@@ -1,0 +1,45 @@
+{
+  "name": "news-review",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "make development-server",
+    "build": "make build",
+    "start": "make start",
+    "generate": "nuxt-ts generate"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.0.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@neneos/nuxt-animate.css": "0.0.1",
+    "@nuxt/typescript-runtime": "^2.0.0",
+    "@nuxtjs/axios": "^5.12.4",
+    "auth0-js": "^9.14.0",
+    "auth0-lock": "^11.27.2",
+    "axios": "^0.21.0",
+    "axios-progress-bar": "^1.2.0",
+    "core-js": "^3.6.5",
+    "lodash-es": "^4.17.15",
+    "nuxt": "^2.14.6",
+    "nuxt-fontawesome": "^0.4.0",
+    "raven-js": "^3.27.2",
+    "vue-axios": "^3.2.0",
+    "vue-date-fns": "^2.0.1",
+    "vue-emotion": "^0.4.29"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.14.6",
+    "@nuxt/typescript-build": "^2.0.3",
+    "@nuxtjs/date-fns": "^1.4.3",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/router": "^1.5.0",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "emoji-js": "^3.5.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0"
+  }
+}
