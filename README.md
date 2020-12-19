@@ -1,20 +1,32 @@
-# news-review
+# News review
 
-## Build Setup
+## Installation
+
+Install dependencies
 
 ```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+npm install
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Development
+
+Serve with hot reload at localhost:3000
+
+```bash
+npm run dev
+```
+
+## Production
+
+Build for production and launch server
+
+```bash
+npm run build
+npm run start
+```
+
+Generate static project
+
+```bash
+npm run generate
+```
