@@ -1,5 +1,8 @@
 const description =
   "Chaque jour, une revue de presse des 10 publications des médias les plus marquantes";
+const title = "Revue de presse";
+const banner = "https://revue-de-presse.org/revue-de-presse-banner.jpg";
+const icon = "/daily-press-review.png";
 
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
@@ -13,22 +16,23 @@ export default {
     htmlAttrs: {
       lang: "fr"
     },
-    title: "Daily Press Review",
+    title,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: description },
       { hid: "og:description", name: "og:description", content: description },
       { hid: "og:type", name: "og:type", content: "website" },
+      { hid: "og:url", name: "og:url", content: "https://revue-de-presse.org" },
       {
         hid: "og:image",
         name: "og:image",
-        content: "/revue-de-presse-banner.png"
+        content: banner
       },
       {
         hid: "og:site_name",
         name: "og:site_name",
-        content: "www.revue-de-presse.org"
+        content: title
       },
       { name: "twitter:card", content: "summary_large_image" },
       { hid: "twitter:site", name: "twitter:site", content: "@revue_2_presse" },
@@ -40,7 +44,7 @@ export default {
       {
         hid: "twitter:title",
         name: "twitter:title",
-        content: "Revue de presse"
+        content: title
       },
       {
         hid: "twitter:description",
@@ -50,10 +54,10 @@ export default {
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: "/revue-de-presse-banner.png"
+        content: banner
       }
     ],
-    link: [{ rel: "icon", type: "image/png", href: "/daily-press-review.png" }]
+    link: [{ rel: "icon", type: "image/png", href: icon }]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
