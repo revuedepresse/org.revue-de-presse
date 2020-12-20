@@ -44,6 +44,8 @@ const getApi = environmentProvider => {
 const getRoutes = () => api.routes;
 const getSchemeAndHost = () => `${api.scheme}${api.host}`;
 
+localStorage.setItem("x-auth-token", process.env.API_AUTH_TOKEN);
+
 export default {
   getApi,
   getRoutes,

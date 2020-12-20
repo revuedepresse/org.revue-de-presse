@@ -96,7 +96,8 @@ export default {
   env: {
     API_HOST: process.env.API_HOST,
     RAVEN_DSN: process.env.RAVEN_DSN,
-    NODE_ENV: process.env.NODE_ENV
+    NODE_ENV: process.env.NODE_ENV,
+    API_AUTH_TOKEN: process.env.API_AUTH_TOKEN
   },
 
   router: {
