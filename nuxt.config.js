@@ -21,14 +21,27 @@ export default {
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: description },
-      { hid: "og:description", name: "og:description", content: description },
-      { hid: "og:type", name: "og:type", content: "website" },
-      { hid: "og:url", name: "og:url", content: "https://revue-de-presse.org" },
       { hid: "author", name: "author", content: "@revue_2_presse" },
-      { hid: "og:image", name: "image", content: banner },
+      { hid: "og:type", name: "og:type", content: "website" },
+      {
+        hid: "og:url",
+        property: "og:url",
+        content: "https://revue-de-presse.org"
+      },
+      { hid: "og:type", property: "og:type", content: "website" },
+      {
+        hid: "og:title",
+        property: "og:title",
+        content: title
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content: description
+      },
       {
         hid: "og:image",
-        name: "og:image",
+        property: "og:image",
         content: banner
       },
       {
