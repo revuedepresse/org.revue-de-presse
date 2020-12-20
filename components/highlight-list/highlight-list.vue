@@ -142,7 +142,7 @@ export default {
       includeRetweets: RETWEETS_EXCLUDED,
       aggregates: [],
       items: [],
-      logger: SharedState.logger,
+      logger: new SharedState.Logger(this.$sentry),
       minDate: '2018-01-01',
       maxDate: this.getMaxDate(),
       selectedAggregates: [],
@@ -286,11 +286,6 @@ export default {
 
             this.totalPages = parseInt(response.headers['x-total-pages'], 10);
             this.pageIndex = parseInt(response.headers['x-page-index'], 10);
-
-            let routeName = 'highlights';
-            if (this.$route.name !== 'highlights') {
-              routeName = this.$route.name;
-            }
 
             const dateParams = { startDate: this.startDate };
             dateParams.endDate = this.endDate;

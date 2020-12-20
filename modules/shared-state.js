@@ -86,20 +86,25 @@ const logLevel = {
   onError: () => {}
 };
 
-const logger = {
+class Logger {
+  constructor($sentry) {
+    this.$sentry = $sentry;
+  }
+
   info(message, file, extra) {
     if (logLevel.isSilent) {
       return;
     }
 
     if (productionMode) {
-      Raven.captureMessage(message, {
+      this.$sentry.captureMessage(message, {
         level: "info",
         logger: file,
         extra
       });
     }
-  },
+  }
+
   error(error, file, extra) {
     logLevel.onError({ error, file, extra });
 
@@ -108,7 +113,7 @@ const logger = {
     }
 
     if (productionMode) {
-      Raven.captureException(error, {
+      this.$sentry.captureException(error, {
         logger: file,
         extra
       });
@@ -117,14 +122,14 @@ const logger = {
 
     return error;
   }
-};
+}
 
 export default {
   errors,
   getEnvironmentParameters,
   isProductionModeActive,
   isTestModeActive,
-  logger,
+  Logger,
   logLevel,
   state
 };
