@@ -73,7 +73,6 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/router",
     "@nuxtjs/axios",
-    "@neneos/nuxt-animate.css",
     "@nuxtjs/date-fns",
     "@nuxtjs/sentry"
   ],
