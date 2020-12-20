@@ -299,6 +299,7 @@ export default {
     },
     getMediaProperties() {
       return {
+        'width': 'calc(100% - 1em)',
         'max-height': '80vw',
         'max-width': '90vw',
         'object-fit': 'scale-down'

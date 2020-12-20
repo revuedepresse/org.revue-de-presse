@@ -6,7 +6,7 @@ $status-margin: 1em;
   flex-direction: column;
   font-size: $font-size-base;
   font-family: $font-family;
-  width: calc(100% - #{$status-margin});
+  @extend .responsive-content;
 
   &__can-be-shared {
     border-color: transparent;
