@@ -1,3 +1,6 @@
+const description =
+  "Chaque jour, une revue de presse des 10 publications des médias les plus marquantes";
+
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
@@ -11,7 +14,41 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      { hid: "description", name: "description", content: description },
+      { hid: "og:description", name: "og:description", content: description },
+      { hid: "og:type", name: "og:type", content: "website" },
+      {
+        hid: "og:image",
+        name: "og:image",
+        content: "/revue-de-presse-banner.png"
+      },
+      {
+        hid: "og:site_name",
+        name: "og:site_name",
+        content: "www.revue-de-presse.org"
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { hid: "twitter:site", name: "twitter:site", content: "@revue_2_presse" },
+      {
+        hid: "twitter:creator",
+        name: "twitter:creator",
+        content: "@revue_2_presse"
+      },
+      {
+        hid: "twitter:title",
+        name: "twitter:title",
+        content: "Revue de presse"
+      },
+      {
+        hid: "twitter:description",
+        name: "twitter:description",
+        content: description
+      },
+      {
+        hid: "twitter:image",
+        name: "twitter:image",
+        content: "/revue-de-presse-banner.png"
+      }
     ],
     link: [{ rel: "icon", type: "image/png", href: "/daily-press-review.png" }]
   },
