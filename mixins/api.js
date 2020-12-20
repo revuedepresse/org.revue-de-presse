@@ -1,6 +1,5 @@
-import Config from '../config';
-import SharedState from '../modules/shared-state';
-import AggregateMixin from './aggregate';
+import Config from "../config";
+import SharedState from "../modules/shared-state";
 
 const getApiMixin = () => {
   if (SharedState.isTestModeActive()) {
@@ -11,7 +10,6 @@ const getApiMixin = () => {
   }
 
   return {
-    mixins: [AggregateMixin],
     computed: {
       routes: function() {
         const routePaths = Config.getRoutes();
@@ -19,12 +17,12 @@ const getApiMixin = () => {
 
         const routes = {};
         Object.keys(routePaths).forEach(routeName => {
-          if (routeName === 'actions') {
+          if (routeName === "actions") {
             return;
           }
 
           const path = routePaths[routeName];
-          const routeIndex = routeName.replace(/\s+/g, '-').toLowerCase();
+          const routeIndex = routeName.replace(/\s+/g, "-").toLowerCase();
           routes[routeIndex] = {
             name: routeName,
             source: `${schemeAndHost}${path}`
