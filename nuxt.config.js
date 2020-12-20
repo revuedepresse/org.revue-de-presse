@@ -73,10 +73,16 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/router",
     "@nuxtjs/axios",
-    "@neneos/nuxt-animate.css",
     "@nuxtjs/date-fns",
-    "@nuxtjs/sentry"
+    "@nuxtjs/sentry",
+    "nuxt-lazysizes"
   ],
+
+  lazySizes: {
+    extendAssetUrls: {
+      img: "data-src"
+    }
+  },
 
   sentry: {
     dsn: process.env.RAVEN_DSN
