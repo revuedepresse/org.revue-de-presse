@@ -6,13 +6,16 @@
         <a
           :href="status.url"
           class="status__url"
+          rel="noreferrer"
           target="_blank"
         >{{ $dateFns.format(publicationDate, 'PPPPpp') }}</a>
       </div>
       <div class="status__vanity-metrics">
         <a
           :href="status.url"
-          class="status__url">
+          class="status__url"
+          rel="noreferrer"
+        >
           <font-awesome-icon
             :icon="['fab', 'twitter']"
             class="status__vanity-metric-icon"
@@ -20,7 +23,8 @@
         </a>
         <font-awesome-icon
           icon="retweet"
-          class="status__vanity-metric-icon" />
+          class="status__vanity-metric-icon"
+        />
         <span class="status__vanity-metric">{{ retweet }}</span>
         <font-awesome-icon
           icon="heart"
@@ -30,55 +34,20 @@
     </div>
 
     <div
-      v-if="isRetweet"
-      class="status__row">
-      <div class="status__relay">
-        <a
-          :href="retweetingMemberTimelineUrl"
-          class="status__username"
-          target="_blank"
-        >@{{ status.usernameOfRetweetingMember }}</a>
-        <span class="status__verb">&nbsp;retweeted&nbsp;</span>
-        <a
-          :href="memberTimelineUrl"
-          class="status__username"
-          target="_blank"
-        >@{{ status.username }}</a>
-      </div>
-    </div>
-
-    <div
-      v-if="isLike"
-      class="status__row">
-      <div class="status__relay">
-        <a
-          :href="likingMemberTimelineUrl"
-          class="status__username"
-          target="_blank"
-        >@{{ status.likedBy }}</a>
-        <span class="status__verb">&nbsp;liked&nbsp;</span>
-        <a
-          :href="memberTimelineUrl"
-          class="status__username"
-          target="_blank"
-        >@{{ status.username }}</a>
-      </div>
-    </div>
-
-    <div
-      v-else
       class="status__row">
       <div class="status__publisher">
         <a
           :style="publisherStyle"
           :href="memberTimelineUrl"
           class="status__username"
+          ref="noreferrer"
           target="_blank"
         >
           <span class="status__publisher-name">@{{ status.username }}</span>
         </a>
       </div>
     </div>
+
     <div class="status__row">
       <div class="status__content">
         <p
@@ -103,29 +72,13 @@
       </div>
     </div>
 
-    <div
-      v-if="shouldDisplayPermalink"
-      class="status__row"
-    >
-      <div class="status__links">
-        <a
-          class="status__url"
-          @click="goToPermalink(status)">Permalink</a>
-        <a
-          v-for="(link, index) in status.links"
-          :key="index"
-          :href="link"
-          class="status__url status__url--secondary-link"
-        >{{ link }}</a>
-      </div>
-    </div>
-
     <div class="status__row">
       <div class="status__web-intents">
         <a
           v-if="canBeRepliedTo"
           :href="urls.reply"
           class="status__web-intent"
+          rel="noreferrer"
           target="_blank"
         >
           <font-awesome-icon icon="reply" />
@@ -135,6 +88,7 @@
           v-if="canBeRetweeted"
           :href="urls.retweet"
           class="status__web-intent"
+          rel="noreferrer"
           target="_blank"
         >
           <font-awesome-icon icon="retweet" />
@@ -144,6 +98,7 @@
           v-if="canBeLiked"
           :href="urls.like"
           class="status__web-intent"
+          rel="noreferrer"
           target="_blank"
         >
           <font-awesome-icon icon="heart" />
@@ -198,18 +153,6 @@ export default {
       return `${basePath}/#/aggregate/${this.fromAggregateType}/${
         this.status.statusId
       }`;
-    },
-    isRetweet() {
-      if (typeof this.status === 'undefined') {
-        return false;
-      }
-      return this.status.retweet;
-    },
-    isLike() {
-      if (typeof this.status === 'undefined') {
-        return false;
-      }
-      return this.status.likedBy;
     },
     retweet() {
       return this.status.totalRetweet || 0;
@@ -269,20 +212,6 @@ export default {
 
       return `https://twitter.com/${this.status.usernameOfRetweetingMember}`;
     },
-    likingMemberTimelineUrl() {
-      if (typeof this.status === 'undefined' && this.status.retweet === false) {
-        return '';
-      }
-
-      return `https://twitter.com/${this.status.likedBy}`;
-    },
-    shouldDisplayPermalink() {
-      return (
-        this.$router
-          .match(window.location)
-          .matched.find(route => route.name === 'admin') && this.isAuthenticated
-      );
-    },
   },
   data() {
     return {
@@ -338,6 +267,7 @@ export default {
         }
 
         return `<a class="status__text-external-link"
+                   rel="noreferrer"
                    target="_blank" href="${matchingText}">${matchingText}</a>`;
       });
     },
@@ -353,8 +283,11 @@ export default {
             return matchingSubstring;
           }
 
-          return `${prefix}<a class="status__text-external-link"
-                   target="_blank" href="https://twitter.com/${mention}">@${mention}</a>${suffix}`;
+          return `${prefix}<a
+                     class="status__text-external-link"
+                     rel="noreferrer"
+                     target="_blank"
+                     href="https://twitter.com/${mention}">@${mention}</a>${suffix}`;
         }
       );
     },
