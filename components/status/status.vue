@@ -64,15 +64,15 @@
       <div class="status__media">
         <img
           v-for="(document, index) in status.media"
-          class="status__media-item"
+          @click="openMediaItem(document)"
+          class="status__media-item lazyload"
           :alt="getMediaTitle(document)"
           :title="getMediaTitle(document)"
           :key="index"
-          :src="getMediaUrl(document)"
+          :data-src="getMediaUrl(document)"
           :style="getMediaProperties()"
           :width="getMediaWidth(document)"
           :height="getMediaHeight(document)"
-          @click="openMediaItem(document)"
         >
       </div>
     </div>

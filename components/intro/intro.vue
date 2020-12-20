@@ -4,11 +4,11 @@
       <div class="intro__logo-container">
         <a href="/">
           <img
-            class="intro__logo"
-            :src="logo"
+            class="intro__logo lazyload"
             alt="Revue de Presse logo"
             width="100"
             height="100"
+            :data-src="logo"
           />
         </a>
       </div>
