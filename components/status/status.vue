@@ -207,13 +207,6 @@ export default {
       --avatar-size: ${size};
       `;
     },
-    retweetingMemberTimelineUrl() {
-      if (typeof this.status === 'undefined' && this.status.retweet === false) {
-        return '';
-      }
-
-      return `https://twitter.com/${this.status.usernameOfRetweetingMember}`;
-    },
   },
   data() {
     return {
