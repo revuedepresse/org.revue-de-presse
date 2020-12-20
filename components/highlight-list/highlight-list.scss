@@ -3,6 +3,12 @@
 .highlight-list {
   @extend .member-status-list;
 
+  &__date-label {
+    display: flex;
+    width: 100%;
+    margin-bottom: $separation-1;
+  }
+
   &__buttons {
     align-self: center;
     display: flex;
@@ -16,12 +22,11 @@
     [for="end-date"],
     [for="date"] {
       color: $color-hyperlink;
-      justify-self: flex-start;
-      display: flex;
       margin-left: 0;
-      max-width: 360px;
-      padding-left: $separation-2;
-      width: 340px;
+      padding-left: $separation-1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-self: flex-start;
 
       [type="date"] {
         background: transparent;
@@ -31,6 +36,7 @@
         font-family: $font-family;
         margin-left: 0;
         padding: 0.2em;
+        width: auto;
       }
 
       &.highlight-list__dates {
