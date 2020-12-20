@@ -19,9 +19,6 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ["./styles/variables.scss"],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
-
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
@@ -103,14 +100,14 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: "default",
+        name: "homepage",
         path: "/",
         component: resolve(__dirname, "pages/index.vue")
       });
       routes.push({
         name: "highlights",
         path: "/highlights/:startDate/:endDate",
-        component: resolve(__dirname, "pages/highlights.vue")
+        component: resolve(__dirname, "pages/-highlights.vue")
       });
     }
   },

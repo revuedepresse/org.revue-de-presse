@@ -133,12 +133,10 @@ export default {
       return this.items;
     },
     highlightsClasses() {
-      const classes = {
+      return {
         'highlight-list': true,
         list: true
       };
-
-      return classes;
     },
     includedRetweetsLabel() {
       return 'included';
