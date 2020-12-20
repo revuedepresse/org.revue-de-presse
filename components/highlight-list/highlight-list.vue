@@ -305,7 +305,7 @@ export default {
 
             if (requestOptions.params.routeName) {
               this.$router.replace({
-                name: 'press-review'
+                name: 'highlights'
               });
             }
           });
@@ -324,6 +324,10 @@ export default {
         if (data.aggregates) {
           this.aggregates = data.aggregates;
         }
+
+        this.$router.push({
+          path: `/highlights/${this.startDate}/${this.endDate}`
+        });
       });
     }
   }

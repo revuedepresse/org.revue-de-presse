@@ -91,9 +91,14 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
+        name: "default",
+        path: "/",
+        component: resolve(__dirname, "pages/index.vue")
+      });
+      routes.push({
         name: "highlights",
         path: "/highlights/:startDate/:endDate",
-        component: resolve(__dirname, "pages/index.vue")
+        component: resolve(__dirname, "pages/highlights.vue")
       });
     }
   },
