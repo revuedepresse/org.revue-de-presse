@@ -62,37 +62,6 @@
         </label>
       </div>
     </div>
-    <label
-      v-if="aggregates.length > 0 && showEndDate"
-      for="select-aggregates">
-      Select one or more Twitter accounts to fetch their highlights
-      <select
-        id="select-aggregates"
-        v-model="selectedAggregates"
-        name="selected-aggregates"
-        multiple="multiple"
-        class="list__items highlight-list__aggregates"
-        @change="fetchHighlights"
-      >
-        <option
-          v-for="(aggregate) in sortedAggregates"
-          :key="aggregate.twitterMemberId"
-          :data-key="aggregate.twitterMemberId"
-          :value="aggregate.memberId"
-          class="list__item"
-        >
-          @{{ aggregate.memberName }}
-          - {{ aggregate.memberFullName }}
-          - {{ aggregate.totalHighlights }} statuses
-        </option>
-      </select>
-      <button
-        class="highlight-list__clear-selection"
-        type="reset"
-        value="clear"
-        @click="clearAggregateSelection"
-      >Clear selection</button>
-    </label>
     <ul class="list__items">
       <li
         v-for="(highlight, index) in highlights"
@@ -164,12 +133,10 @@ export default {
       return this.items;
     },
     highlightsClasses() {
-      const classes = {
+      return {
         'highlight-list': true,
         list: true
       };
-
-      return classes;
     },
     includedRetweetsLabel() {
       return 'included';
@@ -219,110 +186,90 @@ export default {
 
     this.fetchHighlights();
   },
+  async fetch() {
+    const action = this.getHighlightsAction();
+    const route = this.getHighlightsRoute();
+    const requestOptions = this.getRequestOptions();
+
+    const url = new URL(route);
+    Object.keys(requestOptions.params).map(key =>
+      url.searchParams.set(key, requestOptions.params[key])
+    );
+
+    const response = await fetch(
+      url,
+      {
+        method: action.method,
+        headers: requestOptions.headers
+      }
+    )
+    .then(res => res.json())
+    .catch(e => {
+      this.logger.error(e.message, 'highlight-list', e);
+    });
+
+    this.items = response.statuses;
+  },
   methods: {
-    clearAggregateSelection() {
-      this.selectedAggregates = [];
-      this.fetchHighlights();
-    },
-    fetchHighlights(params = {}) {
-      return new Promise(resolved => {
-        const authenticationToken = localStorage.getItem('x-auth-token');
-        const requestOptions = {
-          headers: { 'x-auth-token': authenticationToken }
-        };
+    getRequestOptions(params = {}) {
+      const authenticationToken = localStorage.getItem('x-auth-token');
+      const requestOptions = {
+        headers: { 'x-auth-token': authenticationToken }
+      };
 
-        const headerName = Object.keys(requestOptions.headers)[0];
-        this.$axios.defaults.headers.common[headerName] =
-          requestOptions.headers[headerName];
+      requestOptions.params = {
+        startDate: this.startDate,
+        endDate: this.endDate
+      };
 
-        requestOptions.params = {
-          startDate: this.startDate,
-          endDate: this.endDate
-        };
+      if (!this.showEndDate) {
+        requestOptions.params.endDate = this.startDate;
+      }
 
-        if (!this.showEndDate) {
-          requestOptions.params.endDate = this.startDate;
-        }
-
-        if (params.pageIndex) {
-          if (!('params' in requestOptions)) {
-            requestOptions.params = {};
-          }
-
-          requestOptions.params.pageIndex = params.pageIndex;
-        }
-
+      if (params.pageIndex) {
         if (!('params' in requestOptions)) {
           requestOptions.params = {};
         }
 
-        if (this.pageSize > 0) {
-          requestOptions.params.pageSize = this.pageSize;
-        }
+        requestOptions.params.pageIndex = params.pageIndex;
+      }
 
-        requestOptions.params.includeRetweets = 1;
-        if (this.includeRetweets === RETWEETS_EXCLUDED) {
-          requestOptions.params.includeRetweets = 0;
-        }
+      if (!('params' in requestOptions)) {
+        requestOptions.params = {};
+      }
 
-        if (this.$route.name !== 'highlights') {
-          requestOptions.params.routeName = this.$route.name;
-          requestOptions.headers['x-auth-admin-token'] = this.idToken;
-        }
+      if (this.pageSize > 0) {
+        requestOptions.params.pageSize = this.pageSize;
+      }
 
-        if (this.selectedAggregates.length > 0) {
-          requestOptions.params.selectedAggregates = this.selectedAggregates;
-        }
+      requestOptions.params.includeRetweets = 1;
+      if (this.includeRetweets === RETWEETS_EXCLUDED) {
+        requestOptions.params.includeRetweets = 0;
+      }
 
-        const action = this.routes.actions.fetchHighlights;
-        const route = `${Config.getSchemeAndHost()}${action.route}`;
-        this.$axios[action.method](route, requestOptions)
-          .then(response => {
-            this.items = response.data.statuses;
+      if (this.selectedAggregates.length > 0) {
+        requestOptions.params.selectedAggregates = this.selectedAggregates;
+      }
 
-            if (response.data.aggregates) {
-              this.aggregates = response.data.aggregates;
-            }
-
-            this.totalPages = parseInt(response.headers['x-total-pages'], 10);
-            this.pageIndex = parseInt(response.headers['x-page-index'], 10);
-
-            const dateParams = { startDate: this.startDate };
-            dateParams.endDate = this.endDate;
-            if (!this.showEndDate) {
-              dateParams.endDate = this.startDate;
-            }
-
-            resolved(response.data);
-          })
-          .catch(e => {
-            this.logger.error(e.message, 'highlight-list', e);
-
-            if (requestOptions.params.routeName) {
-              this.$router.replace({
-                name: 'highlights'
-              });
-            }
-          });
-      });
+      return requestOptions;
+    },
+    getHighlightsAction() {
+      return this.routes.actions.fetchHighlights;
+    },
+    getHighlightsRoute() {
+      const action = this.getHighlightsAction();
+      return `${Config.getSchemeAndHost()}${action.route}`;
+    },
+    fetchHighlights(params = {}) {
+      this.$fetch();
     },
     getMaxDate() {
       return this.getCurrentDate();
     },
-    getMemberProfileUrl(aggregate) {
-      return `https://twitter.com/${aggregate.memberName}`;
-    },
     updateHighlights() {
-      this.fetchHighlights().then(data => {
-        this.items = data.statuses;
-
-        if (data.aggregates) {
-          this.aggregates = data.aggregates;
-        }
-
-        this.$router.push({
-          path: `/highlights/${this.startDate}/${this.startDate}`
-        });
+      this.fetchHighlights();
+      this.$router.push({
+        path: `/highlights/${this.startDate}/${this.getMaxDate()}`
       });
     }
   }

@@ -1,5 +1,8 @@
 <template>
-  <highlist-list></highlist-list>
+  <div>
+    <highlist-list></highlist-list>
+    <modal-window />
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,6 +12,7 @@ import VueRouter from 'vue-router';
 import routes from '../modules/routes';
 import {RouterMode} from "vue-router/types/router";
 import SharedState from '../modules/shared-state';
+import ModalWindow from "~/components/modal-window/modal-window.vue";
 
 Vue.use(VueRouter);
 
@@ -25,7 +29,10 @@ if (SharedState.isProductionModeActive()) {
 }
 
 export default Vue.extend({
-  components: {HighlistList}
+  components: {
+    HighlistList,
+    ModalWindow
+  }
 })
 </script>
 

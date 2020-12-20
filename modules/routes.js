@@ -9,11 +9,6 @@ export default [
     redirect: defaultRedirect
   },
   {
-    component: HighlightList,
-    path: "/highlights/:startDate/:endDate",
-    name: "highlights"
-  },
-  {
     path: "*",
     redirect: defaultRedirect
   }
