@@ -104,6 +104,12 @@ $status-margin: 1em;
       &:link {
         font-size: 1em;
       }
+
+      @media (max-width: $width-medium-device) {
+        width: 100%;
+        margin-top: $separation-1;
+        margin-bottom: $separation-1;
+      }
     }
 
     &:first-child {
@@ -221,6 +227,11 @@ $status-margin: 1em;
     padding: $separation-1;
     line-height: 1.3em;
     height: 1.3em;
+
+    @media (max-width: $width-medium-device) {
+      flex-wrap: wrap;
+      padding-bottom: $separation-2;
+    }
 
     [data-icon] {
       line-height: 1.3em;
