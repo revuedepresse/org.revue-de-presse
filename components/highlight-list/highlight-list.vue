@@ -1,5 +1,7 @@
 <template>
   <div :class='highlightsClasses'>
+    <link rel="preconnect" :href="getApiHost" />
+    <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin />
     <intro />
     <div class="highlight-list__container">
       <div class="highlight-list__buttons">
@@ -117,6 +119,9 @@ export default {
     };
   },
   computed: {
+    getApiHost() {
+      return Config.getSchemeAndHost();
+    },
     canIdentifyRetweets() {
       return new Date(this.startDate) >= new Date('2018-12-09');
     },
