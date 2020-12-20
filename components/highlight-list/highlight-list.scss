@@ -3,6 +3,11 @@
 .highlight-list {
   @extend .member-status-list;
 
+  &__container {
+    display: block;
+    min-height: 100vh;
+  }
+
   &__date-label {
     display: flex;
     width: 100%;
