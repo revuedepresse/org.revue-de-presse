@@ -95,6 +95,17 @@ $status-margin: 1em;
       @extend .clickable;
     }
 
+    &--permanent-link {
+      font-size: 1em;
+
+      &:active,
+      &:hover,
+      &:visited,
+      &:link {
+        font-size: 1em;
+      }
+    }
+
     &:first-child {
       align-self: center;
       margin-left: 0;

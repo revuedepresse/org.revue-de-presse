@@ -13,13 +13,14 @@
       <div class="status__vanity-metrics">
         <a
           :href="status.url"
-          class="status__url"
+          class="status__url status__url--permanent-link"
           rel="noreferrer"
         >
           <font-awesome-icon
             :icon="['fab', 'twitter']"
             class="status__vanity-metric-icon"
           />
+          Publication originale
         </a>
         <font-awesome-icon
           icon="retweet"
