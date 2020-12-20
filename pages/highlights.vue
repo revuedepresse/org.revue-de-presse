@@ -8,7 +8,7 @@ import HighlistList from "../components/highlight-list/highlight-list.vue";
 import VueRouter from 'vue-router';
 import routes from '../modules/routes';
 import {RouterMode} from "vue-router/types/router";
-import Time from "~/modules/time";
+import SharedState from '../modules/shared-state';
 
 Vue.use(VueRouter);
 
@@ -19,6 +19,10 @@ const routingOptions = {
 };
 
 const router = new VueRouter(routingOptions);
+
+if (SharedState.isProductionModeActive()) {
+  Vue.config.productionTip = false;
+}
 
 export default Vue.extend({
   components: {HighlistList}

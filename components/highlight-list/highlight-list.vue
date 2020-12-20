@@ -287,11 +287,6 @@ export default {
             this.totalPages = parseInt(response.headers['x-total-pages'], 10);
             this.pageIndex = parseInt(response.headers['x-page-index'], 10);
 
-            let routeName = 'highlights';
-            if (this.$route.name !== 'highlights') {
-              routeName = this.$route.name;
-            }
-
             const dateParams = { startDate: this.startDate };
             dateParams.endDate = this.endDate;
             if (!this.showEndDate) {
