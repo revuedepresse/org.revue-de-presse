@@ -93,6 +93,12 @@ export default {
     defaultLocale: "fr"
   },
 
+  env: {
+    API_HOST: process.env.API_HOST,
+    RAVEN_DSN: process.env.RAVEN_DSN,
+    NODE_ENV: process.env.NODE_ENV
+  },
+
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
