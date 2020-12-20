@@ -41,7 +41,7 @@
           :style="publisherStyle"
           :href="memberTimelineUrl"
           class="status__username"
-          ref="noreferrer"
+          rel="noreferrer"
           target="_blank"
         >
           <span class="status__publisher-name">@{{ status.username }}</span>
