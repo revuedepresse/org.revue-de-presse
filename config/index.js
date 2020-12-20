@@ -10,7 +10,7 @@ const getHostAndScheme = environmentProvider => {
 
   const environment = environmentProvider.getEnvironmentParameters();
   if (environment.productionMode) {
-    host = "api.press-review.weaving-the-web.org";
+    host = process.env.API_HOST;
     scheme = "https://";
   }
 
