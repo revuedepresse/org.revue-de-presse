@@ -13,13 +13,14 @@
       <div class="status__vanity-metrics">
         <a
           :href="status.url"
-          class="status__url"
+          class="status__url status__url--permanent-link"
           rel="noreferrer"
         >
           <font-awesome-icon
             :icon="['fab', 'twitter']"
             class="status__vanity-metric-icon"
           />
+          Publication originale
         </a>
         <font-awesome-icon
           icon="retweet"
@@ -40,7 +41,7 @@
           :style="publisherStyle"
           :href="memberTimelineUrl"
           class="status__username"
-          ref="noreferrer"
+          rel="noreferrer"
           target="_blank"
         >
           <span class="status__publisher-name">@{{ status.username }}</span>
@@ -207,13 +208,6 @@ export default {
       --avatar-size: ${size};
       `;
     },
-    retweetingMemberTimelineUrl() {
-      if (typeof this.status === 'undefined' && this.status.retweet === false) {
-        return '';
-      }
-
-      return `https://twitter.com/${this.status.usernameOfRetweetingMember}`;
-    },
   },
   data() {
     return {
@@ -306,6 +300,7 @@ export default {
     },
     getMediaProperties() {
       return {
+        'width': 'calc(100% - 1em)',
         'max-height': '80vw',
         'max-width': '90vw',
         'object-fit': 'scale-down'

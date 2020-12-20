@@ -10,6 +10,9 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
+    htmlAttrs: {
+      lang: "fr"
+    },
     title: "Daily Press Review",
     meta: [
       { charset: "utf-8" },

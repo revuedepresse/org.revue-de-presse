@@ -6,6 +6,7 @@
         :class="{ 'highlight-list__dates': showEndDate }"
         for="start-date"
       >
+        <span class="highlight-list__date-label">Sélectionner une date :</span>
         <input
           id="start-date"
           ref="startDate"
@@ -15,15 +16,6 @@
           type="date"
         >
         <input
-          v-if="showEndDate"
-          id="end-date"
-          v-model="endDate"
-          :min="minEndDate"
-          :max="maxDate"
-          type="date"
-        >
-        <input
-          v-else
           v-model="startDate"
           :min="minEndDate"
           :max="maxDate"
