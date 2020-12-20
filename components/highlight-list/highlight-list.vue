@@ -326,7 +326,7 @@ export default {
         }
 
         this.$router.push({
-          path: `/highlights/${this.startDate}/${this.endDate}`
+          path: `/highlights/${this.startDate}/${this.startDate}`
         });
       });
     }
