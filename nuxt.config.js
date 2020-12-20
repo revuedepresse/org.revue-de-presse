@@ -24,6 +24,8 @@ export default {
       { hid: "og:description", name: "og:description", content: description },
       { hid: "og:type", name: "og:type", content: "website" },
       { hid: "og:url", name: "og:url", content: "https://revue-de-presse.org" },
+      { hid: "author", name: "author", content: "@revue_2_presse" },
+      { hid: "og:image", name: "image", content: banner },
       {
         hid: "og:image",
         name: "og:image",
