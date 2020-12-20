@@ -2,7 +2,7 @@
   <div class="outro" id="project">
     <h2>À propos de Revue 2 Presse</h2>
     <p class="outro__project-description">
-      Ce projet s'appuie sur l'API de Twitter (<a href="https://github.com/WeavingTheWeb/daily-press-review">https://github.com/WeavingTheWeb/daily-press-review</a>) et propose une vue des publications des médias en
+      Ce projet s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse/daily-press-review">https://github.com/revuedepresse/daily-press-review</a>) et propose une vue des publications des médias en
       fonction du succès que ces publications ont rencontré auprès du public. Un classement s'appuyant sur les <em>retweets</em> et les
       <em>likes</em>, offre chaque jour une visibilité sur 10 posts médias.
     </p>
