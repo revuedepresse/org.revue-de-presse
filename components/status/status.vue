@@ -63,6 +63,8 @@
       <div class="status__media">
         <img
           v-for="(document, index) in status.media"
+          :alt="getMediaTitle(document)"
+          :title="getMediaTitle(document)"
           :key="index"
           :src="getMediaUrl(document)"
           :style="getMediaProperties()"
@@ -305,12 +307,15 @@ export default {
     getMediaProperties() {
       return {
         'max-height': '80vw',
-        width: '90vmin',
-        objectFit: 'scale-down'
+        'max-width': '90vw',
+        'object-fit': 'scale-down'
       };
     },
     getMediaUrl(media) {
-      return media.url;
+      return `${media.url}:small`;
+    },
+    getMediaTitle(media) {
+      return media.title ? media.title : '';
     },
     goToPermalink(status) {
       this.$router.push({
