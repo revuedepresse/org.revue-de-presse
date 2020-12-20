@@ -1,60 +1,61 @@
 <template>
   <div :class='highlightsClasses'>
     <intro />
-    <div class="highlight-list__buttons">
-      <label
-        :class="{ 'highlight-list__dates': showEndDate }"
-        for="start-date"
-      >
-        <span class="highlight-list__date-label">Sélectionner une date :</span>
-        <input
-          id="start-date"
-          ref="startDate"
-          v-model="startDate"
-          :min="minDate"
-          :max="maxStartDate"
-          type="date"
-        >
-        <input
-          v-model="startDate"
-          :min="minEndDate"
-          :max="maxDate"
-          type="hidden"
-        >
-      </label>
-      <div
-        v-if="canIdentifyRetweets"
-        v-show="canFilterByRetweet"
-        class="highlight-list__retweets"
-      >
-        <span class="highlight-list__retweets-label">
-          Retweets are
-        </span>
+    <div class="highlight-list__container">
+      <div class="highlight-list__buttons">
         <label
-          for="included-retweets"
-          title="Include or exclude retweets">
+          :class="{ 'highlight-list__dates': showEndDate }"
+          for="start-date"
+        >
+          <span class="highlight-list__date-label">Sélectionner une date :</span>
           <input
-            id="included-retweets"
-            v-model="includeRetweets"
-            name="retweets"
-            type="radio"
-            value="1"
-          >{{ includedRetweetsLabel }}
-        </label>
-        <label
-          for="excluded-retweets"
-          title="Include or exclude retweets">
+            id="start-date"
+            ref="startDate"
+            v-model="startDate"
+            :min="minDate"
+            :max="maxStartDate"
+            type="date"
+          >
           <input
-            id="excluded-retweets"
-            v-model="includeRetweets"
-            type="radio"
-            name="retweets"
-            value="0"
-          >{{ excludedRetweetsLabel }}
+            v-model="startDate"
+            :min="minEndDate"
+            :max="maxDate"
+            type="hidden"
+          >
         </label>
+        <div
+          v-if="canIdentifyRetweets"
+          v-show="canFilterByRetweet"
+          class="highlight-list__retweets"
+        >
+          <span class="highlight-list__retweets-label">
+            Retweets are
+          </span>
+          <label
+            for="included-retweets"
+            title="Include or exclude retweets">
+            <input
+              id="included-retweets"
+              v-model="includeRetweets"
+              name="retweets"
+              type="radio"
+              value="1"
+            >{{ includedRetweetsLabel }}
+          </label>
+          <label
+            for="excluded-retweets"
+            title="Include or exclude retweets">
+            <input
+              id="excluded-retweets"
+              v-model="includeRetweets"
+              type="radio"
+              name="retweets"
+              value="0"
+            >{{ excludedRetweetsLabel }}
+          </label>
+        </div>
       </div>
-    </div>
-    <ul class="list__items">
+      <ul class="list__items">
       <li
         v-for="(highlight, index) in highlights"
         :key="highlight.statusId"
@@ -67,6 +68,7 @@
         />
       </li>
     </ul>
+    </div>
     <outro />
   </div>
 </template>
