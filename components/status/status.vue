@@ -64,12 +64,14 @@
       <div class="status__media">
         <img
           v-for="(document, index) in status.media"
+          class="status__media-item"
           :alt="getMediaTitle(document)"
           :title="getMediaTitle(document)"
           :key="index"
           :src="getMediaUrl(document)"
           :style="getMediaProperties()"
-          class="status__media-item"
+          :width="getMediaWidth(document)"
+          :height="getMediaHeight(document)"
           @click="openMediaItem(document)"
         >
       </div>
@@ -308,6 +310,12 @@ export default {
     },
     getMediaUrl(media) {
       return `${media.url}:small`;
+    },
+    getMediaHeight(media) {
+      return media.sizes.small.h;
+    },
+    getMediaWidth(media) {
+      return media.sizes.small.w;
     },
     getMediaTitle(media) {
       return media.title ? media.title : '';

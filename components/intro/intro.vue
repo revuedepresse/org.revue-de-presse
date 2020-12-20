@@ -3,7 +3,13 @@
     <div class="intro__container">
       <div class="intro__logo-container">
         <a href="/">
-          <img class="intro__logo" :src="logo" alt="Revue de Presse logo"/>
+          <img
+            class="intro__logo"
+            :src="logo"
+            alt="Revue de Presse logo"
+            width="100"
+            height="100"
+          />
         </a>
       </div>
       <div class="intro__description-container">
@@ -18,7 +24,7 @@
 </template>
 
 <script>
-import logo from "../../assets/revue-de-presse_400x400.jpg";
+import logo from "../../assets/revue-de-presse_100x100.png";
 
 export default {
   name: "intro",
