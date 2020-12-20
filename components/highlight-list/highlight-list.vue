@@ -142,7 +142,7 @@ export default {
       includeRetweets: RETWEETS_EXCLUDED,
       aggregates: [],
       items: [],
-      logger: SharedState.logger,
+      logger: new SharedState.Logger(this.$sentry),
       minDate: '2018-01-01',
       maxDate: this.getMaxDate(),
       selectedAggregates: [],

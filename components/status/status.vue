@@ -287,7 +287,7 @@ export default {
   data() {
     return {
       errorMessages: SharedState.errors,
-      logger: SharedState.logger,
+      logger: new SharedState.Logger(this.$sentry),
       status: this.statusAtFirst,
       visibleStatuses: SharedState.state.visibleStatuses,
       aggregateType: this.fromAggregateType

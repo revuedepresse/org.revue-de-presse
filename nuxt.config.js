@@ -33,8 +33,13 @@ export default {
     "@nuxtjs/router",
     "@nuxtjs/axios",
     "@neneos/nuxt-animate.css",
-    "@nuxtjs/date-fns"
+    "@nuxtjs/date-fns",
+    "@nuxtjs/sentry"
   ],
+
+  sentry: {
+    dsn: process.env.RAVEN_DSN
+  },
 
   modules: [
     "@nuxtjs/style-resources",

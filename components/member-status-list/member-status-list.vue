@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       items: [],
-      logger: SharedState.logger,
+      logger: new SharedState.Logger(this.$sentry),
       keyword: null,
       pageIndex: 1,
       pageSize: 10,
