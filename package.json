@@ -6,7 +6,6 @@
     "dev": "make development-server",
     "build": "make build",
     "start": "make start",
-    "generate": "nuxt-ts generate",
     "preinstall": "npx npm-force-resolutions"
   },
   "resolutions": {
@@ -21,6 +20,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.4",
+    "@nuxtjs/device": "^1.2.7",
     "@nuxtjs/sentry": "^4.5.0",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
