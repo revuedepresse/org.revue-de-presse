@@ -90,8 +90,15 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/date-fns",
     "@nuxtjs/sentry",
+    "@nuxtjs/pwa",
     "nuxt-lazysizes"
   ],
+
+  pwa: {
+    icon: {
+      source: "~assets/revue-de-presse_400x400.jpg"
+    }
+  },
 
   lazySizes: {
     extendAssetUrls: {

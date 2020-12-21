@@ -35,6 +35,7 @@
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxtjs/date-fns": "^1.4.3",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/pwa": "^3.3.3",
     "@nuxtjs/router": "^1.5.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "emoji-js": "^3.5.0",
