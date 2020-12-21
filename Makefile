@@ -18,3 +18,9 @@ development-server: ## Start development server
 
 generate: ## Generate static files
 	@/bin/bash -c 'source .env && npx nuxt-ts generate'
+
+build-nginx-image: ## Build nginx image
+	@/bin/bash -c 'source ./provisioning/docker.sh && build_nginx_image'
+
+run-nginx-container: ## Run nginx container
+	@/bin/bash -c 'source ./provisioning/docker.sh && run_nginx_container'
