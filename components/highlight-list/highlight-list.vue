@@ -3,7 +3,7 @@
     <link rel="preconnect" :href="getApiHost" />
     <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin />
     <intro />
-    <div class="highlight-list__container">
+    <div :class="containerClass">
       <div class="highlight-list__buttons">
         <label
           :class="{ 'highlight-list__dates': showEndDate }"
@@ -57,19 +57,32 @@
           </label>
         </div>
       </div>
-      <ul class="list__items">
-      <li
-        v-for="(highlight, index) in highlights"
-        :key="highlight.statusId"
-        :data-key="highlight.statusId"
-        class="list__item"
+      <p
+        class="highlight-list__empty-list"
+        v-if="$fetchState.pending"
       >
-        <status
-          :status-at-first="formatStatus(highlight.status)"
-          :ref-name="index"
-        />
-      </li>
-    </ul>
+        Chargement des publications...
+      </p>
+      <p
+        class="highlight-list__empty-list"
+        v-else-if="!containerClass"
+      >
+        Cette date n'est encore associée à aucune publication pour le moment.<br /><br />
+        Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
+      </p>
+      <ul v-else class="list__items">
+        <li
+          v-for="(highlight, index) in highlights"
+          :key="highlight.statusId"
+          :data-key="highlight.statusId"
+          class="list__item"
+        >
+          <status
+            :status-at-first="formatStatus(highlight.status)"
+            :ref-name="index"
+          />
+        </li>
+      </ul>
     </div>
     <outro />
   </div>
@@ -119,6 +132,13 @@ export default {
     };
   },
   computed: {
+    containerClass() {
+      if (this.highlights.length > 0 || this.$fetchState.pending) {
+        return 'highlight-list__container'
+      }
+
+      return false
+    },
     getApiHost() {
       return Config.getSchemeAndHost();
     },
@@ -144,10 +164,6 @@ export default {
       return 'excluded';
     },
     maxStartDate() {
-      if (new Date(this.maxDate) > new Date(this.endDate)) {
-        return this.endDate;
-      }
-
       return this.maxDate;
     },
     minEndDate() {
@@ -159,10 +175,6 @@ export default {
     },
     showEndDate() {
       return this.$route.name !== 'highlights';
-    },
-    sortedAggregates() {
-      const reversedAggregates = this.aggregates.concat([]);
-      return reversedAggregates.reverse();
     }
   },
   watch: {
@@ -218,7 +230,7 @@ export default {
 
       requestOptions.params = {
         startDate: this.startDate,
-        endDate: this.endDate
+        endDate: this.startDate
       };
 
       if (!this.showEndDate) {
@@ -266,9 +278,9 @@ export default {
       return this.getCurrentDate();
     },
     updateHighlights() {
-      this.fetchHighlights();
+      this.items = [];
       this.$router.push({
-        path: `/highlights/${this.startDate}/${this.getMaxDate()}`
+        path: `/${this.startDate}`
       });
     }
   }

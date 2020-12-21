@@ -3,6 +3,11 @@
 .highlight-list {
   @extend .member-status-list;
 
+  &__empty-list {
+    @extend .responsive-content;
+    padding-left: $separation-1;
+  }
+
   &__container {
     display: block;
     min-height: 100vh;

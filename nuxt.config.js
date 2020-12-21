@@ -170,8 +170,8 @@ export default {
         component: resolve(__dirname, "pages/index.vue")
       });
       routes.push({
-        name: "highlights",
-        path: "/highlights/:startDate/:endDate",
+        name: "daily-review",
+        path: "/:startDate",
         component: resolve(__dirname, "pages/-highlights.vue")
       });
     }

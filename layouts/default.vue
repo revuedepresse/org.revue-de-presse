@@ -1,3 +1,3 @@
 <template>
-  <Nuxt keep-alive />
+  <Nuxt />
 </template>
