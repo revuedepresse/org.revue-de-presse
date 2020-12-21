@@ -7,7 +7,7 @@
       <em>likes</em>, offre chaque jour une visibilité sur 10 posts médias.
     </p>
     <p>
-      Le dispositif Revue 2 presse est composé :
+      Le dispositif Revue 2 presse est composé&nbsp;:
     <ul>
       <li>d'un site web présentant les 10 posts médias ayant rencontré le plus d'écho pour chaque jour de l'année, avec
         un calendrier permettant de revoir facilement une date précise

@@ -58,14 +58,14 @@
         </div>
       </div>
       <p
-        class="highlight-list__empty-list"
+        class="highlight-list__loading"
         v-if="$fetchState.pending"
       >
         Chargement des publications...
       </p>
       <p
         class="highlight-list__empty-list"
-        v-else-if="!containerClass"
+        v-else-if="highlights.length === 0"
       >
         Cette date n'est encore associée à aucune publication pour le moment.<br /><br />
         Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
@@ -134,10 +134,10 @@ export default {
   computed: {
     containerClass() {
       if (this.highlights.length > 0 || this.$fetchState.pending) {
-        return 'highlight-list__container'
+        return 'highlight-list__container highlight-list__container--filled'
       }
 
-      return false
+      return 'highlight-list__container'
     },
     getApiHost() {
       return Config.getSchemeAndHost();
