@@ -72,6 +72,12 @@ export default {
         content: banner
       }
     ],
+    noscript: [
+      {
+        innerHTML:
+          "Revue de presse nécessite JavaScript pour son bon fonctionnement."
+      }
+    ],
     link: [{ rel: "icon", type: "image/png", href: icon }]
   },
 
@@ -90,8 +96,24 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/date-fns",
     "@nuxtjs/sentry",
+    "@nuxtjs/pwa",
     "nuxt-lazysizes"
   ],
+
+  pwa: {
+    icon: {
+      source: "~assets/revue-de-presse_400x400.jpg"
+    },
+    manifest: {
+      name: title,
+      lang: "fr",
+      short_name: title,
+      useWebmanifestExtension: false
+    },
+    meta: {
+      theme_color: "#42CFC9"
+    }
+  },
 
   lazySizes: {
     extendAssetUrls: {
@@ -104,6 +126,7 @@ export default {
   },
 
   modules: [
+    "@nuxtjs/device",
     "@nuxtjs/style-resources",
     [
       "nuxt-fontawesome",

@@ -18,15 +18,14 @@ npm run dev
 
 ## Production
 
-Build for production and launch server
+Build for production by generating static files
 
 ```bash
 npm run build
-npm run start
 ```
 
-Generate static project
+Launch server
 
 ```bash
-npm run generate
+npm run start
 ```

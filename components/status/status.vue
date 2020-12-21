@@ -59,7 +59,7 @@
     </div>
 
     <div
-      v-if="status.media && status.media.length > 0"
+      v-if="canShowMedia"
       class="status__row status__row--media">
       <div class="status__media">
         <img
@@ -150,6 +150,9 @@ export default {
     }
   },
   computed: {
+    canShowMedia() {
+      return this.status.media && this.status.media.length > 0 && !this.$device.isMobile
+    },
     favorite() {
       return this.status.totalLike || 0;
     },
