@@ -171,7 +171,7 @@ export default {
       });
       routes.push({
         name: "highlights",
-        path: "/highlights/:startDate/:endDate",
+        path: "/highlights/:startDate",
         component: resolve(__dirname, "pages/-highlights.vue")
       });
     }
