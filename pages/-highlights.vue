@@ -1,6 +1,6 @@
 <template>
   <div>
-    <highlist-list></highlist-list>
+    <highlist-list :show-media="!$device.isMobile"></highlist-list>
     <modal-window />
   </div>
 </template>
