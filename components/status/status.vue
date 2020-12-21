@@ -128,6 +128,10 @@ export default {
       type: Object,
       required: true
     },
+    showMedia: {
+      type: Boolean,
+      default: true
+    },
     canBeLiked: {
       type: Boolean,
       default: true
@@ -151,7 +155,7 @@ export default {
   },
   computed: {
     canShowMedia() {
-      return this.status.media && this.status.media.length > 0 && !this.$device.isMobile
+      return this.status.media && this.status.media.length > 0 && this.showMedia;
     },
     favorite() {
       return this.status.totalLike || 0;

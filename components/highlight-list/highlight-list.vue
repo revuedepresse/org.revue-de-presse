@@ -79,6 +79,7 @@
         >
           <status
             :status-at-first="formatStatus(highlight.status)"
+            :show-media="showMedia"
             :ref-name="index"
           />
         </li>
@@ -105,6 +106,12 @@ export default {
   name: 'highlight-list',
   components: { Intro, Status, Outro },
   mixins: [ApiMixin, DateMixin, StatusFormat],
+  props: {
+    showMedia: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     let { startDate, endDate } = this.$route.params;
 
