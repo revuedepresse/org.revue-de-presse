@@ -37,6 +37,10 @@ $width-extra-large-device: 1200px;
 // @see https://graphicdesign.stackexchange.com/q/30731/158844
 $content-width: 960px;
 
+body {
+  overflow-y: scroll;
+}
+
 .clickable {
   color: $color-hyperlink;
   cursor: pointer;

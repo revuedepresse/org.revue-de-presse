@@ -3,14 +3,18 @@
 .highlight-list {
   @extend .member-status-list;
 
+  &__loading,
   &__empty-list {
     @extend .responsive-content;
-    padding-left: $separation-1;
+    font-size: $font-size-base;
   }
 
   &__container {
     display: block;
-    min-height: 100vh;
+
+    &--filled {
+      min-height: 100vh;
+    }
   }
 
   &__date-label {
@@ -33,7 +37,6 @@
     [for="date"] {
       color: $color-hyperlink;
       margin-left: 0;
-      padding-left: $separation-1;
       display: flex;
       flex-wrap: wrap;
       justify-self: flex-start;

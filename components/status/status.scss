@@ -43,7 +43,7 @@ $status-margin: 1em;
     flex-direction: row;
     justify-content: flex-start;
     max-width: calc(100vw - #{$separation-2});
-    padding: $separation-1;
+    padding: 0 $separation-2;
   }
 
   &__media {
