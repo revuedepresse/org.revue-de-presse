@@ -7,8 +7,8 @@ import Time from "~/modules/time";
 
 export default Vue.extend({
   middleware({ redirect, route }) {
-    if (route.name !== 'highlight') {
-      return redirect(`/highlights/${Time.today()}`)
+    if (route.name !== 'daily-review') {
+      return redirect(`/${Time.today()}`)
     }
   }
 })

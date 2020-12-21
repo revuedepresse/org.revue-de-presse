@@ -268,7 +268,7 @@ export default {
     updateHighlights() {
       this.fetchHighlights();
       this.$router.push({
-        path: `/highlights/${this.startDate}`
+        path: `/${this.startDate}`
       });
     }
   }
