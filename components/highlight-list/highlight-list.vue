@@ -59,7 +59,14 @@
       </div>
       <p
         class="highlight-list__loading"
-        v-if="$fetchState.pending"
+        v-if="$nuxt.isOffline"
+      >
+        Votre navigateur se trouve actuellement hors-ligne.<br /><br />
+        Une connexion internet est requise afin de découvrir les publications populaires.
+      </p>
+      <p
+        class="highlight-list__loading"
+        v-else-if="$fetchState.pending"
       >
         Chargement des publications...
       </p>
@@ -140,7 +147,7 @@ export default {
   },
   computed: {
     containerClass() {
-      if (this.highlights.length > 0 || this.$fetchState.pending) {
+      if (this.$nuxt.isOnline && this.highlights.length > 0 || this.$fetchState.pending) {
         return 'highlight-list__container highlight-list__container--filled'
       }
 
