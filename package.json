@@ -41,6 +41,6 @@
     "emoji-js": "^3.5.0",
     "node-sass": "^5.0.0",
     "nuxt-lazysizes": "^1.1.2",
-    "sass-loader": "^10.1.0"
+    "sass-loader": "^10.1.1"
   }
 }
