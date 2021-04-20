@@ -171,7 +171,12 @@ export default {
       const parsedSubject = he.escape(dom.body.textContent);
       const emoji = new EmojiConvertor();
 
-      // @see https://github.com/iamcal/emoji-data
+      // Emoji are publicly available as soon as the following command has been executed
+      // to expose the required assets (from the API root directory)
+      // ```
+      // # @see https://github.com/iamcal/emoji-data
+      // make clone-emoji-repository
+      // ```
       emoji.img_sets.apple.path = `https://${process.env.API_HOST}/emoji-data/img-apple-64/`;
       return emoji.replace_unified(parsedSubject);
     }
