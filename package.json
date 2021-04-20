@@ -1,6 +1,6 @@
 {
   "name": "news-review",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "dev": "make development-server",
@@ -41,6 +41,6 @@
     "emoji-js": "^3.5.0",
     "node-sass": "^5.0.0",
     "nuxt-lazysizes": "^1.1.2",
-    "sass-loader": "^11.0.1"
+    "sass-loader": "^10.1.1"
   }
 }
