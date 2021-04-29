@@ -177,7 +177,8 @@ export default {
       // # @see https://github.com/iamcal/emoji-data
       // make clone-emoji-repository
       // ```
-      emoji.img_sets.apple.path = `https://${process.env.API_HOST}/emoji-data/img-apple-64/`;
+      const protocolScheme = process.env.NODE_ENV === "production" ? 'https' : 'http';
+      emoji.img_sets.apple.path = `${protocolScheme}://${process.env.API_HOST}/emoji-data/img-apple-64/`;
       return emoji.replace_unified(parsedSubject);
     }
   }
