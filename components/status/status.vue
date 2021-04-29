@@ -278,7 +278,7 @@ export default {
     },
     replaceMentionsWithWithAnchors(subject) {
       const whitespace = 's';
-      const startCharacterClass = '[^\\';
+      const startCharacterClass = '[^<>\\';
       const pattern = `(\\${whitespace}?)@(${startCharacterClass}${whitespace}]+)(\\${whitespace}?)`;
 
       return subject.replace(
