@@ -1,11 +1,11 @@
 
 .logo {
   display: flex;
-  align-content: flex-start;
-  width: 100%;
+  align-self: flex-start;
   height: 48px;
-  margin-left: 19px;
+  margin-left: var(--separation-3);
   padding: 8px;
+  padding-left: 0;
 
   .logo__container {
     display: flex;

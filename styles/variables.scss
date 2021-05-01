@@ -1,35 +1,61 @@
+:root {
+  --color-content-background: #2f394d;
+  --color-content-font: #e6e6e6;
+  --color-taupe-grey: #ebeef0;
+
+  --separation-0: 6px;
+  --separation-1: 8px;
+  --separation-2: calc(2 * var(--separation-1));
+  --separation-3: 19px;
+
+  --font-size-content: 12px;
+  --line-height-content: 16px;
+
+  --border-radius: var(--separation-1);
+}
+
 $color-black: #1e1e1e;
 $color-black-light: #252526;
 $color-beige: #d4d4d4;
 $color-beige-light: #f1f1f1;
 $color-orange: #ce9178;
-$color-red: #CF4647;
+$color-red: #cf4647;
 $color-green: #b4cea8;
-$color-greenish: #8BAF98;
+$color-greenish: #8baf98;
 $color-greener: #2aa19b;
 $color-even-greener: darken($color-greener, 10%);
 $color-hyperlink: $color-black;
 $color-yellow: #dab988;
-$color-blue: #569CD3;
+$color-blue: #569cd3;
 $color-white: #fff;
 $color-pitch-black: #000;
-$color-brand: #00CDC7;
+$color-brand: #00cdc7;
+$color-content: #2f394d;
 
+$background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: $color-white;
 $border-color: darken(rgb(235, 238, 240), 20%);
 
 $font-size-base: 1.1em;
-$font-size-date: 0.9em;
 $line-height-base: 1.4em;
+
+$font-size-date: 0.9em;
+
 $font-size-menu-item: 1em;
 $line-height-menu-item: 1.4em;
 
-$separation-1: 8px;
-$separation-2: calc(2 * #{$separation-1});
+$separation-0: var(--separation-0);
+$separation-1: var(--separation-1);
+$separation-2: var(--separation-2);
+$separation-3: var(--separation-3);
 
 $intro-height: calc(120px + #{$separation-2}  * 2);
 
 $font-family: 'PT_serif', 'Open Sans', sans-serif;
+
+.underline {
+  text-decoration: underline
+}
 
 @font-face {
   font-family: 'Signika';
@@ -37,6 +63,14 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   font-weight: normal;
   font-display: swap;
   src: url('~assets/fonts/signika-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url('~assets/fonts/roboto-regular.ttf') format('truetype');
 }
 
 .font-logo-title {
@@ -47,13 +81,13 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   line-height: 16px;
 }
 
-$width-small-device: 576px;
-$width-medium-device: 768px;
-$width-large-device: 992px;
-$width-extra-large-device: 1200px;
+  $width-small-device: 576px;
+  $width-medium-device: 768px;
+  $width-large-device: 992px;
+  $width-extra-large-device: 1200px;
 
 // @see https://graphicdesign.stackexchange.com/q/30731/158844
-$content-width: 960px;
+  $content-width: 960px;
 
 body {
   overflow-y: scroll;
