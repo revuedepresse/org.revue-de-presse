@@ -1,17 +1,35 @@
 :root {
+  --color-brand-twitter: #1d9bf0;
   --color-content-background: #2f394d;
   --color-content-font: #e6e6e6;
   --color-taupe-grey: #ebeef0;
+  --color-white: #fff;
+
+  --height-logo: 64px;
+
+  --margin-title: 20px;
+
+  --font-size-content: 12px;
+  --line-spacing-content: 16px;
+
+  --font-size-footer-copyright: 12px;
+  --line-spacing-footer-copyright: 24px;
+
+  --font-size-footer-outer-link: 14px;
+  --line-spacing-footer-outer-link: 16px;
+
+  --font-size-footer-paragraph: 16px;
+  --line-spacing-footer-paragraph: 24px;
+
+  --font-size-footer-title: 26px;
+  --line-spacing-footer-title: 16px;
+
+  --border-radius: var(--separation-1);
 
   --separation-0: 6px;
   --separation-1: 8px;
   --separation-2: calc(2 * var(--separation-1));
   --separation-3: 19px;
-
-  --font-size-content: 12px;
-  --line-height-content: 16px;
-
-  --border-radius: var(--separation-1);
 }
 
 $color-black: #1e1e1e;
@@ -27,13 +45,13 @@ $color-even-greener: darken($color-greener, 10%);
 $color-hyperlink: $color-black;
 $color-yellow: #dab988;
 $color-blue: #569cd3;
-$color-white: #fff;
+$color-white: var(--color-white);
 $color-pitch-black: #000;
 $color-brand: #00cdc7;
 $color-content: #2f394d;
 
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
-$background-color: $color-white;
+$background-color: var(--color-white);
 $border-color: darken(rgb(235, 238, 240), 20%);
 
 $font-size-base: 1.1em;
@@ -81,10 +99,10 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   line-height: 16px;
 }
 
-  $width-small-device: 576px;
-  $width-medium-device: 768px;
-  $width-large-device: 992px;
-  $width-extra-large-device: 1200px;
+$width-small-device: 576px;
+$width-medium-device: 768px;
+$width-large-device: 992px;
+$width-extra-large-device: 1200px;
 
 // @see https://graphicdesign.stackexchange.com/q/30731/158844
   $content-width: 960px;

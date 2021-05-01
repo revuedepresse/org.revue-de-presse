@@ -8,6 +8,24 @@ body {
   scroll-behavior: smooth;
 }
 
+h2 {
+  font: normal normal normal var(--font-size-footer-title)/var(--line-spacing-footer-title) Signika;
+  margin-bottom: var(--separation-1);
+  margin: var(--margin-title);
+  margin-top: calc(3 * var(--separation-1));
+  margin-bottom: var(--separation-1);
+}
+
+p {
+  color: $color-white;
+  font: normal normal normal var(--font-size-footer-paragraph)/var(--line-spacing-footer-paragraph) Roboto;
+  letter-spacing: 0;
+  margin: var(--separation-3);
+  margin-top: 0;
+  text-align: left;
+  letter-spacing: 0;
+}
+
 button {
   border: 1px solid $color-black;
   color: $color-black;

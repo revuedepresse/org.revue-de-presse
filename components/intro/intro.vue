@@ -1,5 +1,5 @@
 <template>
-  <div class="intro">
+  <div class="intro" ref="intro">
     <div class="intro__container">
       <div class="intro__content-container">
         <div class="intro__arrow-up"></div>
@@ -24,6 +24,11 @@ export default {
     return {
       currentRoute: this.$router.currentRoute.path,
       logo
+    }
+  },
+  methods: {
+    height() {
+      return this.$refs.intro.offsetHeight;
     }
   }
 }

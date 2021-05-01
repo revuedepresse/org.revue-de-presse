@@ -1,9 +1,14 @@
 <template>
-  <div :class='highlightsClasses'>
+  <div
+    :class='highlightsClasses'
+    :style="headerHeight()"
+  >
+
     <link rel="preconnect" :href="getApiHost" />
     <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin />
-    <logo />
-    <intro />
+
+    <app-header ref="header" />
+
     <div :class="containerClass">
       <div class="highlight-list__buttons">
         <label
@@ -93,7 +98,9 @@
         </li>
       </ul>
     </div>
+
     <outro />
+
   </div>
 </template>
 
@@ -104,16 +111,16 @@ import DateMixin from '../../mixins/date';
 import EventHub from '../../modules/event-hub';
 import StatusFormat from '../../mixins/status-format';
 import SharedState from '../../modules/shared-state';
-import Logo from '../logo/logo.vue';
+import AppHeader from '../app-header/app-header.vue';
 import Status from '../status/status.vue';
-import Intro from '../intro/intro.vue';
 import Outro from '../outro/outro.vue';
+import sharingIcon from "~/assets/icons/icon-sharing.svg";
 
 const RETWEETS_EXCLUDED = '0';
 
 export default {
   name: 'highlight-list',
-  components: { Intro, Logo, Status, Outro },
+  components: { AppHeader, Status, Outro },
   mixins: [ApiMixin, DateMixin, StatusFormat],
   props: {
     showMedia: {
@@ -292,6 +299,17 @@ export default {
     },
     getMaxDate() {
       return this.getCurrentDate();
+    },
+    headerHeight() {
+      return `--intro-height: calc(${this.introHeight()}px + var(--height-logo))`
+    },
+    introHeight() {
+      let height = 0;
+      if (this.$refs.header) {
+        height = this.$refs.header.height();
+      }
+
+      return height;
     },
     updateHighlights() {
       this.items = [];
