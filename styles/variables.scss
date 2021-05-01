@@ -1,4 +1,5 @@
 :root {
+  --color-brand: #00cdc7;
   --color-brand-twitter: #1d9bf0;
   --color-content-background: #2f394d;
   --color-content-font: #e6e6e6;
@@ -8,12 +9,16 @@
   --height-logo: 64px;
 
   --margin-title: 20px;
+  --margin-navigation: 12px;
 
   --font-size-content: 12px;
   --line-spacing-content: 16px;
 
   --font-size-footer-copyright: 12px;
   --line-spacing-footer-copyright: 24px;
+
+  --font-size-date-picker: 16px;
+  --line-spacing-date-picker: 21px;
 
   --font-size-footer-outer-link: 14px;
   --line-spacing-footer-outer-link: 16px;
@@ -25,6 +30,7 @@
   --line-spacing-footer-title: 16px;
 
   --border-radius: var(--separation-1);
+  --border-radius-date-picker: calc(var(--separation-1) / 2);
 
   --separation-0: 6px;
   --separation-1: 8px;
@@ -47,7 +53,7 @@ $color-yellow: #dab988;
 $color-blue: #569cd3;
 $color-white: var(--color-white);
 $color-pitch-black: #000;
-$color-brand: #00cdc7;
+$color-brand: var(--color-brand);
 $color-content: #2f394d;
 
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;

@@ -1,9 +1,8 @@
+
 .outro {
   background: var(--color-content-background) 0% 0% no-repeat padding-box;
   border-top: 1px $color-black solid;
   margin: 0;
-  position: absolute;
-  top: var(--intro-height);
   width: 100%;
 
   a {
@@ -74,7 +73,7 @@
   &__title {
     color: var(--color-white);
     position: relative;
-    padding-left: 25px;
+    padding-left: 30px;
 
     &:before {
       color: var(--color-white);

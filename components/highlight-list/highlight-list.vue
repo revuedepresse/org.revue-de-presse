@@ -1,68 +1,16 @@
 <template>
-  <div
-    :class='highlightsClasses'
-    :style="headerHeight()"
-  >
+
+  <div :class='highlightsClasses'>
 
     <link rel="preconnect" :href="getApiHost" />
     <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin />
 
     <app-header ref="header" />
 
-    <div :class="containerClass">
-      <div class="highlight-list__buttons">
-        <label
-          :class="{ 'highlight-list__dates': showEndDate }"
-          for="start-date"
-        >
-          <span class="highlight-list__date-label">Sélectionner une date :</span>
-          <input
-            id="start-date"
-            ref="startDate"
-            v-model="startDate"
-            :min="minDate"
-            :max="maxStartDate"
-            type="date"
-          >
-          <input
-            v-model="startDate"
-            :min="minEndDate"
-            :max="maxDate"
-            type="hidden"
-          >
-        </label>
-        <div
-          v-if="canIdentifyRetweets"
-          v-show="canFilterByRetweet"
-          class="highlight-list__retweets"
-        >
-          <span class="highlight-list__retweets-label">
-            Retweets are
-          </span>
-          <label
-            for="included-retweets"
-            title="Include or exclude retweets">
-            <input
-              id="included-retweets"
-              v-model="includeRetweets"
-              name="retweets"
-              type="radio"
-              value="1"
-            >{{ includedRetweetsLabel }}
-          </label>
-          <label
-            for="excluded-retweets"
-            title="Include or exclude retweets">
-            <input
-              id="excluded-retweets"
-              v-model="includeRetweets"
-              type="radio"
-              name="retweets"
-              value="0"
-            >{{ excludedRetweetsLabel }}
-          </label>
-        </div>
-      </div>
+    <div
+      :class="containerClass"
+      ref="highlights"
+    >
       <p
         class="highlight-list__loading"
         v-if="$nuxt.isOffline"
@@ -99,9 +47,15 @@
       </ul>
     </div>
 
+    <date-picker
+      v-if="startDate"
+      :start-date="startDate"
+    />
+
     <outro />
 
   </div>
+
 </template>
 
 <script>
@@ -112,15 +66,15 @@ import EventHub from '../../modules/event-hub';
 import StatusFormat from '../../mixins/status-format';
 import SharedState from '../../modules/shared-state';
 import AppHeader from '../app-header/app-header.vue';
+import DatePicker from '../date-picker/date-picker.vue';
 import Status from '../status/status.vue';
 import Outro from '../outro/outro.vue';
-import sharingIcon from "~/assets/icons/icon-sharing.svg";
 
 const RETWEETS_EXCLUDED = '0';
 
 export default {
   name: 'highlight-list',
-  components: { AppHeader, Status, Outro },
+  components: { AppHeader, DatePicker, Status, Outro },
   mixins: [ApiMixin, DateMixin, StatusFormat],
   props: {
     showMedia: {
@@ -144,6 +98,7 @@ export default {
       aggregates: [],
       items: [],
       logger: new SharedState.Logger(this.$sentry),
+      heightOfComponentsBeforeOutro: '--height-components-before-outro: 0',
       minDate: '2018-01-01',
       maxDate: this.getMaxDate(),
       selectedAggregates: [],
@@ -179,6 +134,13 @@ export default {
         'highlight-list': true,
         list: true
       };
+    },
+    highlightListOffsetHeight() {
+      if (!this.$refs.highlights) {
+        return 0;
+      }
+
+      return this.$refs.highlights.offsetHeight;
     },
     includedRetweetsLabel() {
       return 'included';
@@ -300,8 +262,14 @@ export default {
     getMaxDate() {
       return this.getCurrentDate();
     },
-    headerHeight() {
-      return `--intro-height: calc(${this.introHeight()}px + var(--height-logo))`
+    highlightListHeight() {
+      const highlights = this.$refs.highlights
+
+      if (!this.$refs.highlights) {
+        return '0';
+      }
+
+      return `${highlights.offsetHeight}`;
     },
     introHeight() {
       let height = 0;

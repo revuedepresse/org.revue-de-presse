@@ -3,7 +3,7 @@
 
     <h2
       class="outro__title outro__iconography-introducing"
-      :style="introducingStyle"
+      :style="introducingIcon"
     >À propos</h2>
 
     <p class="outro__paragraph">
@@ -16,7 +16,7 @@
 
     <h2
       class="outro__title outro__iconography-sharing"
-      :style="sharingStyle"
+      :style="sharingIcon"
     >@revue_2_presse</h2>
 
     <p class="outro__paragraph">Retrouver chaque soir les 3 tweets médias ayant été les plus relayés au cours de la journée.
@@ -38,7 +38,7 @@
 
     <h2
       class="outro__title outro__iconography-funding"
-      :style="fundingStyle"
+      :style="fundingIcon"
     >Pro bono publico</h2>
 
     <p  class="outro__paragraph">Revue de presse ne reçoit aucun financement extérieur.
@@ -66,7 +66,7 @@ import fundingIcon from "../../assets/icons/icon-funding.svg";
 export default {
   name: "outro",
   computed: {
-    fundingStyle() {
+    fundingIcon() {
       const width = '18px';
       const height = '20px';
 
@@ -75,7 +75,7 @@ export default {
           --icon-funding-width: ${width}
         `;
     },
-    introducingStyle() {
+    introducingIcon() {
       const width = '22px';
       const height = '15px';
 
@@ -84,7 +84,7 @@ export default {
         --icon-introducing-width: ${width}
       `;
     },
-    sharingStyle() {
+    sharingIcon() {
       const width = '20px';
       const height = '18px';
 
