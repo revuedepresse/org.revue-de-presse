@@ -1,24 +1,36 @@
 <template>
   <div class="date-picker">
+    <month-picker
+      :month="startDateMonth"
+      :year="startDateYear"
+      :is-next-item-available="isNextMonthAvailable()"
+      :is-previous-item-available="isPreviousMonthAvailable()"
+    />
     <calendar-month :month="startDateMonth" :year="startDateYear" />
     <div
       class="date-picker__buttons"
       :style="calendarIcon"
     >
-      <div class="date-picker__container">
+      <div
+        :class="datePickerClasses()"
+        :data-disabled="disabled"
+        @click="pickDate()"
+        @mouseout="releaseDate()"
+      >
         <button
           class="date-picker__button"
           v-text="startDateLabel"
+          :disabled="disabled"
         />
       </div>
 
       <div class="date-picker__navigation">
         <button
-          class="date-picker__previous-day"
+          :class="getPreviousDayClasses()"
           :style="previousDayIcon"
         />
         <button
-          class="date-picker__next-day"
+          :class="getNextDayClasses()"
           :style="nextDayIcon"
         />
       </div>
@@ -29,12 +41,16 @@
 <script>
 import calendardIcon from "~/assets/icons/icon-calendar-primary.svg";
 import previousDayIcon from "~/assets/icons/icon-previous-day.svg";
+import previousDayHoverIcon from "~/assets/icons/icon-previous-day-hover.png";
 import nextDayIcon from "~/assets/icons/icon-next-day.svg";
+import nextDayHoverIcon from "~/assets/icons/icon-next-day-hover.png";
 import CalendarMonth from "../calendar-month/calendar-month.vue";
+import MonthPicker from "../month-picker/month-picker.vue";
+import YearPicker from "../year-picker/year-picker.vue";
 
 export default {
   name: "date-picker",
-  components: { CalendarMonth },
+  components: { CalendarMonth, MonthPicker, YearPicker },
   props: {
     startDate: {
       type: String,
@@ -43,18 +59,17 @@ export default {
   },
   data() {
     const startDateLabel = this.refreshStartDateLabel(this.startDate);
-    const startDateMonth = this.getStartDateMonth(this.startDate);
-    const startDateYear = this.getStartDateYear(this.startDate);
+    const pickedDate = false;
 
     return {
       startDateLabel,
-      startDateMonth,
-      startDateYear,
+      disabled: false,
+      pickedDate
     }
   },
   computed: {
     calendarIcon() {
-      const widthOrHeight = '16px';
+      const widthOrHeight = '20px';
 
       return `
         --icon-calendar-background: center / ${widthOrHeight} no-repeat url("${calendardIcon}");
@@ -67,6 +82,7 @@ export default {
 
       return `
         --icon-previous-day-background: center / ${widthOrHeight} no-repeat url("${previousDayIcon}");
+        --icon-previous-day-background-hover: center / ${widthOrHeight} no-repeat url("${previousDayHoverIcon}");
         --icon-previous-day-height: ${widthOrHeight};
         --icon-previous-day-width: ${widthOrHeight}
       `;
@@ -76,12 +92,123 @@ export default {
 
       return `
         --icon-next-day-background: center / ${widthOrHeight} no-repeat url("${nextDayIcon}");
+        --icon-next-day-background-hover: center / ${widthOrHeight} no-repeat url("${nextDayHoverIcon}");
         --icon-next-day-height: ${widthOrHeight};
         --icon-next-day-width: ${widthOrHeight}
       `;
+    },
+    startDateMonth() {
+      return this.getStartDateMonth(this.startDate);
+    },
+    startDateYear() {
+      return this.getStartDateYear(this.startDate);
     }
   },
   methods: {
+    getNextDayClasses() {
+      return {
+        'date-picker__next-day': true,
+        'date-picker__next-day--disabled': !this.isNextDayAvailable(),
+      }
+    },
+    getPreviousDayClasses() {
+      return {
+        'date-picker__previous-day': true,
+        'date-picker__previous-day--disabled': !this.isPreviousDayAvailable(),
+      }
+    },
+    isNextDayAvailable() {
+      const today = new Date();
+      const sinceDate = new Date(this.startDate);
+
+      if (
+        sinceDate.getFullYear() >= 2018 &&
+        sinceDate.getFullYear() < today.getFullYear()) {
+        return true;
+      }
+
+      if (sinceDate.getFullYear() < 2018) {
+        if (sinceDate.getMonth() < 11) {
+          return false;
+        }
+
+        return sinceDate.getDate() === 31;
+      }
+
+      if (sinceDate.getMonth() < today.getMonth()) {
+        return true;
+      }
+
+      return sinceDate.getDate() < today.getDate();
+    },
+    isPreviousDayAvailable() {
+      const today = new Date();
+      const sinceDate = new Date(this.startDate);
+
+      if (sinceDate.getFullYear() < 2018) {
+        return false;
+      }
+
+      if (sinceDate.getFullYear() === today.getFullYear()) {
+        if (sinceDate.getMonth() < today.getMonth()) {
+          return true;
+        }
+
+        return sinceDate.getDate() <= today.getDate() + 1;
+      }
+
+      if (
+        sinceDate.getFullYear() > 2018 &&
+        sinceDate.getFullYear() < today.getFullYear()) {
+        return true;
+      }
+
+      if (sinceDate.getMonth() > 0) {
+        return true;
+      }
+
+      return sinceDate.getDate() > 1;
+    },
+    isNextMonthAvailable() {
+      const today = new Date();
+
+      if (this.startDateYear >= 2018 && this.startDateYear < today.getFullYear()) {
+        // The next month belongs to
+        // a year before or equal to
+        // the year following the current one
+        return true;
+      }
+
+      // The next month is before or equal
+      // to the current month
+      return this.startDateMonth + 1 <= today.getMonth();
+    },
+    isPreviousMonthAvailable() {
+      const today = new Date();
+
+      if (this.startDateYear > 2018 && this.startDateYear <= today.getFullYear()) {
+        return true;
+      }
+
+      // January 2018 is the earliest available month
+      return this.startDateMonth > 1;
+    },
+    pickDate(event) {
+      this.pickedDate = true;
+
+      return false;
+    },
+    releaseDate(event) {
+      this.pickedDate = false;
+
+      return false;
+    },
+    datePickerClasses() {
+      return {
+        'date-picker__container': true,
+        'date-picker__container--active': this.pickedDate,
+      }
+    },
     getStartDateMonth(startDate) {
       const date = new Date(startDate);
 

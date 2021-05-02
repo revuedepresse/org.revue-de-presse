@@ -10,7 +10,9 @@
     <div
       :class="containerClass"
       ref="highlights"
+      v-show="false"
     >
+      <!-- TODO remove v-show directive -->
       <p
         class="highlight-list__loading"
         v-if="$nuxt.isOffline"

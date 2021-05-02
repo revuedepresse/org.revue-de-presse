@@ -1,10 +1,13 @@
 
 $cell-width: 40px;
 $cell-margin: 2px;
+$max-width: 336px;
 
 .calendar-margin {
   margin-left: var(--separation-1);
   margin-right: var(--separation-1);
+
+  max-width: $max-width;
   width: calc(100vw - 2 * var(--separation-1));
 
   @media (min-width: $width-above-iphone-5) {
@@ -65,6 +68,7 @@ $cell-margin: 2px;
     background: var(--color-white) 0% 0% no-repeat padding-box;
     border-radius: var(--border-radius-date-picker);
     color: var(--color-content-text);
+    cursor: pointer;
     font: normal normal normal var(--font-size-calendar-month-day-cell)/var(--line-spacing-calendar-month-day-cell) Arial;
     letter-spacing: 0;
     height: calc(32px - #{$cell-margin});
@@ -72,6 +76,17 @@ $cell-margin: 2px;
     text-align: center;
     opacity: 1;
     width: $cell-width;
+
+    &:hover {
+      border-color: var(--color-brand);
+      color: var(--color-brand);
+    }
+
+    &:active {
+      border-color: var(--color-brand);
+      background-color: var(--color-brand);
+      color: var(--color-white);
+    }
   }
 
   &__day-number--other-month {

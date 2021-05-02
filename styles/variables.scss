@@ -6,6 +6,7 @@
   --color-content-text: #2f394d;
   --color-taupe-grey: #ebeef0;
   --color-white: #fff;
+  --color-background-button-active: #006663;
 
   --height-logo: 64px;
   --height-date-picker: 21px;
@@ -20,7 +21,7 @@
   --line-spacing-footer-copyright: 24px;
 
   --font-size-date-picker: 16px;
-  --line-spacing-date-picker: var(--height-date-picker);
+  --line-spacing-date-picker: 22px;
 
   --font-size-calendar-month-day: 12px;
   --line-spacing-calendar-month-day: 14px;
@@ -67,6 +68,11 @@ $color-content: var(--color-content-text);
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: var(--color-white);
 $border-color: darken(rgb(235, 238, 240), 20%);
+
+$filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
+$filter-active: invert(27%) sepia(82%) saturate(501%) hue-rotate(129deg) brightness(99%) contrast(101%);
+$filter-white: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+$filter-content: invert(100%) sepia(0%) saturate(881%) hue-rotate(86deg) brightness(113%) contrast(80%);
 
 $font-size-base: 1.1em;
 $line-height-base: 1.4em;

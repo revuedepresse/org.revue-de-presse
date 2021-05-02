@@ -25,11 +25,11 @@
           v-for="(weekDay, dayPos) in dayNumbers(rowNumber)"
           :key="dayPos"
         >
-          <span
+          <a
             class="calendar-month__day-cell"
             v-text="weekDay.getDate()"
           >
-          </span>
+          </a>
         </td>
       </tr>
     </tbody>
