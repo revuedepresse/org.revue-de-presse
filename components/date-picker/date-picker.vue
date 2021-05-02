@@ -1,24 +1,27 @@
 <template>
-  <div
-    class="date-picker__buttons"
-    :style="calendarIcon"
-  >
-    <div class="date-picker__container">
-      <button
-        class="date-picker"
-        v-text="startDateLabel"
-      />
-    </div>
+  <div class="date-picker">
+    <calendar-month :month="startDateMonth" :year="startDateYear" />
+    <div
+      class="date-picker__buttons"
+      :style="calendarIcon"
+    >
+      <div class="date-picker__container">
+        <button
+          class="date-picker__button"
+          v-text="startDateLabel"
+        />
+      </div>
 
-    <div class="date-picker__navigation">
-      <button
-        class="date-picker__previous-day"
-        :style="previousDayIcon"
-      />
-      <button
-        class="date-picker__next-day"
-        :style="nextDayIcon"
-      />
+      <div class="date-picker__navigation">
+        <button
+          class="date-picker__previous-day"
+          :style="previousDayIcon"
+        />
+        <button
+          class="date-picker__next-day"
+          :style="nextDayIcon"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -27,9 +30,11 @@
 import calendardIcon from "~/assets/icons/icon-calendar-primary.svg";
 import previousDayIcon from "~/assets/icons/icon-previous-day.svg";
 import nextDayIcon from "~/assets/icons/icon-next-day.svg";
+import CalendarMonth from "../calendar-month/calendar-month.vue";
 
 export default {
   name: "date-picker",
+  components: { CalendarMonth },
   props: {
     startDate: {
       type: String,
@@ -38,9 +43,13 @@ export default {
   },
   data() {
     const startDateLabel = this.refreshStartDateLabel(this.startDate);
+    const startDateMonth = this.getStartDateMonth(this.startDate);
+    const startDateYear = this.getStartDateYear(this.startDate);
 
     return {
-      startDateLabel
+      startDateLabel,
+      startDateMonth,
+      startDateYear,
     }
   },
   computed: {
@@ -73,6 +82,16 @@ export default {
     }
   },
   methods: {
+    getStartDateMonth(startDate) {
+      const date = new Date(startDate);
+
+      return date.getMonth();
+    },
+    getStartDateYear(startDate) {
+      const date = new Date(startDate);
+
+      return date.getFullYear();
+    },
     refreshStartDateLabel(startDate) {
       const date = new Date(startDate);
       const dayOfMonth = date.getDate();
