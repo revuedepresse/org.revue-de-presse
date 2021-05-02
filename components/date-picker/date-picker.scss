@@ -37,12 +37,12 @@
       }
     }
 
-    .date-picker__contianer--active,
+    .date-picker__container--active,
     &:active {
       background-color: var(--color-background-button-active);
+      border-color: var(--color-background-button-active);
 
       .date-picker__button {
-        border-color: var(--color-background-button-active);
         color: var(--color-white);
       }
     }
@@ -103,6 +103,13 @@
         filter: none;
       }
     }
+
+    &:active {
+      &:before {
+        background: var(--icon-previous-day-background-active);
+        filter: none;
+      }
+    }
   }
 
   &__next-day {
@@ -121,6 +128,13 @@
         filter: none;
       }
     }
+
+    &:active {
+      &:before {
+        background: var(--icon-next-day-background-active);
+        filter: none;
+      }
+    }
   }
 
   &__previous-day,
@@ -131,6 +145,7 @@
         filter: $filter-active;
       }
 
+      &:active,
       &:hover {
         &:before {
           background: var(--icon-previous-day-background);
@@ -142,6 +157,7 @@
 
   &__next-day {
     &--disabled {
+      &:active,
       &:hover {
         &:before {
           background: var(--icon-next-day-background);

@@ -41,8 +41,10 @@
 <script>
 import calendardIcon from "~/assets/icons/icon-calendar-primary.svg";
 import previousDayIcon from "~/assets/icons/icon-previous-day.svg";
+import previousDayActiveIcon from "~/assets/icons/icon-previous-day-active.png";
 import previousDayHoverIcon from "~/assets/icons/icon-previous-day-hover.png";
 import nextDayIcon from "~/assets/icons/icon-next-day.svg";
+import nextDayActiveIcon from "~/assets/icons/icon-next-day-active.png";
 import nextDayHoverIcon from "~/assets/icons/icon-next-day-hover.png";
 import CalendarMonth from "../calendar-month/calendar-month.vue";
 import MonthPicker from "../month-picker/month-picker.vue";
@@ -82,6 +84,7 @@ export default {
 
       return `
         --icon-previous-day-background: center / ${widthOrHeight} no-repeat url("${previousDayIcon}");
+        --icon-previous-day-background-active: center / ${widthOrHeight} no-repeat url("${previousDayActiveIcon}");
         --icon-previous-day-background-hover: center / ${widthOrHeight} no-repeat url("${previousDayHoverIcon}");
         --icon-previous-day-height: ${widthOrHeight};
         --icon-previous-day-width: ${widthOrHeight}
@@ -92,6 +95,7 @@ export default {
 
       return `
         --icon-next-day-background: center / ${widthOrHeight} no-repeat url("${nextDayIcon}");
+        --icon-next-day-background-active: center / ${widthOrHeight} no-repeat url("${nextDayActiveIcon}");
         --icon-next-day-background-hover: center / ${widthOrHeight} no-repeat url("${nextDayHoverIcon}");
         --icon-next-day-height: ${widthOrHeight};
         --icon-next-day-width: ${widthOrHeight}
@@ -137,6 +141,10 @@ export default {
 
       if (sinceDate.getMonth() < today.getMonth()) {
         return true;
+      }
+
+      if (sinceDate.getMonth() > today.getMonth()) {
+        return false;
       }
 
       return sinceDate.getDate() < today.getDate();
