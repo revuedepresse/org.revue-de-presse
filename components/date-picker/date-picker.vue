@@ -5,8 +5,10 @@
       :year="startDateYear"
       :is-next-item-available="isNextMonthAvailable()"
       :is-previous-item-available="isPreviousMonthAvailable()"
+    <calendar-month
+      :month="startDateMonth"
+      :year="startDateYear"
     />
-    <calendar-month :month="startDateMonth" :year="startDateYear" />
     <div
       class="date-picker__buttons"
       :style="calendarIcon"
