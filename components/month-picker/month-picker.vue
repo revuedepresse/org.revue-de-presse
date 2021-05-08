@@ -58,6 +58,27 @@ export default {
     monthYearLabel() {
       return `${this.getMonths()[this.month]} ${this.year}`;
     },
+    monthLabels() {
+      const isDisabled = true;
+
+      return this.getMonths()
+      .map((m, index) => {
+        const isEnabled = (
+          this.year >= this.visibleDaysInterval.start.getFullYear() &&
+          this.year < this.visibleDaysInterval.end.getFullYear()
+        ) || (
+          this.year === this.visibleDaysInterval.end.getFullYear() &&
+          index <= this.visibleDaysInterval.end.getMonth()
+        );
+
+        return {
+          index,
+          label: m,
+          isSelected: this.month === index,
+          isDisabled: !isEnabled
+        }
+      });
+    },
     pickItemIcon() {
       const widthOrHeight = '20px';
 
@@ -84,6 +105,12 @@ export default {
         --icon-next-item-height: ${widthOrHeight};
         --icon-next-item-width: ${widthOrHeight}
       `;
+    },
+    visibleDaysStart() {
+      return this.visibleDaysInterval.start;
+    },
+    visibleDaysEnd() {
+      return this.visibleDaysInterval.end;
     }
   },
   methods: {
