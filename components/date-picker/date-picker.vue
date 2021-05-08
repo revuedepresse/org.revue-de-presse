@@ -5,6 +5,8 @@
       :year="startDateYear"
       :is-next-item-available="isNextMonthAvailable()"
       :is-previous-item-available="isPreviousMonthAvailable()"
+      :visible-days-interval="visibleDaysInterval()"
+    />
     <calendar-month
       :month="startDateMonth"
       :year="startDateYear"
