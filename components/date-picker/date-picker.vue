@@ -261,6 +261,12 @@ export default {
 
       return `${dayOfWeek} ${dayOfMonth} ${month} ${year}`;
     },
+    visibleDaysInterval() {
+      return {
+        start: new Date(this.getMinDate()),
+        end: new Date(this.getMaxDate()),
+      }
+    },
   }
 }
 </script>
