@@ -110,6 +110,12 @@ export default {
     },
     startDateYear() {
       return this.getStartDateYear(this.startDate);
+    },
+    month() {
+      return this.startDateMonth;
+    },
+    year() {
+      return this.startDateYear;
     }
   },
   methods: {
@@ -254,7 +260,7 @@ export default {
       const year = date.getFullYear();
 
       return `${dayOfWeek} ${dayOfMonth} ${month} ${year}`;
-    }
+    },
   }
 }
 </script>
