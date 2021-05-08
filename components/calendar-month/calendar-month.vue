@@ -72,13 +72,27 @@ export default {
       return week;
     },
     dayRows() {
-      const dateOfFirstVisibleDay = this.dateOfFirstVisibleDay();
+      let dateOfFirstVisibleDay;
+
+      try {
+        dateOfFirstVisibleDay = this.dateOfFirstVisibleDay();
+      } catch (e) {
+        return;
+      }
+
       let daysBeforeSelectedMonth = 0;
       if (dateOfFirstVisibleDay.getMonth() !== this.month) {
         daysBeforeSelectedMonth = this.totalDaysInPreviousMonth() - dateOfFirstVisibleDay.getDate() + 1;
       }
 
-      const dateOfLastVisibleDay = this.dateOfLastVisibleDay();
+      let dateOfLastVisibleDay;
+
+      try {
+        dateOfLastVisibleDay = this.dateOfLastVisibleDay();
+      } catch (e) {
+        return;
+      }
+
       let daysAfterSelectedMonth = 0;
       if (dateOfLastVisibleDay.getMonth() !== this.month) {
         daysAfterSelectedMonth = dateOfLastVisibleDay.getDate();
