@@ -20,7 +20,7 @@
     border: 1px solid var(--color-brand);
     border-radius: var(--border-radius-date-picker);
     display: flex;
-    height: calc(21px + calc(2 * --margin-navigation) + 10px);
+    height: var(--height-date-picker);
     padding: 5px 4px 5px 4px;
     position: relative;
     line-height: calc(var(--height-date-picker) + 10px);
@@ -134,7 +134,6 @@
 
   &__navigation {
     display: flex;
-    height: 100%;
     position: absolute;
     right: 0;
   }
