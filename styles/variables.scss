@@ -12,7 +12,7 @@
   --height-date-picker: 21px;
 
   --margin-title: 20px;
-  --margin-navigation: 12px;
+  --margin-navigation: 10px;
 
   --font-size-content: 12px;
   --line-spacing-content: 16px;
@@ -38,8 +38,11 @@
   --font-size-footer-title: 26px;
   --line-spacing-footer-title: 16px;
 
+  --border-color: #e6e6e6;
+
   --border-radius: var(--separation-1);
   --border-radius-date-picker: calc(var(--separation-1) / 2);
+  --border-radius-selectable: calc(var(--separation-1) / 2);
 
   --separation-0: 6px;
   --separation-1: 8px;
