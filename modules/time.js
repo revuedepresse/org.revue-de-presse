@@ -25,6 +25,7 @@ const yesterday = () => {
 const today = () => formatDate(new Date());
 
 export default {
+  formatDate,
   today,
   yesterday
 };
