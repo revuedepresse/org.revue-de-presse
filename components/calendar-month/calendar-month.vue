@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import DateMixin from '../../mixins/date';
+
 export default {
   name: "calendar-month",
+  mixins: [DateMixin],
   props: {
     month: {
       type: Number,

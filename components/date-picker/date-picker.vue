@@ -49,10 +49,12 @@ import nextDayHoverIcon from "~/assets/icons/icon-next-day-hover.png";
 import CalendarMonth from "../calendar-month/calendar-month.vue";
 import MonthPicker from "../month-picker/month-picker.vue";
 import YearPicker from "../year-picker/year-picker.vue";
+import DateMixin from '../../mixins/date';
 
 export default {
   name: "date-picker",
   components: { CalendarMonth, MonthPicker, YearPicker },
+  mixins: [DateMixin],
   props: {
     startDate: {
       type: String,
