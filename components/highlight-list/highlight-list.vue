@@ -101,7 +101,7 @@ export default {
       items: [],
       logger: new SharedState.Logger(this.$sentry),
       heightOfComponentsBeforeOutro: '--height-components-before-outro: 0',
-      minDate: '2018-01-01',
+      minDate: this.getMinDate(),
       maxDate: this.getMaxDate(),
       selectedAggregates: [],
       pageIndex: 1,
@@ -260,9 +260,6 @@ export default {
     },
     fetchHighlights(params = {}) {
       this.$fetch();
-    },
-    getMaxDate() {
-      return this.getCurrentDate();
     },
     highlightListHeight() {
       const highlights = this.$refs.highlights
