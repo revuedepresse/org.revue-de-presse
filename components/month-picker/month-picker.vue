@@ -33,21 +33,25 @@ import nextItemIcon from "~/assets/icons/icon-next-item.png";
 export default {
   name: "month-picker",
   props: {
-    month: {
-      type: Number,
-      required: true
-    },
-    year: {
-      type: Number,
-      required: true
+    isNextItemAvailable: {
+      type: Boolean,
+      default: false
     },
     isPreviousItemAvailable: {
       type: Boolean,
       default: false
     },
-    isNextItemAvailable: {
-      type: Boolean,
-      default: false
+    month: {
+      type: Number,
+      required: true
+    },
+    visibleDaysInterval: {
+      type: Object,
+      required: true
+    },
+    year: {
+      type: Number,
+      required: true
     }
   },
   computed: {
