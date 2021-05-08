@@ -22,6 +22,10 @@
         />
       </div>
     </div>
+    <scrollable-list
+      :items="monthLabels"
+      :selected="this.month"
+    />
   </div>
 </template>
 
@@ -29,9 +33,11 @@
 import pickItemIcon from "~/assets/icons/icon-pick-item.svg";
 import previousItemIcon from "~/assets/icons/icon-previous-item.png";
 import nextItemIcon from "~/assets/icons/icon-next-item.png";
+import ScrollableList from '../scrollable-list/scrollable-list.vue';
 
 export default {
   name: "month-picker",
+  components: { ScrollableList },
   props: {
     isNextItemAvailable: {
       type: Boolean,
