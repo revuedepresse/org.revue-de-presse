@@ -31,7 +31,7 @@
     "vue-emotion": "^0.4.29"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.14.6",
+    "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/date-fns": "^1.4.3",
     "@nuxtjs/dotenv": "^1.4.1",
