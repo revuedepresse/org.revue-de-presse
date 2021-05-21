@@ -20,6 +20,7 @@ $max-width: 336px;
 .calendar-month {
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
   margin-top: 10px;
   margin-bottom: var(--separation-3);
   @extend .calendar-margin;
