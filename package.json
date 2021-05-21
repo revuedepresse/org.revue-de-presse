@@ -40,7 +40,7 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "emoji-js": "^3.5.0",
     "node-sass": "^5.0.0",
-    "nuxt-lazysizes": "^1.1.2",
+    "nuxt-lazysizes": "^1.4.0",
     "sass-loader": "^10.1.1"
   }
 }
