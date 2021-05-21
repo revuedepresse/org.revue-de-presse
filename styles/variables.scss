@@ -10,9 +10,11 @@
 
   --height-logo: 64px;
   --height-date-picker: 21px;
+  --height-year-picker-buttons: calc(32px + (2 * var(--margin-year-picker-buttons-margin)));
 
   --margin-title: 20px;
   --margin-navigation: 10px;
+  --margin-year-picker-buttons-margin: 10px;
 
   --font-size-content: 12px;
   --line-spacing-content: 16px;

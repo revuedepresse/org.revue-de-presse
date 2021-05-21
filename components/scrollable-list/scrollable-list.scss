@@ -26,6 +26,10 @@ $item-height: calc(
     width: 100%;
   }
 
+  &__list--auto {
+    height: auto;
+  }
+
   &__selectable {
     display: none;
   }

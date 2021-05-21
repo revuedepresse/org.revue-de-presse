@@ -7,7 +7,7 @@
       <div class="month-picker__container">
         <button
           class="month-picker__button"
-          v-text="monthYearLabel"
+          v-text="yearLabel"
         />
       </div>
 
@@ -61,8 +61,8 @@ export default {
     }
   },
   computed: {
-    monthYearLabel() {
-      return `${this.getMonths()[this.month]} ${this.year}`;
+    yearLabel() {
+      return `${this.year}`;
     },
     monthLabels() {
       const isDisabled = true;

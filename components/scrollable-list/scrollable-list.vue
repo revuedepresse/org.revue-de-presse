@@ -1,6 +1,6 @@
 <template>
   <div class="scrollable-list">
-    <ul class="scrollable-list__list">
+    <ul :class="getListClasses()">
       <li
         class="scrollable-list__list-item"
         v-for="(item, index) in items"
@@ -35,6 +35,10 @@ export default {
     selected: {
       type: Number,
       required: true
+    },
+    autoHeight: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -44,6 +48,12 @@ export default {
         'scrollable-list__selectable-label--selected': item.isSelected,
         'scrollable-list__selectable-label--disabled': item.isDisabled,
       }
+    },
+    getListClasses() {
+      return {
+          "scrollable-list__list": true,
+          "scrollable-list__list--auto": true,
+      };
     }
   }
 }

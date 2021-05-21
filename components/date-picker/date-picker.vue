@@ -1,13 +1,22 @@
 <template>
   <div class="date-picker">
+    <year-picker
+      :year="startDateYear"
+      :is-next-item-available="isNextYearAvailable()"
+      :is-previous-item-available="isPreviousYearAvailable()"
+    />
+    <!-- TODO remove v-show directive -->
     <month-picker
+      v-show="false"
       :month="startDateMonth"
       :year="startDateYear"
       :is-next-item-available="isNextMonthAvailable()"
       :is-previous-item-available="isPreviousMonthAvailable()"
       :visible-days-interval="visibleDaysInterval()"
     />
+    <!-- TODO remove v-show directive -->
     <calendar-month
+      v-show="false"
       :month="startDateMonth"
       :year="startDateYear"
     />
@@ -188,6 +197,16 @@ export default {
       }
 
       return sinceDate.getDate() > 1;
+    },
+    isNextYearAvailable() {
+      const today = new Date();
+
+      return this.startDateYear >= 2017 && this.startDateYear < today.getFullYear();
+    },
+    isPreviousYearAvailable() {
+      const today = new Date();
+
+      return this.startDateYear > 2018 && this.startDateYear <= today.getFullYear() + 1;
     },
     isNextMonthAvailable() {
       const today = new Date();
