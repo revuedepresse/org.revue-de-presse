@@ -1,25 +1,25 @@
 <template>
   <div class="date-picker">
-    <year-picker
-      :year="startDateYear"
-      :is-next-item-available="isNextYearAvailable()"
-      :is-previous-item-available="isPreviousYearAvailable()"
-    />
-    <!-- TODO remove v-show directive -->
-    <month-picker
-      v-show="false"
-      :month="startDateMonth"
-      :year="startDateYear"
-      :is-next-item-available="isNextMonthAvailable()"
-      :is-previous-item-available="isPreviousMonthAvailable()"
-      :visible-days-interval="visibleDaysInterval()"
-    />
-    <!-- TODO remove v-show directive -->
-    <calendar-month
-      v-show="false"
-      :month="startDateMonth"
-      :year="startDateYear"
-    />
+    <div class="date-picker__pickers">
+      <year-picker
+        :year="startDateYear"
+        :is-next-item-available="isNextYearAvailable()"
+        :is-previous-item-available="isPreviousYearAvailable()"
+      />
+      <month-picker
+        :month="startDateMonth"
+        :year="startDateYear"
+        :is-next-item-available="isNextMonthAvailable()"
+        :is-previous-item-available="isPreviousMonthAvailable()"
+        :visible-days-interval="visibleDaysInterval()"
+      />
+      <calendar-month
+        :month="startDateMonth"
+        :year="startDateYear"
+        :is-next-item-available="isNextDayAvailable()"
+        :is-previous-item-available="isPreviousDayAvailable()"
+      />
+    </div>
     <div
       class="date-picker__buttons"
       :style="calendarIcon"

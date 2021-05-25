@@ -10,7 +10,11 @@
   }
 
   &__container {
-    display: block;
+    display: flex;
+
+    @media (min-width: var(--width-right-column-mobile)) {
+      max-width: var(--width-right-column-desktop);
+    }
 
     &--filled {
       min-height: 100vh;

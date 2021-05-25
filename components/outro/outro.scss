@@ -5,6 +5,8 @@
   margin: 0;
   width: 100%;
 
+  @extend .responsive-content;
+
   a {
     @extend .underline;
     color: var(--color-brand-twitter);

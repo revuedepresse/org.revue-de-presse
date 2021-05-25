@@ -7,10 +7,16 @@
 
     <app-header ref="header" />
 
+    <date-picker
+      v-if="startDate"
+      :start-date="startDate"
+    />
+
+    <outro />
+
     <div
       :class="containerClass"
       ref="highlights"
-      v-show="false"
     >
       <!-- TODO remove v-show directive -->
       <p
@@ -48,13 +54,6 @@
         </li>
       </ul>
     </div>
-
-    <date-picker
-      v-if="startDate"
-      :start-date="startDate"
-    />
-
-    <outro />
 
   </div>
 

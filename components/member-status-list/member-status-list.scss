@@ -2,6 +2,8 @@
 
 .member-status-list {
   @extend .list;
+
+  background-color: var(--color-white);
   flex-direction: column;
   padding-top: 0;
   width: auto;

@@ -34,10 +34,12 @@ import pickItemIcon from "~/assets/icons/icon-pick-item.svg";
 import previousItemIcon from "~/assets/icons/icon-previous-item.png";
 import nextItemIcon from "~/assets/icons/icon-next-item.png";
 import ScrollableList from '../scrollable-list/scrollable-list.vue';
+import DateMixin from "~/mixins/date";
 
 export default {
   name: "month-picker",
   components: { ScrollableList },
+  mixins: [DateMixin],
   props: {
     isNextItemAvailable: {
       type: Boolean,
@@ -67,7 +69,7 @@ export default {
     monthLabels() {
       const isDisabled = true;
 
-      return this.getMonths()
+      return this.getMonths
       .map((m, index) => {
         const isEnabled = (
           this.year >= this.visibleDaysInterval.start.getFullYear() &&
@@ -131,22 +133,6 @@ export default {
         'month-picker__previous-item': true,
         'month-picker__previous-item--disabled': !this.isPreviousItemAvailable,
       }
-    },
-    getMonths() {
-      return [
-        'Janvier',
-        'Février',
-        'Mars',
-        'Avril',
-        'Mai',
-        'Juin',
-        'Juillet',
-        'Août',
-        'Septembre',
-        'Octobre',
-        'Novembre',
-        'Décembre',
-      ]
     }
   }
 }

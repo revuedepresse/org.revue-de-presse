@@ -50,6 +50,11 @@
   --separation-1: 8px;
   --separation-2: calc(2 * var(--separation-1));
   --separation-3: 19px;
+
+  --width-left-column-mobile: 336px;
+
+  --width-left-column-desktop: 390px;
+  --width-right-column-desktop: 600px;
 }
 
 $color-black: #1e1e1e;
@@ -71,7 +76,7 @@ $color-brand: var(--color-brand);
 $color-content: var(--color-content-text);
 
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
-$background-color: var(--color-white);
+$background-color: var(--color-taupe-grey);
 $border-color: darken(rgb(235, 238, 240), 20%);
 
 $filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
@@ -156,12 +161,10 @@ body {
 }
 
 .responsive-content {
-  width: calc(100vw - #{$separation-2} * 2);
-  min-width: calc(100vw - #{$separation-2} * 2);
+  max-width: var(--width-left-column-desktop);
 
-  @media (min-width: $width-large-device) {
-    width: $content-width;
-    min-width: $content-width;
+  @media (min-width: var(--width-left-column-desktop)) {
+    max-width: var(--width-left-column-desktop);
   }
 }
 

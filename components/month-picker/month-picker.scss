@@ -24,7 +24,8 @@
     padding: 5px 4px 5px 4px;
     position: relative;
     line-height: calc(var(--height-date-picker) + 10px);
-    margin: var(--margin-navigation) var(--separation-2);
+    margin-bottom: var(--separation-2);
+    margin-top: var(--separation-2);
     align-content: flex-end;
 
     &:hover {
@@ -113,6 +114,7 @@
 
   &__next-item {
     margin-left: 0;
+    margin-right: 0;
 
     &:before {
       background: var(--icon-next-item-background);

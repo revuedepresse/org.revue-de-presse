@@ -7,6 +7,8 @@
   bottom: 0;
   width: 100%;
 
+  @extend .responsive-content;
+
   &__buttons {
     align-content: center;
     display: flex;
@@ -55,6 +57,7 @@
 
   &__next-item {
     margin-left: 0;
+    margin-right: 0;
 
     &:before {
       background: var(--icon-next-item-background);
@@ -67,10 +70,21 @@
   &__next-item--disabled {
     &:hover {
       border: 1px solid var(--color-white);
+      cursor: auto;
     }
 
     &:before {
       filter: $filter-content;
+    }
+
+    &:active {
+      border-color: transparent;
+      background-color: transparent;
+      cursor: auto;
+
+      &:before {
+        filter: $filter-content;
+      }
     }
   }
 

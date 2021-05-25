@@ -4,6 +4,10 @@
   padding: var(--separation-3);
   padding-top: var(--separation-2);
 
+  @media (min-width: $width-large-device) {
+    max-width: var(--width-right-column-desktop);
+  }
+
   &__container {
     background: var(--color-content-background) 0% 0% no-repeat padding-box;
     border-radius: 8px;
@@ -34,6 +38,10 @@
     position: absolute;
     top: -5px;
     left: 30px;
+
+    @media (min-width: $width-large-device) {
+      display: none;
+    }
   }
 
   &__close-intro {

@@ -5,6 +5,22 @@ export default {
     daysOfWeek() {
       return ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
     },
+    getMonths() {
+      return [
+        'Janvier',
+        'Février',
+        'Mars',
+        'Avril',
+        'Mai',
+        'Juin',
+        'Juillet',
+        'Août',
+        'Septembre',
+        'Octobre',
+        'Novembre',
+        'Décembre',
+      ]
+    }
   },
   methods: {
     dateOfFirstVisibleDay() {

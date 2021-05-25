@@ -1,19 +1,27 @@
 
 .date-picker {
+  background-color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
-  position: sticky;
+  flex-direction: column;
   bottom: 0;
   color: var(--color-white);
   width: 100%;
 
-  @extend .responsive-content;
+  &__pickers {
+    margin: auto;
+
+    @media (min-width: var(--width-left-column-mobile)) {
+      max-width: var(--width-left-column-mobile);
+    }
+  }
 
   &__buttons {
     display: flex;
     background-color: var(--color-brand);
+    margin: auto;
     position: relative;
-    width: 100%;
+    width: var(--width-left-column-desktop);
   }
 
   &__container {
