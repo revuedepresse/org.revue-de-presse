@@ -1,6 +1,5 @@
 <template>
   <div :class="statusClasses()">
-
     <div class="status__row">
       <div class="status__publication-date">
         <a
@@ -29,13 +28,15 @@
         <span class="status__vanity-metric">{{ retweet }}</span>
         <font-awesome-icon
           icon="heart"
-          class="status__vanity-metric-icon" />
+          class="status__vanity-metric-icon"
+        />
         <span class="status__vanity-metric">{{ favorite }}</span>
       </div>
     </div>
 
     <div
-      class="status__row">
+      class="status__row"
+    >
       <div class="status__publisher">
         <a
           :style="publisherStyle"
@@ -54,25 +55,26 @@
         <p
           class="status__text"
           v-html="statusText"
-        ></p>
+        />
       </div>
     </div>
 
     <div
       v-if="canShowMedia"
-      class="status__row status__row--media">
+      class="status__row status__row--media"
+    >
       <div class="status__media">
         <img
           v-for="(document, index) in status.media"
-          @click="openMediaItem(document)"
+          :key="index"
           class="status__media-item lazyload"
           :alt="getMediaTitle(document)"
           :title="getMediaTitle(document)"
-          :key="index"
           :data-src="getMediaUrl(document)"
           :style="getMediaProperties()"
           :width="getMediaWidth(document)"
           :height="getMediaHeight(document)"
+          @click="openMediaItem(document)"
         >
       </div>
     </div>
@@ -115,13 +117,13 @@
 </template>
 
 <script>
-import ApiMixin from '../../mixins/api';
-import StatusFormat from '../../mixins/status-format';
-import EventHub from '../../modules/event-hub';
-import SharedState from '../../modules/shared-state';
+import ApiMixin from '../../mixins/api'
+import StatusFormat from '../../mixins/status-format'
+import EventHub from '../../modules/event-hub'
+import SharedState from '../../modules/shared-state'
 
 export default {
-  name: 'status',
+  name: 'Status',
   mixins: [ApiMixin, StatusFormat],
   props: {
     statusAtFirst: {
@@ -153,35 +155,44 @@ export default {
       default: ''
     }
   },
+  data () {
+    return {
+      errorMessages: SharedState.errors,
+      logger: new SharedState.Logger(this.$sentry),
+      status: this.statusAtFirst,
+      visibleStatuses: SharedState.state.visibleStatuses,
+      aggregateType: this.fromAggregateType
+    }
+  },
   computed: {
-    canShowMedia() {
-      return this.status.media && this.status.media.length > 0 && this.showMedia;
+    canShowMedia () {
+      return this.status.media && this.status.media.length > 0 && this.showMedia
     },
-    favorite() {
-      return this.status.totalLike || 0;
+    favorite () {
+      return this.status.totalLike || 0
     },
-    urlWhichCanBeShared() {
-      const basePath = `${window.location.protocol}//${window.location.host}`;
+    urlWhichCanBeShared () {
+      const basePath = `${window.location.protocol}//${window.location.host}`
       return `${basePath}/#/aggregate/${this.fromAggregateType}/${
         this.status.statusId
-      }`;
+      }`
     },
-    retweet() {
-      return this.status.totalRetweet || 0;
+    retweet () {
+      return this.status.totalRetweet || 0
     },
-    statusText() {
+    statusText () {
       if (
         typeof this.status === 'undefined' ||
         typeof this.status === 'string'
       ) {
-        return '';
+        return ''
       }
 
-      return this.formatStatusText(this.status);
+      return this.formatStatusText(this.status)
     },
-    urls() {
+    urls () {
       if (typeof this.status === 'undefined') {
-        return '';
+        return ''
       }
 
       return {
@@ -192,53 +203,44 @@ export default {
           this.status.statusId
         }`,
         like: `https://twitter.com/intent/like?tweet_id=${this.status.statusId}`
-      };
+      }
     },
-    publicationDate() {
+    publicationDate () {
       if (typeof this.status === 'undefined') {
-        return '';
+        return ''
       }
 
-      return new Date(this.status.publishedAt);
+      return new Date(this.status.publishedAt)
     },
-    memberTimelineUrl() {
+    memberTimelineUrl () {
       if (typeof this.status === 'undefined') {
-        return '';
+        return ''
       }
 
-      return `https://twitter.com/${this.status.username}`;
+      return `https://twitter.com/${this.status.username}`
     },
-    publisherStyle() {
+    publisherStyle () {
       if (typeof this.status.avatarUrl === 'undefined') {
-        return '';
+        return ''
       }
-      const size = '48px';
+      const size = '48px'
       return `--avatar-url: center / ${size} no-repeat url("${this.status.avatarUrl}");
       --avatar-size: ${size};
-      `;
-    },
-  },
-  data() {
-    return {
-      errorMessages: SharedState.errors,
-      logger: new SharedState.Logger(this.$sentry),
-      status: this.statusAtFirst,
-      visibleStatuses: SharedState.state.visibleStatuses,
-      aggregateType: this.fromAggregateType
-    };
-  },
-  watch: {
-    statusAtFirst(newStatus) {
-      this.status = newStatus;
+      `
     }
   },
-  updated() {
-    this.status = this.statusAtFirst;
+  watch: {
+    statusAtFirst (newStatus) {
+      this.status = newStatus
+    }
+  },
+  updated () {
+    this.status = this.statusAtFirst
   },
   methods: {
-    canBeShared() {
+    canBeShared () {
       if (this.$route.name === 'status') {
-        return false;
+        return false
       }
 
       if (
@@ -246,98 +248,98 @@ export default {
         this.$route.name === 'aggregate-status' ||
         this.$route.name === 'press-review'
       ) {
-        return this.isAuthenticated;
+        return this.isAuthenticated
       }
 
-      return this.canBeSharedAtFirst && this.isAuthenticated;
+      return this.canBeSharedAtFirst && this.isAuthenticated
     },
-    formatStatusText(status) {
+    formatStatusText (status) {
       if (typeof status === 'undefined' || typeof status === 'string') {
-        return '';
+        return ''
       }
 
-      let text = this.replaceHyperlinksWithAnchors(status.text);
-      text = this.replaceMentionsWithWithAnchors(text);
+      let text = this.replaceHyperlinksWithAnchors(status.text)
+      text = this.replaceMentionsWithWithAnchors(text)
 
-      return text.replace(/\s/g, ' ');
+      return text.replace(/\s/g, ' ')
     },
-    replaceHyperlinksWithAnchors(subject) {
-      const whitespace = 's';
-      const startCharacterClass = '[^\\';
-      const pattern = `(http(s?)://${startCharacterClass}${whitespace}]+)`;
+    replaceHyperlinksWithAnchors (subject) {
+      const whitespace = 's'
+      const startCharacterClass = '[^\\'
+      const pattern = `(http(s?)://${startCharacterClass}${whitespace}]+)`
 
-      return subject.replace(new RegExp(pattern, 'gi'), matchingText => {
-        if (matchingText.indexOf(process.env.API_HOST) !== -1) {
-          return matchingText;
+      return subject.replace(new RegExp(pattern, 'gi'), (matchingText) => {
+        if (matchingText.includes(process.env.API_HOST)) {
+          return matchingText
         }
 
         return `<a class="status__text-external-link"
                    rel="noreferrer"
-                   target="_blank" href="${matchingText}">${matchingText}</a>`;
-      });
+                   target="_blank" href="${matchingText}">${matchingText}</a>`
+      })
     },
-    replaceMentionsWithWithAnchors(subject) {
-      const whitespace = 's';
-      const startCharacterClass = '[^<>\\';
-      const pattern = `(\\${whitespace}?)@(${startCharacterClass}${whitespace}]+)(\\${whitespace}?)`;
+    replaceMentionsWithWithAnchors (subject) {
+      const whitespace = 's'
+      const startCharacterClass = '[^<>\\'
+      const pattern = `(\\${whitespace}?)@(${startCharacterClass}${whitespace}]+)(\\${whitespace}?)`
 
       return subject.replace(
         new RegExp(pattern, 'gi'),
         (matchingSubstring, prefix, mention, suffix) => {
-          if (matchingSubstring.indexOf('revue-de-presse') !== -1) {
-            return matchingSubstring;
+          if (matchingSubstring.includes('revue-de-presse')) {
+            return matchingSubstring
           }
 
           return `${prefix}<a
                      class="status__text-external-link"
                      rel="noreferrer"
                      target="_blank"
-                     href="https://twitter.com/${mention}">@${mention}</a>${suffix}`;
+                     href="https://twitter.com/${mention}">@${mention}</a>${suffix}`
         }
-      );
+      )
     },
-    statusClasses() {
-      const classes = { status: true };
+    statusClasses () {
+      const classes = { status: true }
 
       if (!this.canBeShared()) {
-        return classes;
+        return classes
       }
 
-      classes['status__can-be-shared'] = true;
+      classes['status__can-be-shared'] = true
 
-      return classes;
+      return classes
     },
-    getMediaProperties() {
+    getMediaProperties () {
       return {
-        'width': 'calc(100% - 1em)',
+        width: 'calc(100% - 1em)',
         'max-height': '80vw',
         'max-width': '90vw',
         'object-fit': 'scale-down'
-      };
+      }
     },
-    getMediaUrl(media) {
-      return `${media.url}:small`;
+    getMediaUrl (media) {
+      return `${media.url}:small`
     },
-    getMediaHeight(media) {
-      return media.sizes.small.h;
+    getMediaHeight (media) {
+      return media.sizes.small.h
     },
-    getMediaWidth(media) {
-      return media.sizes.small.w;
+    getMediaWidth (media) {
+      return media.sizes.small.w
     },
-    getMediaTitle(media) {
-      return media.title ? media.title : '';
+    getMediaTitle (media) {
+      return media.title ? media.title : ''
     },
-    goToPermalink(status) {
+    goToPermalink (status) {
       this.$router.push({
         name: 'status',
         params: { statusId: status.statusId }
-      });
+      })
     },
-    openMediaItem(document) {
-      EventHub.$emit('modal_window.show_intended', { media: document });
+    openMediaItem (document) {
+      EventHub.$emit('modal_window.show_intended', { media: document })
     }
   }
-};
+}
 </script>
 
 <style lang='scss' scoped>

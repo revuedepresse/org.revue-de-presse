@@ -2,8 +2,8 @@
   <div class="scrollable-list">
     <ul :class="getListClasses()">
       <li
-        class="scrollable-list__list-item"
         v-for="(item, index) in items"
+        class="scrollable-list__list-item"
       >
         <label
           :class="getLabelClasses(item)"
@@ -16,7 +16,7 @@
             :disabled="item.isDisabled"
             :value="item.index"
             :checked="item.isSelected"
-          />
+          >
           {{ item.label }}
         </label>
       </li>
@@ -24,9 +24,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "scrollable-list",
+<script lang="ts">
+import Vue from 'vue'
+
+const Props = Vue.extend({
   props: {
     items: {
       type: Array,
@@ -40,23 +41,27 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  methods: {
-    getLabelClasses(item) {
-      return {
-        'scrollable-list__selectable-label': true,
-        'scrollable-list__selectable-label--selected': item.isSelected,
-        'scrollable-list__selectable-label--disabled': item.isDisabled,
-      }
-    },
-    getListClasses() {
-      return {
-          "scrollable-list__list": true,
-          "scrollable-list__list--auto": true,
-      };
+  }
+})
+
+class ScrollableList extends Props {
+  getLabelClasses (item) {
+    return {
+      'scrollable-list__selectable-label': true,
+      'scrollable-list__selectable-label--selected': item.isSelected,
+      'scrollable-list__selectable-label--disabled': item.isDisabled
+    }
+  }
+
+  getListClasses () {
+    return {
+      'scrollable-list__list': true,
+      'scrollable-list__list--auto': true
     }
   }
 }
+
+export default ScrollableList
 </script>
 
 <style lang="scss" scoped>

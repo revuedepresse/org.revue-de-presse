@@ -1,42 +1,39 @@
 <template>
+  <div :class="highlightsClasses">
+    <link rel="preconnect" :href="getApiHost">
+    <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin>
 
-  <div :class='highlightsClasses'>
+    <AppHeader ref="header" />
 
-    <link rel="preconnect" :href="getApiHost" />
-    <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin />
-
-    <app-header ref="header" />
-
-    <date-picker
+    <DatePicker
       v-if="startDate"
       :start-date="startDate"
     />
 
-    <outro />
+    <Outro />
 
     <div
-      :class="containerClass"
       ref="highlights"
+      :class="containerClass"
     >
-      <!-- TODO remove v-show directive -->
       <p
-        class="highlight-list__loading"
         v-if="$nuxt.isOffline"
+        class="highlight-list__loading"
       >
-        Votre navigateur se trouve actuellement hors-ligne.<br /><br />
+        Votre navigateur se trouve actuellement hors-ligne.<br><br>
         Une connexion internet est requise afin de découvrir les publications populaires.
       </p>
       <p
-        class="highlight-list__loading"
         v-else-if="$fetchState.pending"
+        class="highlight-list__loading"
       >
         Chargement des publications...
       </p>
       <p
-        class="highlight-list__empty-list"
         v-else-if="highlights.length === 0"
+        class="highlight-list__empty-list"
       >
-        Cette date n'est encore associée à aucune publication pour le moment.<br /><br />
+        Cette date n'est encore associée à aucune publication pour le moment.<br><br>
         Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
       </p>
       <ul v-else class="list__items">
@@ -46,7 +43,7 @@
           :data-key="highlight.statusId"
           class="list__item"
         >
-          <status
+          <Status
             :status-at-first="formatStatus(highlight.status)"
             :show-media="showMedia"
             :ref-name="index"
@@ -54,27 +51,25 @@
         </li>
       </ul>
     </div>
-
   </div>
-
 </template>
 
 <script>
-import ApiMixin from '../../mixins/api';
-import Config from '../../config';
-import DateMixin from '../../mixins/date';
-import EventHub from '../../modules/event-hub';
-import StatusFormat from '../../mixins/status-format';
-import SharedState from '../../modules/shared-state';
-import AppHeader from '../app-header/app-header.vue';
-import DatePicker from '../date-picker/date-picker.vue';
-import Status from '../status/status.vue';
-import Outro from '../outro/outro.vue';
+import ApiMixin from '../../mixins/api'
+import Config from '../../config'
+import DateMixin from '../../mixins/date'
+import EventHub from '../../modules/event-hub'
+import StatusFormat from '../../mixins/status-format'
+import SharedState from '../../modules/shared-state'
+import AppHeader from '../app-header/app-header.vue'
+import DatePicker from '../date-picker/date-picker.vue'
+import Status from '../status/status.vue'
+import Outro from '../outro/outro.vue'
 
-const RETWEETS_EXCLUDED = '0';
+const RETWEETS_EXCLUDED = '0'
 
 export default {
-  name: 'highlight-list',
+  name: 'HighlightList',
   components: { AppHeader, DatePicker, Status, Outro },
   mixins: [ApiMixin, DateMixin, StatusFormat],
   props: {
@@ -83,15 +78,15 @@ export default {
       default: true
     }
   },
-  data() {
-    let { startDate, endDate } = this.$route.params;
+  data () {
+    let { startDate, endDate } = this.$route.params
 
     if (startDate === '1970-01-01') {
-      startDate = this.getMaxDate();
+      startDate = this.getMaxDate()
     }
 
     if (endDate === '1970-01-01') {
-      endDate = this.getMaxDate();
+      endDate = this.getMaxDate()
     }
 
     return {
@@ -108,90 +103,17 @@ export default {
       totalPages: null,
       endDate,
       startDate
-    };
-  },
-  computed: {
-    containerClass() {
-      if (this.$nuxt.isOnline && this.highlights.length > 0 || this.$fetchState.pending) {
-        return 'highlight-list__container highlight-list__container--filled'
-      }
-
-      return 'highlight-list__container'
-    },
-    getApiHost() {
-      return Config.getSchemeAndHost();
-    },
-    canIdentifyRetweets() {
-      return new Date(this.startDate) >= new Date('2018-12-09');
-    },
-    canFilterByRetweet() {
-      return false;
-    },
-    highlights() {
-      return this.items;
-    },
-    highlightsClasses() {
-      return {
-        'highlight-list': true,
-        list: true
-      };
-    },
-    highlightListOffsetHeight() {
-      if (!this.$refs.highlights) {
-        return 0;
-      }
-
-      return this.$refs.highlights.offsetHeight;
-    },
-    includedRetweetsLabel() {
-      return 'included';
-    },
-    excludedRetweetsLabel() {
-      return 'excluded';
-    },
-    maxStartDate() {
-      return this.maxDate;
-    },
-    minEndDate() {
-      if (new Date(this.minDate) > new Date(this.startDate)) {
-        return this.minDate;
-      }
-
-      return this.startDate;
-    },
-    showEndDate() {
-      return this.$route.name !== 'highlights';
     }
   },
-  watch: {
-    startDate() {
-      this.updateHighlights();
-    },
-    endDate() {
-      this.updateHighlights();
-    },
-    includeRetweets() {
-      this.updateHighlights();
-    }
-  },
-  destroyed() {
-    EventHub.$off('highlight_list.reload_intended');
-  },
-  created() {
-    EventHub.$off('highlight_list.reload_intended');
-    EventHub.$on('highlight_list.reload_intended', this.fetchHighlights);
+  async fetch () {
+    const action = this.getHighlightsAction()
+    const route = this.getHighlightsRoute()
+    const requestOptions = this.getRequestOptions()
 
-    this.fetchHighlights();
-  },
-  async fetch() {
-    const action = this.getHighlightsAction();
-    const route = this.getHighlightsRoute();
-    const requestOptions = this.getRequestOptions();
-
-    const url = new URL(route);
+    const url = new URL(route)
     Object.keys(requestOptions.params).map(key =>
       url.searchParams.set(key, requestOptions.params[key])
-    );
+    )
 
     const response = await fetch(
       url,
@@ -200,91 +122,167 @@ export default {
         headers: requestOptions.headers
       }
     )
-    .then(res => res.json())
-    .catch(e => {
-      this.logger.error(e.message, 'highlight-list', e);
-    });
+      .then(res => res.json())
+      .catch((e) => {
+        this.logger.error(e.message, 'highlight-list', e)
+      })
 
-    this.items = response.statuses;
+    this.items = response.statuses
+  },
+  computed: {
+    containerClass () {
+      const filledContainerClass = 'highlight-list__container highlight-list__container--filled'
+      const nonEmptyList = this.$nuxt.isOnline && this.highlights.length > 0
+
+      if (nonEmptyList || this.$fetchState.pending) {
+        return filledContainerClass
+      }
+
+      return 'highlight-list__container'
+    },
+    getApiHost () {
+      return Config.getSchemeAndHost()
+    },
+    canIdentifyRetweets () {
+      return new Date(this.startDate) >= new Date('2018-12-09')
+    },
+    canFilterByRetweet () {
+      return false
+    },
+    highlights () {
+      return this.items
+    },
+    highlightsClasses () {
+      return {
+        'highlight-list': true,
+        list: true
+      }
+    },
+    highlightListOffsetHeight () {
+      if (!this.$refs.highlights) {
+        return 0
+      }
+
+      return this.$refs.highlights.offsetHeight
+    },
+    includedRetweetsLabel () {
+      return 'included'
+    },
+    excludedRetweetsLabel () {
+      return 'excluded'
+    },
+    maxStartDate () {
+      return this.maxDate
+    },
+    minEndDate () {
+      if (new Date(this.minDate) > new Date(this.startDate)) {
+        return this.minDate
+      }
+
+      return this.startDate
+    },
+    showEndDate () {
+      return this.$route.name !== 'highlights'
+    }
+  },
+  watch: {
+    startDate () {
+      this.updateHighlights()
+    },
+    endDate () {
+      this.updateHighlights()
+    },
+    includeRetweets () {
+      this.updateHighlights()
+    }
+  },
+  destroyed () {
+    EventHub.$off('highlight_list.reload_intended')
+  },
+  created () {
+    EventHub.$off('highlight_list.reload_intended')
+    EventHub.$on('highlight_list.reload_intended', this.fetchHighlights)
+
+    this.fetchHighlights()
   },
   methods: {
-    getRequestOptions(params = {}) {
-      const authenticationToken = localStorage.getItem('x-auth-token');
+    getRequestOptions (params = {}) {
+      const authenticationToken = localStorage.getItem('x-auth-token')
       const requestOptions = {
         headers: { 'x-auth-token': authenticationToken }
-      };
+      }
 
       requestOptions.params = {
         startDate: this.startDate,
         endDate: this.startDate
-      };
+      }
 
       if (!this.showEndDate) {
-        requestOptions.params.endDate = this.startDate;
+        requestOptions.params.endDate = this.startDate
       }
 
       if (params.pageIndex) {
         if (!('params' in requestOptions)) {
-          requestOptions.params = {};
+          requestOptions.params = {}
         }
 
-        requestOptions.params.pageIndex = params.pageIndex;
+        requestOptions.params.pageIndex = params.pageIndex
       }
 
       if (!('params' in requestOptions)) {
-        requestOptions.params = {};
+        requestOptions.params = {}
       }
 
       if (this.pageSize > 0) {
-        requestOptions.params.pageSize = this.pageSize;
+        requestOptions.params.pageSize = this.pageSize
       }
 
-      requestOptions.params.includeRetweets = 1;
+      requestOptions.params.includeRetweets = 1
       if (this.includeRetweets === RETWEETS_EXCLUDED) {
-        requestOptions.params.includeRetweets = 0;
+        requestOptions.params.includeRetweets = 0
       }
 
       if (this.selectedAggregates.length > 0) {
-        requestOptions.params.selectedAggregates = this.selectedAggregates;
+        requestOptions.params.selectedAggregates = this.selectedAggregates
       }
 
-      return requestOptions;
+      return requestOptions
     },
-    getHighlightsAction() {
-      return this.routes.actions.fetchHighlights;
+    getHighlightsAction () {
+      return this.routes.actions.fetchHighlights
     },
-    getHighlightsRoute() {
-      const action = this.getHighlightsAction();
-      return `${Config.getSchemeAndHost()}${action.route}`;
+    getHighlightsRoute () {
+      const action = this.getHighlightsAction()
+      return `${Config.getSchemeAndHost()}${action.route}`
     },
-    fetchHighlights(params = {}) {
-      this.$fetch();
+    fetchHighlights () {
+      this.$fetch()
     },
-    highlightListHeight() {
+    highlightListHeight () {
       const highlights = this.$refs.highlights
 
       if (!this.$refs.highlights) {
-        return '0';
+        return '0'
       }
 
-      return `${highlights.offsetHeight}`;
+      return `${highlights.offsetHeight}`
     },
-    introHeight() {
-      let height = 0;
+    introHeight () {
+      let height = 0
       if (this.$refs.header) {
-        height = this.$refs.header.height();
+        height = this.$refs.header.height()
       }
 
-      return height;
+      return height
     },
-    updateHighlights() {
-      this.items = [];
+    updateHighlights () {
+      this.items = []
       this.$router.push({
         path: `/${this.startDate}`
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

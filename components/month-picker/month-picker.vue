@@ -22,24 +22,23 @@
         />
       </div>
     </div>
-    <scrollable-list
+    <ScrollableList
       :items="monthLabels"
       :selected="this.month"
     />
   </div>
 </template>
 
-<script>
-import pickItemIcon from "~/assets/icons/icon-pick-item.svg";
-import previousItemIcon from "~/assets/icons/icon-previous-item.png";
-import nextItemIcon from "~/assets/icons/icon-next-item.png";
-import ScrollableList from '../scrollable-list/scrollable-list.vue';
-import DateMixin from "~/mixins/date";
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Mixins } from 'vue-mixin-decorator'
+import ScrollableList from '../scrollable-list/scrollable-list.vue'
+import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
+import previousItemIcon from '~/assets/icons/icon-previous-item.png'
+import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import DateMixin from '~/mixins/date'
 
-export default {
-  name: "month-picker",
-  components: { ScrollableList },
-  mixins: [DateMixin],
+const Props = Vue.extend({
   props: {
     isNextItemAvailable: {
       type: Boolean,
@@ -61,23 +60,25 @@ export default {
       type: Number,
       required: true
     }
-  },
-  computed: {
-    yearLabel() {
-      return `${this.year}`;
-    },
-    monthLabels() {
-      const isDisabled = true;
+  }
+})
 
-      return this.getMonths
+@Component({ components: { ScrollableList } })
+class MonthPicker extends Mixins<MonthPickerInterface>(DateMixin, Props) {
+  get yearLabel () {
+    return `${this.year}`
+  }
+
+  get monthLabels () {
+    return this.getMonths
       .map((m, index) => {
         const isEnabled = (
           this.year >= this.visibleDaysInterval.start.getFullYear() &&
-          this.year < this.visibleDaysInterval.end.getFullYear()
+              this.year < this.visibleDaysInterval.end.getFullYear()
         ) || (
           this.year === this.visibleDaysInterval.end.getFullYear() &&
-          index <= this.visibleDaysInterval.end.getMonth()
-        );
+              index <= this.visibleDaysInterval.end.getMonth()
+        )
 
         return {
           index,
@@ -85,57 +86,62 @@ export default {
           isSelected: this.month === index,
           isDisabled: !isEnabled
         }
-      });
-    },
-    pickItemIcon() {
-      const widthOrHeight = '20px';
+      })
+  }
 
-      return `
-        --icon-pick-item-background: center / ${widthOrHeight} no-repeat url("${pickItemIcon}");
-        --icon-pick-item-height: ${widthOrHeight};
-        --icon-pick-item-width: ${widthOrHeight}
-      `;
-    },
-    previousItemIcon() {
-      const widthOrHeight = '32px';
+  get pickItemIcon () {
+    const widthOrHeight = '20px'
 
-      return `
-        --icon-previous-item-background: center / ${widthOrHeight} no-repeat url("${previousItemIcon}");
-        --icon-previous-item-height: ${widthOrHeight};
-        --icon-previous-item-width: ${widthOrHeight}
-      `;
-    },
-    nextItemIcon() {
-      const widthOrHeight = '32px';
+    return `
+      --icon-pick-item-background: center / ${widthOrHeight} no-repeat url("${pickItemIcon}");
+      --icon-pick-item-height: ${widthOrHeight};
+      --icon-pick-item-width: ${widthOrHeight}
+    `
+  }
 
-      return `
-        --icon-next-item-background: center / ${widthOrHeight} no-repeat url("${nextItemIcon}");
-        --icon-next-item-height: ${widthOrHeight};
-        --icon-next-item-width: ${widthOrHeight}
-      `;
-    },
-    visibleDaysStart() {
-      return this.visibleDaysInterval.start;
-    },
-    visibleDaysEnd() {
-      return this.visibleDaysInterval.end;
+  get previousItemIcon () {
+    const widthOrHeight = '32px'
+
+    return `
+      --icon-previous-item-background: center / ${widthOrHeight} no-repeat url("${previousItemIcon}");
+      --icon-previous-item-height: ${widthOrHeight};
+      --icon-previous-item-width: ${widthOrHeight}
+    `
+  }
+
+  get nextItemIcon () {
+    const widthOrHeight = '32px'
+
+    return `
+      --icon-next-item-background: center / ${widthOrHeight} no-repeat url("${nextItemIcon}");
+      --icon-next-item-height: ${widthOrHeight};
+      --icon-next-item-width: ${widthOrHeight}
+    `
+  }
+
+  get visibleDaysStart () {
+    return this.visibleDaysInterval.start
+  }
+
+  get visibleDaysEnd () {
+    return this.visibleDaysInterval.end
+  }
+
+  getNextItemClasses () {
+    return {
+      'month-picker__next-item': true,
+      'month-picker__next-item--disabled': !this.isNextItemAvailable
     }
-  },
-  methods: {
-    getNextItemClasses() {
-      return {
-        'month-picker__next-item': true,
-        'month-picker__next-item--disabled': !this.isNextItemAvailable,
-      }
-    },
-    getPreviousItemClasses() {
-      return {
-        'month-picker__previous-item': true,
-        'month-picker__previous-item--disabled': !this.isPreviousItemAvailable,
-      }
+  }
+
+  getPreviousItemClasses () {
+    return {
+      'month-picker__previous-item': true,
+      'month-picker__previous-item--disabled': !this.isPreviousItemAvailable
     }
   }
 }
+export default MonthPicker
 </script>
 
 <style lang="scss" scoped>

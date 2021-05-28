@@ -1,15 +1,15 @@
 export default {
   methods: {
-    formatTotalStatuses(subject) {
+    formatTotalStatuses (subject) {
       if (subject.totalStatuses === -1) {
-        return '0 status';
+        return '0 status'
       }
 
       if (subject.totalStatuses === 1) {
-        return '1 status';
+        return '1 status'
       }
 
-      return `${subject.totalStatuses} statuses`;
+      return `${subject.totalStatuses} statuses`
     }
   }
-};
+}

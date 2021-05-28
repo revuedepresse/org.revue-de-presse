@@ -161,6 +161,7 @@ body {
 }
 
 .responsive-content {
+  min-width: var(--width-left-column-mobile);
   max-width: var(--width-left-column-desktop);
 
   @media (min-width: var(--width-left-column-desktop)) {

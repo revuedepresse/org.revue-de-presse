@@ -25,33 +25,33 @@
       <thead class="calendar-month__day-names">
         <tr class="calendar-month__day-row">
           <th
-            class="calendar-month__day-col"
             v-for="(day, dayIndex) in days"
             :key="dayIndex"
+            class="calendar-month__day-col"
           >
             <span
               class="calendar-month__day-name"
               v-text="day"
-            ></span>
+            />
           </th>
         </tr>
       </thead>
       <tbody class="calendar-month__day-numbers">
         <tr
-          class="calendar-month__day-row"
           v-for="(rowNumber, rowIndex) in dayRows()"
           :key="rowIndex"
+          class="calendar-month__day-row"
         >
           <td
-            :class="weekDayClasses(weekDay)"
             v-for="(weekDay, dayPos) in dayNumbers(rowNumber)"
             :key="dayPos"
+            :class="weekDayClasses(weekDay)"
           >
             <a
               class="calendar-month__day-cell"
+              @click="pickDate(weekDay)"
               v-text="weekDay.getDate()"
-            >
-            </a>
+            />
           </td>
         </tr>
       </tbody>
@@ -59,15 +59,15 @@
   </div>
 </template>
 
-<script>
-import DateMixin from '../../mixins/date';
-import pickItemIcon from "~/assets/icons/icon-pick-item.svg";
-import previousItemIcon from "~/assets/icons/icon-previous-item.png";
-import nextItemIcon from "~/assets/icons/icon-next-item.png";
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Mixins } from 'vue-mixin-decorator'
+import DateMixin from '../../mixins/date'
+import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
+import previousItemIcon from '~/assets/icons/icon-previous-item.png'
+import nextItemIcon from '~/assets/icons/icon-next-item.png'
 
-export default {
-  name: "calendar-month",
-  mixins: [DateMixin],
+const Props = Vue.extend({
   props: {
     isNextItemAvailable: {
       type: Boolean,
@@ -85,121 +85,189 @@ export default {
       type: Number,
       required: true
     }
-  },
-  data() {
+  }
+})
+
+interface CalendarMonthInterface extends DateMixin, Props {}
+
+@Component
+class CalendarMonth extends Mixins<CalendarMonthInterface>(DateMixin, Props) {
+  data () {
     return {
       days: ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
     }
-  },
-  computed: {
-    previousItemIcon() {
-      const widthOrHeight = '32px';
+  }
 
-    console.log(previousItemIcon);
+  get previousItemIcon () {
+    const widthOrHeight = '32px'
 
-      return `
-        --icon-previous-item-background: center / ${widthOrHeight} no-repeat url("${previousItemIcon}");
-        --icon-previous-item-height: ${widthOrHeight};
-        --icon-previous-item-width: ${widthOrHeight}
-      `;
-    },
-    nextItemIcon() {
-      const widthOrHeight = '32px';
+    return `
+      --icon-previous-item-background: center / ${widthOrHeight} no-repeat url("${previousItemIcon}");
+      --icon-previous-item-height: ${widthOrHeight};
+      --icon-previous-item-width: ${widthOrHeight}
+    `
+  }
 
-      return `
-        --icon-next-item-background: center / ${widthOrHeight} no-repeat url("${nextItemIcon}");
-        --icon-next-item-height: ${widthOrHeight};
-        --icon-next-item-width: ${widthOrHeight}
-      `;
-    },
-    monthYearLabel() {
-      return `${this.getMonths[this.month]} ${this.year}`;
-    },
-    pickItemIcon() {
-      const widthOrHeight = '20px';
+  get nextItemIcon () {
+    const widthOrHeight = '32px'
 
-      return `
-        --icon-pick-item-background: center / ${widthOrHeight} no-repeat url("${pickItemIcon}");
-        --icon-pick-item-height: ${widthOrHeight};
-        --icon-pick-item-width: ${widthOrHeight}
-      `;
-    },
-  },
-  methods: {
-    dayNumbers(rowNumber) {
-      const shift = (rowNumber - 1) * 7
+    return `
+      --icon-next-item-background: center / ${widthOrHeight} no-repeat url("${nextItemIcon}");
+      --icon-next-item-height: ${widthOrHeight};
+      --icon-next-item-width: ${widthOrHeight}
+    `
+  }
 
-      const week = (new Array(7))
-        .fill('', 0, 7)
-        .map((_, index) => {
-          const dayOfWeek = new Date(this.dateOfFirstVisibleDay().getTime());
-          dayOfWeek.setDate(dayOfWeek.getDate() + index + shift);
-          return dayOfWeek;
-        })
+  get monthYearLabel () {
+    return `${this.getMonths[this.month]} ${this.year}`
+  }
 
-      return week;
-    },
-    dayRows() {
-      let dateOfFirstVisibleDay;
+  get pickItemIcon () {
+    const widthOrHeight = '20px'
 
-      try {
-        dateOfFirstVisibleDay = this.dateOfFirstVisibleDay();
-      } catch (e) {
-        return;
-      }
+    return `
+      --icon-pick-item-background: center / ${widthOrHeight} no-repeat url("${pickItemIcon}");
+      --icon-pick-item-height: ${widthOrHeight};
+      --icon-pick-item-width: ${widthOrHeight}
+    `
+  }
 
-      let daysBeforeSelectedMonth = 0;
-      if (dateOfFirstVisibleDay.getMonth() !== this.month) {
-        daysBeforeSelectedMonth = this.totalDaysInPreviousMonth() - dateOfFirstVisibleDay.getDate() + 1;
-      }
+  dateOfFirstVisibleDay () {
+    let firstVisibleDayCandidate = this.nameOfFirstDayOfMonth()
 
-      let dateOfLastVisibleDay;
+    const dateCandidate = new Date(this.year, this.month, 1)
 
-      try {
-        dateOfLastVisibleDay = this.dateOfLastVisibleDay();
-      } catch (e) {
-        return;
-      }
+    this.guardAgainstMissingMonthOrYear(firstVisibleDayCandidate)
 
-      let daysAfterSelectedMonth = 0;
-      if (dateOfLastVisibleDay.getMonth() !== this.month) {
-        daysAfterSelectedMonth = dateOfLastVisibleDay.getDate();
-      }
+    while (firstVisibleDayCandidate !== 'Lun.') {
+      dateCandidate.setDate(dateCandidate.getDate() - 1)
+      firstVisibleDayCandidate = this.whichDayOfWeek(dateCandidate.getDay())
+    }
 
-      return (
-        daysBeforeSelectedMonth
-        + this.totalDaysInMonth()
-        + daysAfterSelectedMonth
-      ) / 7;
-    },
-    getNextItemClasses() {
+    return dateCandidate
+  }
+
+  dateOfLastVisibleDay () {
+    let lastVisibleDayCandidate = this.nameOfLastDayOfMonth()
+    const dateCandidate = new Date(this.year, this.month, this.totalDaysInMonth())
+
+    this.guardAgainstMissingMonthOrYear(lastVisibleDayCandidate)
+
+    while (lastVisibleDayCandidate !== 'Dim.') {
+      dateCandidate.setDate(dateCandidate.getDate() + 1)
+      lastVisibleDayCandidate = this.whichDayOfWeek(dateCandidate.getDay())
+    }
+
+    return dateCandidate
+  }
+
+  dayNumbers (rowNumber) {
+    const shift = (rowNumber - 1) * 7
+
+    const week = (new Array(7))
+      .fill('', 0, 7)
+      .map((_, index) => {
+        const dayOfWeek = new Date(this.dateOfFirstVisibleDay().getTime())
+        dayOfWeek.setDate(dayOfWeek.getDate() + index + shift)
+        return dayOfWeek
+      })
+
+    return week
+  }
+
+  nameOfFirstDayOfMonth () {
+    return this.daysOfWeek[new Date(this.year, this.month, 1).getDay()]
+  }
+
+  nameOfLastDayOfMonth () {
+    const lastDayNumberOfMonth = this.totalDaysInMonth()
+
+    return this.whichDayOfWeek(new Date(this.year, this.month, lastDayNumberOfMonth).getDay())
+  }
+
+  totalDaysInMonth (): number {
+    return new Date(this.year, this.month + 1, 0).getDate()
+  }
+
+  totalDaysInPreviousMonth (): number {
+    return new Date(this.year, this.month, 0).getDate()
+  }
+
+  dayRows () {
+    let dateOfFirstVisibleDay
+
+    try {
+      dateOfFirstVisibleDay = this.dateOfFirstVisibleDay()
+    } catch (e) {
+      return
+    }
+
+    let daysBeforeSelectedMonth = 0
+    if (dateOfFirstVisibleDay.getMonth() !== this.month) {
+      daysBeforeSelectedMonth = this.totalDaysInPreviousMonth() - dateOfFirstVisibleDay.getDate() + 1
+    }
+
+    let dateOfLastVisibleDay
+
+    try {
+      dateOfLastVisibleDay = this.dateOfLastVisibleDay()
+    } catch (e) {
+      return
+    }
+
+    let daysAfterSelectedMonth = 0
+    if (dateOfLastVisibleDay.getMonth() !== this.month) {
+      daysAfterSelectedMonth = dateOfLastVisibleDay.getDate()
+    }
+
+    return (
+      daysBeforeSelectedMonth +
+      this.totalDaysInMonth() +
+      daysAfterSelectedMonth
+    ) / 7
+  }
+
+  getNextItemClasses () {
+    return {
+      'calendar-month__next-item': true,
+      'calendar-month__next-item--disabled': !this.isNextItemAvailable
+    }
+  }
+
+  getPreviousItemClasses () {
+    return {
+      'calendar-month__previous-item': true,
+      'calendar-month__previous-item--disabled': !this.isPreviousItemAvailable
+    }
+  }
+
+  pickDate (date) {
+    const startDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+    const endDate = startDate
+
+    this.$router.push({
+      name: 'highlights',
+      params: { startDate, endDate }
+    })
+  }
+
+  weekDayClasses (weekDay) {
+    const defaultClass = 'calendar-month__day-number'
+
+    if (!(weekDay instanceof Date)) {
       return {
-        'calendar-month__next-item': true,
-        'calendar-month__next-item--disabled': !this.isNextItemAvailable,
+        [defaultClass]: true
       }
-    },
-    getPreviousItemClasses() {
-      return {
-        'calendar-month__previous-item': true,
-        'calendar-month__previous-item--disabled': !this.isPreviousItemAvailable,
-      }
-    },
-    weekDayClasses(weekDay) {
-      const defaultClass = 'calendar-month__day-number';
+    }
 
-      if (!weekDay instanceof Date) {
-        return {
-          [defaultClass]: true
-        };
-      }
-
-      return {
-        [defaultClass]: true,
-        'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month,
-      }
+    return {
+      [defaultClass]: true,
+      'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month
     }
   }
 }
+
+export default CalendarMonth
 </script>
 
 <style lang="scss" scoped>

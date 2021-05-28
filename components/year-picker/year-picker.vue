@@ -12,7 +12,7 @@
         />
       </div>
     </div>
-    <scrollable-list
+    <ScrollableList
       class="year-picker__scrollable-list"
       :items="acceptedYearLabels"
       :selected="this.year"
@@ -20,14 +20,15 @@
   </div>
 </template>
 
-<script>
-import previousItemIcon from "~/assets/icons/icon-previous-item.png";
-import nextItemIcon from "~/assets/icons/icon-next-item.png";
-import ScrollableList from '../scrollable-list/scrollable-list.vue';
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Mixins } from 'vue-mixin-decorator'
+import ScrollableList from '../scrollable-list/scrollable-list.vue'
+import previousItemIcon from '~/assets/icons/icon-previous-item.png'
+import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import DateMixin from '~/mixins/date'
 
-export default {
-  name: "year-picker",
-  components: { ScrollableList },
+const Props = Vue.extend({
   props: {
     year: {
       type: Number,
@@ -40,18 +41,23 @@ export default {
     isPreviousItemAvailable: {
       type: Boolean,
       default: false
-    },
-  },
-  computed: {
-    acceptedYearLabels() {
-      const today = new Date()
-      const years = new Array(today.getFullYear() - 2018);
-      const acceptedYears = [{
-        index: 0,
-        label: 2018,
-        isSelected: this.year === 2018
-      }].concat(
-        years
+    }
+  }
+})
+
+interface YearPickerInterface extends DateMixin, Props {}
+
+@Component({ components: { ScrollableList } })
+class YearPicker extends Mixins<YearPickerInterface>(DateMixin, Props) {
+  get acceptedYearLabels () {
+    const today = new Date()
+    const years = new Array(today.getFullYear() - 2018)
+    const acceptedYears = [{
+      index: 0,
+      label: 2018,
+      isSelected: this.year === 2018
+    }].concat(
+      years
         .fill(2019)
         .map((year, inc) => {
           return {
@@ -60,44 +66,47 @@ export default {
             isSelected: this.year === year + inc
           }
         })
-      );
+    )
 
-      return acceptedYears;
-    },
-    previousItemIcon() {
-      const widthOrHeight = '32px';
+    return acceptedYears
+  }
 
-      return `
+  get previousItemIcon () {
+    const widthOrHeight = '32px'
+
+    return `
         --icon-previous-item-background: center / ${widthOrHeight} no-repeat url("${previousItemIcon}");
         --icon-previous-item-height: ${widthOrHeight};
         --icon-previous-item-width: ${widthOrHeight}
-      `;
-    },
-    nextItemIcon() {
-      const widthOrHeight = '32px';
+      `
+  }
 
-      return `
+  get nextItemIcon () {
+    const widthOrHeight = '32px'
+
+    return `
         --icon-next-item-background: center / ${widthOrHeight} no-repeat url("${nextItemIcon}");
         --icon-next-item-height: ${widthOrHeight};
         --icon-next-item-width: ${widthOrHeight}
-      `;
-    },
-  },
-  methods: {
-    getNextItemClasses() {
-      return {
-        'year-picker__next-item': true,
-        'year-picker__next-item--disabled': !this.isNextItemAvailable,
-      }
-    },
-    getPreviousItemClasses() {
-      return {
-        'year-picker__previous-item': true,
-        'year-picker__previous-item--disabled': !this.isPreviousItemAvailable,
-      }
+      `
+  }
+
+  getNextItemClasses () {
+    return {
+      'year-picker__next-item': true,
+      'year-picker__next-item--disabled': !this.isNextItemAvailable
+    }
+  }
+
+  getPreviousItemClasses () {
+    return {
+      'year-picker__previous-item': true,
+      'year-picker__previous-item--disabled': !this.isPreviousItemAvailable
     }
   }
 }
+
+export default YearPicker
 </script>
 
 <style lang="scss" scoped>

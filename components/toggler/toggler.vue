@@ -5,9 +5,9 @@
     @click="($event) => handleClick($event)"
   >
     <input
+      :id="id"
       v-model="toggled"
       :checked="toggled"
-      :id="id"
       :name="id"
       class="toggler__button"
       type="checkbox"
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'toggler',
+  name: 'Toggler',
   props: {
     clickHandler: {
       type: Function,
@@ -39,38 +39,38 @@ export default {
       required: true
     }
   },
-  data() {
-    return { toggled: this.isSelected };
+  data () {
+    return { toggled: this.isSelected }
   },
   computed: {
-    textClasses() {
+    textClasses () {
       return {
         toggler__text: true,
         'toggler__text--highlighted': this.isSelected
-      };
+      }
     }
   },
-  updated() {
-    this.toggled = this.isSelected;
+  updated () {
+    this.toggled = this.isSelected
   },
   methods: {
-    updateToggling(isToggled) {
-      this.toggled = isToggled;
+    updateToggling (isToggled) {
+      this.toggled = isToggled
     },
-    handleClick($event) {
-      $event.stopPropagation();
+    handleClick ($event) {
+      $event.stopPropagation()
 
       if ($event.target.type !== 'checkbox') {
-        return false;
+        return false
       }
 
-      const event = Object.assign($event, { itemId: this.id });
-      this.clickHandler(event, this.updateToggling);
+      const event = Object.assign($event, { itemId: this.id })
+      this.clickHandler(event, this.updateToggling)
 
-      return false;
+      return false
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

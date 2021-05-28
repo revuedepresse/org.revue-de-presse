@@ -9,20 +9,22 @@
             width="48"
             height="48"
             :data-src="logo"
-          />
+          >
         </a>
       </div>
     </div>
-    <h1 class="logo__title">Revue de presse</h1>
+    <h1 class="logo__title">
+      Revue de presse
+    </h1>
   </div>
 </template>
 
 <script>
-import logo from "../../assets/revue-de-presse-logo.svg";
+import logo from '../../assets/revue-de-presse-logo.svg'
 
 export default {
-  name: "logo",
-  data() {
+  name: 'Logo',
+  data () {
     return {
       currentRoute: this.$router.currentRoute.path,
       logo
