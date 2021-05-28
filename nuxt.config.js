@@ -14,7 +14,7 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     htmlAttrs: {
-      lang: "fr"
+      lang: "fr",
     },
     title,
     meta: [
@@ -26,59 +26,59 @@ export default {
       {
         hid: "og:url",
         property: "og:url",
-        content: "https://revue-de-presse.org"
+        content: "https://revue-de-presse.org",
       },
       { hid: "og:type", property: "og:type", content: "website" },
       {
         hid: "og:title",
         property: "og:title",
-        content: title
+        content: title,
       },
       {
         hid: "og:description",
         property: "og:description",
-        content: description
+        content: description,
       },
       {
         hid: "og:image",
         property: "og:image",
-        content: banner
+        content: banner,
       },
       {
         hid: "og:site_name",
         name: "og:site_name",
-        content: title
+        content: title,
       },
       { name: "twitter:card", content: "summary_large_image" },
       { hid: "twitter:site", name: "twitter:site", content: "@revue_2_presse" },
       {
         hid: "twitter:creator",
         name: "twitter:creator",
-        content: "@revue_2_presse"
+        content: "@revue_2_presse",
       },
       {
         hid: "twitter:title",
         name: "twitter:title",
-        content: title
+        content: title,
       },
       {
         hid: "twitter:description",
         name: "twitter:description",
-        content: description
+        content: description,
       },
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: banner
-      }
+        content: banner,
+      },
     ],
     noscript: [
       {
         innerHTML:
-          "Revue de presse nécessite JavaScript pour son bon fonctionnement."
-      }
+          "Revue de presse nécessite JavaScript pour son bon fonctionnement.",
+      },
     ],
-    link: [{ rel: "icon", type: "image/png", href: icon }]
+    link: [{ rel: "icon", type: "image/png", href: icon }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -97,32 +97,32 @@ export default {
     "@nuxtjs/date-fns",
     "@nuxtjs/sentry",
     "@nuxtjs/pwa",
-    "nuxt-lazysizes"
+    "nuxt-lazysizes",
   ],
 
   pwa: {
     icon: {
-      source: "~assets/revue-de-presse_400x400.jpg"
+      source: "~assets/revue-de-presse_400x400.jpg",
     },
     manifest: {
       name: title,
       lang: "fr",
       short_name: title,
-      useWebmanifestExtension: false
+      useWebmanifestExtension: false,
     },
     meta: {
-      theme_color: "#42CFC9"
-    }
+      theme_color: "#42CFC9",
+    },
   },
 
   lazySizes: {
     extendAssetUrls: {
-      img: "data-src"
-    }
+      img: "data-src",
+    },
   },
 
   sentry: {
-    dsn: process.env.RAVEN_DSN
+    dsn: process.env.RAVEN_DSN,
   },
 
   modules: [
@@ -135,7 +135,7 @@ export default {
           //import whole set
           {
             set: "@fortawesome/free-brands-svg-icons",
-            icons: ["faTwitter"]
+            icons: ["faTwitter"],
           },
           //import 2 icons from set
           // please note this is PRO set in this example,
@@ -166,23 +166,23 @@ export default {
               "faTrashAlt",
               "faTh",
               "faUndo",
-              "faUsers"
-            ]
-          }
-        ]
-      }
-    ]
+              "faUsers",
+            ],
+          },
+        ],
+      },
+    ],
   ],
 
   dateFns: {
-    defaultLocale: "fr"
+    defaultLocale: "fr",
   },
 
   env: {
     API_HOST: process.env.API_HOST,
     RAVEN_DSN: process.env.RAVEN_DSN,
     NODE_ENV: process.env.NODE_ENV,
-    API_AUTH_TOKEN: process.env.API_AUTH_TOKEN
+    API_AUTH_TOKEN: process.env.API_AUTH_TOKEN,
   },
 
   router: {
@@ -190,24 +190,32 @@ export default {
       routes.push({
         name: "homepage",
         path: "/",
-        component: resolve(__dirname, "pages/index.vue")
+        component: resolve(__dirname, "pages/index.vue"),
       });
       routes.push({
         name: "daily-review",
         path: "/:startDate",
-        component: resolve(__dirname, "pages/-highlights.vue")
+        component: resolve(__dirname, "pages/-highlights.vue"),
       });
-    }
+    },
   },
 
   styleResources: {
-    scss: ["./styles/variables.scss", "./styles/global.scss"]
+    scss: ["./styles/variables.scss", "./styles/global.scss"],
   },
 
   generate: {
-    routes: ["/"]
+    routes: ["/"],
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {}
+  build: {},
+
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: "./**/*.{ts,js,vue}",
+      },
+    },
+  },
 };

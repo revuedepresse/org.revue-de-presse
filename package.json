@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "make development-server",
     "build": "make build",
-    "start": "make start"
+    "start": "make start",
+    "lint": "eslint --ext .ts,.js,.vue ."
   },
   "dependencies": {
     "@egoist/vue-emotion": "^0.6.2",
@@ -31,12 +32,20 @@
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/date-fns": "^1.4.3",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/eslint-config-typescript": "^6.0.1",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/router": "^1.5.0",
     "@nuxtjs/style-resources": "^1.0.0",
+    "babel-eslint": "^10.1.0",
     "emoji-js": "^3.5.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.9.0",
     "node-sass": "^5.0.0",
     "nuxt-lazysizes": "^1.1.2",
+    "prettier": "^2.3.0",
     "sass-loader": "^10.1.1"
   }
 }

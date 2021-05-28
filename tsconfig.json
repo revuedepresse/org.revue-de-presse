@@ -28,7 +28,8 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@nuxtjs/date-fns"
-    ]
+    ],
+    "typeRoots": ["types"]
   },
   "exclude": [
     "node_modules",
