@@ -12,13 +12,17 @@ module.exports = {
   ],
   rules: {
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    'vue/no-v-html': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    camelcase: 'off',
+    '@typescript-eslint/camelcase': 'off'
   },
   globals: {
     $nuxt: true
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@typescript-eslint/parser'
   }
 }

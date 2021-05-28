@@ -1,9 +1,8 @@
-import Vue from 'vue'
-import { Mixin } from 'vue-mixin-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import Time from '../modules/time'
 import Errors from '../modules/errors'
 
-@Mixin
+@Component
 class DateMixin extends Vue {
   get daysOfWeek (): Array<string> {
     return ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']

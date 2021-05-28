@@ -60,43 +60,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Mixins } from 'vue-mixin-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import DateMixin from '../../mixins/date'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 
-const Props = Vue.extend({
-  props: {
-    isNextItemAvailable: {
-      type: Boolean,
-      default: false
-    },
-    isPreviousItemAvailable: {
-      type: Boolean,
-      default: false
-    },
-    month: {
-      type: Number,
-      required: true
-    },
-    year: {
-      type: Number,
-      required: true
-    }
-  }
-})
-
-interface CalendarMonthInterface extends DateMixin, Props {}
-
 @Component
-class CalendarMonth extends Mixins<CalendarMonthInterface>(DateMixin, Props) {
-  data () {
-    return {
-      days: ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
-    }
-  }
+class CalendarMonth extends mixins(DateMixin) {
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isNextItemAvailable!: boolean
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isPreviousItemAvailable!: boolean
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  month!: number
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  year!: number
+
+  days: String[] = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
 
   get previousItemIcon () {
     const widthOrHeight = '32px'
@@ -161,7 +157,7 @@ class CalendarMonth extends Mixins<CalendarMonthInterface>(DateMixin, Props) {
     return dateCandidate
   }
 
-  dayNumbers (rowNumber) {
+  dayNumbers (rowNumber: number) {
     const shift = (rowNumber - 1) * 7
 
     const week = (new Array(7))
@@ -241,7 +237,7 @@ class CalendarMonth extends Mixins<CalendarMonthInterface>(DateMixin, Props) {
     }
   }
 
-  pickDate (date) {
+  pickDate (date: Date) {
     const startDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
     const endDate = startDate
 
@@ -251,7 +247,7 @@ class CalendarMonth extends Mixins<CalendarMonthInterface>(DateMixin, Props) {
     })
   }
 
-  weekDayClasses (weekDay) {
+  weekDayClasses (weekDay?: Date) {
     const defaultClass = 'calendar-month__day-number'
 
     if (!(weekDay instanceof Date)) {

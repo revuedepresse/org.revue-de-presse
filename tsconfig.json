@@ -24,16 +24,19 @@
       ]
     },
     "types": [
+      "@types/he",
+      "@types/emoji-js",
       "@types/node",
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@nuxtjs/date-fns"
+      "@nuxtjs/date-fns",
+      "@nuxtjs/sentry"
     ],
     "typeRoots": ["types"]
   },
   "exclude": [
-    "node_modules",
     ".nuxt",
+    "node_modules",
     "dist"
   ]
 }

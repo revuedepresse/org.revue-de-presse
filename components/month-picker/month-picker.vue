@@ -24,47 +24,58 @@
     </div>
     <ScrollableList
       :items="monthLabels"
-      :selected="this.month"
+      :selected="month"
     />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Mixins } from 'vue-mixin-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import ScrollableList from '../scrollable-list/scrollable-list.vue'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 import DateMixin from '~/mixins/date'
 
-const Props = Vue.extend({
-  props: {
-    isNextItemAvailable: {
-      type: Boolean,
-      default: false
-    },
-    isPreviousItemAvailable: {
-      type: Boolean,
-      default: false
-    },
-    month: {
-      type: Number,
-      required: true
-    },
-    visibleDaysInterval: {
-      type: Object,
-      required: true
-    },
-    year: {
-      type: Number,
-      required: true
-    }
-  }
-})
+type DateInterval = {
+  start: Date,
+  end: Date
+}
 
-@Component({ components: { ScrollableList } })
-class MonthPicker extends Mixins<MonthPickerInterface>(DateMixin, Props) {
+@Component({
+  components: { ScrollableList }
+})
+class MonthPicker extends mixins(DateMixin) {
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isNextItemAvailable!: boolean
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isPreviousItemAvailable!: boolean
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  month!: number
+
+  @Prop({
+    type: Object,
+    required: true
+  })
+  visibleDaysInterval!: DateInterval
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  year!: number
+
   get yearLabel () {
     return `${this.year}`
   }
@@ -141,6 +152,9 @@ class MonthPicker extends Mixins<MonthPickerInterface>(DateMixin, Props) {
     }
   }
 }
+
+export { DateInterval }
+
 export default MonthPicker
 </script>
 

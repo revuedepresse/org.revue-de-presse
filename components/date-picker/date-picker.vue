@@ -55,13 +55,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Mixins } from 'vue-mixin-decorator'
+import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
 import CalendarMonth from '../calendar-month/calendar-month.vue'
 import MonthPicker from '../month-picker/month-picker.vue'
 import YearPicker from '../year-picker/year-picker.vue'
 import DateMixin from '../../mixins/date'
-import DatePickerChoices from './picking-choices'
 import calendardIcon from '~/assets/icons/icon-calendar-primary.svg'
 import previousDayIcon from '~/assets/icons/icon-previous-day.svg'
 import previousDayActiveIcon from '~/assets/icons/icon-previous-day-active.png'
@@ -70,43 +68,29 @@ import nextDayIcon from '~/assets/icons/icon-next-day.svg'
 import nextDayActiveIcon from '~/assets/icons/icon-next-day-active.png'
 import nextDayHoverIcon from '~/assets/icons/icon-next-day-hover.png'
 
-const Props = Vue.extend({
-  props: {
-    startDate: {
-      type: String,
-      required: true
-    }
-  }
-})
-
-interface DatePickerInterface extends DateMixin, Props {}
+const DatePickerStore = namespace('date-picker')
 
 @Component({
   components: { CalendarMonth, MonthPicker, YearPicker }
-})
-class DatePicker extends Mixins<DatePickerInterface>(DateMixin, Props) {
-  data () {
-    const startDateLabel = this.refreshStartDateLabel(this.startDate)
-    const pickedDate = false
+}) class DatePicker extends mixins(DateMixin) {
+  @Prop({
+    type: String,
+    required: true
+  })
+  startDate!: string
 
-    return {
-      startDateLabel,
-      disabled: false,
-      pickedDate
-    }
-  }
+  startDateLabel: string = this.refreshStartDateLabel(this.startDate)
+  disabled: boolean = false
+  pickedDate: boolean = false
 
-  get pickingDay (): boolean {
-    return this.$store.state.pickingChoice === DatePickerChoices.day
-  }
+  @DatePickerStore.Getter
+  public pickingDay!: boolean
 
-  get pickingMonth (): boolean {
-    return this.$store.state.pickingChoice === DatePickerChoices.month
-  }
+  @DatePickerStore.Getter
+  public pickingMonth!: boolean
 
-  get pickingYear (): boolean {
-    return this.$store.state.pickingChoice === DatePickerChoices.year
-  }
+  @DatePickerStore.Getter
+  public pickingYear!: boolean
 
   get calendarIcon () {
     const widthOrHeight = '20px'
@@ -142,11 +126,11 @@ class DatePicker extends Mixins<DatePickerInterface>(DateMixin, Props) {
     `
   }
 
-  get startDateMonth () {
+  get startDateMonth (): number {
     return this.getStartDateMonth(this.startDate)
   }
 
-  get startDateYear () {
+  get startDateYear (): number {
     return this.getStartDateYear(this.startDate)
   }
 
@@ -287,19 +271,19 @@ class DatePicker extends Mixins<DatePickerInterface>(DateMixin, Props) {
     }
   }
 
-  getStartDateMonth (startDate) {
+  getStartDateMonth (startDate: string): number {
     const date = new Date(startDate)
 
     return date.getMonth()
   }
 
-  getStartDateYear (startDate) {
+  getStartDateYear (startDate: string): number {
     const date = new Date(startDate)
 
     return date.getFullYear()
   }
 
-  refreshStartDateLabel (startDate) {
+  refreshStartDateLabel (startDate: string) {
     const date = new Date(startDate)
     const dayOfMonth = date.getDate()
     const daysOfWeek = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']

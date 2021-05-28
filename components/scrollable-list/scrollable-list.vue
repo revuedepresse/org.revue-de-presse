@@ -2,7 +2,8 @@
   <div class="scrollable-list">
     <ul :class="getListClasses()">
       <li
-        v-for="(item, index) in items"
+        v-for="item in items"
+        :key="item.index"
         class="scrollable-list__list-item"
       >
         <label
@@ -25,27 +26,35 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
-const Props = Vue.extend({
-  props: {
-    items: {
-      type: Array,
-      required: true
-    },
-    selected: {
-      type: Number,
-      required: true
-    },
-    autoHeight: {
-      type: Boolean,
-      default: false
-    }
-  }
-})
+type Item = {
+  isDisabled: boolean,
+  isSelected: boolean,
+  index: number,
+}
 
-class ScrollableList extends Props {
-  getLabelClasses (item) {
+@Component
+class ScrollableList extends Vue {
+  @Prop({
+    type: Array,
+    required: true
+  })
+  items!: Item
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  selected!: number
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  autoHeight!: boolean
+
+  getLabelClasses (item: Item) {
     return {
       'scrollable-list__selectable-label': true,
       'scrollable-list__selectable-label--selected': item.isSelected,
@@ -61,6 +70,7 @@ class ScrollableList extends Props {
   }
 }
 
+export { Item }
 export default ScrollableList
 </script>
 

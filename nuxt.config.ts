@@ -1,10 +1,18 @@
+import { NuxtConfig } from '@nuxt/types'
+
 const description =
-  'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
+    'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
 const title = 'Revue de presse'
 const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
 const icon = '/daily-press-review.png'
 
-export default {
+type Route = {
+  name: string,
+  path: string,
+  component: string,
+}
+
+const config: NuxtConfig = {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -75,7 +83,7 @@ export default {
     noscript: [
       {
         innerHTML:
-          'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
+            'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
       }
     ],
     link: [{ rel: 'icon', type: 'image/png', href: icon }]
@@ -180,14 +188,15 @@ export default {
   },
 
   env: {
-    API_HOST: process.env.API_HOST,
-    RAVEN_DSN: process.env.RAVEN_DSN,
-    NODE_ENV: process.env.NODE_ENV,
-    API_AUTH_TOKEN: process.env.API_AUTH_TOKEN
+    API_HOST: process.env.API_HOST || '',
+    API_AUTH_TOKEN: process.env.API_AUTH_TOKEN || '',
+    NODE_ENV: process.env.NODE_ENV || '',
+    RAVEN_DSN: process.env.RAVEN_DSN || ''
   },
 
   router: {
-    extendRoutes (routes, resolve) {
+    middleware: 'redirect',
+    extendRoutes (routes: Route[], resolve: (dir: string, path: string) => string): void {
       routes.push({
         name: 'homepage',
         path: '/',
@@ -220,3 +229,5 @@ export default {
     }
   }
 }
+
+export default config

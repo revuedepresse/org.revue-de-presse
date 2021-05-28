@@ -15,40 +15,40 @@
     <ScrollableList
       class="year-picker__scrollable-list"
       :items="acceptedYearLabels"
-      :selected="this.year"
+      :selected="year"
     />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Mixins } from 'vue-mixin-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import ScrollableList from '../scrollable-list/scrollable-list.vue'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 import DateMixin from '~/mixins/date'
 
-const Props = Vue.extend({
-  props: {
-    year: {
-      type: Number,
-      required: true
-    },
-    isNextItemAvailable: {
-      type: Boolean,
-      default: false
-    },
-    isPreviousItemAvailable: {
-      type: Boolean,
-      default: false
-    }
-  }
+@Component({
+  components: { ScrollableList }
 })
+class YearPicker extends mixins(DateMixin) {
+  @Prop({
+    type: Number,
+    required: true
+  })
+  year!: number
 
-interface YearPickerInterface extends DateMixin, Props {}
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isNextItemAvailable!: boolean
 
-@Component({ components: { ScrollableList } })
-class YearPicker extends Mixins<YearPickerInterface>(DateMixin, Props) {
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isPreviousItemAvailable!: boolean
+
   get acceptedYearLabels () {
     const today = new Date()
     const years = new Array(today.getFullYear() - 2018)
