@@ -5,25 +5,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import Logo from '../logo/logo.vue'
 import Intro from '../intro/intro.vue'
 
-export default {
-  name: 'AppHeader',
-  components: { Intro, Logo },
-  methods: {
-    height () {
-      let height = 0
+interface HeightAware {
+  height: () => number
+}
 
-      if (this.$refs.intro) {
-        height = this.$refs.intro.height()
-      }
+@Component({
+  components: { Intro, Logo }
+})
+class AppHeader extends Vue implements HeightAware {
+  $refs!: {
+    intro: any
+  }
 
-      return height
+  height () {
+    let height = 0
+
+    if (this.$refs.intro) {
+      height = this.$refs.intro.height()
     }
+
+    return height
   }
 }
+
+export { HeightAware }
+
+export default AppHeader
 </script>
 
 <style lang="scss" scoped>

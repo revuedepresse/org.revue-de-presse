@@ -13,6 +13,8 @@ type Route = {
 }
 
 const config: NuxtConfig = {
+  pattern: '**/*.{vue,js,ts}',
+
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -102,6 +104,7 @@ const config: NuxtConfig = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/date-fns',
+    '@nuxtjs/emotion',
     '@nuxtjs/pwa',
     '@nuxtjs/router',
     '@nuxtjs/sentry',
@@ -141,42 +144,9 @@ const config: NuxtConfig = {
       'nuxt-fontawesome',
       {
         imports: [
-          // import whole set
           {
             set: '@fortawesome/free-brands-svg-icons',
             icons: ['faTwitter']
-          },
-          // import 2 icons from set
-          // please note this is PRO set in this example,
-          // you must have it in your node_modules to actually import
-          {
-            set: '@fortawesome/free-solid-svg-icons',
-            icons: [
-              'faArrowAltCircleUp',
-              'faArrowAltCircleDown',
-              'faCheck',
-              'faComments',
-              'faDoorOpen',
-              'faExclamationTriangle',
-              'faFileDownload',
-              'faFire',
-              'faHeart',
-              'faImages',
-              'faLink',
-              'faLock',
-              'faMinus',
-              'faPen',
-              'faPlus',
-              'faRedoAlt',
-              'faReply',
-              'faRetweet',
-              'faSync',
-              'faTrash',
-              'faTrashAlt',
-              'faTh',
-              'faUndo',
-              'faUsers'
-            ]
           }
         ]
       }

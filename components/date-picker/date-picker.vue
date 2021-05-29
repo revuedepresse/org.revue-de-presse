@@ -60,7 +60,7 @@ import CalendarMonth from '../calendar-month/calendar-month.vue'
 import MonthPicker from '../month-picker/month-picker.vue'
 import YearPicker from '../year-picker/year-picker.vue'
 import DateMixin from '../../mixins/date'
-import calendardIcon from '~/assets/icons/icon-calendar-primary.svg'
+import calendardIcon from '~/assets/icons/icon-pick-day.svg'
 import previousDayIcon from '~/assets/icons/icon-previous-day.svg'
 import previousDayActiveIcon from '~/assets/icons/icon-previous-day-active.png'
 import previousDayHoverIcon from '~/assets/icons/icon-previous-day-hover.png'
@@ -72,7 +72,8 @@ const DatePickerStore = namespace('date-picker')
 
 @Component({
   components: { CalendarMonth, MonthPicker, YearPicker }
-}) class DatePicker extends mixins(DateMixin) {
+})
+export default class DatePicker extends mixins(DateMixin) {
   @Prop({
     type: String,
     required: true
@@ -315,8 +316,6 @@ const DatePickerStore = namespace('date-picker')
     }
   }
 }
-
-export default DatePicker
 </script>
 
 <style lang="scss" scoped>

@@ -3,7 +3,7 @@ import Time from '../modules/time'
 import Errors from '../modules/errors'
 
 @Component
-class DateMixin extends Vue {
+export default class DateMixin extends Vue {
   get daysOfWeek (): Array<string> {
     return ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']
   }
@@ -51,5 +51,3 @@ class DateMixin extends Vue {
     return this.daysOfWeek[dayNumber]
   }
 }
-
-export default DateMixin

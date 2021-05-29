@@ -5,13 +5,6 @@
 
     <AppHeader ref="header" />
 
-    <DatePicker
-      v-if="startDate"
-      :start-date="startDate"
-    />
-
-    <Outro />
-
     <div
       ref="highlights"
       :class="containerClass"
@@ -51,72 +44,96 @@
         </li>
       </ul>
     </div>
+
+    <DatePicker
+      v-if="startDate"
+      :start-date="startDate"
+    />
+
+    <Outro />
   </div>
 </template>
 
-<script>
-import ApiMixin from '../../mixins/api'
+<script lang="ts">
+import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import Config from '../../config'
-import DateMixin from '../../mixins/date'
 import EventHub from '../../modules/event-hub'
-import StatusFormat from '../../mixins/status-format'
 import SharedState from '../../modules/shared-state'
-import AppHeader from '../app-header/app-header.vue'
+import AppHeader, { HeightAware } from '../app-header/app-header.vue'
 import DatePicker from '../date-picker/date-picker.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
+import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
+import DateMixin from '~/mixins/date'
+import ApiMixin from '~/mixins/api'
 
 const RETWEETS_EXCLUDED = '0'
 
-export default {
-  name: 'HighlightList',
-  components: { AppHeader, DatePicker, Status, Outro },
-  mixins: [ApiMixin, DateMixin, StatusFormat],
-  props: {
-    showMedia: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data () {
-    let { startDate, endDate } = this.$route.params
+type Params = {
+  endDate?: string,
+  startDate?: string,
+  pageIndex?: number,
+  pageSize?: number,
+  includeRetweets?: number
+  selectedAggregates?: number[],
+  [key: string]: any
+}
 
-    if (startDate === '1970-01-01') {
-      startDate = this.getMaxDate()
-    }
+type RequestOptionsHeaders = HeadersInit
 
-    if (endDate === '1970-01-01') {
-      endDate = this.getMaxDate()
-    }
+type RequestOptions = {
+  headers: RequestOptionsHeaders,
+  params: Params
+}
 
-    return {
-      includeRetweets: RETWEETS_EXCLUDED,
-      aggregates: [],
-      items: [],
-      logger: new SharedState.Logger(this.$sentry),
-      heightOfComponentsBeforeOutro: '--height-components-before-outro: 0',
-      minDate: this.getMinDate(),
-      maxDate: this.getMaxDate(),
-      selectedAggregates: [],
-      pageIndex: 1,
-      pageSize: 10,
-      totalPages: null,
-      endDate,
-      startDate
-    }
-  },
+@Component({
+  components: { AppHeader, DatePicker, Status, Outro }
+})
+export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
+  @Prop({
+    type: Boolean,
+    default: true
+  })
+  showMedia!: boolean
+
+  includeRetweets: string = RETWEETS_EXCLUDED
+  items: RawStatus[] = []
+  logger = new SharedState.Logger(this.$sentry)
+  heightOfComponentsBeforeOutro: string = '--height-components-before-outro: 0'
+  minDate = this.getMinDate()
+  maxDate = this.getMaxDate()
+  selectedAggregates: number[] = []
+  pageIndex: number = 1
+  pageSize: number = 10
+  totalPages: number|null = null
+  endDate: string = this.defaultDates().endDate
+  startDate: string = this.defaultDates().startDate
+
+  $refs!: {
+    header: HeightAware,
+    highlights: {
+      offsetHeight: number
+    },
+    [key: string]: any
+  }
+
   async fetch () {
     const action = this.getHighlightsAction()
     const route = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
 
     const url = new URL(route)
-    Object.keys(requestOptions.params).map(key =>
-      url.searchParams.set(key, requestOptions.params[key])
-    )
+    Object.keys(requestOptions.params).map((key: string) => {
+      let param: string|null = requestOptions.params[key]
+      if (param == null) {
+        param = ''
+      }
+
+      return url.searchParams.set(key, param)
+    })
 
     const response = await fetch(
-      url,
+      url.toString(),
       {
         method: action.method,
         headers: requestOptions.headers
@@ -128,159 +145,192 @@ export default {
       })
 
     this.items = response.statuses
-  },
-  computed: {
-    containerClass () {
-      const filledContainerClass = 'highlight-list__container highlight-list__container--filled'
-      const nonEmptyList = this.$nuxt.isOnline && this.highlights.length > 0
+  }
 
-      if (nonEmptyList || this.$fetchState.pending) {
-        return filledContainerClass
-      }
+  get containerClass () {
+    const filledContainerClass = 'highlight-list__container highlight-list__container--filled'
+    const nonEmptyList = this.$nuxt.isOnline && this.highlights.length > 0
 
-      return 'highlight-list__container'
-    },
-    getApiHost () {
-      return Config.getSchemeAndHost()
-    },
-    canIdentifyRetweets () {
-      return new Date(this.startDate) >= new Date('2018-12-09')
-    },
-    canFilterByRetweet () {
-      return false
-    },
-    highlights () {
-      return this.items
-    },
-    highlightsClasses () {
-      return {
-        'highlight-list': true,
-        list: true
-      }
-    },
-    highlightListOffsetHeight () {
-      if (!this.$refs.highlights) {
-        return 0
-      }
-
-      return this.$refs.highlights.offsetHeight
-    },
-    includedRetweetsLabel () {
-      return 'included'
-    },
-    excludedRetweetsLabel () {
-      return 'excluded'
-    },
-    maxStartDate () {
-      return this.maxDate
-    },
-    minEndDate () {
-      if (new Date(this.minDate) > new Date(this.startDate)) {
-        return this.minDate
-      }
-
-      return this.startDate
-    },
-    showEndDate () {
-      return this.$route.name !== 'highlights'
+    if (nonEmptyList || this.$fetchState.pending) {
+      return filledContainerClass
     }
-  },
-  watch: {
-    startDate () {
-      this.updateHighlights()
-    },
-    endDate () {
-      this.updateHighlights()
-    },
-    includeRetweets () {
-      this.updateHighlights()
+
+    return 'highlight-list__container'
+  }
+
+  get getApiHost () {
+    return Config.getSchemeAndHost()
+  }
+
+  get canIdentifyRetweets () {
+    return new Date(this.startDate) >= new Date('2018-12-09')
+  }
+
+  get canFilterByRetweet () {
+    return false
+  }
+
+  get highlights () {
+    return this.items
+  }
+
+  get highlightsClasses () {
+    return {
+      'highlight-list': true,
+      list: true
     }
-  },
+  }
+
+  get highlightListOffsetHeight () {
+    if (!this.$refs.highlights) {
+      return 0
+    }
+
+    return this.$refs.highlights.offsetHeight
+  }
+
+  get includedRetweetsLabel () {
+    return 'included'
+  }
+
+  get excludedRetweetsLabel () {
+    return 'excluded'
+  }
+
+  get maxStartDate () {
+    return this.maxDate
+  }
+
+  get minEndDate () {
+    if (new Date(this.minDate) > new Date(this.startDate)) {
+      return this.minDate
+    }
+
+    return this.startDate
+  }
+
+  get showEndDate () {
+    return this.$route.name !== 'highlights'
+  }
+
+  @Watch('startDate')
+  onStartDateChange () {
+    this.updateHighlights()
+  }
+
+  @Watch('endDate')
+  onEndDateChange () {
+    this.updateHighlights()
+  }
+
+  @Watch('includeRetweets')
+  onIncludeRetweetsChange () {
+    this.updateHighlights()
+  }
+
   destroyed () {
     EventHub.$off('highlight_list.reload_intended')
-  },
+  }
+
   created () {
     EventHub.$off('highlight_list.reload_intended')
     EventHub.$on('highlight_list.reload_intended', this.fetchHighlights)
 
     this.fetchHighlights()
-  },
-  methods: {
-    getRequestOptions (params = {}) {
-      const authenticationToken = localStorage.getItem('x-auth-token')
-      const requestOptions = {
-        headers: { 'x-auth-token': authenticationToken }
-      }
+  }
 
-      requestOptions.params = {
+  defaultDates () {
+    let { startDate, endDate } = this.$route.params
+
+    if (startDate === '1970-01-01') {
+      startDate = this.getMaxDate()
+    }
+
+    if (endDate === '1970-01-01') {
+      endDate = this.getMaxDate()
+    }
+
+    return {
+      startDate,
+      endDate
+    }
+  }
+
+  fetchHighlights () {
+    this.$fetch()
+  }
+
+  getRequestOptions (params: Params = {}) {
+    const authenticationToken = localStorage.getItem('x-auth-token')
+
+    const requestHeaders: HeadersInit = new Headers()
+    requestHeaders.set('x-auth-token', authenticationToken || '')
+
+    const requestOptions: RequestOptions = {
+      headers: requestHeaders,
+      params: {
+        includeRetweets: 1,
         startDate: this.startDate,
         endDate: this.startDate
       }
-
-      if (!this.showEndDate) {
-        requestOptions.params.endDate = this.startDate
-      }
-
-      if (params.pageIndex) {
-        if (!('params' in requestOptions)) {
-          requestOptions.params = {}
-        }
-
-        requestOptions.params.pageIndex = params.pageIndex
-      }
-
-      if (!('params' in requestOptions)) {
-        requestOptions.params = {}
-      }
-
-      if (this.pageSize > 0) {
-        requestOptions.params.pageSize = this.pageSize
-      }
-
-      requestOptions.params.includeRetweets = 1
-      if (this.includeRetweets === RETWEETS_EXCLUDED) {
-        requestOptions.params.includeRetweets = 0
-      }
-
-      if (this.selectedAggregates.length > 0) {
-        requestOptions.params.selectedAggregates = this.selectedAggregates
-      }
-
-      return requestOptions
-    },
-    getHighlightsAction () {
-      return this.routes.actions.fetchHighlights
-    },
-    getHighlightsRoute () {
-      const action = this.getHighlightsAction()
-      return `${Config.getSchemeAndHost()}${action.route}`
-    },
-    fetchHighlights () {
-      this.$fetch()
-    },
-    highlightListHeight () {
-      const highlights = this.$refs.highlights
-
-      if (!this.$refs.highlights) {
-        return '0'
-      }
-
-      return `${highlights.offsetHeight}`
-    },
-    introHeight () {
-      let height = 0
-      if (this.$refs.header) {
-        height = this.$refs.header.height()
-      }
-
-      return height
-    },
-    updateHighlights () {
-      this.items = []
-      this.$router.push({
-        path: `/${this.startDate}`
-      })
     }
+
+    if (!this.showEndDate) {
+      requestOptions.params.endDate = this.startDate
+    }
+
+    if (params.pageIndex) {
+      requestOptions.params.pageIndex = params.pageIndex
+    }
+
+    if (this.pageSize > 0) {
+      requestOptions.params.pageSize = this.pageSize
+    }
+
+    if (this.includeRetweets === RETWEETS_EXCLUDED) {
+      requestOptions.params.includeRetweets = 0
+    }
+
+    if (this.selectedAggregates.length > 0) {
+      requestOptions.params.selectedAggregates = this.selectedAggregates
+    }
+
+    return requestOptions
+  }
+
+  getHighlightsAction () {
+    return this.routes.actions.fetchHighlights
+  }
+
+  getHighlightsRoute () {
+    const action = this.getHighlightsAction()
+    return `${Config.getSchemeAndHost()}${action.route}`
+  }
+
+  highlightListHeight () {
+    const highlights = this.$refs.highlights
+
+    if (!this.$refs.highlights) {
+      return '0'
+    }
+
+    return `${highlights.offsetHeight}`
+  }
+
+  introHeight () {
+    let height = 0
+    if (this.$refs.header) {
+      height = this.$refs.header.height()
+    }
+
+    return height
+  }
+
+  updateHighlights () {
+    this.items = []
+    this.$router.push({
+      path: `/${this.startDate}`
+    })
   }
 }
 </script>

@@ -15,21 +15,9 @@
           class="status__url status__url--permanent-link"
           rel="noreferrer"
         >
-          <font-awesome-icon
-            :icon="['fab', 'twitter']"
-            class="status__vanity-metric-icon"
-          />
           Publication originale
         </a>
-        <font-awesome-icon
-          icon="retweet"
-          class="status__vanity-metric-icon"
-        />
         <span class="status__vanity-metric">{{ retweet }}</span>
-        <font-awesome-icon
-          icon="heart"
-          class="status__vanity-metric-icon"
-        />
         <span class="status__vanity-metric">{{ favorite }}</span>
       </div>
     </div>
@@ -88,7 +76,6 @@
           rel="noreferrer"
           target="_blank"
         >
-          <font-awesome-icon icon="reply" />
           <span>Reply</span>
         </a>
         <a
@@ -98,7 +85,6 @@
           rel="noreferrer"
           target="_blank"
         >
-          <font-awesome-icon icon="retweet" />
           <span>Retweet</span>
         </a>
         <a
@@ -108,7 +94,6 @@
           rel="noreferrer"
           target="_blank"
         >
-          <font-awesome-icon icon="heart" />
           <span>Like</span>
         </a>
       </div>
@@ -117,14 +102,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, mixins } from 'nuxt-property-decorator'
-import { Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import ApiMixin from '../../mixins/api'
 import StatusFormatMixin, { FormattedStatus, Media } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
+import Publisher from '../publisher/publisher.vue'
 
-@Component
+@Component({
+  components: { Publisher }
+})
 class Status extends mixins(ApiMixin, StatusFormatMixin) {
   @Prop({
     type: Object,
@@ -241,7 +228,7 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   }
 
   @Watch('statusAtFirst')
-  onStatusAtFirstChanged (_: FormattedStatus, newStatus: FormattedStatus) {
+  onStatusAtFirstChange (_: FormattedStatus, newStatus: FormattedStatus) {
     this.status = newStatus
   }
 

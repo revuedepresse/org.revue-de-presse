@@ -12,7 +12,7 @@ type Media = {
   title: string,
 }
 
-type Status = {
+type RawStatus = {
   username: string,
   avatarUrl: string,
   publishedAt: Date,
@@ -29,7 +29,7 @@ type Status = {
   published_at: string,
   retweet_count: number,
   favorite_count: number,
-  status_replied_to?: Status,
+  status_replied_to?: RawStatus,
   full_text?: string,
   liked_by?: string,
   retweet?: number,
@@ -56,13 +56,13 @@ type FormattedStatus = {
   key?: number
 }
 
-type FilteringFn = (status: Status) => boolean
+type FilteringFn = (status: RawStatus) => boolean
 
 type Filter = FilteringFn | undefined | null | 'media' | 'top100'
 
 @Component
-class StatusFormat extends Vue {
-  filterStatuses (statuses: Status[], filterType: Filter) {
+export default class StatusFormat extends Vue {
+  filterStatuses (statuses: RawStatus[], filterType: Filter) {
     if (typeof filterType === 'undefined' || filterType === null) {
       return statuses
     }
@@ -80,7 +80,7 @@ class StatusFormat extends Vue {
     }
 
     if (filterType === 'media') {
-      const filter = (status: Status) => status.media && status.media.length > 0
+      const filter = (status: RawStatus) => status.media && status.media.length > 0
       filteredStatuses = Object.values(statuses).filter(filter)
       if (filteredStatuses.length === 0) {
         EventHub.$emit('status_list.apologize_about_empty_list_intended')
@@ -92,7 +92,7 @@ class StatusFormat extends Vue {
 
     if (filterType === 'top100') {
       filteredStatuses = Object.values(Object.assign({}, statuses))
-      const sortByRetweet = (firstStatus: Status, secondStatus: Status) => {
+      const sortByRetweet = (firstStatus: RawStatus, secondStatus: RawStatus) => {
         if (firstStatus.totalRetweet === secondStatus.totalRetweet) {
           return 0
         }
@@ -110,12 +110,12 @@ class StatusFormat extends Vue {
     return statuses
   }
 
-  formatStatus (status: Status) {
+  formatStatus (status: RawStatus) {
     const formattedStatuses = this.formatStatuses([status])
     return formattedStatuses[0]
   }
 
-  formatStatuses (statuses: Status[]): FormattedStatus[] {
+  formatStatuses (statuses: RawStatus[]): FormattedStatus[] {
     if (typeof statuses === 'undefined' || statuses === null) {
       return []
     }
@@ -126,7 +126,7 @@ class StatusFormat extends Vue {
       throw new TypeError(SharedState.errors.REQUIRED_COLLECTION)
     }
 
-    statuses.forEach((status: Status) => {
+    statuses.forEach((status: RawStatus) => {
       if (
         typeof status === 'undefined' ||
           (typeof status.text === 'undefined' &&
@@ -249,6 +249,4 @@ class StatusFormat extends Vue {
   }
 }
 
-export { FormattedStatus, Media }
-
-export default StatusFormat
+export { FormattedStatus, RawStatus, Media }

@@ -1,11 +1,8 @@
 $status-margin: 1em;
 
 .status {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  font-size: $font-size-base;
-  font-family: $font-family;
+  background-color: $background-taupe-grey;
+
   @extend .responsive-content;
 
   &__can-be-shared {
