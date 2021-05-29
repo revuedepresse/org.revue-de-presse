@@ -68,6 +68,7 @@ type ErrorContext = {
 const logLevel = {
   isSilent: false,
   onError: (context: ErrorContext): void => {
+    // eslint-disable-line no-console
     console.error(context)
   }
 }
