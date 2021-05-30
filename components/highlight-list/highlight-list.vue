@@ -103,7 +103,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   showMedia!: boolean
 
   includeRetweets: string = RETWEETS_EXCLUDED
-  items: RawStatus[] = []
+  items: Array<{status: RawStatus}> = []
   logger = new SharedState.Logger(this.$sentry)
   heightOfComponentsBeforeOutro: string = '--height-components-before-outro: 0'
   minDate = this.getMinDate()
@@ -219,17 +219,16 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return this.startDate
   }
 
-  get intro () {
+  get intro (): RawStatus {
     const text = 'Revue de presse est un projet citoyen indépendant ' +
     'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
     'à l\'actualité et à l\'influence des médias sur l\'opinion.'
 
     const intro: RawStatus = {
       username: 'revue_2_presse',
-      name: 'Revue de presse',
       avatarUrl: Logo,
       avatar_url: Logo,
-      published_at: new Date(),
+      published_at: this.formatDate(new Date()),
       publishedAt: new Date(),
       statusId: '0',
       status_id: '0',
@@ -365,7 +364,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return height
   }
 
-  isIntro (key) {
+  isIntro (key: number) {
     return this.$device.isDesktop && key === 0
   }
 

@@ -23,6 +23,11 @@ import logo from '../../assets/revue-de-presse_100x100.png'
 
 @Component
 export default class Intro extends Vue {
+  $refs!: {
+    intro: {offsetHeight: number},
+    [key: string]: any
+  }
+
   currentRoute: string = this.$router.currentRoute.path
   logo = logo
   height () {
