@@ -12,6 +12,7 @@
 
   --height-logo: 64px;
   --height-date-picker: 21px;
+  --height-status-text: 21px;
   --height-year-picker-buttons: calc(32px + (2 * var(--margin-year-picker-buttons-margin)));
 
   --margin-title: 20px;
@@ -19,7 +20,7 @@
   --margin-year-picker-buttons-margin: 10px;
   --margin-status: 15px;
 
-  --font-size-content: 12px;
+  --font-size-content: 14px;
   --line-spacing-content: 16px;
 
   --font-size-publication-date: 12px;
@@ -48,6 +49,9 @@
 
   --font-size-vanity-metric: 15px;
   --line-spacing-vanity-metric: 25px;
+
+  --font-size-status-text: 19px;
+  --line-spacing-status-text: 25px;
 
   --background-vanity-metric-reply: #1d9bf0;
   --background-vanity-metric-retweet: #19cf86;
@@ -169,10 +173,7 @@ body {
 }
 
 .clickable {
-  color: $color-hyperlink;
   cursor: pointer;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
 
   &[target="_blank"] {
     text-decoration: underline dotted $color-hyperlink;

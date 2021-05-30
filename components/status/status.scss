@@ -2,14 +2,13 @@ $status-margin: 1em;
 
 .status {
   background-color: var(--color-taupe-grey);
+  width: 100%;
 
   &__publication {
     background-color: var(--color-white);
     border-radius: var(--separation-1);
     border: 1px solid var(--border-color);
   }
-
-  @extend .responsive-content;
 
   &__row {
     display: flex;
@@ -28,49 +27,45 @@ $status-margin: 1em;
     }
   }
 
-  &__content {
-    flex-direction: row;
-    justify-content: flex-start;
-    max-width: calc(100vw - #{$separation-2});
-    padding: 0 $separation-2;
+  &__text-container {
+    margin: auto;
+    margin-top: 10px;
+    width: calc(100% - 2 * var(--margin-status));
   }
 
-  &__media {
-    background-color: $color-black-light;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    @extend .responsive-content;
+  &__text {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font: normal normal normal var(--font-size-status-text)/var(--line-spacing-status-text) Arial;
+    letter-spacing: 0px;
+    color: $color-pitch-black;
+    opacity: 1;
 
-    &-item {
-      cursor: pointer;
+    a {
+      @extends .status__text;
     }
   }
 
-  &__publisher,
-  &__relay {
-      padding: $separation-1;
-  }
-
-  &__relay {
-    align-items: center;
+  &__media {
+    background-color: transparent;
     display: flex;
-    flex-wrap: wrap;
+    margin: auto;
+    margin-bottom: 15px;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
 
-    .status__verb {
-      line-height: $line-height-base;
+    &-item {
+      cursor: pointer;
+      border-radius: var(--separation-1);
+      border: 1px solid #E6E6E6;
+      width: calc(100% - 2 * var(--margin-status))
     }
   }
 
   &__text {
-    color: $color-black;
-    margin-top: 0;
-    margin-bottom: 0;
-    max-width: calc(100vw - 16px);
-    white-space: pre-line;
-
     /deep/ .status__text-external-link {
-      font-size: 1em;
       @extend .clickable;
     }
 
@@ -122,7 +117,6 @@ $status-margin: 1em;
 
     @media (max-width: 375px) {
       white-space: normal;
-      line-height: 1em;
       max-width: 320px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -148,28 +142,9 @@ $status-margin: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom: 10px;
     margin-top: 10px;
     margin-left: var(--margin-status);
     width: 100%;
-  }
-
-  &__error {
-    margin-left: 8px;
-  }
-
-  &__conversation {
-    align-items: center;
-
-    &--has-error {
-      .status__web-intent--load-conversation,
-      .status__web-intent--open-conversation {
-        color: darken($color-beige, 40%);
-      }
-
-      .status__error {
-        margin-left: 8px;
-        color: darken($color-beige, 50%);
-      }
-    }
   }
 }

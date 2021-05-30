@@ -14,7 +14,7 @@
     margin: auto;
     width: calc(100% - 2 * var(--separation-3));
 
-    @media (min-width: var(--width-right-column-mobile)) {
+    @media (min-width: $width-large-device) {
       max-width: var(--width-right-column-desktop);
     }
 

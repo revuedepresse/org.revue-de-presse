@@ -4,7 +4,7 @@ const description =
     'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
 const title = 'Revue de presse'
 const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
-const icon = '/daily-press-review.png'
+const icon = '/logo-revue-de-presse.png'
 
 type Route = {
   name: string,

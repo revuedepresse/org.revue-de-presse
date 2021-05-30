@@ -10,12 +10,21 @@
         :metric-type="webIntentTypes.like"
       />
     </div>
+
     <div class="status__publication">
       <publisher
         :avatar-url="status.avatarUrl"
         :name="status.name"
         :username="status.username"
       />
+
+      <div class="status__text-container">
+        <p
+          class="status__text"
+          v-html="statusText"
+        />
+      </div>
+
       <publication-date
         :date="publicationDate"
         :publication-url="status.url"
@@ -35,15 +44,6 @@
         />
       </div>
 
-      <div class="status__row">
-        <div class="status__content">
-          <p
-            class="status__text"
-            v-html="statusText"
-          />
-        </div>
-      </div>
-
       <div
         v-if="canShowMedia"
         class="status__row status__row--media"
@@ -58,7 +58,7 @@
             :data-src="getMediaUrl(document)"
             :style="getMediaProperties()"
             :width="getMediaWidth(document)"
-            :height="getMediaHeight(document)"
+            height="auto"
             @click="openMediaItem(document)"
           >
         </div>
@@ -249,9 +249,7 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   getMediaProperties () {
     return {
       width: 'calc(100% - 1em)',
-      'max-height': '80vw',
-      'max-width': '90vw',
-      'object-fit': 'scale-down'
+      'max-width': '570px'
     }
   }
 
@@ -259,12 +257,8 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
     return `${media.url}:small`
   }
 
-  getMediaHeight (media: Media) {
-    return media.sizes.small.h
-  }
-
   getMediaWidth (media: Media) {
-    return media.sizes.small.w
+    return Math.min(media.sizes.small.w, 570)
   }
 
   getMediaTitle (media: Media) {
