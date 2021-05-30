@@ -83,9 +83,6 @@
       display: inline-flex;
       zoom: 1.5;
       position: absolute;
-      // See https://stackoverflow.com/a/53336754/282073 about
-      // how to alter the background of an embedded svg document
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
     }
   }
 

@@ -108,6 +108,7 @@ const config: NuxtConfig = {
     '@nuxtjs/pwa',
     '@nuxtjs/router',
     '@nuxtjs/sentry',
+    '@nuxtjs/svg',
     'nuxt-lazysizes',
     'nuxt-vuex-router-sync'
   ],

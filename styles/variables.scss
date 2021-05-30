@@ -1,4 +1,5 @@
 :root {
+  --color-black: #000;
   --color-brand: #00cdc7;
   --color-brand-twitter: #1d9bf0;
   --color-content-background: #2f394d;
@@ -7,6 +8,7 @@
   --color-taupe-grey: #ebeef0;
   --color-white: #fff;
   --color-background-button-active: #006663;
+  --color-light-grey: #657786;
 
   --height-logo: 64px;
   --height-date-picker: 21px;
@@ -15,9 +17,13 @@
   --margin-title: 20px;
   --margin-navigation: 10px;
   --margin-year-picker-buttons-margin: 10px;
+  --margin-status: 15px;
 
   --font-size-content: 12px;
   --line-spacing-content: 16px;
+
+  --font-size-publication-date: 12px;
+  --line-spacing-publication-date: 25px;
 
   --font-size-footer-copyright: 12px;
   --line-spacing-footer-copyright: 24px;
@@ -40,6 +46,13 @@
   --font-size-footer-title: 26px;
   --line-spacing-footer-title: 16px;
 
+  --font-size-vanity-metric: 15px;
+  --line-spacing-vanity-metric: 25px;
+
+  --background-vanity-metric-reply: #1d9bf0;
+  --background-vanity-metric-retweet: #19cf86;
+  --background-vanity-metric-like: #e81c4f;
+
   --border-color: #e6e6e6;
 
   --border-radius: var(--separation-1);
@@ -57,6 +70,17 @@
   --width-right-column-desktop: 600px;
 }
 
+$color-background-like-light: lighten(#e81c4f, 45%);
+$color-background-reply-light: lighten(#1d9bf0, 75%);
+$color-background-retweet-light: lighten(#19cf86, 45%);
+
+$color-background-like-dark: lighten(#e81c4f, 45%);
+$color-background-reply-dark: darken(#1d9bf0, 45%);
+$color-background-retweet-dark: #19cf86;
+
+$color-background-like-clicked: lighten(#e81c4f, 35%);
+$color-stroke-like: lighten(#e81c4f, 25%);
+
 $color-black: #1e1e1e;
 $color-black-light: #252526;
 $color-beige: #d4d4d4;
@@ -71,9 +95,11 @@ $color-hyperlink: $color-black;
 $color-yellow: #dab988;
 $color-blue: #569cd3;
 $color-white: var(--color-white);
-$color-pitch-black: #000;
+$color-pitch-black: var(--color-black);
 $color-brand: var(--color-brand);
 $color-content: var(--color-content-text);
+$color-username: var(--color-light-grey);
+$color-publication-date: var(--color-light-grey);
 
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: var(--color-taupe-grey);

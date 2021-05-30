@@ -24,6 +24,7 @@ type RawStatus = {
   totalRetweet: number,
   totalLike: number,
   links: object,
+  original_document: string,
   avatar_url: string,
   status_id: string,
   published_at: string,
@@ -38,6 +39,7 @@ type RawStatus = {
 
 type FormattedStatus = {
   username: string,
+  name: string,
   avatarUrl: string,
   publishedAt: Date,
   statusId: string,
@@ -112,6 +114,7 @@ export default class StatusFormat extends Vue {
 
   formatStatus (status: RawStatus) {
     const formattedStatuses = this.formatStatuses([status])
+
     return formattedStatuses[0]
   }
 
@@ -160,7 +163,10 @@ export default class StatusFormat extends Vue {
         aggregate = this.$route.params.aggregateType
       }
 
+      const originalDocument = JSON.parse(status.original_document)
+
       const formattedStatus: FormattedStatus = {
+        name: originalDocument.user.name,
         inAggregate: aggregate,
         username: status.username,
         avatarUrl: status.avatar_url,
@@ -239,12 +245,15 @@ export default class StatusFormat extends Vue {
 
     // Emoji are publicly available as soon as the following command has been executed
     // to expose the required assets (from the API root directory)
+    // @see https://github.com/iamcal/emoji-data
     // ```
-    // # @see https://github.com/iamcal/emoji-data
     // make clone-emoji-repository
     // ```
     const protocolScheme = process.env.NODE_ENV === 'production' ? 'https' : 'http'
     emoji.img_sets.apple.path = `${protocolScheme}://${process.env.API_HOST}/emoji-data/img-apple-64/`
+    // @see https://github.com/iamcal/js-emoji/issues/96
+    emoji.allow_native = process.env.NODE_ENV === 'production'
+
     return emoji.replace_unified(parsedSubject)
   }
 }

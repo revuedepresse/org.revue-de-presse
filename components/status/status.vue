@@ -1,101 +1,67 @@
 <template>
   <div :class="statusClasses()">
-    <div class="status__row">
-      <div class="status__publication-date">
-        <a
-          :href="status.url"
-          class="status__url"
-          rel="noreferrer"
-          target="_blank"
-        >{{ $dateFns.format(publicationDate, 'PPPPpp') }}</a>
-      </div>
-      <div class="status__vanity-metrics">
-        <a
-          :href="status.url"
-          class="status__url status__url--permanent-link"
-          rel="noreferrer"
-        >
-          Publication originale
-        </a>
-        <span class="status__vanity-metric">{{ retweet }}</span>
-        <span class="status__vanity-metric">{{ favorite }}</span>
-      </div>
+    <div class="status__vanity-metrics">
+      <vanity-metric
+        :count="retweet"
+        :metric-type="webIntentTypes.retweet"
+      />
+      <vanity-metric
+        :count="favorite"
+        :metric-type="webIntentTypes.like"
+      />
     </div>
-
-    <div
-      class="status__row"
-    >
-      <div class="status__publisher">
-        <a
-          :style="publisherStyle"
-          :href="memberTimelineUrl"
-          class="status__username"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <span class="status__publisher-name">@{{ status.username }}</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="status__row">
-      <div class="status__content">
-        <p
-          class="status__text"
-          v-html="statusText"
+    <div class="status__publication">
+      <publisher
+        :avatar-url="status.avatarUrl"
+        :name="status.name"
+        :username="status.username"
+      />
+      <publication-date
+        :date="publicationDate"
+        :publication-url="status.url"
+      />
+      <div class="status__web-intents">
+        <web-intent
+          :status-id="status.statusId"
+          :intent-type="webIntentTypes.reply"
+        />
+        <web-intent
+          :status-id="status.statusId"
+          :intent-type="webIntentTypes.retweet"
+        />
+        <web-intent
+          :status-id="status.statusId"
+          :intent-type="webIntentTypes.like"
         />
       </div>
-    </div>
 
-    <div
-      v-if="canShowMedia"
-      class="status__row status__row--media"
-    >
-      <div class="status__media">
-        <img
-          v-for="(document, index) in status.media"
-          :key="index"
-          class="status__media-item lazyload"
-          :alt="getMediaTitle(document)"
-          :title="getMediaTitle(document)"
-          :data-src="getMediaUrl(document)"
-          :style="getMediaProperties()"
-          :width="getMediaWidth(document)"
-          :height="getMediaHeight(document)"
-          @click="openMediaItem(document)"
-        >
+      <div class="status__row">
+        <div class="status__content">
+          <p
+            class="status__text"
+            v-html="statusText"
+          />
+        </div>
       </div>
-    </div>
 
-    <div class="status__row">
-      <div class="status__web-intents">
-        <a
-          v-if="canBeRepliedTo"
-          :href="urls.reply"
-          class="status__web-intent"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <span>Reply</span>
-        </a>
-        <a
-          v-if="canBeRetweeted"
-          :href="urls.retweet"
-          class="status__web-intent"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <span>Retweet</span>
-        </a>
-        <a
-          v-if="canBeLiked"
-          :href="urls.like"
-          class="status__web-intent"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <span>Like</span>
-        </a>
+      <div
+        v-if="canShowMedia"
+        class="status__row status__row--media"
+      >
+        <div class="status__media">
+          <img
+            v-for="(document, index) in status.media"
+            :key="index"
+            class="status__media-item lazyload"
+            :alt="getMediaTitle(document)"
+            :title="getMediaTitle(document)"
+            :data-src="getMediaUrl(document)"
+            :style="getMediaProperties()"
+            :width="getMediaWidth(document)"
+            :height="getMediaHeight(document)"
+            @click="openMediaItem(document)"
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -108,9 +74,12 @@ import StatusFormatMixin, { FormattedStatus, Media } from '../../mixins/status-f
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
+import PublicationDate from '../publication-date/publication-date.vue'
+import VanityMetric from '../vanity-metric/vanity-metric.vue'
+import WebIntent from '../web-intent/web-intent.vue'
 
 @Component({
-  components: { Publisher }
+  components: { Publisher, PublicationDate, VanityMetric, WebIntent }
 })
 class Status extends mixins(ApiMixin, StatusFormatMixin) {
   @Prop({
@@ -126,24 +95,6 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   showMedia!: boolean
 
   @Prop({
-    type: Boolean,
-    default: true
-  })
-  canBeLiked!: boolean
-
-  @Prop({
-    type: Boolean,
-    default: true
-  })
-  canBeRetweeted!: boolean
-
-  @Prop({
-    type: Boolean,
-    default: true
-  })
-  canBeRepliedTo!: boolean
-
-  @Prop({
     type: String,
     default: ''
   })
@@ -154,6 +105,14 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   status: FormattedStatus = this.statusAtFirst
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
+
+  get webIntentTypes (): {[key: string]: string} {
+    return {
+      reply: 'reply',
+      retweet: 'retweet',
+      like: 'like'
+    }
+  }
 
   get canShowMedia () {
     return this.status.media && this.status.media.length > 0 && this.showMedia
@@ -256,7 +215,6 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
       if (process.env.API_HOST !== undefined && matchingText.includes(process.env.API_HOST)) {
         return matchingText
       }
-
       return `<a class="status__text-external-link"
                  rel="noreferrer"
                  target="_blank" href="${matchingText}">${matchingText}</a>`

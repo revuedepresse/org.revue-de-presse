@@ -11,6 +11,8 @@
 
   &__container {
     display: flex;
+    margin: auto;
+    width: calc(100% - 2 * var(--separation-3));
 
     @media (min-width: var(--width-right-column-mobile)) {
       max-width: var(--width-right-column-desktop);
@@ -76,10 +78,6 @@
 
   &--anonymously-visited {
     margin-top: 0;
-  }
-
-  .status {
-    margin-top: 15px;
   }
 
   .highlight-list__member-profile {

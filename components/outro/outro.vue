@@ -33,10 +33,9 @@
           ><!--
             --><font-awesome-icon
               :icon="['fab', 'twitter']"
-              class="status__vanity-metric-icon"
-            />
-            <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
-          --></a><!--
+              />
+              <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
+        --></a><!--
       --></span>
     </p>
 
