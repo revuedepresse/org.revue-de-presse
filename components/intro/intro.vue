@@ -17,21 +17,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import logo from '../../assets/revue-de-presse_100x100.png'
 
-export default {
-  name: 'Intro',
-  data () {
-    return {
-      currentRoute: this.$router.currentRoute.path,
-      logo
-    }
-  },
-  methods: {
-    height () {
-      return this.$refs.intro.offsetHeight
-    }
+@Component
+export default class Intro extends Vue {
+  currentRoute: string = this.$router.currentRoute.path
+  logo = logo
+  height () {
+    return this.$refs.intro.offsetHeight
   }
 }
 </script>

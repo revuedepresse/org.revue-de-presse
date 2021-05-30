@@ -1,15 +1,22 @@
 
 .date-picker {
   background-color: var(--color-white);
+  color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  bottom: 0;
-  color: var(--color-white);
-  width: 100%;
+  top: calc(100% - 53px);
 
-  @media (min-width: $width-large-device) {
-    max-width: var(--width-right-column-desktop);
+  @media (min-width: $width-left-column-mobile) {
+    max-width: var(--width-left-column-desktop);
+    border-radius: var(--separation-1);
+    flex-direction: column-reverse;
+    margin-top: var(--separation-1);
+
+    .date-picker__buttons {
+      border-top-left-radius: var(--separation-1);
+      border-top-right-radius: var(--separation-1);
+    }
   }
 
   &__pickers {
@@ -34,7 +41,6 @@
     border-radius: var(--border-radius-date-picker);
     cursor: pointer;
     display: flex;
-    height: calc(21px + 10px);
     padding: 5px 4px 5px 4px;
     position: relative;
     margin: var(--margin-navigation) var(--separation-2);

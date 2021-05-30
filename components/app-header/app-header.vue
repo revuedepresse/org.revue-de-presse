@@ -1,7 +1,15 @@
 <template>
-  <div ref="header">
-    <Logo />
-    <Intro ref="intro" />
+  <div
+    ref="header"
+    class="app-header"
+  >
+    <div class="app-header__container">
+      <Logo />
+    </div>
+    <Intro
+      v-show="$device.isMobile"
+      ref="intro"
+    />
   </div>
 </template>
 

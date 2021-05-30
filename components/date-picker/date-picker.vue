@@ -93,6 +93,27 @@ export default class DatePicker extends mixins(DateMixin) {
   @DatePickerStore.Getter
   public pickingYear!: boolean
 
+  @DatePickerStore.Mutation
+  public pickDay!: () => void
+
+  @DatePickerStore.Mutation
+  public pickMonth!: () => void
+
+  @DatePickerStore.Mutation
+  public pickYear!: () => void
+
+  switchToDayPicking (): void {
+    this.pickDay()
+  }
+
+  switchToMonthPicking (): void {
+    this.pickMonth()
+  }
+
+  switchToYearPicking (): void {
+    this.pickYear()
+  }
+
   get calendarIcon () {
     const widthOrHeight = '20px'
 
@@ -141,6 +162,12 @@ export default class DatePicker extends mixins(DateMixin) {
 
   get year () {
     return this.startDateYear
+  }
+
+  mounted () {
+    if (this.$device.isDesktop) {
+      this.switchToDayPicking()
+    }
   }
 
   getNextDayClasses () {

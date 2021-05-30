@@ -70,7 +70,7 @@
 
   --width-left-column-mobile: 336px;
 
-  --width-left-column-desktop: 390px;
+  --width-left-column-desktop: 336px;
   --width-right-column-desktop: 600px;
 }
 
@@ -164,6 +164,7 @@ $width-small-device: 576px;
 $width-medium-device: 768px;
 $width-large-device: 992px;
 $width-extra-large-device: 1200px;
+$width-left-column-mobile: 336px;
 
 // @see https://graphicdesign.stackexchange.com/q/30731/158844
   $content-width: 960px;

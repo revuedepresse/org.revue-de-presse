@@ -7,7 +7,7 @@ import DatePickerChoices from '../components/date-picker/picking-choices'
   namespaced: true
 })
 class DatePickerStore extends VuexModule {
-  public pickingChoice: string = DatePickerChoices.day
+  public pickingChoice: string = DatePickerChoices.none
 
   public get getPickingChoice (): string {
     return this.pickingChoice

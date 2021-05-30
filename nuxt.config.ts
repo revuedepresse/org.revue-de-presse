@@ -13,7 +13,7 @@ type Route = {
 }
 
 const config: NuxtConfig = {
-  pattern: '**/*.{vue,js,ts}',
+  pattern: '**/*.{vue,js}',
 
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,

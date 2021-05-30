@@ -1,6 +1,9 @@
 @import '../member-status-list/member-status-list.scss';
 
 .highlight-list {
+  position: relative;
+  margin-top: 64px;
+
   @extend .member-status-list;
 
   &__loading,
@@ -12,11 +15,6 @@
   &__container {
     display: flex;
     margin: auto;
-    width: calc(100% - 2 * var(--separation-3));
-
-    @media (min-width: $width-large-device) {
-      max-width: var(--width-right-column-desktop);
-    }
 
     &--filled {
       min-height: 100vh;
@@ -29,68 +27,6 @@
     margin-bottom: $separation-1;
   }
 
-  [for="select-aggregates"] {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.5em;
-    justify-content: center;
-    text-align: center;
-    color: $color-black;
-    margin-top: 1em;
-    width: 100%;
-  }
-
-  &__aggregates {
-      /deep/ &.list__items {
-        margin-top: 1em;
-        background: transparent;
-        border: none;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        height: 12em;
-        width: 100%;
-
-        @media only screen and (max-device-width : 640px) {
-          height: 2em;
-        }
-
-        @media only screen and (max-device-width: 768px) {
-          height: 2em;
-        }
-
-        .list__item {
-          border: none;
-          color: $color-hyperlink;
-          text-decoration: underline;
-          display: flex;
-          font-size: 1.5em;
-          font-family: $font-family;
-          height: 1.5em;
-          line-height: 1.85em;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          width: 100%;
-        }
-      }
-  };
-
-  &--anonymously-visited {
-    margin-top: 0;
-  }
-
-  .highlight-list__member-profile {
-    color: $color-black;
-
-    &:link,
-    &:hover,
-    &:visited,
-    &:active {
-      color: $color-black;
-    }
-  }
-
   .highlight-list__clear-selection {
     cursor: pointer;
     background: transparent;
@@ -101,16 +37,20 @@
     }
   }
 
-  .highlight-list__member-profile {
-    display: flex;
-    flex-wrap: wrap;
-    align-self: center;
-    justify-self: center;
-    justify-content: center;
-    align-content: center;
-  }
-
   .list__item:last-child {
     border-bottom: none;
+  }
+
+  @media (min-width: $width-left-column-mobile) {
+    .highlight-list__content {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .highlight-list__container {
+      min-width: var(--width-right-column-desktop);
+      max-width: var(--width-right-column-desktop);
+      margin-left: var(--separation-2);
+    }
   }
 }

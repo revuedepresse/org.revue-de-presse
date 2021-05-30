@@ -1,6 +1,9 @@
 <template>
   <div :class="statusClasses()">
-    <div class="status__vanity-metrics">
+    <div
+      v-show="!isIntro"
+      class="status__vanity-metrics"
+    >
       <vanity-metric
         :count="retweet"
         :metric-type="webIntentTypes.retweet"
@@ -16,6 +19,7 @@
         :avatar-url="status.avatarUrl"
         :name="status.name"
         :username="status.username"
+        :remove-twitter-logo="isIntro"
       />
 
       <div class="status__text-container">
@@ -26,10 +30,14 @@
       </div>
 
       <publication-date
+        v-show="!isIntro"
         :date="publicationDate"
         :publication-url="status.url"
       />
-      <div class="status__web-intents">
+      <div
+        v-show="!isIntro"
+        class="status__web-intents"
+      >
         <web-intent
           :status-id="status.statusId"
           :intent-type="webIntentTypes.reply"
@@ -99,6 +107,12 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
     default: ''
   })
   fromAggregateType!: string
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isIntro!: boolean
 
   errorMessages: Errors = SharedState.errors
   logger = new SharedState.Logger(this.$sentry)
@@ -243,7 +257,7 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   }
 
   statusClasses () {
-    return { status: true }
+    return { status: true, status__intro: this.isIntro }
   }
 
   getMediaProperties () {

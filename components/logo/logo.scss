@@ -1,11 +1,10 @@
 
 .logo {
+  background-color: $color-white;
   display: flex;
   align-self: flex-start;
   height: 48px;
-  margin-left: var(--separation-3);
   padding: 8px;
-  padding-left: 0;
 
   .logo__container {
     display: flex;

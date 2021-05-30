@@ -5,10 +5,6 @@
   padding-top: var(--separation-2);
   padding-bottom: 0;
 
-  @media (min-width: $width-large-device) {
-    max-width: var(--width-right-column-desktop);
-  }
-
   &__container {
     background: var(--color-content-background) 0% 0% no-repeat padding-box;
     border-radius: 8px;

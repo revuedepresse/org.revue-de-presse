@@ -47,6 +47,21 @@ $status-margin: 1em;
     }
   }
 
+  &__intro {
+    .status__publication,
+    .status__text-container {
+      background-color: var(--color-content-background);
+    }
+
+    .status__text-container {
+      margin-bottom: 15px;
+    }
+
+    .status__text {
+      color: var(--color-white)
+    }
+  }
+
   &__media {
     background-color: transparent;
     display: flex;

@@ -5,7 +5,11 @@
   margin: 0;
   width: 100%;
 
-  @extend .responsive-content;
+  @media (min-width: $width-large-device) {
+    border-radius: var(--separation-1);
+    margin-top: var(--separation-1);
+    max-width: var(--width-left-column-desktop);
+  }
 
   a {
     @extend .underline;

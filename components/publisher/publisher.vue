@@ -1,6 +1,6 @@
 <template>
   <div
-    class="publisher"
+    :class="publisherClasses"
     :style="publisherAvatar"
   >
     <div class="publisher__container">
@@ -29,6 +29,7 @@
       </div>
     </div>
     <a
+      v-show="!removeTwitterLogo"
       href="https://twitter.com"
     >
       <font-awesome-icon
@@ -62,8 +63,21 @@ export default class Publisher extends Vue {
   })
   avatarUrl!: string
 
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  removeTwitterLogo!: boolean
+
   get textAlternative () {
     return `${this.name} avatar`
+  }
+
+  get publisherClasses () {
+    return {
+      publisher: true,
+      publisher__intro: this.removeTwitterLogo
+    }
   }
 
   get publisherAvatar () {

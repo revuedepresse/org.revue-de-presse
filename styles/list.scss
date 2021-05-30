@@ -1,11 +1,12 @@
 
 .list {
-  font-family: $font-family;
-  margin-top: 0;
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  display: flex;
+  font-family: $font-family;
+  flex-direction: column;
+  margin-top: 0;
   padding-left: 0;
+  width: 100%;
 
   .list__page-size,
   .list__total-pages {
@@ -37,21 +38,6 @@
     &:hover {
       color: $color-beige;
       background-color: $color-black;
-    }
-  }
-
-  &__typeahead-label {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-
-    .list__typeahead {
-      border-radius: 5px;
-      box-shadow: none;
-      height: 30px;
-      outline: transparent;
-      padding: 3px 8px;
-      width: 100%;
     }
   }
 

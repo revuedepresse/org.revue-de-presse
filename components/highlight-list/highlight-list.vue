@@ -5,52 +5,56 @@
 
     <AppHeader ref="header" />
 
-    <div
-      ref="highlights"
-      :class="containerClass"
-    >
-      <p
-        v-if="$nuxt.isOffline"
-        class="highlight-list__loading"
+    <div class="highlight-list__content">
+      <div class="highlight-list__navigation">
+        <DatePicker
+          v-if="startDate"
+          :start-date="startDate"
+        />
+        <Outro />
+      </div>
+
+      <div
+        ref="highlights"
+        :class="containerClass"
       >
-        Votre navigateur se trouve actuellement hors-ligne.<br><br>
-        Une connexion internet est requise afin de découvrir les publications populaires.
-      </p>
-      <p
-        v-else-if="$fetchState.pending"
-        class="highlight-list__loading"
-      >
-        Chargement des publications...
-      </p>
-      <p
-        v-else-if="highlights.length === 0"
-        class="highlight-list__empty-list"
-      >
-        Cette date n'est encore associée à aucune publication pour le moment.<br><br>
-        Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
-      </p>
-      <ul v-else class="list__items">
-        <li
-          v-for="(highlight, index) in highlights"
-          :key="highlight.statusId"
-          :data-key="highlight.statusId"
-          class="list__item"
+        <p
+          v-if="$nuxt.isOffline"
+          class="highlight-list__loading"
         >
-          <Status
-            :status-at-first="formatStatus(highlight.status)"
-            :show-media="showMedia"
-            :ref-name="index"
-          />
-        </li>
-      </ul>
+          Votre navigateur se trouve actuellement hors-ligne.<br><br>
+          Une connexion internet est requise afin de découvrir les publications populaires.
+        </p>
+        <p
+          v-else-if="$fetchState.pending"
+          class="highlight-list__loading"
+        >
+          Chargement des publications...
+        </p>
+        <p
+          v-else-if="highlights.length === 0"
+          class="highlight-list__empty-list"
+        >
+          Cette date n'est encore associée à aucune publication pour le moment.<br><br>
+          Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
+        </p>
+        <ul v-else class="list__items">
+          <li
+            v-for="(highlight, index) in highlights"
+            :key="highlight.statusId"
+            :data-key="highlight.statusId"
+            class="list__item"
+          >
+            <Status
+              :status-at-first="formatStatus(highlight.status)"
+              :show-media="showMedia"
+              :is-intro="isIntro(index)"
+              :ref-name="index"
+            />
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <DatePicker
-      v-if="startDate"
-      :start-date="startDate"
-    />
-
-    <Outro />
   </div>
 </template>
 
@@ -60,12 +64,14 @@ import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import SharedState from '../../modules/shared-state'
 import AppHeader, { HeightAware } from '../app-header/app-header.vue'
+import Intro from '../intro/intro.vue'
 import DatePicker from '../date-picker/date-picker.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
+import Logo from '~/assets/revue-de-presse-logo.svg'
 
 const RETWEETS_EXCLUDED = '0'
 
@@ -87,7 +93,7 @@ type RequestOptions = {
 }
 
 @Component({
-  components: { AppHeader, DatePicker, Status, Outro }
+  components: { AppHeader, DatePicker, Intro, Status, Outro }
 })
 export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   @Prop({
@@ -171,6 +177,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get highlights () {
+    if (this.$device.isDesktop) {
+      return [{ status: this.intro }].concat(this.items)
+    }
+
     return this.items
   }
 
@@ -207,6 +217,35 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
 
     return this.startDate
+  }
+
+  get intro () {
+    const text = 'Revue de presse est un projet citoyen indépendant ' +
+    'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
+    'à l\'actualité et à l\'influence des médias sur l\'opinion.'
+
+    const intro: RawStatus = {
+      username: 'revue_2_presse',
+      name: 'Revue de presse',
+      avatarUrl: Logo,
+      avatar_url: Logo,
+      published_at: new Date(),
+      publishedAt: new Date(),
+      statusId: '0',
+      status_id: '0',
+      text,
+      url: '',
+      isVisible: true,
+      media: [],
+      totalRetweet: 0,
+      totalLike: 0,
+      retweet_count: 0,
+      favorite_count: 0,
+      links: [],
+      original_document: JSON.stringify({ user: { name: 'Revue de presse' } })
+    }
+
+    return intro
   }
 
   get showEndDate () {
@@ -324,6 +363,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
 
     return height
+  }
+
+  isIntro (key) {
+    return this.$device.isDesktop && key === 0
   }
 
   updateHighlights () {

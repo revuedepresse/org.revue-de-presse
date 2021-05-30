@@ -40,6 +40,7 @@
     letter-spacing: 0;
     line-height: 17px;
     text-align: left;
+    text-decoration: none;
 
     &:link,
     &:active,
@@ -57,12 +58,37 @@
     letter-spacing: 0;
     line-height: 16px;
     text-align: left;
+    text-decoration: none;
 
     &:link,
     &:active,
     &:hover,
     &:visited {
       @extends .publisher__username;
+    }
+  }
+
+  &__intro {
+    .publisher__name {
+      color: var(--color-white);
+
+      &:link,
+      &:active,
+      &:hover,
+      &:visited {
+        color: var(--color-white);
+      }
+    }
+
+    .publisher__username {
+      color: var(--color-brand-twitter);
+
+      &:link,
+      &:active,
+      &:hover,
+      &:visited {
+        color: var(--color-brand-twitter);
+      }
     }
   }
 
