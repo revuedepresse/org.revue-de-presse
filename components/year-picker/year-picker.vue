@@ -55,10 +55,12 @@ class YearPicker extends mixins(DateMixin) {
   get acceptedYears () {
     const today = new Date()
     const years = new Array(today.getFullYear() - 2018)
+
     const acceptedYears = [{
       index: 0,
       label: 2018,
-      isSelected: this.year === 2018
+      isSelected: this.year === 2018,
+      onClick: () => {}
     }].concat(
       years
         .fill(2019)
@@ -67,12 +69,15 @@ class YearPicker extends mixins(DateMixin) {
             index: inc + 1,
             label: year + inc,
             isSelected: this.year === year + inc,
-            onClick: () => {
-              this.pickDate(new Date(`${year + inc}-01-01`))
-            }
+            onClick: () => {}
           }
         })
-    )
+    ).map((acceptedYear) => {
+      acceptedYear.onClick = () => {
+        this.pickDate(new Date(`${acceptedYear.label}-01-01`))
+      }
+      return acceptedYear
+    })
 
     return acceptedYears
   }
