@@ -1,0 +1,270 @@
+
+$cell-width: 40px;
+$cell-margin: 2px;
+$max-width: 336px;
+
+.calendar-month {
+  background-color: var(--color-white);
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-bottom: var(--separation-3);
+  width: calc(100% - 2 * var(--separation-2));
+
+  @media (min-width: $width-desktop) {
+    border-bottom-left-radius: var(--separation-1);
+    border-bottom-right-radius: var(--separation-1);
+    max-width: var(--width-left-column-mobile);
+    margin-bottom: var(--separation-2);
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    background-color: var(--color-white);
+    justify-content: space-between;
+    margin: auto;
+    width: 100%;
+  }
+
+  &__container {
+    background: var(--color-white) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--color-brand);
+    border-radius: var(--border-radius-date-picker);
+    display: flex;
+    height: var(--height-date-picker);
+    padding: 5px 4px 5px 4px;
+    position: relative;
+    line-height: calc(var(--height-date-picker) + 10px);
+    margin-bottom: var(--separation-2);
+    margin-top: 10px;
+    align-content: flex-end;
+
+    @media (min-width: $width-large-device) {
+      margin: 10px;
+      margin-left: var(--separation-2);
+    }
+
+    &:hover {
+      background-color: var(--color-background-button-active);
+      border-color: var(--color-background-button-active);
+
+      .calendar-month__button {
+        color: var(--color-white);
+
+        &:before {
+          filter: $filter-white;
+        }
+      }
+    }
+
+    &:active {
+      background-color: var(--color-background-button-active);
+      border-color: var(--color-brand);
+
+      .calendar-month__button {
+        color: var(--color-brand);
+
+        &:before {
+          filter: $filter-brand;
+        }
+      }
+    }
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    color: var(--color-brand);
+    display: flex;
+    font: normal normal normal var(--font-size-date-picker)/var(--line-spacing-date-picker) Roboto;
+    height: var(--height-date-picker);
+    letter-spacing: 0;
+
+    &:before {
+      content: "";
+      display: inline-flex;
+      background: var(--icon-pick-item-background);
+      filter: $filter-brand;
+      width: var(--icon-pick-item-width);
+      height: var(--icon-pick-item-height);
+      margin-right: 5px;
+    }
+  }
+
+  &__days {
+    margin: auto;
+
+    @media (min-width: var(--width-left-column-desktop)) {
+      max-width: var(--width-left-column-desktop);
+    }
+
+    @media (min-width: $width-large-device) {
+      padding-left: var(--separation-2);
+      padding-right: var(--separation-2);
+      max-width: var(--width-left-column-desktop);
+    }
+  }
+
+  &__day-names {
+    background-color: var(--color-white);
+    display: flex;
+    align-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  &__day-col {
+    display: flex;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__day-name {
+    display: flex;
+    font: normal normal normal var(--font-size-calendar-month-day)/var(--line-spacing-calendar-month-day) Arial;
+    letter-spacing: 0;
+    color: var(--color-brand);
+    margin: auto;
+    opacity: 1;
+  }
+
+  &__day-row {
+    display: flex;
+    width: 100%;
+  }
+
+  &__day-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__day-cell {
+    border: 1px solid var(--color-content-font);
+    background: var(--color-white) 0% 0% no-repeat padding-box;
+    border-radius: var(--border-radius-date-picker);
+    color: var(--color-content-text);
+    cursor: pointer;
+    font: normal normal normal var(--font-size-calendar-month-day-cell)/var(--line-spacing-calendar-month-day-cell) Arial;
+    letter-spacing: 0;
+    height: calc(32px - #{$cell-margin});
+    line-height: 32px;
+    text-align: center;
+    opacity: 1;
+    box-sizing: border-box;
+    width: $cell-width;
+
+    &:hover {
+      border-color: var(--color-brand);
+      color: var(--color-brand);
+    }
+
+    &:active {
+      border-color: var(--color-brand);
+      background-color: var(--color-brand);
+      color: var(--color-white);
+    }
+  }
+
+  &__day-number {
+    display: flex;
+    width: 100%;
+
+    &--selected {
+      .calendar-month__day-cell {
+        border-color: var(--color-brand);
+        background-color: var(--color-brand);
+        color: var(--color-white);
+
+        &:hover {
+          color: var(--color-white);
+        }
+      }
+    }
+  }
+
+  &__day-number--other-month {
+    .calendar-month__day-cell {
+      color: var(--color-content-font);
+    }
+  }
+
+  &__previous-item,
+  &__next-item {
+    background: transparent;
+    border: 1px solid var(--color-white);
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    height: 34px;
+    width: 34px;
+    line-height: 34px;
+    margin: var(--margin-navigation) 16px var(--margin-navigation);
+    margin-left: 0;
+    padding: 1px;
+
+    &:before {
+      background: var(--icon-previous-item-background);
+      content: "";
+      display: inline-flex;
+      filter: $filter-brand;
+      height: var(--icon-previous-item-height);
+      width: var(--icon-previous-item-width);
+    }
+
+    &:hover {
+      border-color: var(--color-brand);
+    }
+
+    &:active {
+      border-color: var(--color-background-button-active);
+      background-color: var(--color-brand);
+
+      &:before {
+        filter: $filter-active
+      }
+    }
+  }
+
+  &__next-item {
+    margin-left: 0;
+    margin-right: 0;
+
+    &:before {
+      background: var(--icon-next-item-background);
+      height: var(--icon-next-item-height);
+      width: var(--icon-next-item-width);
+    }
+  }
+
+  &__previous-item--disabled,
+  &__next-item--disabled {
+    cursor: auto;
+
+    &:hover {
+      border: 1px solid var(--color-white);
+    }
+
+    &:before {
+      filter: $filter-content;
+    }
+
+    &:active {
+      border-color: transparent;
+      background-color: transparent;
+
+      &:before {
+        filter: $filter-content;
+      }
+    }
+  }
+
+  &__navigation {
+    display: flex;
+
+    @media (min-width: $width-large-device) {
+      margin-right: var(--separation-2);
+    }
+  }
+}

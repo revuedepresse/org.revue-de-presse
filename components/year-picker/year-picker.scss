@@ -1,0 +1,96 @@
+
+.year-picker {
+  background-color: var(--color-white);
+  display: flex;
+  flex-wrap: wrap;
+  position: sticky;
+  bottom: 0;
+
+  &__buttons {
+    align-content: center;
+    display: flex;
+    background-color: var(--color-white);
+    justify-content: flex-end;
+    height: 100%;
+    width: calc(100% - var(--separation-2));
+  }
+
+  &__previous-item,
+  &__next-item {
+    background: transparent;
+    border: 1px solid var(--color-white);
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    height: 34px;
+    width: 34px;
+    line-height: 34px;
+    margin: var(--margin-navigation) 16px var(--margin-navigation);
+    margin-left: 0;
+    padding: 1px;
+
+    &:before {
+      background: var(--icon-previous-item-background);
+      content: "";
+      display: inline-flex;
+      filter: $filter-brand;
+      height: var(--icon-previous-item-height);
+      width: var(--icon-previous-item-width);
+    }
+
+    &:hover {
+      border-color: var(--color-brand);
+    }
+
+    &:active {
+      border-color: var(--color-background-button-active);
+      background-color: var(--color-brand);
+
+      &:before {
+        filter: $filter-active
+      }
+    }
+  }
+
+  &__next-item {
+    margin-left: 0;
+    margin-right: 0;
+
+    &:before {
+      background: var(--icon-next-item-background);
+      height: var(--icon-next-item-height);
+      width: var(--icon-next-item-width);
+    }
+  }
+
+  &__previous-item--disabled,
+  &__next-item--disabled {
+    &:hover {
+      border: 1px solid var(--color-white);
+      cursor: auto;
+    }
+
+    &:before {
+      filter: $filter-content;
+    }
+
+    &:active {
+      border-color: transparent;
+      background-color: transparent;
+      cursor: auto;
+
+      &:before {
+        filter: $filter-content;
+      }
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    align-self: center;
+  }
+
+  &__scrollable-list {
+    height: auto;
+  }
+}

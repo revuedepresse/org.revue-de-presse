@@ -1,19 +1,119 @@
+
 .outro {
+  background: var(--color-content-background) 0% 0% no-repeat padding-box;
   border-top: 1px $color-black solid;
-  line-height: 1.5rem;
-  font-style: normal;
-  font-size: 1.1em;
-  font-family: $font-family;
   margin: 0;
-  @extend .responsive-content;
+  width: 100%;
+
+  @media (min-width: $width-large-device) {
+    border-radius: var(--separation-1);
+    margin-top: var(--separation-1);
+    max-width: var(--width-left-column-desktop);
+  }
 
   a {
-    @extend .clickable;
-    font-size: 1em;
+    @extend .underline;
+    color: var(--color-brand-twitter);
   }
 
   em {
     text-decoration: underline;
     font-style: normal;
+  }
+
+  &__iconography {
+    &-introducing:before {
+      background: var(--icon-introducing-background);
+      width: var(--icon-introducing-width);
+      height: var(--icon-introducing-height);
+      left: -5px;
+      top: -2px;
+    }
+
+    &-sharing:before {
+      background: var(--icon-sharing-background);
+      width: var(--icon-sharing-width);
+      height: var(--icon-sharing-height);
+      left: -5px;
+      top: -2px;
+    }
+
+    &-funding:before {
+      background: var(--icon-funding-background);
+      width: var(--icon-funding-width);
+      height: var(--icon-funding-height);
+      left: -2px;
+      top: -5px;
+    }
+  }
+
+  &__subscribe-to {
+    display: inline-flex;
+    background: var(--color-brand-twitter) 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    opacity: 1;
+    margin-top: var(--separation-2);
+    padding: var(--separation-0);
+    color: var(--color-white);
+    font: normal normal normal var(--font-size-footer-outer-link)/var(--line-spacing-footer-outer-link) Arial;
+    letter-spacing: 0;
+    letter-spacing: 0;
+    text-align: left;
+
+    :active,
+    :hover,
+    :link,
+    :visited {
+      @extend .outro__subscribe-to;
+
+      margin-top: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+  }
+
+  &__subscription-label {
+    padding-left: var(--separation-0);
+  }
+
+  &__title {
+    color: var(--color-white);
+    position: relative;
+    padding-left: 30px;
+
+    &:before {
+      color: var(--color-white);
+      content: "";
+      display: inline-flex;
+      zoom: 1.5;
+      position: absolute;
+    }
+  }
+
+  &__copyright {
+    margin: auto;
+    margin-bottom: var(--separation-2);
+  }
+
+  &__copyright-footer {
+    color: var(--color-white);
+    display: flex;
+    font: normal normal normal var(--font-size-footer-copyright)/var(--line-spacing-footer-copyright) Roboto;
+    text-align: center;
+    width: 100%;
+
+    .outro__outer-link {
+      display: inline-flex;
+      margin: auto;
+      align-self: center;
+
+      &:active,
+      &:active,
+      &:hover,
+      &:link,
+      &:visited {
+        color: var(--color-white);
+      }
+    }
   }
 }

@@ -1,0 +1,89 @@
+
+.web-intent {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  margin-right: 20px;
+  padding: 0;
+
+  &__hidden {
+    display: none
+  }
+
+  &__like {
+    &:hover {
+      border-radius: 50%;
+      color: var(--background-vanity-metric-like);
+      stroke: var(--background-vanity-metric-like);
+      width: 24px;
+      fill: $color-background-like-light;
+
+      .a {
+        fill: #fdecf1;
+      }
+    }
+
+    &:active {
+      .c {
+        fill: lighten(#e81c4f, 25%);
+      }
+    }
+  }
+
+  &__retweet {
+    &:hover {
+      background-color: $color-background-retweet-light;
+      border-radius: 50%;
+      color: var(--background-vanity-metric-retweet);
+      width: 24px;
+
+      .a {
+        stroke: none;
+        stroke-width: 1px;
+      }
+
+      .b {
+        stroke: var(--background-vanity-metric-retweet);
+      }
+    }
+
+    &:active {
+      .a {
+        stroke: none;
+        stroke-width: 1px;
+      }
+
+      .c {
+        fill: lighten(#19cf86, 25%);
+      }
+    }
+  }
+
+  &__reply {
+    &:hover {
+      background-color: $color-background-reply-light;
+      border-radius: 50%;
+      width: 24px;
+
+      .a {
+        stroke: $color-background-reply-light;
+      }
+
+      .c  {
+        stroke: $color-background-reply-light;
+        fill: lighten(#1d9bf0, 25%);
+      }
+    }
+
+    &:active {
+      .a {
+        stroke: none;
+        stroke-width: 1px;
+      }
+
+      .c {
+        fill: var(--background-vanity-metric-reply);
+      }
+    }
+  }
+}

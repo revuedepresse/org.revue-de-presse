@@ -1,0 +1,56 @@
+
+.vanity-metric {
+  display: flex;
+  cursor: auto;
+  flex-direction: row;
+  height: 24px;
+  width: 24px;
+  margin-left: 20px;
+  padding: 0;
+  width: auto;
+
+  &__count {
+    display: flex;
+    font: normal normal normal 15px/25px Arial;
+    letter-spacing: 0;
+    opacity: 1;
+    margin-left: 5px;
+
+    &--like {
+      color: var(--background-vanity-metric-like);
+    }
+
+    &--retweet {
+      color: var(--background-vanity-metric-retweet);
+    }
+  }
+
+  &__like {
+    border-radius: 50%;
+    color: var(--background-vanity-metric-like);
+    stroke: var(--background-vanity-metric-like);
+    width: 24px;
+    fill: $color-background-like-light;
+
+    .a {
+      fill: #fdecf1;
+    }
+  }
+
+  &__retweet {
+    background-color: $color-background-retweet-light;
+    border-radius: 50%;
+    color: var(--background-vanity-metric-retweet);
+    stroke: var(--background-vanity-metric-retweet);
+    width: 24px;
+
+    .a {
+      stroke: none;
+      stroke-width: 1px;
+    }
+
+    .b {
+      stroke: var(--background-vanity-metric-retweet);
+    }
+  }
+}

@@ -14,49 +14,62 @@
   </div>
 </template>
 
-<script>
-import { css } from '@emotion/css';
-import EventHub from '../../modules/event-hub';
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { css } from '@emotion/css'
+import EventHub from '../../modules/event-hub'
+import { Media } from '~/mixins/status-format'
 
-export default {
-  name: 'modal-window',
-  data() {
-    return {
-      isVisible: false,
-      mediaStyle: '',
-      mediaUrl: '',
-      overflowStyle: {},
-      noOverflowStyle: {},
-      body: {}
-    };
-  },
-  mounted() {
-    EventHub.$on('modal_window.show_intended', this.show);
+@Component
+class ModalWindow extends Vue {
+  isVisible: boolean = false
+  mediaStyle: string = ''
+  mediaUrl: string = ''
+  overflowStyle: string = ''
+  noOverflowStyle: string = ''
+  body?: HTMLBodyElement
+
+  mounted () {
+    EventHub.$on('modal_window.show_intended', this.show)
     this.noOverflowStyle = css`
       overflow-y: hidden;
-    `;
+    `
     this.overflowStyle = css`
       overflow-y: auto;
-    `;
-    this.body = document.querySelector('body');
-  },
-  methods: {
-    show({ media }) {
-      this.mediaUrl = media.url;
-      this.body.classList.remove(this.overflowStyle);
-      this.body.classList.add(this.noOverflowStyle);
-      this.body.classList.add('containing-modal-window');
-      this.isVisible = true;
-    },
-    hide() {
-      this.isVisible = false;
-      this.body.classList.remove(this.noOverflowStyle);
-      this.body.classList.add(this.overflowStyle);
-      this.body.classList.remove('containing-modal-window');
-      this.mediaUrl = '';
+    `
+    const body = document.querySelector('body')
+
+    if (body !== null) {
+      this.body = body
     }
   }
-};
+
+  show ({ media }: { media: Media}) {
+    this.mediaUrl = media.url
+
+    if (this.body !== undefined) {
+      this.body.classList.remove(this.overflowStyle)
+      this.body.classList.add(this.noOverflowStyle)
+      this.body.classList.add('containing-modal-window')
+    }
+
+    this.isVisible = true
+  }
+
+  hide () {
+    this.isVisible = false
+
+    if (this.body !== undefined) {
+      this.body.classList.remove(this.noOverflowStyle)
+      this.body.classList.add(this.overflowStyle)
+      this.body.classList.remove('containing-modal-window')
+    }
+
+    this.mediaUrl = ''
+  }
+}
+
+export default ModalWindow
 </script>
 
 <style lang="scss" scoped>

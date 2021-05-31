@@ -2,12 +2,20 @@
 
 .member-status-list {
   @extend .list;
+
+  background-color: $background-taupe-grey;
   flex-direction: column;
   padding-top: 0;
-  width: auto;
+  margin: auto;
+  width: 100%;
 
   .list__item {
     height: auto;
+    margin-top: var(--separation-2);
+
+    &:first-child {
+      margin-top: 18px;
+    }
   }
 
   /deep/ .status__links {
