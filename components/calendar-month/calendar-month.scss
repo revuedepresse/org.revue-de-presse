@@ -8,15 +8,15 @@ $max-width: 336px;
   display: flex;
   flex-wrap: wrap;
   margin: auto;
-  max-width: var(--width-left-column-mobile);
   margin-bottom: var(--separation-3);
-  width: 100%;
+  width: calc(100% - 2 * var(--separation-2));
 
-  @media (min-width: $width-left-column-mobile) {
+  @media (min-width: $width-desktop) {
     border-bottom-left-radius: var(--separation-1);
     border-bottom-right-radius: var(--separation-1);
     max-width: var(--width-left-column-mobile);
     margin-bottom: var(--separation-2);
+    width: 100%;
   }
 
   &__buttons {
@@ -37,7 +37,7 @@ $max-width: 336px;
     position: relative;
     line-height: calc(var(--height-date-picker) + 10px);
     margin-bottom: var(--separation-2);
-    margin-top: var(--separation-2);
+    margin-top: 10px;
     align-content: flex-end;
 
     @media (min-width: $width-large-device) {

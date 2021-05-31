@@ -7,8 +7,6 @@
   bottom: 0;
   width: 100%;
 
-  @extend .responsive-content;
-
   &__buttons {
     display: flex;
     background-color: var(--color-white);

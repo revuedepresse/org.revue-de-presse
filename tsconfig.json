@@ -24,15 +24,16 @@
       ]
     },
     "types": [
-      "@types/he",
-      "@types/emoji-js",
-      "@types/node",
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxtjs/date-fns",
-      "@nuxtjs/device",
-      "@nuxtjs/router",
-      "@nuxtjs/sentry"
+      'cookie-universal-nuxt',
+      '@types/he',
+      '@types/emoji-js',
+      '@types/node',
+      '@nuxt/types',
+      '@nuxtjs/axios',
+      '@nuxtjs/date-fns',
+      '@nuxtjs/device',
+      '@nuxtjs/router',
+      '@nuxtjs/sentry'
     ],
     "typeRoots": ["types"]
   },

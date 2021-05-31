@@ -8,8 +8,14 @@
   top: 0;
   justify-content: center;
   z-index: 1000;
+  flex-direction: column;
+  @media (min-width: $width-desktop) {
+    flex-direction: row;
+  }
 
   &__container {
-    width: calc(16px + var(--width-left-column-desktop) + var(--width-right-column-desktop));
+    @media (min-width: $width-desktop) {
+      width: calc(16px + var(--width-left-column-desktop) + var(--width-right-column-desktop));
+    }
   }
 }

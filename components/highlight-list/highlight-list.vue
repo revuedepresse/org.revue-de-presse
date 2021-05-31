@@ -18,6 +18,7 @@
         ref="highlights"
         :class="containerClass"
       >
+        <!-- TODO bring back offline mode
         <p
           v-if="$nuxt.isOffline"
           class="highlight-list__loading"
@@ -39,6 +40,8 @@
           Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
         </p>
         <ul v-else class="list__items">
+        -->
+        <ul class="list__items">
           <li
             v-for="(highlight, index) in highlights"
             :key="highlight.statusId"

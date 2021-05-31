@@ -109,6 +109,7 @@ const config: NuxtConfig = {
     '@nuxtjs/router',
     '@nuxtjs/sentry',
     '@nuxtjs/svg',
+    'cookie-universal-nuxt',
     'nuxt-lazysizes',
     'nuxt-vuex-router-sync'
   ],

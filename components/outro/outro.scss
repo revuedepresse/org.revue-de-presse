@@ -90,11 +90,15 @@
     }
   }
 
+  &__copyright {
+    margin: auto;
+    margin-bottom: var(--separation-2);
+  }
+
   &__copyright-footer {
     color: var(--color-white);
     display: flex;
     font: normal normal normal var(--font-size-footer-copyright)/var(--line-spacing-footer-copyright) Roboto;
-    margin-bottom: var(--separation-2);
     text-align: center;
     width: 100%;
 
@@ -111,9 +115,5 @@
         color: var(--color-white);
       }
     }
-  }
-
-  &__copyright {
-    margin: auto;
   }
 }

@@ -1,9 +1,16 @@
 <template>
-  <div ref="intro" class="intro">
+  <div
+    v-show="isIntroVisible"
+    ref="intro"
+    class="intro"
+  >
     <div class="intro__container">
       <div class="intro__content-container">
         <div class="intro__arrow-up" />
-        <a class="intro__close-intro">+</a>
+        <a
+          class="intro__close-intro"
+          @click="hideIntro"
+        >+</a>
         <p class="intro__content">
           Revue de presse est un projet citoyen indépendant
           qui s'adresse aux journalistes et à toute personne s'intéressant à l'actualité et à l'influence des médias sur l'opinion.<br>
@@ -28,10 +35,23 @@ export default class Intro extends Vue {
     [key: string]: any
   }
 
+  isIntroVisible: boolean = true;
   currentRoute: string = this.$router.currentRoute.path
   logo = logo
+
   height () {
     return this.$refs.intro.offsetHeight
+  }
+
+  hideIntro () {
+    this.isIntroVisible = false
+    this.$cookies.set('hideIntro', 1)
+  }
+
+  mounted () {
+    if (this.$cookies.get('hideIntro') === 1) {
+      this.isIntroVisible = false
+    }
   }
 }
 </script>

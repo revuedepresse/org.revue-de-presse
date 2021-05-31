@@ -6,8 +6,6 @@
   position: sticky;
   bottom: 0;
 
-  @extend .responsive-content;
-
   &__buttons {
     align-content: center;
     display: flex;

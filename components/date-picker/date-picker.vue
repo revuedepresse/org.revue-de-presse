@@ -106,7 +106,7 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   get calendarIcon () {
-    const widthOrHeight = '20px'
+    const widthOrHeight = '19px'
 
     return `
       --icon-calendar-background: center / ${widthOrHeight} no-repeat url("${calendardIcon}");

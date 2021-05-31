@@ -6,8 +6,10 @@
   flex-wrap: wrap;
   flex-direction: column;
   top: calc(100% - 53px);
+  border-radius: 0;
+  margin-top: 10px;
 
-  @media (min-width: $width-left-column-mobile) {
+  @media (min-width: $width-desktop) {
     max-width: var(--width-left-column-desktop);
     border-radius: var(--separation-1);
     flex-direction: column-reverse;
@@ -21,6 +23,7 @@
 
   &__pickers {
     margin: auto;
+    width: 100%;
 
     @media (min-width: var(--width-left-column-mobile)) {
       max-width: var(--width-left-column-mobile);
@@ -32,7 +35,12 @@
     background-color: var(--color-brand);
     margin: auto;
     position: relative;
-    width: var(--width-left-column-desktop);
+    justify-content: space-between;
+    width: 100%;
+
+    @media (min-width: $width-desktop) {
+      width: var(--width-left-column-desktop);
+    }
   }
 
   &__container {
@@ -81,8 +89,9 @@
     color: var(--color-white);
     display: flex;
     font: normal normal normal var(--font-size-date-picker)/var(--line-spacing-date-picker) Roboto;
-    height: var(--height-date-picker);
+    height: auto;
     letter-spacing: 0;
+    align-items: center;
 
     &:before {
       content: "";
@@ -188,8 +197,5 @@
   &__navigation {
     display: flex;
     height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
   }
 }

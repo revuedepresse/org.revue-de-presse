@@ -8,13 +8,13 @@
 
   &__loading,
   &__empty-list {
-    @extend .responsive-content;
     font-size: $font-size-base;
   }
 
   &__container {
     display: flex;
     margin: auto;
+    width: calc(100% - 2*var(--separation-2));
 
     &--filled {
       min-height: 100vh;
@@ -41,9 +41,13 @@
     border-bottom: none;
   }
 
-  @media (min-width: $width-left-column-mobile) {
+  .highlight-list__content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  @media (min-width: $width-desktop) {
     .highlight-list__content {
-      display: flex;
       flex-direction: row;
     }
 
