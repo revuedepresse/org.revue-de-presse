@@ -4,7 +4,10 @@
       class="calendar-month__buttons"
       :style="pickItemIcon"
     >
-      <div class="calendar-month__container">
+      <div
+        class="calendar-month__container"
+        @click="switchToMonthPicking"
+      >
         <button
           class="calendar-month__button"
           @click="switchToMonthPicking"
