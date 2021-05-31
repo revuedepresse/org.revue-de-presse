@@ -19,6 +19,7 @@
         :avatar-url="status.avatarUrl"
         :name="status.name"
         :username="status.username"
+        :publication-url="status.url"
         :remove-twitter-logo="isIntro"
       />
 

@@ -31,7 +31,7 @@
     </div>
     <a
       v-show="!removeTwitterLogo"
-      href="https://twitter.com"
+      :href="publicationUrl"
     >
       <font-awesome-icon
         class="publisher__platform"
@@ -63,6 +63,12 @@ export default class Publisher extends Vue {
     required: true
   })
   avatarUrl!: string
+
+  @Prop({
+    type: String,
+    required: true
+  })
+  publicationUrl!: string
 
   @Prop({
     type: Boolean,
