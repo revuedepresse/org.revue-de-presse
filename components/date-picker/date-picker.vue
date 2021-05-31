@@ -18,9 +18,10 @@
       <CalendarMonth
         v-show="pickingDay"
         :month="startDateMonth"
+        :picked-date="new Date(startDate)"
         :year="startDateYear"
-        :is-next-item-available="isNextDayAvailable()"
-        :is-previous-item-available="isPreviousDayAvailable()"
+        :is-next-item-available="isNextMonthAvailable()"
+        :is-previous-item-available="isPreviousMonthAvailable()"
       />
     </div>
     <div
@@ -36,6 +37,7 @@
         <button
           class="date-picker__button"
           :disabled="disabled"
+          @click="pickDate()"
           v-text="startDateLabel"
         />
       </div>
@@ -44,10 +46,12 @@
         <button
           :class="getPreviousDayClasses()"
           :style="previousDayIcon"
+          @click="goToDayBeforePickedDate()"
         />
         <button
           :class="getNextDayClasses()"
           :style="nextDayIcon"
+          @click="goToDayFollowingPickedDate()"
         />
       </div>
     </div>
@@ -67,6 +71,7 @@ import previousDayHoverIcon from '~/assets/icons/icon-previous-day-hover.png'
 import nextDayIcon from '~/assets/icons/icon-next-day.svg'
 import nextDayActiveIcon from '~/assets/icons/icon-next-day-active.png'
 import nextDayHoverIcon from '~/assets/icons/icon-next-day-hover.png'
+import Time from '~/modules/time'
 
 const DatePickerStore = namespace('date-picker')
 
@@ -81,7 +86,7 @@ export default class DatePicker extends mixins(DateMixin) {
   startDate!: string
 
   startDateLabel: string = this.refreshStartDateLabel(this.startDate)
-  disabled: boolean = false
+
   pickedDate: boolean = false
 
   @DatePickerStore.Getter
@@ -96,22 +101,8 @@ export default class DatePicker extends mixins(DateMixin) {
   @DatePickerStore.Mutation
   public pickDay!: () => void
 
-  @DatePickerStore.Mutation
-  public pickMonth!: () => void
-
-  @DatePickerStore.Mutation
-  public pickYear!: () => void
-
   switchToDayPicking (): void {
     this.pickDay()
-  }
-
-  switchToMonthPicking (): void {
-    this.pickMonth()
-  }
-
-  switchToYearPicking (): void {
-    this.pickYear()
   }
 
   get calendarIcon () {
@@ -122,6 +113,26 @@ export default class DatePicker extends mixins(DateMixin) {
       --icon-calendar-height: ${widthOrHeight};
       --icon-calendar-width: ${widthOrHeight}
     `
+  }
+
+  get dayBeforePickedDate (): Date {
+    const startDate = new Date(this.startDate)
+    const pickedDate = new Date(startDate.getTime())
+    pickedDate.setDate(pickedDate.getDate() - 1)
+
+    return pickedDate
+  }
+
+  get dayFollowingPickedDate (): Date {
+    const startDate = new Date(this.startDate)
+    const pickedDate = new Date(startDate.getTime())
+    pickedDate.setDate(pickedDate.getDate() + 1)
+
+    return pickedDate
+  }
+
+  get disabled (): boolean {
+    return this.pickingDay
   }
 
   get previousDayIcon () {
@@ -162,6 +173,22 @@ export default class DatePicker extends mixins(DateMixin) {
 
   get year () {
     return this.startDateYear
+  }
+
+  goToDayFollowingPickedDate () {
+    if (!this.isNextDayAvailable()) {
+      return
+    }
+
+    this.changeDate(this.dayFollowingPickedDate)
+  }
+
+  goToDayBeforePickedDate () {
+    if (!this.isPreviousDayAvailable()) {
+      return
+    }
+
+    this.changeDate(this.dayBeforePickedDate)
   }
 
   mounted () {
@@ -276,12 +303,27 @@ export default class DatePicker extends mixins(DateMixin) {
       return true
     }
 
-    // January 2018 is the earliest available month
-    return this.startDateMonth > 1
+    // January 2018 being the earliest available month
+    // February 2018 is the earliest month being preceding by a month
+    // considered valid
+    return this.startDateMonth >= 1
+  }
+
+  changeDate (date: Date) {
+    const startDate = Time.formatDate(date)
+
+    this.$router.push({
+      name: 'daily-review',
+      params: { startDate }
+    })
   }
 
   pickDate () {
     this.pickedDate = true
+
+    if (!this.disabled) {
+      this.switchToDayPicking()
+    }
 
     return false
   }

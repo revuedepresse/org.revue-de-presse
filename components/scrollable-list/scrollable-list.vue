@@ -1,14 +1,16 @@
 <template>
   <div class="scrollable-list">
-    <ul :class="getListClasses()">
+    <ul ref="list" :class="getListClasses()">
       <li
         v-for="item in items"
         :key="item.index"
         class="scrollable-list__list-item"
+        :data-checked="item.isSelected"
       >
         <label
           :class="getLabelClasses(item)"
           for="selectable"
+          @click="handleClick(item)"
         >
           <input
             class="scrollable-list__selectable"
@@ -32,6 +34,7 @@ type Item = {
   isDisabled: boolean,
   isSelected: boolean,
   index: number,
+  onClick: () => void
 }
 
 @Component
@@ -54,6 +57,11 @@ class ScrollableList extends Vue {
   })
   autoHeight!: boolean
 
+  $refs!: {
+    list: HTMLElement,
+    [key: string]: any
+  }
+
   getLabelClasses (item: Item) {
     return {
       'scrollable-list__selectable-label': true,
@@ -67,6 +75,32 @@ class ScrollableList extends Vue {
       'scrollable-list__list': true,
       'scrollable-list__list--auto': true
     }
+  }
+
+  handleClick (item: {[key: string]: any}) {
+    if (item.onClick instanceof Function) {
+      item.onClick()
+    }
+  }
+
+  scrollIntoView () {
+    const selectedItem: HTMLElement|null = this.$refs.list.querySelector(
+      '[data-checked]'
+    )
+
+    if (selectedItem === null) {
+      return
+    }
+
+    this.$refs.list.scrollTop = selectedItem.offsetTop - 15
+  }
+
+  mounted () {
+    this.scrollIntoView()
+  }
+
+  updated () {
+    this.scrollIntoView()
   }
 }
 

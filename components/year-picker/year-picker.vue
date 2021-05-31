@@ -5,16 +5,18 @@
         <button
           :class="getPreviousItemClasses()"
           :style="previousItemIcon"
+          @click="goToYearBeforePickedDate"
         />
         <button
           :class="getNextItemClasses()"
           :style="nextItemIcon"
+          @click="goToYearFollowingPickedDate"
         />
       </div>
     </div>
     <ScrollableList
       class="year-picker__scrollable-list"
-      :items="acceptedYearLabels"
+      :items="acceptedYears"
       :selected="year"
     />
   </div>
@@ -26,6 +28,7 @@ import ScrollableList from '../scrollable-list/scrollable-list.vue'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 import DateMixin from '~/mixins/date'
+import Time from '~/modules/time'
 
 @Component({
   components: { ScrollableList }
@@ -49,7 +52,7 @@ class YearPicker extends mixins(DateMixin) {
   })
   isPreviousItemAvailable!: boolean
 
-  get acceptedYearLabels () {
+  get acceptedYears () {
     const today = new Date()
     const years = new Array(today.getFullYear() - 2018)
     const acceptedYears = [{
@@ -63,7 +66,10 @@ class YearPicker extends mixins(DateMixin) {
           return {
             index: inc + 1,
             label: year + inc,
-            isSelected: this.year === year + inc
+            isSelected: this.year === year + inc,
+            onClick: () => {
+              this.pickDate(new Date(`${year + inc}-01-01`))
+            }
           }
         })
     )
@@ -103,6 +109,35 @@ class YearPicker extends mixins(DateMixin) {
       'year-picker__previous-item': true,
       'year-picker__previous-item--disabled': !this.isPreviousItemAvailable
     }
+  }
+
+  goToYearBeforePickedDate () {
+    if (!this.isPreviousItemAvailable) {
+      return false
+    }
+
+    this.pickDate(new Date(`${this.year - 1}-01-01`))
+
+    return false
+  }
+
+  goToYearFollowingPickedDate () {
+    if (!this.isNextItemAvailable) {
+      return false
+    }
+
+    this.pickDate(new Date(`${this.year + 1}-01-01`))
+
+    return false
+  }
+
+  pickDate (date: Date) {
+    const startDate = Time.formatDate(date)
+
+    this.$router.push({
+      name: 'daily-review',
+      params: { startDate }
+    })
   }
 }
 

@@ -7,6 +7,7 @@
       <div class="calendar-month__container">
         <button
           class="calendar-month__button"
+          @click="switchToMonthPicking"
           v-text="monthYearLabel"
         />
       </div>
@@ -14,10 +15,12 @@
         <button
           :class="getPreviousItemClasses()"
           :style="previousItemIcon"
+          @click="goToPreviousMonth()"
         />
         <button
           :class="getNextItemClasses()"
           :style="nextItemIcon"
+          @click="goToNextMonth()"
         />
       </div>
     </div>
@@ -60,11 +63,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, mixins } from 'nuxt-property-decorator'
+import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
 import DateMixin from '../../mixins/date'
+import Time from '../../modules/time'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
+
+const DatePickerStore = namespace('date-picker')
 
 @Component
 class CalendarMonth extends mixins(DateMixin) {
@@ -81,6 +87,12 @@ class CalendarMonth extends mixins(DateMixin) {
   isPreviousItemAvailable!: boolean
 
   @Prop({
+    type: Date,
+    required: true
+  })
+  pickedDate!: Date
+
+  @Prop({
     type: Number,
     required: true
   })
@@ -93,6 +105,13 @@ class CalendarMonth extends mixins(DateMixin) {
   year!: number
 
   days: String[] = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
+
+  @DatePickerStore.Mutation
+  public pickMonth!: () => void
+
+  switchToMonthPicking (): void {
+    this.pickMonth()
+  }
 
   get previousItemIcon () {
     const widthOrHeight = '32px'
@@ -126,6 +145,28 @@ class CalendarMonth extends mixins(DateMixin) {
       --icon-pick-item-height: ${widthOrHeight};
       --icon-pick-item-width: ${widthOrHeight}
     `
+  }
+
+  get dayBeforePickedDate (): Date {
+    const pickedDate = new Date(this.pickedDate.getTime())
+    pickedDate.setDate(pickedDate.getDate() - 1)
+
+    return pickedDate
+  }
+
+  get dayFollowingPickedDate (): Date {
+    const pickedDate = new Date(this.pickedDate.getTime())
+    pickedDate.setDate(pickedDate.getDate() + 1)
+
+    return pickedDate
+  }
+
+  get previousMonth (): Date {
+    return this.getPreviousMonth(this.month, this.year)
+  }
+
+  get nextMonth (): Date {
+    return this.getNextMonth(this.month, this.year)
   }
 
   dateOfFirstVisibleDay () {
@@ -169,6 +210,22 @@ class CalendarMonth extends mixins(DateMixin) {
       })
 
     return week
+  }
+
+  goToPreviousMonth () {
+    if (!this.isPreviousItemAvailable) {
+      return
+    }
+
+    this.pickDate(this.previousMonth)
+  }
+
+  goToNextMonth () {
+    if (!this.isNextItemAvailable) {
+      return
+    }
+
+    this.pickDate(this.nextMonth)
   }
 
   nameOfFirstDayOfMonth () {
@@ -238,12 +295,11 @@ class CalendarMonth extends mixins(DateMixin) {
   }
 
   pickDate (date: Date) {
-    const startDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
-    const endDate = startDate
+    const startDate = Time.formatDate(date)
 
     this.$router.push({
-      name: 'highlights',
-      params: { startDate, endDate }
+      name: 'daily-review',
+      params: { startDate }
     })
   }
 
@@ -258,6 +314,7 @@ class CalendarMonth extends mixins(DateMixin) {
 
     return {
       [defaultClass]: true,
+      'calendar-month__day-number--selected': this.formatDate(this.pickedDate) === this.formatDate(weekDay),
       'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month
     }
   }

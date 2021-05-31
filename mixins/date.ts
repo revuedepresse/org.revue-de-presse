@@ -47,6 +47,22 @@ export default class DateMixin extends Vue {
     return this.getCurrentDate()
   }
 
+  getNextMonth (month: number, year: number): Date {
+    if (month === 11) {
+      return new Date(year + 1, 0, 1)
+    }
+
+    return new Date(year, month + 1, 1)
+  }
+
+  getPreviousMonth (month: number, year: number): Date {
+    if (month === 0) {
+      return new Date(year - 1, 11, 1)
+    }
+
+    return new Date(year, month - 1, 1)
+  }
+
   whichDayOfWeek (dayNumber: number): string {
     return this.daysOfWeek[dayNumber]
   }

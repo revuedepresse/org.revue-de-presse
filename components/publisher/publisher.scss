@@ -19,6 +19,10 @@
     margin-right: var(--avatar-margin-right);
     object-font: cover;
     width: var(--avatar-size);
+
+    &--hide {
+      visibility: hidden;
+    }
   }
 
   &__container {

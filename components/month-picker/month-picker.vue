@@ -7,6 +7,7 @@
       <div class="month-picker__container">
         <button
           class="month-picker__button"
+          @click="switchToYearPicking"
           v-text="yearLabel"
         />
       </div>
@@ -15,32 +16,37 @@
         <button
           :class="getPreviousItemClasses()"
           :style="previousItemIcon"
+          @click="goToMonthBeforePickedDate"
         />
         <button
           :class="getNextItemClasses()"
           :style="nextItemIcon"
+          @click="goToMonthFollowingPickedDate"
         />
       </div>
     </div>
     <ScrollableList
-      :items="monthLabels"
+      :items="months"
       :selected="month"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, mixins } from 'nuxt-property-decorator'
+import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
 import ScrollableList from '../scrollable-list/scrollable-list.vue'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 import DateMixin from '~/mixins/date'
+import Time from '~/modules/time'
 
 type DateInterval = {
   start: Date,
   end: Date
 }
+
+const DatePickerStore = namespace('date-picker')
 
 @Component({
   components: { ScrollableList }
@@ -48,13 +54,13 @@ type DateInterval = {
 class MonthPicker extends mixins(DateMixin) {
   @Prop({
     type: Boolean,
-    default: false
+    required: true
   })
   isNextItemAvailable!: boolean
 
   @Prop({
     type: Boolean,
-    default: false
+    required: true
   })
   isPreviousItemAvailable!: boolean
 
@@ -76,11 +82,14 @@ class MonthPicker extends mixins(DateMixin) {
   })
   year!: number
 
+  @DatePickerStore.Mutation
+  public pickYear!: () => void
+
   get yearLabel () {
     return `${this.year}`
   }
 
-  get monthLabels () {
+  get months () {
     return this.getMonths
       .map((m, index) => {
         const isEnabled = (
@@ -95,7 +104,10 @@ class MonthPicker extends mixins(DateMixin) {
           index,
           label: m,
           isSelected: this.month === index,
-          isDisabled: !isEnabled
+          isDisabled: !isEnabled,
+          onClick: () => {
+            this.pickDate(new Date(`${this.year}-${index + 1}-01`))
+          }
         }
       })
   }
@@ -150,6 +162,67 @@ class MonthPicker extends mixins(DateMixin) {
       'month-picker__previous-item': true,
       'month-picker__previous-item--disabled': !this.isPreviousItemAvailable
     }
+  }
+
+  goToMonthBeforePickedDate () {
+    if (!this.isPreviousItemAvailable) {
+      return false
+    }
+
+    let year = this.year
+    let month = this.month
+
+    if (this.month === 0) {
+      year = this.year - 1
+      month = 12
+    }
+
+    let date = new Date(`${year}-${month}-01`)
+    if (month < 10) {
+      date = new Date(`${year}-0${month}-01`)
+    }
+
+    this.pickDate(date)
+
+    return false
+  }
+
+  goToMonthFollowingPickedDate () {
+    if (!this.isNextItemAvailable) {
+      return false
+    }
+
+    let year: number = this.year
+    let month: number = this.month
+
+    if (this.month === 11) {
+      year = this.year + 1
+      month = 1
+    } else {
+      month = month + 2
+    }
+
+    let date = new Date(`${year}-${month}-01`)
+    if (month < 10) {
+      date = new Date(`${year}-0${month}-01`)
+    }
+
+    this.pickDate(date)
+
+    return false
+  }
+
+  pickDate (date: Date) {
+    const startDate = Time.formatDate(date)
+
+    this.$router.push({
+      name: 'daily-review',
+      params: { startDate }
+    })
+  }
+
+  switchToYearPicking (): void {
+    this.pickYear()
   }
 }
 

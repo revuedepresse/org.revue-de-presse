@@ -12,7 +12,9 @@
   &__buttons {
     display: flex;
     background-color: var(--color-white);
-    width: 100%;
+    justify-content: space-between;
+    margin: auto;
+    width: calc(100% - 2 * var(--separation-2));
   }
 
   &__container {
@@ -25,7 +27,7 @@
     position: relative;
     line-height: calc(var(--height-date-picker) + 10px);
     margin-bottom: var(--separation-2);
-    margin-top: var(--separation-2);
+    margin-top: 10px;
     align-content: flex-end;
 
     &:hover {
@@ -136,7 +138,5 @@
 
   &__navigation {
     display: flex;
-    position: absolute;
-    right: 0;
   }
 }

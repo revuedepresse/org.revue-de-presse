@@ -5,7 +5,6 @@
   flex-wrap: wrap;
   position: sticky;
   bottom: 0;
-  width: 100%;
 
   @extend .responsive-content;
 
@@ -14,8 +13,8 @@
     display: flex;
     background-color: var(--color-white);
     justify-content: flex-end;
-    height: var(--height-year-picker-buttons);
-    width: 100%;
+    height: 100%;
+    width: calc(100% - var(--separation-2));
   }
 
   &__previous-item,
@@ -91,8 +90,6 @@
   &__navigation {
     display: flex;
     align-self: center;
-    margin-bottom: var(--margin-year-picker-buttons-margin);
-    margin-top: var(--margin-year-picker-buttons-margin);
   }
 
   &__scrollable-list {

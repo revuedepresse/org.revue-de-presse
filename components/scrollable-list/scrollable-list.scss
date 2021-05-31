@@ -11,8 +11,9 @@ $item-height: calc(
 .scrollable-list {
   display: flex;
   height: calc(8 * #{$item-height} + 23px);
+  margin: auto;
   position: relative;
-  width: 100%;
+  width: calc(100% - 2 * var(--separation-2));
 
   @media (min-width: var(--width-left-column-mobile)) {
     max-width: var(--width-left-column-mobile);

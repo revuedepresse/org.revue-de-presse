@@ -7,10 +7,11 @@
       <a :href="publisherUrl">
         <img
           :alt="textAlternative"
-          :src="avatarUrl"
-          class="publisher__avatar"
+          :data-src="avatarUrl"
+          :class="avatarClasses()"
           width="46px"
           height="46px"
+          @error="onError"
         >
       </a>
       <div class="publisher__identifiers">
@@ -69,6 +70,8 @@ export default class Publisher extends Vue {
   })
   removeTwitterLogo!: boolean
 
+  canNotLoadAvatar: boolean = false
+
   get textAlternative () {
     return `${this.name} avatar`
   }
@@ -92,6 +95,17 @@ export default class Publisher extends Vue {
 
   get publisherUrl () {
     return `https://twitter.com/${this.username}`
+  }
+
+  avatarClasses () {
+    return {
+      'publisher__avatar lazyload': true,
+      'publisher__avatar--hide': this.canNotLoadAvatar
+    }
+  }
+
+  onError () {
+    this.canNotLoadAvatar = true
   }
 }
 </script>

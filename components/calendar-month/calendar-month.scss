@@ -9,7 +9,6 @@ $max-width: 336px;
   flex-wrap: wrap;
   margin: auto;
   max-width: var(--width-left-column-mobile);
-  padding-top: 10px;
   margin-bottom: var(--separation-3);
   width: 100%;
 
@@ -141,11 +140,6 @@ $max-width: 336px;
     width: 100%;
   }
 
-  &__day-number {
-    display: flex;
-    width: 100%;
-  }
-
   &__day-cell {
     border: 1px solid var(--color-content-font);
     background: var(--color-white) 0% 0% no-repeat padding-box;
@@ -170,6 +164,23 @@ $max-width: 336px;
       border-color: var(--color-brand);
       background-color: var(--color-brand);
       color: var(--color-white);
+    }
+  }
+
+  &__day-number {
+    display: flex;
+    width: 100%;
+
+    &--selected {
+      .calendar-month__day-cell {
+        border-color: var(--color-brand);
+        background-color: var(--color-brand);
+        color: var(--color-white);
+
+        &:hover {
+          color: var(--color-white);
+        }
+      }
     }
   }
 
@@ -229,12 +240,23 @@ $max-width: 336px;
 
   &__previous-item--disabled,
   &__next-item--disabled {
+    cursor: auto;
+
     &:hover {
       border: 1px solid var(--color-white);
     }
 
     &:before {
       filter: $filter-content;
+    }
+
+    &:active {
+      border-color: transparent;
+      background-color: transparent;
+
+      &:before {
+        filter: $filter-content;
+      }
     }
   }
 
