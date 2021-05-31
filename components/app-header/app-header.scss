@@ -1,0 +1,21 @@
+
+.app-header {
+  background-color: var(--color-white);
+  display: flex;
+  margin: auto;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  justify-content: center;
+  z-index: 1000;
+  flex-direction: column;
+  @media (min-width: $width-desktop) {
+    flex-direction: row;
+  }
+
+  &__container {
+    @media (min-width: $width-desktop) {
+      width: calc(16px + var(--width-left-column-desktop) + var(--width-right-column-desktop));
+    }
+  }
+}

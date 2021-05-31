@@ -24,15 +24,22 @@
       ]
     },
     "types": [
+      "cookie-universal-nuxt",
+      "@types/he",
+      "@types/emoji-js",
       "@types/node",
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@nuxtjs/date-fns"
-    ]
+      "@nuxtjs/date-fns",
+      "@nuxtjs/device",
+      "@nuxtjs/router",
+      "@nuxtjs/sentry"
+    ],
+    "typeRoots": ["types"]
   },
   "exclude": [
-    "node_modules",
     ".nuxt",
+    "node_modules",
     "dist"
   ]
 }

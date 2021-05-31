@@ -1,17 +1,10 @@
-<template>
-</template>
-
 <script lang="ts">
-import Vue from 'vue'
-import Time from "~/modules/time";
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default Vue.extend({
-  middleware({ redirect, route }) {
-    if (route.name !== 'daily-review') {
-      return redirect(`/${Time.today()}`)
-    }
-  }
-})
+@Component
+class Homepage extends Vue {}
+
+export default Homepage
 </script>
 
 <style>

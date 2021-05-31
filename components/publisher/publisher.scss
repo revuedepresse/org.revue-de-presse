@@ -1,0 +1,107 @@
+
+.publisher {
+  --avatar-margin-right: 5px;
+  --avatar-size: 0;
+  --avatar-url: '';
+
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  width: calc(100% - 2 * var(--margin-status));
+  position: relative;
+  align-content: space-between;
+
+  &__avatar {
+    display: flex;
+    border-radius: 50%;
+    background: var(--avatar-url);
+    height: var(--avatar-size);
+    margin-right: var(--avatar-margin-right);
+    object-font: cover;
+    width: var(--avatar-size);
+
+    &--hide {
+      visibility: hidden;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__identifiers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__name {
+    color: $color-pitch-black;
+    font: normal normal bold 15px/25px Arial;
+    display: inline-flex;
+    height: 17px;
+    letter-spacing: 0;
+    line-height: 17px;
+    text-align: left;
+    text-decoration: none;
+
+    &:link,
+    &:active,
+    &:hover,
+    &:visited {
+      @extends .publisher__name;
+    }
+  }
+
+  &__username {
+    color: $color-username;
+    display: inline-flex;
+    font: normal normal normal 14px/25px Arial;
+    height: 16px;
+    letter-spacing: 0;
+    line-height: 16px;
+    text-align: left;
+    text-decoration: none;
+
+    &:link,
+    &:active,
+    &:hover,
+    &:visited {
+      @extends .publisher__username;
+    }
+  }
+
+  &__intro {
+    .publisher__name {
+      color: var(--color-white);
+
+      &:link,
+      &:active,
+      &:hover,
+      &:visited {
+        color: var(--color-white);
+      }
+    }
+
+    .publisher__username {
+      color: var(--color-brand-twitter);
+
+      &:link,
+      &:active,
+      &:hover,
+      &:visited {
+        color: var(--color-brand-twitter);
+      }
+    }
+  }
+
+  &__platform {
+    color: var(--color-brand-twitter);
+    display: flex;
+    height: 27px;
+    width: 28px;
+    position: absolute;
+    right: 0;
+  }
+}

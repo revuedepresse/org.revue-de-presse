@@ -1,51 +1,181 @@
+:root {
+  --color-black: #000;
+  --color-brand: #00cdc7;
+  --color-brand-twitter: #1d9bf0;
+  --color-content-background: #2f394d;
+  --color-content-font: #e6e6e6;
+  --color-content-text: #2f394d;
+  --color-taupe-grey: #ebeef0;
+  --color-white: #fff;
+  --color-background-button-active: #006663;
+  --color-light-grey: #657786;
+
+  --height-logo: 64px;
+  --height-date-picker: 21px;
+  --height-status-text: 21px;
+  --height-year-picker-buttons: 34px;
+
+  --margin-title: 20px;
+  --margin-navigation: 10px;
+  --margin-year-picker-buttons-margin: 10px;
+  --margin-status: 15px;
+
+  --font-size-content: 14px;
+  --line-spacing-content: 16px;
+
+  --font-size-publication-date: 12px;
+  --line-spacing-publication-date: 25px;
+
+  --font-size-footer-copyright: 12px;
+  --line-spacing-footer-copyright: 24px;
+
+  --font-size-date-picker: 16px;
+  --line-spacing-date-picker: 22px;
+
+  --font-size-calendar-month-day: 12px;
+  --line-spacing-calendar-month-day: 14px;
+
+  --font-size-footer-outer-link: 14px;
+  --line-spacing-footer-outer-link: 16px;
+
+  --font-size-footer-paragraph: 16px;
+  --line-spacing-footer-paragraph: 24px;
+
+  --font-size-calendar-month-day-cell: 16px;
+  --line-spacing-calendar-month-day-cell: 18px;
+
+  --font-size-footer-title: 26px;
+  --line-spacing-footer-title: 16px;
+
+  --font-size-vanity-metric: 15px;
+  --line-spacing-vanity-metric: 25px;
+
+  --font-size-status-text: 19px;
+  --line-spacing-status-text: 25px;
+
+  --background-vanity-metric-reply: #1d9bf0;
+  --background-vanity-metric-retweet: #19cf86;
+  --background-vanity-metric-like: #e81c4f;
+
+  --border-color: #e6e6e6;
+
+  --border-radius: var(--separation-1);
+  --border-radius-date-picker: calc(var(--separation-1) / 2);
+  --border-radius-selectable: calc(var(--separation-1) / 2);
+
+  --separation-0: 6px;
+  --separation-1: 8px;
+  --separation-2: calc(2 * var(--separation-1));
+  --separation-3: 19px;
+
+  --width-left-column-mobile: 336px;
+
+  --width-left-column-desktop: 336px;
+  --width-right-column-desktop: 600px;
+}
+
+$color-background-like-light: lighten(#e81c4f, 45%);
+$color-background-reply-light: lighten(#1d9bf0, 75%);
+$color-background-retweet-light: lighten(#19cf86, 45%);
+
+$color-background-like-dark: lighten(#e81c4f, 45%);
+$color-background-reply-dark: darken(#1d9bf0, 45%);
+$color-background-retweet-dark: #19cf86;
+
+$color-background-like-clicked: lighten(#e81c4f, 35%);
+$color-stroke-like: lighten(#e81c4f, 25%);
+
 $color-black: #1e1e1e;
 $color-black-light: #252526;
 $color-beige: #d4d4d4;
 $color-beige-light: #f1f1f1;
 $color-orange: #ce9178;
-$color-red: #CF4647;
+$color-red: #cf4647;
 $color-green: #b4cea8;
-$color-greenish: #8BAF98;
+$color-greenish: #8baf98;
 $color-greener: #2aa19b;
 $color-even-greener: darken($color-greener, 10%);
 $color-hyperlink: $color-black;
 $color-yellow: #dab988;
-$color-blue: #569CD3;
-$color-white: #fff;
+$color-blue: #569cd3;
+$color-white: var(--color-white);
+$color-pitch-black: var(--color-black);
+$color-brand: var(--color-brand);
+$color-content: var(--color-content-text);
+$color-username: var(--color-light-grey);
+$color-publication-date: var(--color-light-grey);
 
-$background-color: $color-white;
+$background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
+$background-color: var(--color-taupe-grey);
 $border-color: darken(rgb(235, 238, 240), 20%);
 
+$filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
+$filter-active: invert(27%) sepia(82%) saturate(501%) hue-rotate(129deg) brightness(99%) contrast(101%);
+$filter-white: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+$filter-content: invert(100%) sepia(0%) saturate(881%) hue-rotate(86deg) brightness(113%) contrast(80%);
+
 $font-size-base: 1.1em;
-$font-size-date: 0.9em;
 $line-height-base: 1.4em;
+
+$font-size-date: 0.9em;
+
 $font-size-menu-item: 1em;
 $line-height-menu-item: 1.4em;
 
-$separation-1: 8px;
-$separation-2: calc(2 * #{$separation-1});
+$separation-0: var(--separation-0);
+$separation-1: var(--separation-1);
+$separation-2: var(--separation-2);
+$separation-3: var(--separation-3);
 
 $intro-height: calc(120px + #{$separation-2}  * 2);
 
 $font-family: 'PT_serif', 'Open Sans', sans-serif;
 
+.underline {
+  text-decoration: underline
+}
+
+@font-face {
+  font-family: 'Signika';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url('~assets/fonts/signika-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url('~assets/fonts/roboto-regular.ttf') format('truetype');
+}
+
+.font-logo-title {
+  color: $color-pitch-black;
+  font-family: Signika;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+$width-above-iphone-5: 321px;
 $width-small-device: 576px;
 $width-medium-device: 768px;
 $width-large-device: 992px;
 $width-extra-large-device: 1200px;
+$width-left-column-mobile: 336px;
+$width-desktop: 952px;
 
 // @see https://graphicdesign.stackexchange.com/q/30731/158844
-$content-width: 960px;
+  $content-width: 960px;
 
 body {
   overflow-y: scroll;
 }
 
 .clickable {
-  color: $color-hyperlink;
   cursor: pointer;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
 
   &[target="_blank"] {
     text-decoration: underline dotted $color-hyperlink;
@@ -60,12 +190,11 @@ body {
 }
 
 .responsive-content {
-  width: calc(100vw - #{$separation-2} * 2);
-  min-width: calc(100vw - #{$separation-2} * 2);
+  min-width: var(--width-left-column-mobile);
+  max-width: var(--width-left-column-desktop);
 
-  @media (min-width: $width-large-device) {
-    width: $content-width;
-    min-width: $content-width;
+  @media (min-width: var(--width-left-column-desktop)) {
+    max-width: var(--width-left-column-desktop);
   }
 }
 
