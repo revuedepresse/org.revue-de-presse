@@ -4,7 +4,10 @@
       class="month-picker__buttons"
       :style="pickItemIcon"
     >
-      <div class="month-picker__container">
+      <div
+        class="month-picker__container"
+        @click="switchToYearPicking"
+      >
         <button
           class="month-picker__button"
           @click="switchToYearPicking"
