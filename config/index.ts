@@ -13,7 +13,7 @@ const getHostAndScheme = (environmentProvider: EnvProvider) => {
   const environment: EnvParam = environmentProvider.getEnvironmentParameters()
   if (environment.productionMode) {
     host = process.env.API_HOST
-    scheme = 'http://'
+    scheme = 'https://'
   }
 
   return {
