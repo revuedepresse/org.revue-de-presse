@@ -1535,13 +1535,13 @@
     serve-static "^1.14.1"
     workbox-cdn "^5.1.4"
 
-"@nuxtjs/router@^1.5.0":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/router/-/router-1.6.1.tgz#a7ee7422e2fc3375d1726579a897179e1e4b2a72"
-  integrity sha512-kuOdXPELh5DXSWSpP6BI+bEDUG2DfX4D1TMxzHQ7hfrJVbbI10rwnsSD1G5jm/yQWXsQ552hA49RaPYuEqLKXg==
+"@nuxtjs/router@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/router/-/router-1.7.0.tgz#631b85c1e853580d558aa49572da2d0474e0c832"
+  integrity sha512-7OXEYqE/7uM/7Bx1Ab8udyFgBux9h5IisJqNLMNa5hxt9oBtF43VXHEnnQV4FtYpKyg8ysTFDT9FJlC+tGqpQg==
   dependencies:
     consola "^2.15.3"
-    defu "^3.2.2"
+    defu "^5.0.0"
 
 "@nuxtjs/sentry@^5.0.3":
   version "5.1.0"
