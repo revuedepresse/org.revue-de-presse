@@ -56,6 +56,6 @@
     "prettier": "^2.3.0",
     "sass-loader": "^10",
     "typescript-eslint-parser": "^22.0.0",
-    "vuex-module-decorators": "^1.0.1"
+    "vuex-module-decorators": "^2.0.0"
   }
 }
