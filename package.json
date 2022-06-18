@@ -16,7 +16,7 @@
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
     "@nuxtjs/sentry": "^5.0.3",
-    "cookie-universal-nuxt": "^2.1.4",
+    "cookie-universal-nuxt": "^2.2.1",
     "core-js": "^3.13.1",
     "csstype": "^3.0.8",
     "he": "^1.2.0",
