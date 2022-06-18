@@ -52,7 +52,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^7.10.0",
     "node-sass": "5.0.0",
-    "nuxt-lazysizes": "1.4.0",
+    "nuxt-lazysizes": "1.4.2",
     "prettier": "^2.3.0",
     "sass-loader": "^10",
     "typescript-eslint-parser": "^22.0.0",

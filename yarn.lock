@@ -7067,10 +7067,10 @@ nuxt-fontawesome@^0.4.0:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/vue-fontawesome" "^0.1.4"
 
-nuxt-lazysizes@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/nuxt-lazysizes/-/nuxt-lazysizes-1.4.0.tgz#185345ef10f2015daa36153d5d54d5a55712490a"
-  integrity sha512-/G6RONaqWbKBCzL6rtWvCfguDx/qXEet4mgoXvfDHkn9xeLZoT62T6wP+pZNOhjq6E04PZdepNAzk6dAJDznzQ==
+nuxt-lazysizes@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/nuxt-lazysizes/-/nuxt-lazysizes-1.4.2.tgz#deda9be8e9a7668760ae1de56f2dfb83d1f4f980"
+  integrity sha512-KM+oEe6BwPX8GiFM5B8JlX49kIJqXI6m5jvZhYe+CJV1RD1aTEd+wUzwAwxPIDFLS5ZvpVR7E7yM7xLx9sSbog==
   dependencies:
     lazysizes "^5.3.2"
 
