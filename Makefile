@@ -15,7 +15,7 @@ clean: clean-dist-files ## Remove build application directory
 		bash -c "rmdir --verbose '$$directory'";
 	done
 
-dev: ## Start development server
+dev: clean ## Start development server
 	@/bin/bash -c 'source .env && npx nuxt'
 
 help:
