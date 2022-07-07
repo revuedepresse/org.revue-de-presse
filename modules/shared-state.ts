@@ -13,7 +13,6 @@ type EnvProvider = {
 }
 
 const developmentMode = process.env.NODE_ENV !== 'production'
-const productionMode = !developmentMode
 
 const environmentParameters: EnvParam = {
   developmentMode,
