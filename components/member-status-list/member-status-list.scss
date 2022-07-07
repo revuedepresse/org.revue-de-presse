@@ -18,7 +18,7 @@
     }
   }
 
-  /deep/ .status__links {
+  :deep(.status__links) {
     width: 100%;
 
     .status__url--secondary-link {
@@ -27,7 +27,7 @@
     }
   }
 
-  /deep/ .status-text {
+  :deep(.status-text) {
     line-height: 1.5em;
     white-space: pre-wrap;
   }
