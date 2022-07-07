@@ -22,7 +22,7 @@
   ],
   "private": true,
   "scripts": {
-    "dev": "make development-server",
+    "dev": "make dev",
     "build": "make build",
     "lint": "make lint",
     "remove-extraneous-packages": "npm prune --production",
