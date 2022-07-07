@@ -75,10 +75,10 @@ class Logger {
   constructor () {
   }
 
-  info (message: string, file: string, extra: {[key:string]: string}): void {
+  info (): void {
   }
 
-  error (error: string, file: string, extra: {[key:string]: string}): void {
+  error (): void {
   }
 }
 
