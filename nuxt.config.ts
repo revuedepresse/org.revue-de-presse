@@ -9,12 +9,14 @@ const icon = '/logo-revue-de-presse.png'
 const days = () => {
   const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))];
   let next = days[days.length - 1];
+  const today = new Date();
+  const nextYear = today.getFullYear() + 1;
 
   do {
     days.push(new Date(new Date(next.getTime()+ 1000*3600*24)));
     next = days[days.length - 1];
 
-  } while (next <= new Date())
+  } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
 
   return days.map(d => `/${d}`)
 }
