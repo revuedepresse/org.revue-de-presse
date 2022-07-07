@@ -18,7 +18,19 @@ const days = () => {
     next = days[days.length - 1]
   } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
 
-  return days.map(d => `/${d}`)
+  return days.map(d => {
+    let month = `${d.getMonth() + 1}`
+    if (d.getMonth() + 1 < 10) {
+      month = `0${month}`
+    }
+
+    let date = `${d.getDate() + 1}`
+    if (d.getDate() + 1 < 10) {
+      date = `0${date}`
+    }
+
+    return `/${d.getFullYear()}-${month}-${date}`
+  })
 }
 
 type Route = {
