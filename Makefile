@@ -6,11 +6,11 @@ build: ## Build production package
 	@/bin/bash -c '( test -e .env && source .env || true ) && npx nuxt generate'
 
 clean-dist-files: ## Remove files in /dist subdirectories
-	@/bin/bash -c 'find ./dist -type f -exec rm --verbose {} \;'
+	@/bin/bash -c 'find ./dist/* -type f -exec rm --verbose {} \;' >> /dev/null 2>&1 || true
 
 clean: clean-dist-files ## Remove build application directory
 	@export IFS=$$'\n'
-	for directory in $$(find ./dist -type d | sort --reverse);
+	for directory in $$(find ./dist/* -type d | sort --reverse);
 	do
 		bash -c "rmdir --verbose '$$directory'";
 	done
