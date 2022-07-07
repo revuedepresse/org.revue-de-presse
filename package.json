@@ -1,6 +1,25 @@
 {
-  "name": "news-review",
-  "version": "1.2.0",
+  "name": "revue-de-presse",
+  "version": "1.9.0",
+  "license": "GPL-3.0-or-later",
+  "funding": [
+    {
+      "type": "buymeacoffee.com",
+      "url": "https://www.buymeacoffee.com/thierrymarianne"
+    },
+    {
+      "type": "github.com",
+      "url": "https://github.com/sponsors/thierrymarianne"
+    },
+    {
+      "type": "liberapay.com",
+      "url": "https://liberapay.com/thierrymarianne/"
+    },
+    {
+      "type": "ko-fi.com",
+      "url": "https://ko-fi.com/thierrymarianne"
+    }
+  ],
   "private": true,
   "scripts": {
     "dev": "make development-server",
@@ -9,7 +28,7 @@
     "lint": "eslint --ext .ts,.js,.vue ."
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "5.13.5",
@@ -26,7 +45,8 @@
     "raven-js": "^3.27.2",
     "serialize-javascript": "^3.1.0",
     "vue-date-fns": "^2.0.1",
-    "vue-property-decorator": "^9.1.2"
+    "vue-property-decorator": "^9.1.2",
+    "vuex-module-decorators": "^1.2.0"
   },
   "devDependencies": {
     "@nuxt/types": "2.15.6",
@@ -50,11 +70,10 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^7.10.0",
-    "node-sass": "5.0.0",
+    "node-sass": "^7.0.1",
     "nuxt-lazysizes": "1.4.0",
     "prettier": "^2.3.0",
     "sass-loader": "^10",
-    "typescript-eslint-parser": "^22.0.0",
-    "vuex-module-decorators": "^1.0.1"
+    "typescript-eslint-parser": "^22.0.0"
   }
 }
