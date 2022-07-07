@@ -107,7 +107,6 @@ const config: NuxtConfig = {
     '@nuxtjs/emotion',
     '@nuxtjs/pwa',
     '@nuxtjs/router',
-    '@nuxtjs/sentry',
     '@nuxtjs/svg',
     'cookie-universal-nuxt',
     'nuxt-lazysizes',
@@ -133,10 +132,6 @@ const config: NuxtConfig = {
     extendAssetUrls: {
       img: 'data-src'
     }
-  },
-
-  sentry: {
-    dsn: process.env.RAVEN_DSN
   },
 
   modules: [

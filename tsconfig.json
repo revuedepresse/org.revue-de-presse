@@ -33,7 +33,6 @@
       "@nuxtjs/date-fns",
       "@nuxtjs/device",
       "@nuxtjs/router",
-      "@nuxtjs/sentry"
     ],
     "typeRoots": ["types"]
   },
