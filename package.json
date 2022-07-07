@@ -24,7 +24,7 @@
   "scripts": {
     "dev": "make development-server",
     "build": "make build",
-    "lint": "eslint --fix --ext .ts,.js,.vue .",
+    "lint": "make lint",
     "remove-extraneous-packages": "npm prune --production",
     "start": "make start"
   },
