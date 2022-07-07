@@ -13,7 +13,7 @@ const days = () => {
   const nextYear = today.getFullYear() + 1;
 
   do {
-    days.push(new Date(new Date(next.getTime()+ 1000*3600*24)));
+    days.push(new Date(next.getTime()+ 1000*3600*24));
     next = days[days.length - 1];
 
   } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
