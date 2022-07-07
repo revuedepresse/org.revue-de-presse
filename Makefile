@@ -22,7 +22,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 lint: ## Lint source files
-	@/bin/bash -c 'npm run lint'
+	@/bin/bash -c 'npx eslint --fix --ext .ts,.js,.vue .'
 
 install: ## Install dependencies
 	@/bin/bash -c '( test -e .env && source .env || true ) && npm install'
