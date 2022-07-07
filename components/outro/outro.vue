@@ -67,7 +67,7 @@
 
     <div class="outro__copyright-footer">
       <div class="outro__copyright">
-        &copy;2021 · Design by <!--
+        &copy; {{ year }} · Design de <!--
       --><a
         class="outro__outer-link"
         href="https://twitter.com/CcelestinC"
@@ -86,6 +86,9 @@ import fundingIcon from '../../assets/icons/icon-funding.svg'
 export default {
   name: 'Outro',
   computed: {
+    year () {
+      return new Date().getFullYear()
+    },
     fundingIcon () {
       const width = '18px'
       const height = '20px'
