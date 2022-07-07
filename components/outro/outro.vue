@@ -46,7 +46,7 @@
     </h2>
 
     <p class="outro__paragraph">
-      Entre la naissance du projet en 2015 jusqu'en 2022,
+      Depuis la naissance du projet en 2015 jusqu'en 2022,
       Revue de presse n'a reçu aucun financement extérieur.<br>
       De manière à rendre le projet plus soutenable,
       des pages de contribution ont été ouvertes :<br>
