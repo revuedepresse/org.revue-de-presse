@@ -28,11 +28,11 @@
         class="outro__subscribe-to"
       ><!--
           --><a
-            href="https://twitter.com/revue_2_presse"
-          ><!--
+        href="https://twitter.com/revue_2_presse"
+      ><!--
             --><font-awesome-icon
-              :icon="['fab', 'twitter']"
-              />
+        :icon="['fab', 'twitter']"
+      />
               <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
         --></a><!--
       --></span>
@@ -47,18 +47,22 @@
 
     <p class="outro__paragraph">
       Entre la naissance du projet en 2015 jusqu'en 2022,
-      Revue de presse n'a reçu aucun financement extérieur.<br />
+      Revue de presse n'a reçu aucun financement extérieur.<br>
       De manière à rendre le projet plus soutenable avec des coûts de maintenance grandissant,
-      des pages de contribution ont été ouvertes :<br />
+      des pages de contribution ont été ouvertes :<br>
+    </p>
 
-      <ul>
-        <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com/thierrymarianne/</a></li>
-        <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com/thierrymarianne/</a></li>
-        <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com/thierrymarianne/</a></li>
-        <li><a href="https://github.com/sponsors/thierrymarianne">github.com/sponsors/thierrymarianne/</a></li>
-      </ul>
+    <ul>
+      <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com/thierrymarianne/</a></li>
+      <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com/thierrymarianne/</a></li>
+      <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com/thierrymarianne/</a></li>
+      <li><a href="https://github.com/sponsors/thierrymarianne">github.com/sponsors/thierrymarianne/</a></li>
+    </ul>
 
-       Ce projet est porté par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a href="https://twitter.com/thierrymarianne">@thierrymarianne</a>.
+    <p class="outro__paragraph">
+      Ce projet est porté par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a
+        href="https://twitter.com/thierrymarianne"
+      >@thierrymarianne</a>.
     </p>
 
     <div class="outro__copyright-footer">

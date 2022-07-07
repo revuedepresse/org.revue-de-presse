@@ -24,8 +24,9 @@
   "scripts": {
     "dev": "make development-server",
     "build": "make build",
-    "start": "make start",
-    "lint": "eslint --ext .ts,.js,.vue ."
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "remove-extraneous-packages": "npm prune --production",
+    "start": "make start"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.1.1",

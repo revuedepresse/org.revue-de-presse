@@ -1,21 +1,21 @@
 import { NuxtConfig } from '@nuxt/types'
+import TerserPlugin from 'terser-webpack-plugin'
 
 const description =
-    'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
+  'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
 const title = 'Revue de presse'
 const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
 const icon = '/logo-revue-de-presse.png'
 
 const days = () => {
-  const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))];
-  let next = days[days.length - 1];
-  const today = new Date();
-  const nextYear = today.getFullYear() + 1;
+  const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))]
+  let next = days[days.length - 1]
+  const today = new Date()
+  const nextYear = today.getFullYear() + 1
 
   do {
-    days.push(new Date(next.getTime()+ 1000*3600*24));
-    next = days[days.length - 1];
-
+    days.push(new Date(next.getTime() + (1000 * 3600 * 24)))
+    next = days[days.length - 1]
   } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
 
   return days.map(d => `/${d}`)
@@ -100,7 +100,7 @@ const config: NuxtConfig = {
     noscript: [
       {
         innerHTML:
-            'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
+          'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
       }
     ],
     link: [{ rel: 'icon', type: 'image/png', href: icon }]
@@ -172,7 +172,7 @@ const config: NuxtConfig = {
   env: {
     API_HOST: process.env.API_HOST || '',
     API_AUTH_TOKEN: process.env.API_AUTH_TOKEN || '',
-    NODE_ENV: process.env.NODE_ENV || '',
+    NODE_ENV: process.env.NODE_ENV || ''
   },
 
   router: {
@@ -200,7 +200,17 @@ const config: NuxtConfig = {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: false
+        })
+      ]
+    }
+  },
 
   typescript: {
     typeCheck: {
