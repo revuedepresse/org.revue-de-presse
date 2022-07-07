@@ -27,5 +27,5 @@ lint: ## Lint source files
 install: ## Install dependencies
 	@/bin/bash -c '( test -e .env && source .env || true ) && npm install'
 
-start: ## Start production server
+start: clean ## Start production server
 	@/bin/bash -c 'source .env && npx nuxt start'
