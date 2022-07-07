@@ -48,19 +48,19 @@
     <p class="outro__paragraph">
       Entre la naissance du projet en 2015 jusqu'en 2022,
       Revue de presse n'a reçu aucun financement extérieur.<br>
-      De manière à rendre le projet plus soutenable avec des coûts de maintenance grandissant,
+      De manière à rendre le projet plus soutenable,
       des pages de contribution ont été ouvertes :<br>
     </p>
 
     <ul>
-      <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com/thierrymarianne/</a></li>
-      <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com/thierrymarianne/</a></li>
-      <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com/thierrymarianne/</a></li>
-      <li><a href="https://github.com/sponsors/thierrymarianne">github.com/sponsors/thierrymarianne/</a></li>
+      <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com</a></li>
+      <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com</a></li>
+      <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com</a></li>
+      <li><a href="https://github.com/sponsors/thierrymarianne">github.com/sponsors</a></li>
     </ul>
 
     <p class="outro__paragraph">
-      Ce projet est porté par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a
+      Ce projet est porté avec 💙 par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a
         href="https://twitter.com/thierrymarianne"
       >@thierrymarianne</a>.
     </p>
