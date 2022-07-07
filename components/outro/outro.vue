@@ -52,11 +52,11 @@
       des pages de contribution ont été ouvertes :<br>
     </p>
 
-    <ul>
+    <ul class="outro__list">
       <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com</a></li>
       <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com</a></li>
       <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com</a></li>
-      <li><a href="https://github.com/sponsors/thierrymarianne">github.com/sponsors</a></li>
+      <li><a href="https://github.com/sponsors/thierrymarianne">github.com</a></li>
     </ul>
 
     <p class="outro__paragraph">

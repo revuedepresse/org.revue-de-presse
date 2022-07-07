@@ -47,6 +47,11 @@
     }
   }
 
+  &__list {
+    color: var(--color-white);
+    line-height: 1.5em;
+  }
+
   &__subscribe-to {
     display: inline-flex;
     background: var(--color-brand-twitter) 0% 0% no-repeat padding-box;
