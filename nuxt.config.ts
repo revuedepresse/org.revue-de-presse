@@ -158,7 +158,6 @@ const config: NuxtConfig = {
     API_HOST: process.env.API_HOST || '',
     API_AUTH_TOKEN: process.env.API_AUTH_TOKEN || '',
     NODE_ENV: process.env.NODE_ENV || '',
-    RAVEN_DSN: process.env.RAVEN_DSN || ''
   },
 
   router: {
