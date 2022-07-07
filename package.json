@@ -50,6 +50,7 @@
     "vuex-module-decorators": "^1.2.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.18.2",
     "@nuxt/types": "2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/date-fns": "^1.4.3",
@@ -63,7 +64,6 @@
     "@types/he": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.25.0",
-    "babel-eslint": "^10.1.0",
     "emoji-js": "^3.5.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
