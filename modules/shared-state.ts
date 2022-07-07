@@ -72,9 +72,6 @@ const logLevel = {
 }
 
 class Logger {
-  constructor () {
-  }
-
   info (): void {
   }
 

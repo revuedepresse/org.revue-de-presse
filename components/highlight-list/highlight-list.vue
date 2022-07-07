@@ -149,8 +149,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       }
     )
       .then(res => res.json())
-      .catch((e) => {
-        this.logger.error(e.message, 'highlight-list', e)
+      .catch(_e => {
+        this.logger.error(
+          // e.message, 'highlight-list', e
+        )
       })
 
     this.items = response.statuses
