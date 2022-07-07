@@ -6,6 +6,19 @@ const title = 'Revue de presse'
 const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
 const icon = '/logo-revue-de-presse.png'
 
+const days = () => {
+  const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))];
+  let next = days[days.length - 1];
+
+  do {
+    days.push(new Date(new Date(next.getTime()+ 1000*3600*24)));
+    next = days[days.length - 1];
+
+  } while (next <= new Date())
+
+  return days.map(d => `/${d}`)
+}
+
 type Route = {
   name: string,
   path: string,
@@ -181,7 +194,7 @@ const config: NuxtConfig = {
   },
 
   generate: {
-    routes: ['/']
+    routes: ['/', ...days()]
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
