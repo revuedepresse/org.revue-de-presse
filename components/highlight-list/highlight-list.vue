@@ -107,7 +107,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
   includeRetweets: string = RETWEETS_EXCLUDED
   items: Array<{status: RawStatus}> = []
-  logger = new SharedState.Logger(this.$sentry)
+  logger = new SharedState.Logger()
   heightOfComponentsBeforeOutro: string = '--height-components-before-outro: 0'
   minDate = this.getMinDate()
   maxDate = this.getMaxDate()
@@ -149,8 +149,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       }
     )
       .then(res => res.json())
-      .catch((e) => {
-        this.logger.error(e.message, 'highlight-list', e)
+      .catch((_e) => {
+        this.logger.error(
+          // e.message, 'highlight-list', e
+        )
       })
 
     this.items = response.statuses

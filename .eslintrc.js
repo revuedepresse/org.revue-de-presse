@@ -11,6 +11,7 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
+    'vue/multi-word-component-names': 'off',
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

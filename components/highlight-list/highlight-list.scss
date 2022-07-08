@@ -13,7 +13,6 @@
 
   &__container {
     display: flex;
-    margin: auto;
     width: calc(100% - 2*var(--separation-2));
 
     &--filled {

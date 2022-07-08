@@ -1,10 +1,37 @@
 import { NuxtConfig } from '@nuxt/types'
+import TerserPlugin from 'terser-webpack-plugin'
 
 const description =
-    'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
+  'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
 const title = 'Revue de presse'
 const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
 const icon = '/logo-revue-de-presse.png'
+
+const days = () => {
+  const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))]
+  let next = days[days.length - 1]
+  const today = new Date()
+  const nextYear = today.getFullYear() + 1
+
+  do {
+    days.push(new Date(next.getTime() + (1000 * 3600 * 24)))
+    next = days[days.length - 1]
+  } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
+
+  return days.map((d) => {
+    let month = `${d.getMonth() + 1}`
+    if (d.getMonth() + 1 < 10) {
+      month = `0${month}`
+    }
+
+    let date = `${d.getDate() + 1}`
+    if (d.getDate() + 1 < 10) {
+      date = `0${date}`
+    }
+
+    return `/${d.getFullYear()}-${month}-${date}`
+  })
+}
 
 type Route = {
   name: string,
@@ -85,7 +112,7 @@ const config: NuxtConfig = {
     noscript: [
       {
         innerHTML:
-            'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
+          'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
       }
     ],
     link: [{ rel: 'icon', type: 'image/png', href: icon }]
@@ -107,7 +134,6 @@ const config: NuxtConfig = {
     '@nuxtjs/emotion',
     '@nuxtjs/pwa',
     '@nuxtjs/router',
-    '@nuxtjs/sentry',
     '@nuxtjs/svg',
     'cookie-universal-nuxt',
     'nuxt-lazysizes',
@@ -135,10 +161,6 @@ const config: NuxtConfig = {
     }
   },
 
-  sentry: {
-    dsn: process.env.RAVEN_DSN
-  },
-
   modules: [
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
@@ -162,8 +184,7 @@ const config: NuxtConfig = {
   env: {
     API_HOST: process.env.API_HOST || '',
     API_AUTH_TOKEN: process.env.API_AUTH_TOKEN || '',
-    NODE_ENV: process.env.NODE_ENV || '',
-    RAVEN_DSN: process.env.RAVEN_DSN || ''
+    NODE_ENV: process.env.NODE_ENV || ''
   },
 
   router: {
@@ -187,11 +208,21 @@ const config: NuxtConfig = {
   },
 
   generate: {
-    routes: ['/']
+    routes: ['/', ...days()]
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: false
+        })
+      ]
+    }
+  },
 
   typescript: {
     typeCheck: {

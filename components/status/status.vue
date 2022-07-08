@@ -116,7 +116,7 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   isIntro!: boolean
 
   errorMessages: Errors = SharedState.errors
-  logger = new SharedState.Logger(this.$sentry)
+  logger = new SharedState.Logger()
   status: FormattedStatus = this.statusAtFirst
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
