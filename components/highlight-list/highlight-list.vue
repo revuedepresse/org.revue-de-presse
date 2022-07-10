@@ -88,7 +88,7 @@ type Params = {
   [key: string]: any
 }
 
-type RequestOptionsHeaders = HeadersInit
+type RequestOptionsHeaders = Headers
 
 type RequestOptions = {
   headers: RequestOptionsHeaders,
@@ -306,7 +306,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   getRequestOptions (params: Params = {}) {
     const authenticationToken = localStorage.getItem('x-auth-token')
 
-    const requestHeaders: HeadersInit = new Headers()
+    const requestHeaders: Headers = new Headers()
     requestHeaders.set('x-auth-token', authenticationToken || '')
 
     const requestOptions: RequestOptions = {
