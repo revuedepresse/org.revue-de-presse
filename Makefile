@@ -2,7 +2,7 @@ SHELL:=/bin/bash
 .ONESHELL:
 .PHONY: build clean clean-dist-files dev help install start
 
-build: ## Build production package
+build: clean ## Build production package
 	@/bin/bash -c '( test -e .env && source .env || true ) && npx nuxt generate'
 
 clean-dist-files: ## Remove files in /dist subdirectories
