@@ -8,7 +8,6 @@ module.exports = {
     'plugin:vue/recommended',
     'eslint:recommended',
     'prettier',
-    '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
     'vue/multi-word-component-names': 'off',
