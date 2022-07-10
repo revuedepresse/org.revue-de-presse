@@ -3,7 +3,7 @@ SHELL:=/bin/bash
 .PHONY: build clean clean-dist-files dev help install start
 
 build: clean ## Build production package
-	@/bin/bash -c 'NODE_ENV=true npx nuxt generate'
+	@/bin/bash -c 'NODE_ENV=production npx nuxt generate'
 
 clean-dist-files: ## Remove files in /dist subdirectories
 	@/bin/bash -c 'find ./dist/* -type f -exec rm --verbose {} \;' >> /dev/null 2>&1 || true
