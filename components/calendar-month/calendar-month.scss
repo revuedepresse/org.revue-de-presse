@@ -184,6 +184,7 @@ $max-width: 336px;
     }
   }
 
+  &__day-number--future-dates,
   &__day-number--other-month {
     .calendar-month__day-cell {
       color: var(--color-content-font);
