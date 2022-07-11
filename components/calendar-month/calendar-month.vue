@@ -318,7 +318,8 @@ class CalendarMonth extends mixins(DateMixin) {
     return {
       [defaultClass]: true,
       'calendar-month__day-number--selected': this.formatDate(this.pickedDate) === this.formatDate(weekDay),
-      'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month
+      'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month,
+      'calendar-month__day-number--future-dates': weekDay > new Date()
     }
   }
 }
