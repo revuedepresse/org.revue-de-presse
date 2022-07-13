@@ -14,6 +14,7 @@
     <Intro
       v-show="$device.isMobile"
       ref="intro"
+      :is-baseline-view="isBaselineView"
     />
   </div>
 </template>
