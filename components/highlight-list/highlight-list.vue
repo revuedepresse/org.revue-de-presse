@@ -5,13 +5,13 @@
 
     <AppHeader
       ref="header"
-      :is-baseline-view="isBaselineView()"
+      :is-baseline-view="isBaselineView"
       :picked-date="startDate"
     />
 
     <div class="highlight-list__content">
       <div
-        v-if="isBaselineView()"
+        v-if="isBaselineView"
         class="highlight-list__navigation">
         <DatePicker
           v-if="startDate"
@@ -57,7 +57,7 @@
             <Status
               :status-at-first="formatStatus(highlight.status)"
               :show-media="showMedia"
-              :is-baseline-view="isBaselineView()"
+              :is-baseline-view="isBaselineView"
               :is-intro="isIntro(index)"
               :ref-name="index"
             />
@@ -191,7 +191,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   get highlights() {
     let highlights = this.items
 
-    if (this.isBaselineView()) {
+    if (this.isBaselineView) {
       if (this.$device.isDesktop) {
         return [{status: this.intro}].concat(highlights)
       }
@@ -205,7 +205,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   get highlightsClasses() {
     return {
       'highlight-list': true,
-      'highlight-list--naked': !this.isBaselineView(),
+      'highlight-list--naked': !this.isBaselineView,
       list: true
     }
   }
@@ -220,6 +220,17 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
   get includedRetweetsLabel() {
     return 'included'
+  }
+
+  get isBaselineView() {
+    if (this.$route === undefined) {
+      return true
+    }
+
+    const paramNames = Object.keys(this.$route.query);
+    const isBaselineViewActive = paramNames.find((p) => p === 'naked') === undefined
+
+    return this.$device.isDesktop || isBaselineViewActive
   }
 
   get excludedRetweetsLabel() {
@@ -381,15 +392,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
 
     return height
-  }
-
-  isBaselineView() {
-    if (this.$route === undefined) {
-      return true
-    }
-
-    return this.$device.isDesktop ||
-        this.$route.query.naked === undefined
   }
 
   isIntro(key: number) {
