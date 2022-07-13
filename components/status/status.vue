@@ -1,5 +1,7 @@
 <template>
-  <div :class="statusClasses()">
+  <div
+    v-if="isBaselineView || !isIntro"
+    :class="statusClasses()">
     <div
       v-show="!isIntro"
       class="status__vanity-metrics"
@@ -102,6 +104,12 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
     default: true
   })
   showMedia!: boolean
+
+  @Prop({
+    type: Boolean,
+    default: true
+  })
+  isBaselineView!: boolean
 
   @Prop({
     type: String,

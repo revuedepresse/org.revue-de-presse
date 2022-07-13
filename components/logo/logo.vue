@@ -19,16 +19,14 @@
   </div>
 </template>
 
-<script>
-import logo from '../../assets/revue-de-presse-logo.svg'
+<script lang="ts">
+import Logotype from '~/assets/revue-de-presse-logo.svg?data'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
-export default {
-  name: 'Logo',
-  data () {
-    return {
-      currentRoute: this.$router.currentRoute.path,
-      logo
-    }
+@Component
+export default class Logo extends Vue {
+  get logo() {
+    return Logotype
   }
 }
 </script>

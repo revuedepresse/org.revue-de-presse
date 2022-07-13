@@ -6,6 +6,11 @@
     <div class="app-header__container">
       <Logo />
     </div>
+    <p
+      v-if="!isBaselineView"
+      class="app-header__popular-news"
+      v-text="popularNews"
+    />
     <Intro
       v-show="$device.isMobile"
       ref="intro"
@@ -14,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import Logo from '../logo/logo.vue'
 import Intro from '../intro/intro.vue'
 
@@ -28,6 +33,24 @@ interface HeightAware {
 class AppHeader extends Vue implements HeightAware {
   $refs!: {
     intro: any
+  }
+
+  @Prop({
+    type: Boolean,
+    default: true
+  })
+  isBaselineView!: boolean
+
+  @Prop({
+    type: String,
+    required: true
+  })
+  pickedDate!: string
+
+  get popularNews() {
+    return `
+      Les 3 actus les + relayées le ${this.pickedDate}
+`
   }
 
   height () {
