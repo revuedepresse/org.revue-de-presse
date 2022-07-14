@@ -13,6 +13,8 @@ type Media = {
 }
 
 type RawStatus = {
+  base64_encoded_avatar?: string,
+  base64_encoded_media?: string,
   username: string,
   avatarUrl: string,
   publishedAt: Date,
@@ -34,7 +36,7 @@ type RawStatus = {
   full_text?: string,
   liked_by?: string,
   retweet?: number,
-  username_of_retweeting_member?: string
+  username_of_retweeting_member?: string,
 }
 
 type TweetUrl = {
@@ -48,6 +50,8 @@ type Entities = {
 }
 
 type FormattedStatus = {
+  base64EncodedAvatar?: string
+  base64EncodedMedia?: string
   username: string,
   name: string,
   avatarUrl: string,
@@ -179,6 +183,8 @@ export default class StatusFormat extends Vue {
       const originalDocument = JSON.parse(status.original_document)
 
       const formattedStatus: FormattedStatus = {
+        base64EncodedAvatar: status.base64_encoded_avatar,
+        base64EncodedMedia: status.base64_encoded_media,
         name: originalDocument.user.name,
         inAggregate: aggregate,
         username: status.username,
