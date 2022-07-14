@@ -81,7 +81,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import ApiMixin from '../../mixins/api'
-import StatusFormatMixin, { FormattedStatus, Media } from '../../mixins/status-format'
+import StatusFormatMixin, {TweetUrl, FormattedStatus, Media} from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
@@ -223,24 +223,50 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
       return ''
     }
 
-    let text = this.replaceHyperlinksWithAnchors(status.text)
+    let urls: Array<TweetUrl> = []
+    if (status.originalDocument.entities?.urls) {
+      urls = status.originalDocument.entities.urls
+    }
+
+    let text = this.replaceHyperlinksWithAnchors(status.text, urls)
     text = this.replaceMentionsWithWithAnchors(text)
 
     return text.replace(/\s/g, ' ')
   }
 
-  replaceHyperlinksWithAnchors (subject: string) {
+  removeTrackingParams(subject: string) {
+    return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '');
+  }
+
+  replaceHyperlinksWithAnchors (subject: string, urls: Array<TweetUrl>) {
     const whitespace = 's'
-    const startCharacterClass = '[^\\'
-    const pattern = `(http(s?)://${startCharacterClass}${whitespace}]+)`
+    const not = '[^\\'
+    const pattern = `(http(s?)://${not}${whitespace}]+)`
 
     return subject.replace(new RegExp(pattern, 'gi'), (matchingText: string) => {
       if (process.env.API_HOST !== undefined && matchingText.includes(process.env.API_HOST)) {
         return matchingText
       }
-      return `<a class="status__text-external-link"
+
+      urls.forEach((u: TweetUrl) => {
+        const expandedUrl = this.removeTrackingParams(u.expanded_url);
+
+        matchingText = matchingText.replaceAll(u.url,
+          `<a class="status__text-external-link"
                  rel="noreferrer"
-                 target="_blank" href="${matchingText}">${matchingText}</a>`
+                 target="_blank" href="${expandedUrl}">${u.display_url}</a>`
+
+        )
+
+        return matchingText
+      })
+
+      const obfuscatedTweetUrl = `http(s?)://t.co${not}${whitespace}]+`
+      if (null !== matchingText.match(new RegExp(obfuscatedTweetUrl, 'gi'))) {
+          return ''
+      }
+
+      return matchingText
     })
   }
 
