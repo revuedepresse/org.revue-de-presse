@@ -37,6 +37,16 @@ type RawStatus = {
   username_of_retweeting_member?: string
 }
 
+type TweetUrl = {
+  url: string,
+  display_url: string,
+  expanded_url: string
+}
+
+type Entities = {
+  urls: Array<TweetUrl>,
+}
+
 type FormattedStatus = {
   username: string,
   name: string,
@@ -55,7 +65,10 @@ type FormattedStatus = {
   retweet?: number,
   usernameOfRetweetingMember?: string,
   statusRepliedTo?: FormattedStatus,
-  key?: number
+  key?: number,
+  originalDocument: {
+    entities: Entities
+  }
 }
 
 type FilteringFn = (status: RawStatus) => boolean
@@ -178,7 +191,8 @@ export default class StatusFormat extends Vue {
         media: status.media,
         totalRetweet: status.retweet_count,
         totalLike: status.favorite_count,
-        links
+        links,
+        originalDocument
       }
 
       if (status.status_replied_to) {
@@ -258,4 +272,4 @@ export default class StatusFormat extends Vue {
   }
 }
 
-export { FormattedStatus, RawStatus, Media }
+export { TweetUrl, FormattedStatus, RawStatus, Media }
