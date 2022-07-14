@@ -80,11 +80,11 @@ $status-margin: 1em;
   }
 
   &__text {
-    :v-deep(.status__text-external-link) {
+    ::v-deep .status__text-external-link {
       @extend .clickable;
     }
 
-    > :deep(span.emoji) {
+    ::v-deep span.emoji {
       display: -moz-inline-box;
       -moz-box-orient: vertical;
       display: inline-block;
@@ -100,13 +100,13 @@ $status-margin: 1em;
       background-position: 50%, 50%;
     }
 
-    > :deep(span.emoji-sizer) {
+    ::v-deep span.emoji-sizer {
       line-height: 0.81em;
       font-size: 1em;
       margin: -2px 0;
     }
 
-    > :deep(span.emoji-outer) {
+    ::v-deep span.emoji-outer {
       display: -moz-inline-box;
       display: inline-block;
       *display: inline;
@@ -114,7 +114,7 @@ $status-margin: 1em;
       width: 1em;
     }
 
-    > :deep(span.emoji-inner) {
+    ::v-deep span.emoji-inner {
       display: -moz-inline-box;
       display: inline-block;
       text-indent: -9999px;
@@ -125,7 +125,7 @@ $status-margin: 1em;
       *zoom: 1;
     }
 
-    > :deep(img.emoji) {
+    ::v-deep img.emoji {
       width: 1em;
       height: 1em;
     }
