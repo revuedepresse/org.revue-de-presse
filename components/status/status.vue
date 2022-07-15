@@ -18,7 +18,7 @@
 
     <div class="status__publication">
       <publisher
-        :avatar-url="status.avatarUrl"
+        :avatar-url="avatarUrl"
         :name="status.name"
         :username="status.username"
         :publication-url="status.url"
@@ -66,7 +66,7 @@
             class="status__media-item lazyload"
             :alt="getMediaTitle(document)"
             :title="getMediaTitle(document)"
-            :data-src="getMediaUrl(document)"
+            :data-src="getMediaDataUri(status)"
             :style="getMediaProperties()"
             :width="getMediaWidth(document)"
             height="auto"
@@ -128,6 +128,15 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   status: FormattedStatus = this.statusAtFirst
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
+
+  get avatarUrl(): string {
+    if (this.status.base64EncodedAvatar) {
+      return this.status.base64EncodedAvatar
+    }
+
+    return this.status.avatarUrl
+  }
+
 
   get webIntentTypes (): {[key: string]: string} {
     return {
@@ -304,6 +313,10 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
 
   getMediaUrl (media: Media) {
     return `${media.url}:small`
+  }
+
+  getMediaDataUri (status: FormattedStatus) {
+    return status.base64EncodedMedia
   }
 
   getMediaWidth (media: Media) {
