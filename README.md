@@ -2,7 +2,7 @@
 
 [![revue-de-presse.org deployment status](https://api.netlify.com/api/v1/badges/36f0341f-bb23-47e9-ab0c-ba8b60ec1859/deploy-status)](https://app.netlify.com/sites/org-revue-de-presse-preview/deploys)
 
-:en: [Revue-de-presse.org](https://github.com/revuedepresse) serves press titles curated daily from official French Media Twitter accounts.
+:uk: [Revue-de-presse.org](https://github.com/revuedepresse) serves press titles curated daily from official French Media Twitter accounts.
 
 All development is delivered under free and open-source software licence.
 
