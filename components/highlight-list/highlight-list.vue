@@ -9,7 +9,8 @@
       :picked-date="startDate"
     />
 
-    <div class="highlight-list__content">
+    <div
+      class="highlight-list__content">
       <div
         v-if="isBaselineView"
         class="highlight-list__navigation">
@@ -24,6 +25,7 @@
         ref="highlights"
         :class="containerClass"
       >
+
         <!-- TODO bring back offline mode
         <p
           v-if="$nuxt.isOffline"
@@ -47,7 +49,9 @@
         </p>
         <ul v-else class="list__items">
         -->
-        <ul class="list__items">
+
+        <ul
+          class="list__items">
           <li
             v-for="(highlight, index) in highlights"
             :key="highlight.statusId"
@@ -63,9 +67,20 @@
             />
           </li>
         </ul>
+
+        <LoadingSpinner
+          v-if="isLoadingSpinnerVisible"
+          :message="errorMessage"
+          :show-error-message="showErrorMessage"
+          :show-loading-spinner="showLoadingSpinner"
+        />
+
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <script lang="ts">
@@ -76,6 +91,7 @@ import SharedState from '../../modules/shared-state'
 import AppHeader, {HeightAware} from '../app-header/app-header.vue'
 import Intro from '../intro/intro.vue'
 import DatePicker from '../date-picker/date-picker.vue'
+import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, {RawStatus} from '~/mixins/status-format'
@@ -103,7 +119,14 @@ type RequestOptions = {
 }
 
 @Component({
-  components: {AppHeader, DatePicker, Intro, Status, Outro}
+  components: {
+    AppHeader,
+    DatePicker,
+    Intro,
+    LoadingSpinner,
+    Outro,
+    Status
+  }
 })
 export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   @Prop({
@@ -174,6 +197,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
 
     return 'highlight-list__container'
+  }
+
+  get errorMessage() {
+    return `Il semblerait qu'il n'y ait pas de contenu disponible pour cette date.`
   }
 
   get getApiHost() {
@@ -279,6 +306,22 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
   get showEndDate() {
     return this.$route.name !== 'highlights'
+  }
+
+  get showErrorMessage(): boolean {
+    return this.$fetchState.error === true
+  }
+
+  get showLoadingSpinner(): boolean {
+    return this.$fetchState.pending === true
+  }
+
+  get isLoadingSpinnerVisible() {
+    if (this.isBaselineView && this.$device.isDesktop) {
+      return this.highlights.length === 1
+    }
+
+    return this.highlights.length === 0
   }
 
   @Watch('startDate')

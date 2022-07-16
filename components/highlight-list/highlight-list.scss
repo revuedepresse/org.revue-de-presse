@@ -17,7 +17,10 @@
   }
 
   &__container {
+    align-content: flex-start;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     margin: auto;
     margin-top: 0;
     width: calc(100% - 2*var(--separation-2));

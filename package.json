@@ -50,6 +50,7 @@
     "serialize-javascript": "^6.0.0",
     "vue-date-fns": "^2.0.1",
     "vue-property-decorator": "^9.1.2",
+    "vue-spinkit": "^2.0.0",
     "vuex-module-decorators": "^1.2.0"
   },
   "devDependencies": {

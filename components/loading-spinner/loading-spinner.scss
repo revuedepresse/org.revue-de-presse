@@ -1,0 +1,44 @@
+.loading-spinner {
+  display: flex;
+  height: $line-height-base;
+  line-height: $line-height-base;
+  text-align: center;
+
+  &__container {
+    display: flex;
+    margin: var(--separation-2) auto auto;
+    min-height: 100px;
+    text-align: center;
+    width: auto;
+  }
+
+  &__spinner-container {
+    margin-top: var(--separation-2);
+  }
+
+  &__icon {
+    background: transparent;
+    border: none;
+    display: flex;
+    font: normal normal normal var(--font-size-date-picker)/var(--line-spacing-date-picker) Roboto;
+    height: var(--height-date-picker);
+    letter-spacing: 0;
+
+    &:before {
+      content: "";
+      display: inline-flex;
+      background: var(--icon-warning-background);
+      filter: $filter-error-icon;
+      width: var(--icon-warning-width);
+      height: var(--icon-warning-height);
+      margin-right: 5px;
+    }
+  }
+
+  p {
+    color: var(--color-content-text);
+    margin: auto auto auto var(--separation-0);
+    height: $line-height-base;
+    line-height: $line-height-base;
+  }
+}
