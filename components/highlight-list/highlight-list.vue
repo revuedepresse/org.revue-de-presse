@@ -309,7 +309,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get showErrorMessage(): boolean {
-    return this.$fetchState.error === true
+    return this.$fetchState.error !== null
   }
 
   get showLoadingSpinner(): boolean {

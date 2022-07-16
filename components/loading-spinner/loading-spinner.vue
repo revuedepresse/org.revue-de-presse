@@ -37,7 +37,7 @@ class LoadingSpinner extends Vue {
   @Prop({
     type: String
   })
-  message: string
+  message!: string
 
   @Prop({
     type: Boolean,
