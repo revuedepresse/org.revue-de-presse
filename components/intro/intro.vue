@@ -13,7 +13,8 @@
         >+</a>
         <p class="intro__content">
           Revue de presse est un projet citoyen indépendant
-          qui s'adresse aux journalistes et à toute personne s'intéressant à l'actualité et à l'influence des médias sur l'opinion.<br>
+          qui s'adresse aux journalistes et à toute personne s'intéressant à l'actualité et
+          à l'influence des médias sur l'opinion.<br>
           <a
             :href="currentRoute + '#project'"
             class="intro__footer-anchor underline"
@@ -25,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import logo from '../../assets/revue-de-presse_100x100.png'
 
 @Component
@@ -34,6 +35,12 @@ export default class Intro extends Vue {
     intro: {offsetHeight: number},
     [key: string]: any
   }
+
+  @Prop({
+    type: Boolean,
+    default: true
+  })
+  isBaselineView!: boolean
 
   isIntroVisible: boolean = true;
   currentRoute: string = this.$router.currentRoute.path
@@ -49,7 +56,7 @@ export default class Intro extends Vue {
   }
 
   mounted () {
-    if (this.$cookies.get('hideIntro') === 1) {
+    if (this.$cookies.get('hideIntro') === 1 || !this.isBaselineView) {
       this.isIntroVisible = false
     }
   }

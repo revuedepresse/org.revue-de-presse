@@ -1,9 +1,5 @@
 import { EnvParam, EnvProvider } from '~/modules/shared-state'
 
-const raven = {
-  dsn: process.env.RAVEN_DSN
-}
-
 const testMode = false
 
 const getHostAndScheme = (environmentProvider: EnvProvider) => {
@@ -76,6 +72,5 @@ export default {
   getApi,
   getRoutes,
   getSchemeAndHost,
-  raven,
   testMode
 }

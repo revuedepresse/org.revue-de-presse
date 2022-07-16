@@ -13,7 +13,6 @@ type EnvProvider = {
 }
 
 const developmentMode = process.env.NODE_ENV !== 'production'
-const productionMode = !developmentMode
 
 const environmentParameters: EnvParam = {
   developmentMode,
@@ -71,52 +70,11 @@ const logLevel = {
   }
 }
 
-type captureMessage = (message: string, context: {[key:string]: string|extra}) => void
-type captureException = (error: string, context: {[key:string]: string|extra}) => void
-
-type Sentry = {
-  captureMessage: captureMessage,
-  captureException: captureException
-}
-
 class Logger {
-  $sentry: Sentry
-
-  constructor ($sentry: Sentry) {
-    this.$sentry = $sentry
+  info (): void {
   }
 
-  info (message: string, file: string, extra: {[key:string]: string}): void {
-    if (logLevel.isSilent) {
-      return
-    }
-
-    if (productionMode) {
-      this.$sentry.captureMessage(message, {
-        level: 'info',
-        logger: file,
-        extra
-      })
-    }
-  }
-
-  error (error: string, file: string, extra: {[key:string]: string}): string {
-    logLevel.onError({ error, file, extra })
-
-    if (logLevel.isSilent) {
-      return error
-    }
-
-    if (productionMode) {
-      this.$sentry.captureException(error, {
-        logger: file,
-        extra
-      })
-
-      return error
-    }
-
-    return error
+  error (): void {
   }
 }
 

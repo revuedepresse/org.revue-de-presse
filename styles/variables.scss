@@ -5,6 +5,7 @@
   --color-content-background: #2f394d;
   --color-content-font: #e6e6e6;
   --color-content-text: #2f394d;
+  --color-error: #ffaa00;
   --color-taupe-grey: #ebeef0;
   --color-white: #fff;
   --color-background-button-active: #006663;
@@ -109,8 +110,9 @@ $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: var(--color-taupe-grey);
 $border-color: darken(rgb(235, 238, 240), 20%);
 
-$filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
 $filter-active: invert(27%) sepia(82%) saturate(501%) hue-rotate(129deg) brightness(99%) contrast(101%);
+$filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
+$filter-error-icon: brightness(0) saturate(100%) invert(71%) sepia(90%) saturate(3049%) hue-rotate(1deg) brightness(109%) contrast(102%);
 $filter-white: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 $filter-content: invert(100%) sepia(0%) saturate(881%) hue-rotate(86deg) brightness(113%) contrast(80%);
 
@@ -153,7 +155,7 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
 
 .font-logo-title {
   color: $color-pitch-black;
-  font-family: Signika;
+  font-family: Signika, serif;
   font-size: 24px;
   letter-spacing: 0;
   line-height: 16px;

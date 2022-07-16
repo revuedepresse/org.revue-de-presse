@@ -1,5 +1,7 @@
 <template>
-  <div :class="statusClasses()">
+  <div
+    v-if="isBaselineView || !isIntro"
+    :class="statusClasses()">
     <div
       v-show="!isIntro"
       class="status__vanity-metrics"
@@ -16,7 +18,7 @@
 
     <div class="status__publication">
       <publisher
-        :avatar-url="status.avatarUrl"
+        :avatar-url="avatarUrl"
         :name="status.name"
         :username="status.username"
         :publication-url="status.url"
@@ -64,7 +66,7 @@
             class="status__media-item lazyload"
             :alt="getMediaTitle(document)"
             :title="getMediaTitle(document)"
-            :data-src="getMediaUrl(document)"
+            :data-src="getMediaDataUri(status)"
             :style="getMediaProperties()"
             :width="getMediaWidth(document)"
             height="auto"
@@ -79,7 +81,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import ApiMixin from '../../mixins/api'
-import StatusFormatMixin, { FormattedStatus, Media } from '../../mixins/status-format'
+import StatusFormatMixin, {TweetUrl, FormattedStatus, Media} from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
@@ -104,6 +106,12 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   showMedia!: boolean
 
   @Prop({
+    type: Boolean,
+    default: true
+  })
+  isBaselineView!: boolean
+
+  @Prop({
     type: String,
     default: ''
   })
@@ -116,10 +124,19 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
   isIntro!: boolean
 
   errorMessages: Errors = SharedState.errors
-  logger = new SharedState.Logger(this.$sentry)
+  logger = new SharedState.Logger()
   status: FormattedStatus = this.statusAtFirst
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
+
+  get avatarUrl(): string {
+    if (this.status.base64EncodedAvatar) {
+      return this.status.base64EncodedAvatar
+    }
+
+    return this.status.avatarUrl
+  }
+
 
   get webIntentTypes (): {[key: string]: string} {
     return {
@@ -215,24 +232,50 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
       return ''
     }
 
-    let text = this.replaceHyperlinksWithAnchors(status.text)
+    let urls: Array<TweetUrl> = []
+    if (status.originalDocument.entities?.urls) {
+      urls = status.originalDocument.entities.urls
+    }
+
+    let text = this.replaceHyperlinksWithAnchors(status.text, urls)
     text = this.replaceMentionsWithWithAnchors(text)
 
     return text.replace(/\s/g, ' ')
   }
 
-  replaceHyperlinksWithAnchors (subject: string) {
+  removeTrackingParams(subject: string) {
+    return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '');
+  }
+
+  replaceHyperlinksWithAnchors (subject: string, urls: Array<TweetUrl>) {
     const whitespace = 's'
-    const startCharacterClass = '[^\\'
-    const pattern = `(http(s?)://${startCharacterClass}${whitespace}]+)`
+    const not = '[^\\'
+    const pattern = `(http(s?)://${not}${whitespace}]+)`
 
     return subject.replace(new RegExp(pattern, 'gi'), (matchingText: string) => {
       if (process.env.API_HOST !== undefined && matchingText.includes(process.env.API_HOST)) {
         return matchingText
       }
-      return `<a class="status__text-external-link"
+
+      urls.forEach((u: TweetUrl) => {
+        const expandedUrl = this.removeTrackingParams(u.expanded_url);
+
+        matchingText = matchingText.replaceAll(u.url,
+          `<a class="status__text-external-link"
                  rel="noreferrer"
-                 target="_blank" href="${matchingText}">${matchingText}</a>`
+                 target="_blank" href="${expandedUrl}">${u.display_url}</a>`
+
+        )
+
+        return matchingText
+      })
+
+      const obfuscatedTweetUrl = `http(s?)://t.co${not}${whitespace}]+`
+      if (null !== matchingText.match(new RegExp(obfuscatedTweetUrl, 'gi'))) {
+          return ''
+      }
+
+      return matchingText
     })
   }
 
@@ -270,6 +313,10 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
 
   getMediaUrl (media: Media) {
     return `${media.url}:small`
+  }
+
+  getMediaDataUri (status: FormattedStatus) {
+    return status.base64EncodedMedia
   }
 
   getMediaWidth (media: Media) {

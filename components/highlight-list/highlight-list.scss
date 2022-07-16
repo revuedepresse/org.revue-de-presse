@@ -4,6 +4,11 @@
   position: relative;
   margin-top: 64px;
 
+  &--naked {
+    // original margin-top + most retweeted news paragraph height in header + separator
+    margin-top: calc(64px + 25px + var(--separation-0));
+  }
+
   @extend .member-status-list;
 
   &__loading,
@@ -12,8 +17,12 @@
   }
 
   &__container {
+    align-content: flex-start;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     margin: auto;
+    margin-top: 0;
     width: calc(100% - 2*var(--separation-2));
 
     &--filled {
