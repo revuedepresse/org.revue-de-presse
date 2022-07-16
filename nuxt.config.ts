@@ -224,6 +224,10 @@ const config: NuxtConfig = {
     }
   },
 
+  plugins: [
+    '@plugins/vue-loader',
+  ],
+
   typescript: {
     typeCheck: {
       eslint: {
