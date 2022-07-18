@@ -40,7 +40,7 @@
     "@nuxtjs/emotion": "^0.1.0",
     "@nuxtjs/sentry": "^5.1.7",
     "cookie-universal-nuxt": "^2.1.4",
-    "core-js": "^3.23.4",
+    "core-js": "^3.23.5",
     "csstype": "^3.0.8",
     "he": "^1.2.0",
     "nuxt": "^2.15.8",
