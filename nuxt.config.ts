@@ -208,6 +208,7 @@ const config: NuxtConfig = {
   },
 
   generate: {
+    fallback: true,
     routes: ['/', ...days()]
   },
 
