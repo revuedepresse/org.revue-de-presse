@@ -165,14 +165,6 @@ const config: NuxtConfig = {
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
     [
-      'nuxt-canonical',
-      {
-        baseUrl: 'https://revue-de-presse.org',
-        trailingSlashes: true,
-        forceLowercase: true
-      }
-    ],
-    [
       'nuxt-fontawesome',
       {
         imports: [
