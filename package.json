@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
-    "@nuxt/types": "2.15.8",
+    "@nuxt/types": "^2.15.8",
     "@nuxt/typescript": "^2.8.1",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/date-fns": "^1.4.3",
