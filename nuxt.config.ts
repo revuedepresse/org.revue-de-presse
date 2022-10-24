@@ -29,7 +29,7 @@ const days = () => {
       date = `0${date}`
     }
 
-    return `/${d.getFullYear()}-${month}-${date}`
+    return `/${d.getFullYear()}-${month}-${date}/`
   })
 }
 

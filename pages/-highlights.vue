@@ -33,6 +33,18 @@ export default class Highlights extends Vue {
 
     return this.$device.isDesktop || isBaselineViewActive
   }
+
+  head() {
+    return {
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://revue-de-presse.org${this.$route.path}/`
+        }
+      ]
+    };
+  }
 }
 </script>
 
