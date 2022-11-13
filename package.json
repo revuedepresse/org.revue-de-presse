@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
-    "@fortawesome/vue-fontawesome": "^2.0.8",
+    "@fortawesome/vue-fontawesome": "^2.0.9",
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
@@ -66,7 +66,7 @@
     "@nuxtjs/svg": "^0.4.0",
     "@types/emoji-js": "^3.5.0",
     "@types/he": "^1.1.2",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.0",
     "emoji-js": "^3.5.0",
     "eslint": "^8.27.0",
