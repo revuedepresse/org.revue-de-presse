@@ -33,7 +33,7 @@
     "node": ">=18.12.0"
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^2.0.9",
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
@@ -67,7 +67,7 @@
     "@types/emoji-js": "^3.5.0",
     "@types/he": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.0",
+    "@typescript-eslint/parser": "^5.43.0",
     "emoji-js": "^3.5.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
