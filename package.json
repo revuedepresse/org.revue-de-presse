@@ -29,8 +29,8 @@
     "start": "make start"
   },
   "engines": {
-    "npm": ">=8.0.0",
-    "node": ">=16.0.0"
+    "npm": ">=8.19.0",
+    "node": ">=18.12.0"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
@@ -40,7 +40,7 @@
     "@nuxtjs/emotion": "^0.1.0",
     "@nuxtjs/sentry": "^6.0.1",
     "cookie-universal-nuxt": "^2.2.2",
-    "core-js": "^3.26.0",
+    "core-js": "^3.26.1",
     "csstype": "^3.1.1",
     "he": "^1.2.0",
     "nuxt": "^2.15.8",
@@ -77,7 +77,8 @@
     "node-sass": "8.0.0",
     "nuxt-lazysizes": "1.4.0",
     "prettier": "^2.7.1",
-    "sass-loader": "^13",
-    "typescript": "^4.8.4"
+    "sass-loader": "^10.4.1",
+    "typescript": "^4.8.4",
+    "webpack": "^4.46.0"
   }
 }
