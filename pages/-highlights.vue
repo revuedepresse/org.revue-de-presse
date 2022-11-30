@@ -35,12 +35,20 @@ export default class Highlights extends Vue {
   }
 
   head() {
+    let href
+
+    if (this.$route.path[this.$route.path.length - 1] === '/') {
+        href = `https://revue-de-presse.org${this.$route.path}`
+    } else {
+        href = `https://revue-de-presse.org${this.$route.path}/`
+    }
+    
     return {
       link: [
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://revue-de-presse.org${this.$route.path}/`
+          href 
         }
       ]
     };
