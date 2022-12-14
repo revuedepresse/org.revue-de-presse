@@ -38,7 +38,7 @@
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
-    "@nuxtjs/sentry": "^6.0.1",
+    "@nuxtjs/sentry": "^6.0.3",
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.26.1",
     "csstype": "^3.1.1",
