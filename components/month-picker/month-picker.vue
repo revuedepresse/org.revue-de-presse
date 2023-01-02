@@ -109,7 +109,7 @@ class MonthPicker extends mixins(DateMixin) {
           isSelected: this.month === index,
           isDisabled: !isEnabled,
           onClick: () => {
-            this.pickDate(new Date(`${this.year}-${index + 1}-01`))
+            this.pickDate(this.setTimezone(new Date(`${this.year}-${index + 1}-01`)))
           }
         }
       })
@@ -180,9 +180,9 @@ class MonthPicker extends mixins(DateMixin) {
       month = 12
     }
 
-    let date = new Date(`${year}-${month}-01`)
+    let date = this.setTimezone(new Date(`${year}-${month}-01`))
     if (month < 10) {
-      date = new Date(`${year}-0${month}-01`)
+      date = this.setTimezone(new Date(`${year}-0${month}-01`))
     }
 
     this.pickDate(date)
@@ -205,9 +205,9 @@ class MonthPicker extends mixins(DateMixin) {
       month = month + 2
     }
 
-    let date = new Date(`${year}-${month}-01`)
+    let date = this.setTimezone(new Date(`${year}-${month}-01`))
     if (month < 10) {
-      date = new Date(`${year}-0${month}-01`)
+      date = this.setTimezone(new Date(`${year}-0${month}-01`))
     }
 
     this.pickDate(date)

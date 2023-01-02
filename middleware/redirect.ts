@@ -3,7 +3,7 @@ import Time from '../modules/time'
 
 const RedirectMiddleware: Middleware = ({ route, redirect }) => {
   if (route.name !== 'daily-review') {
-    return redirect(`/${Time.today()}`)
+    return redirect(`/${Time.today()}/`)
   }
 }
 

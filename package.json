@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -38,7 +38,7 @@
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
-    "@nuxtjs/sentry": "^6.0.3",
+    "@typescript-eslint/typescript-estree": "^4.8.2",
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.27.1",
     "csstype": "^3.1.1",

@@ -33,7 +33,7 @@
       </div>
 
       <publication-date
-        v-show="!isIntro"
+        v-if="!isIntro"
         :date="publicationDate"
         :publication-url="status.url"
       />
@@ -63,10 +63,10 @@
           <img
             v-for="(document, index) in status.media"
             :key="index"
-            class="status__media-item lazyload"
+            class="status__media-item"
             :alt="getMediaTitle(document)"
             :title="getMediaTitle(document)"
-            :data-src="getMediaDataUri(status)"
+            :src="getMediaDataUri(status)"
             :style="getMediaProperties()"
             :width="getMediaWidth(document)"
             height="auto"
@@ -81,6 +81,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import ApiMixin from '../../mixins/api'
+import DateMixin from '../../mixins/date'
 import StatusFormatMixin, {TweetUrl, FormattedStatus, Media} from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
@@ -92,7 +93,7 @@ import WebIntent from '../web-intent/web-intent.vue'
 @Component({
   components: { Publisher, PublicationDate, VanityMetric, WebIntent }
 })
-class Status extends mixins(ApiMixin, StatusFormatMixin) {
+class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   @Prop({
     type: Object,
     required: true
@@ -136,7 +137,6 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
 
     return this.status.avatarUrl
   }
-
 
   get webIntentTypes (): {[key: string]: string} {
     return {
@@ -197,7 +197,7 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
       return ''
     }
 
-    return new Date(this.status.publishedAt)
+    return this.setTimezone(new Date(this.status.publishedAt))
   }
 
   get memberTimelineUrl () {
@@ -249,8 +249,11 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
 
   replaceHyperlinksWithAnchors (subject: string, urls: Array<TweetUrl>) {
     const whitespace = 's'
+    const parens_start = '('
+    const parens_end = ')'
+    const comma = ','
     const not = '[^\\'
-    const pattern = `(http(s?)://${not}${whitespace}]+)`
+    const pattern = `(http(s?)://${not}${whitespace}\\${parens_start}\\${parens_end}${comma}]+)`
 
     return subject.replace(new RegExp(pattern, 'gi'), (matchingText: string) => {
       if (process.env.API_HOST !== undefined && matchingText.includes(process.env.API_HOST)) {
@@ -325,13 +328,6 @@ class Status extends mixins(ApiMixin, StatusFormatMixin) {
 
   getMediaTitle (media: Media) {
     return media.title ? media.title : ''
-  }
-
-  goToPermalink (status: FormattedStatus) {
-    this.$router.push({
-      name: 'status',
-      params: { statusId: status.statusId }
-    })
   }
 
   openMediaItem (media: Media) {

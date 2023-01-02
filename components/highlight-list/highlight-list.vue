@@ -26,30 +26,6 @@
         :class="containerClass"
       >
 
-        <!-- TODO bring back offline mode
-        <p
-          v-if="$nuxt.isOffline"
-          class="highlight-list__loading"
-        >
-          Votre navigateur se trouve actuellement hors-ligne.<br><br>
-          Une connexion internet est requise afin de découvrir les publications populaires.
-        </p>
-        <p
-          v-else-if="$fetchState.pending"
-          class="highlight-list__loading"
-        >
-          Chargement des publications...
-        </p>
-        <p
-          v-else-if="highlights.length === 0"
-          class="highlight-list__empty-list"
-        >
-          Cette date n'est encore associée à aucune publication pour le moment.<br><br>
-          Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
-        </p>
-        <ul v-else class="list__items">
-        -->
-
         <ul
           class="list__items">
           <li
@@ -208,7 +184,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get canIdentifyRetweets() {
-    return new Date(this.startDate) >= new Date('2018-12-09')
+    return this.setTimezone(new Date(this.startDate)) >= this.setTimezone(new Date('2018-12-09'))
   }
 
   get canFilterByRetweet() {
@@ -264,18 +240,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return 'excluded'
   }
 
-  get maxStartDate() {
-    return this.maxDate
-  }
-
-  get minEndDate() {
-    if (new Date(this.minDate) > new Date(this.startDate)) {
-      return this.minDate
-    }
-
-    return this.startDate
-  }
-
   get intro(): RawStatus {
     const text = 'Revue de presse est un projet citoyen indépendant ' +
       'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
@@ -285,8 +249,8 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       username: 'revue_2_presse',
       avatarUrl: Logo,
       avatar_url: Logo,
-      published_at: this.formatDate(new Date()),
-      publishedAt: new Date(),
+      published_at: this.formatDate(this.now()),
+      publishedAt: this.now(),
       statusId: '0',
       status_id: '0',
       text,
@@ -309,7 +273,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get showErrorMessage(): boolean {
-    return this.$fetchState.error !== null
+    return this.$fetchState.error !== null || this.items.length === 0
   }
 
   get showLoadingSpinner(): boolean {
@@ -444,7 +408,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   updateHighlights() {
     this.items = []
     this.$router.push({
-      path: `/${this.startDate}`
+      path: `/${this.startDate}/`
     })
   }
 }

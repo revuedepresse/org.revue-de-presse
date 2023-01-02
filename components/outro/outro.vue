@@ -78,46 +78,51 @@
   </div>
 </template>
 
-<script>
-import introducingIcon from '../../assets/icons/icon-introducing.svg'
-import sharingIcon from '../../assets/icons/icon-sharing.svg'
-import fundingIcon from '../../assets/icons/icon-funding.svg'
+<script lang="ts">
+import { Component, mixins  } from 'nuxt-property-decorator'
+import IntroducingIcon from '../../assets/icons/icon-introducing.svg'
+import SharingIcon from '../../assets/icons/icon-sharing.svg'
+import FundingIcon from '../../assets/icons/icon-funding.svg'
+import DateMixin from "~/mixins/date";
 
-export default {
-  name: 'Outro',
-  computed: {
-    year () {
-      return new Date().getFullYear()
-    },
-    fundingIcon () {
-      const width = '18px'
-      const height = '20px'
+@Component
+class Outro extends mixins(DateMixin) {
+  get year () {
+    return this.now().getFullYear()
+  }
 
-      return `--icon-funding-background: center / ${width} ${height} no-repeat url("${fundingIcon}");
-          --icon-funding-height: ${height};
-          --icon-funding-width: ${width}
-        `
-    },
-    introducingIcon () {
-      const width = '22px'
-      const height = '15px'
+  get fundingIcon () {
+    const width = '18px'
+    const height = '20px'
 
-      return `--icon-introducing-background: center / ${width} ${height} no-repeat url("${introducingIcon}");
-        --icon-introducing-height: ${height};
-        --icon-introducing-width: ${width}
+    return `--icon-funding-background: center / ${width} ${height} no-repeat url("${FundingIcon}");
+        --icon-funding-height: ${height};
+        --icon-funding-width: ${width}
       `
-    },
-    sharingIcon () {
-      const width = '20px'
-      const height = '18px'
+  }
 
-      return `--icon-sharing-background: center / ${width} ${height} no-repeat url("${sharingIcon}");
-        --icon-sharing-height: ${height};
-        --icon-sharing-width: ${width}
-      `
-    }
+  get introducingIcon () {
+    const width = '22px'
+    const height = '15px'
+
+    return `--icon-introducing-background: center / ${width} ${height} no-repeat url("${IntroducingIcon}");
+      --icon-introducing-height: ${height};
+      --icon-introducing-width: ${width}
+    `
+  }
+
+  get sharingIcon () {
+    const width = '20px'
+    const height = '18px'
+
+    return `--icon-sharing-background: center / ${width} ${height} no-repeat url("${SharingIcon}");
+      --icon-sharing-height: ${height};
+      --icon-sharing-width: ${width}
+    `
   }
 }
+
+export default Outro
 </script>
 
 <style lang="scss" scoped>

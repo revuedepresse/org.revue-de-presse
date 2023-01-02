@@ -1,5 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
+import { setTimezone } from './mixins/date'
 
 const description =
   'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
@@ -8,15 +9,20 @@ const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
 const icon = '/logo-revue-de-presse.png'
 
 const days = () => {
-  const days = [new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))]
+  const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
-  const today = new Date()
+
+  const today = setTimezone(new Date())
   const nextYear = today.getFullYear() + 1
 
   do {
-    days.push(new Date(next.getTime() + (1000 * 3600 * 24)))
+    const nextDate = new Date();
+    nextDate.setMonth(next.getMonth());
+    nextDate.setFullYear(next.getFullYear());
+
+    days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
-  } while (next <= new Date(`31 dec ${nextYear} 00:00:00 GMT`))
+  } while (next <= setTimezone(new Date(`31 dec ${nextYear} 00:00:00 GMT`)))
 
   return days.map((d) => {
     let month = `${d.getMonth() + 1}`
@@ -24,8 +30,8 @@ const days = () => {
       month = `0${month}`
     }
 
-    let date = `${d.getDate() + 1}`
-    if (d.getDate() + 1 < 10) {
+    let date = `${d.getDate()}`
+    if (d.getDate() < 10) {
       date = `0${date}`
     }
 
@@ -188,6 +194,7 @@ const config: NuxtConfig = {
   },
 
   router: {
+    trailingSlash: true,
     middleware: 'redirect',
     extendRoutes (routes: Route[], resolve: (dir: string, path: string) => string): void {
       routes.push({
@@ -197,7 +204,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'daily-review',
-        path: '/:startDate',
+        path: '/:startDate/',
         component: resolve(__dirname, 'pages/-highlights.vue')
       })
     }

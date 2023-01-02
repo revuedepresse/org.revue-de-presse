@@ -151,14 +151,14 @@ class CalendarMonth extends mixins(DateMixin) {
   }
 
   get dayBeforePickedDate (): Date {
-    const pickedDate = new Date(this.pickedDate.getTime())
+    const pickedDate = this.setTimezone(new Date(this.pickedDate.getTime()))
     pickedDate.setDate(pickedDate.getDate() - 1)
 
     return pickedDate
   }
 
   get dayFollowingPickedDate (): Date {
-    const pickedDate = new Date(this.pickedDate.getTime())
+    const pickedDate = this.setTimezone(new Date(this.pickedDate.getTime()))
     pickedDate.setDate(pickedDate.getDate() + 1)
 
     return pickedDate
@@ -175,7 +175,7 @@ class CalendarMonth extends mixins(DateMixin) {
   dateOfFirstVisibleDay () {
     let firstVisibleDayCandidate = this.nameOfFirstDayOfMonth()
 
-    const dateCandidate = new Date(this.year, this.month, 1)
+    const dateCandidate = this.setTimezone(new Date(this.year, this.month, 1))
 
     this.guardAgainstMissingMonthOrYear(firstVisibleDayCandidate)
 
@@ -189,7 +189,7 @@ class CalendarMonth extends mixins(DateMixin) {
 
   dateOfLastVisibleDay () {
     let lastVisibleDayCandidate = this.nameOfLastDayOfMonth()
-    const dateCandidate = new Date(this.year, this.month, this.totalDaysInMonth())
+    const dateCandidate = this.setTimezone(new Date(this.year, this.month, this.totalDaysInMonth()))
 
     this.guardAgainstMissingMonthOrYear(lastVisibleDayCandidate)
 
@@ -207,7 +207,7 @@ class CalendarMonth extends mixins(DateMixin) {
     const week = (new Array(7))
       .fill('', 0, 7)
       .map((_, index) => {
-        const dayOfWeek = new Date(this.dateOfFirstVisibleDay().getTime())
+        const dayOfWeek = this.setTimezone(new Date(this.dateOfFirstVisibleDay().getTime()))
         dayOfWeek.setDate(dayOfWeek.getDate() + index + shift)
         return dayOfWeek
       })
@@ -232,21 +232,21 @@ class CalendarMonth extends mixins(DateMixin) {
   }
 
   nameOfFirstDayOfMonth () {
-    return this.daysOfWeek[new Date(this.year, this.month, 1).getDay()]
+    return this.daysOfWeek[this.setTimezone(new Date(this.year, this.month, 1)).getDay()]
   }
 
   nameOfLastDayOfMonth () {
     const lastDayNumberOfMonth = this.totalDaysInMonth()
 
-    return this.whichDayOfWeek(new Date(this.year, this.month, lastDayNumberOfMonth).getDay())
+    return this.whichDayOfWeek(this.setTimezone(new Date(this.year, this.month, lastDayNumberOfMonth)).getDay())
   }
 
   totalDaysInMonth (): number {
-    return new Date(this.year, this.month + 1, 0).getDate()
+    return this.setTimezone(new Date(this.year, this.month + 1, 0)).getDate()
   }
 
   totalDaysInPreviousMonth (): number {
-    return new Date(this.year, this.month, 0).getDate()
+    return this.setTimezone(new Date(this.year, this.month, 0)).getDate()
   }
 
   dayRows () {
@@ -319,7 +319,7 @@ class CalendarMonth extends mixins(DateMixin) {
       [defaultClass]: true,
       'calendar-month__day-number--selected': this.formatDate(this.pickedDate) === this.formatDate(weekDay),
       'calendar-month__day-number--other-month': weekDay.getMonth() !== this.month,
-      'calendar-month__day-number--future-dates': weekDay > new Date()
+      'calendar-month__day-number--future-dates': weekDay > this.setTimezone(this.now())
     }
   }
 }
