@@ -2,6 +2,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import he from 'he'
 import EmojiConvertor from 'emoji-js'
 import SharedState from '../modules/shared-state'
+import { setTimezone } from './date'
 
 import EventHub from '../modules/event-hub'
 import Errors from '../modules/errors'
@@ -63,7 +64,8 @@ type FormattedStatus = {
   media: Media[],
   totalRetweet: number,
   totalLike: number,
-  links: string[],
+
+  links: RegExpMatchArray[]|null|Array<string>,
   inAggregate?: string,
   likedBy?: string,
   retweet?: number,
@@ -163,7 +165,7 @@ export default class StatusFormat extends Vue {
         return
       }
 
-      let links = status.text.match(/http(?:s)?:\/\/\S+/g)
+      let links: RegExpMatchArray[]|null|Array<string> = status.text.match(/http(?:s)?:\/\/\S+/g)
 
       if (links === null || links === undefined || links.length <= 1) {
         links = []
@@ -189,7 +191,7 @@ export default class StatusFormat extends Vue {
         inAggregate: aggregate,
         username: status.username,
         avatarUrl: status.avatar_url,
-        publishedAt: new Date(status.published_at),
+        publishedAt: setTimezone(new Date(status.published_at)),
         statusId: status.status_id,
         text: this.parseFromString(status.text),
         url: status.url,

@@ -53,7 +53,7 @@ class YearPicker extends mixins(DateMixin) {
   isPreviousItemAvailable!: boolean
 
   get acceptedYears () {
-    const today = new Date()
+    const today = this.now()
     const years = new Array(today.getFullYear() - 2018)
 
     const acceptedYears = [{
@@ -74,7 +74,7 @@ class YearPicker extends mixins(DateMixin) {
         })
     ).map((acceptedYear) => {
       acceptedYear.onClick = () => {
-        this.pickDate(new Date(`${acceptedYear.label}-01-01`))
+        this.pickDate(this.setTimezone(new Date(`${acceptedYear.label}-01-01`)))
       }
       return acceptedYear
     })
@@ -121,7 +121,7 @@ class YearPicker extends mixins(DateMixin) {
       return false
     }
 
-    this.pickDate(new Date(`${this.year - 1}-01-01`))
+    this.pickDate(this.setTimezone(new Date(`${this.year - 1}-01-01`)))
 
     return false
   }
@@ -131,7 +131,7 @@ class YearPicker extends mixins(DateMixin) {
       return false
     }
 
-    this.pickDate(new Date(`${this.year + 1}-01-01`))
+    this.pickDate(this.setTimezone(new Date(`${this.year + 1}-01-01`)))
 
     return false
   }

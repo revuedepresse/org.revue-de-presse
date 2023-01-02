@@ -7,7 +7,7 @@
       <a :href="publisherUrl">
         <img
           :alt="textAlternative"
-          :data-src="avatarUrl"
+          :src="avatarUrl"
           :class="avatarClasses()"
           width="46px"
           height="46px"
@@ -105,7 +105,7 @@ export default class Publisher extends Vue {
 
   avatarClasses () {
     return {
-      'publisher__avatar lazyload': true,
+      'publisher__avatar': true,
       'publisher__avatar--hide': this.canNotLoadAvatar
     }
   }

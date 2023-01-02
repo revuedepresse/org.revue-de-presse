@@ -208,7 +208,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get canIdentifyRetweets() {
-    return new Date(this.startDate) >= new Date('2018-12-09')
+    return this.setTimezone(new Date(this.startDate)) >= this.setTimezone(new Date('2018-12-09'))
   }
 
   get canFilterByRetweet() {
@@ -264,18 +264,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return 'excluded'
   }
 
-  get maxStartDate() {
-    return this.maxDate
-  }
-
-  get minEndDate() {
-    if (new Date(this.minDate) > new Date(this.startDate)) {
-      return this.minDate
-    }
-
-    return this.startDate
-  }
-
   get intro(): RawStatus {
     const text = 'Revue de presse est un projet citoyen indépendant ' +
       'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
@@ -285,8 +273,8 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       username: 'revue_2_presse',
       avatarUrl: Logo,
       avatar_url: Logo,
-      published_at: this.formatDate(new Date()),
-      publishedAt: new Date(),
+      published_at: this.formatDate(this.now()),
+      publishedAt: this.now(),
       statusId: '0',
       status_id: '0',
       text,
@@ -444,7 +432,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   updateHighlights() {
     this.items = []
     this.$router.push({
-      path: `/${this.startDate}`
+      path: `/${this.startDate}/`
     })
   }
 }

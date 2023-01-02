@@ -18,7 +18,7 @@
       <CalendarMonth
         v-show="pickingDay"
         :month="startDateMonth"
-        :picked-date="new Date(startDate)"
+        :picked-date="pickedStartDate"
         :year="startDateYear"
         :is-next-item-available="isNextMonthAvailable()"
         :is-previous-item-available="isPreviousMonthAvailable()"
@@ -115,17 +115,21 @@ export default class DatePicker extends mixins(DateMixin) {
     `
   }
 
+  get pickedStartDate (): Date {
+    return this.setTimezone(new Date(this.startDate))
+  }
+
   get dayBeforePickedDate (): Date {
-    const startDate = new Date(this.startDate)
-    const pickedDate = new Date(startDate.getTime())
+    const startDate = this.setTimezone(new Date(this.startDate))
+    const pickedDate = this.setTimezone(new Date(startDate.getTime()))
     pickedDate.setDate(pickedDate.getDate() - 1)
 
     return pickedDate
   }
 
   get dayFollowingPickedDate (): Date {
-    const startDate = new Date(this.startDate)
-    const pickedDate = new Date(startDate.getTime())
+    const startDate = this.setTimezone(new Date(this.startDate))
+    const pickedDate = this.setTimezone(new Date(startDate.getTime()))
     pickedDate.setDate(pickedDate.getDate() + 1)
 
     return pickedDate
@@ -212,8 +216,8 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   isNextDayAvailable () {
-    const today = new Date()
-    const sinceDate = new Date(this.startDate)
+    const today = this.now()
+    const sinceDate = this.setTimezone(new Date(this.startDate))
 
     if (
       sinceDate.getFullYear() >= 2018 &&
@@ -241,8 +245,8 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   isPreviousDayAvailable () {
-    const today = new Date()
-    const sinceDate = new Date(this.startDate)
+    const today = this.now()
+    const sinceDate = this.setTimezone(new Date(this.startDate))
 
     if (sinceDate.getFullYear() < 2018) {
       return false
@@ -270,19 +274,19 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   isNextYearAvailable () {
-    const today = new Date()
+    const today = this.now()
 
     return this.startDateYear >= 2017 && this.startDateYear < today.getFullYear()
   }
 
   isPreviousYearAvailable () {
-    const today = new Date()
+    const today = this.now()
 
     return this.startDateYear > 2018 && this.startDateYear <= today.getFullYear() + 1
   }
 
   isNextMonthAvailable () {
-    const today = new Date()
+    const today = this.now()
 
     if (this.startDateYear >= 2018 && this.startDateYear < today.getFullYear()) {
       // The next month belongs to
@@ -297,7 +301,7 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   isPreviousMonthAvailable () {
-    const today = new Date()
+    const today = this.now()
 
     if (this.startDateYear > 2018 && this.startDateYear <= today.getFullYear()) {
       return true
@@ -342,19 +346,19 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   getStartDateMonth (startDate: string): number {
-    const date = new Date(startDate)
+    const date = this.setTimezone(new Date(startDate))
 
     return date.getMonth()
   }
 
   getStartDateYear (startDate: string): number {
-    const date = new Date(startDate)
+    const date = this.setTimezone(new Date(startDate))
 
     return date.getFullYear()
   }
 
   refreshStartDateLabel (startDate: string) {
-    const date = new Date(startDate)
+    const date = this.setTimezone(new Date(startDate))
     const dayOfMonth = date.getDate()
     const daysOfWeek = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']
     const months = [
@@ -380,8 +384,8 @@ export default class DatePicker extends mixins(DateMixin) {
 
   visibleDaysInterval () {
     return {
-      start: new Date(this.getMinDate()),
-      end: new Date(this.getMaxDate())
+      start: this.setTimezone(new Date(this.getMinDate())),
+      end: this.setTimezone(new Date(this.getMaxDate()))
     }
   }
 }

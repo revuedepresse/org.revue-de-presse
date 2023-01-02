@@ -1,3 +1,4 @@
+import { setTimezone } from '../mixins/date'
 const padWithCharacter = (subject: number, character: number): string => {
   let paddedSubject = subject.toString()
   if (subject < 10) {
@@ -16,13 +17,13 @@ const formatDate = (date: Date) => {
 }
 
 const yesterday = () => {
-  const date = new Date()
+  const date = setTimezone(new Date())
   date.setDate(date.getDate() - 1)
 
   return formatDate(date)
 }
 
-const today = (): string => formatDate(new Date())
+const today = (): string => formatDate(setTimezone(new Date()))
 
 export default {
   formatDate,
