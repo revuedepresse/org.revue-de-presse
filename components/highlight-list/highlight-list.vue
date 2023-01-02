@@ -26,30 +26,6 @@
         :class="containerClass"
       >
 
-        <!-- TODO bring back offline mode
-        <p
-          v-if="$nuxt.isOffline"
-          class="highlight-list__loading"
-        >
-          Votre navigateur se trouve actuellement hors-ligne.<br><br>
-          Une connexion internet est requise afin de découvrir les publications populaires.
-        </p>
-        <p
-          v-else-if="$fetchState.pending"
-          class="highlight-list__loading"
-        >
-          Chargement des publications...
-        </p>
-        <p
-          v-else-if="highlights.length === 0"
-          class="highlight-list__empty-list"
-        >
-          Cette date n'est encore associée à aucune publication pour le moment.<br><br>
-          Veuillez svp sélectionner une date antérieure ou alors revenir un plus tard.
-        </p>
-        <ul v-else class="list__items">
-        -->
-
         <ul
           class="list__items">
           <li
