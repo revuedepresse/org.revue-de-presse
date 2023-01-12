@@ -62,7 +62,7 @@
     <p class="outro__paragraph">
       Ce projet est porté avec 💙 par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a
         href="https://twitter.com/thierrymarianne"
-      >@thierrymarianne</a> et est hébergé par <a href="netlify.com">netlify</a>.
+      >@thierrymarianne</a> et est hébergé par <a target="_blank" href="https://netlify.com">netlify</a>.
     </p>
 
     <div class="outro__copyright-footer">
