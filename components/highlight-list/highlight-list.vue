@@ -382,7 +382,13 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     if (this.highlights.length > 1) {
       const whitespace = '\\s'
       const pattern = `https?://[^${whitespace}]+`
-      const description = this.highlights[1].status.text
+
+      let highlightIndex = 1
+      if (this.$device.isMobile) {
+        highlightIndex = 0
+      }
+
+      const description = this.highlights[highlightIndex].status.text
         .replaceAll(new RegExp(pattern, 'ig'), '')
         // eslint-disable-next-line no-control-regex
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
