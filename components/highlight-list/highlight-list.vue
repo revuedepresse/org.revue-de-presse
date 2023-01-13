@@ -1,4 +1,5 @@
 <template>
+
   <div :class="highlightsClasses">
     <link rel="preconnect" :href="getApiHost">
     <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin>
@@ -11,6 +12,7 @@
 
     <div
       class="highlight-list__content">
+
       <div
         v-if="isBaselineView"
         class="highlight-list__navigation">
@@ -45,11 +47,13 @@
         </ul>
 
         <LoadingSpinner
-          v-if="isLoadingSpinnerVisible"
+          v-if="isLoadingSpinnerVisible && isNotLegalNoticeRoute"
           :message="errorMessage"
           :show-error-message="showErrorMessage"
           :show-loading-spinner="showLoadingSpinner"
         />
+
+        <LegalNotice/>
 
       </div>
 
@@ -68,6 +72,7 @@ import AppHeader, {HeightAware} from '../app-header/app-header.vue'
 import Intro from '../intro/intro.vue'
 import DatePicker from '../date-picker/date-picker.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
+import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, {RawStatus} from '~/mixins/status-format'
@@ -99,6 +104,7 @@ type RequestOptions = {
     AppHeader,
     DatePicker,
     Intro,
+    LegalNotice,
     LoadingSpinner,
     Outro,
     Status
@@ -114,7 +120,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   includeRetweets: string = RETWEETS_EXCLUDED
   items: Array<{ status: RawStatus }> = []
   logger = new SharedState.Logger()
-  heightOfComponentsBeforeOutro: string = '--height-components-before-outro: 0'
   minDate = this.getMinDate()
   maxDate = this.getMaxDate()
   selectedAggregates: number[] = []
@@ -183,21 +188,20 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return Config.getSchemeAndHost()
   }
 
-  get canIdentifyRetweets() {
-    return this.setTimezone(new Date(this.startDate)) >= this.setTimezone(new Date('2018-12-09'))
-  }
-
-  get canFilterByRetweet() {
-    return false
-  }
-
   get highlights() {
     let highlights = this.items
 
+    let intro: Array<{ status: RawStatus }> = []
+    if (this.$device.isDesktop) {
+      intro = [{status: this.intro}]
+    }
+
+    if (this.isShowingLegalNotice) {
+      return intro
+    }
+
     if (this.isBaselineView) {
-      if (this.$device.isDesktop) {
-        return [{status: this.intro}].concat(highlights)
-      }
+      return intro.concat(highlights)
     } else {
       highlights = highlights.slice(0, 3)
     }
@@ -213,18 +217,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
-  get highlightListOffsetHeight() {
-    if (!this.$refs.highlights) {
-      return 0
-    }
-
-    return this.$refs.highlights.offsetHeight
-  }
-
-  get includedRetweetsLabel() {
-    return 'included'
-  }
-
   get isBaselineView() {
     if (this.$route === undefined) {
       return true
@@ -234,10 +226,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     const isBaselineViewActive = paramNames.find((p) => p === 'naked') === undefined
 
     return this.$device.isDesktop || isBaselineViewActive
-  }
-
-  get excludedRetweetsLabel() {
-    return 'excluded'
   }
 
   get intro(): RawStatus {
@@ -277,7 +265,15 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get showLoadingSpinner(): boolean {
-    return this.$fetchState.pending === true
+    return this.$fetchState.pending
+  }
+
+  get isNotLegalNoticeRoute() {
+    return !this.isShowingLegalNotice
+  }
+
+  get isShowingLegalNotice() {
+    return this.$route.name === 'legal-notice'
   }
 
   get isLoadingSpinnerVisible() {
@@ -317,11 +313,11 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   defaultDates() {
     let {startDate, endDate} = this.$route.params
 
-    if (startDate === '1970-01-01') {
+    if (startDate === '1970-01-01' || !startDate) {
       startDate = this.getMaxDate()
     }
 
-    if (endDate === '1970-01-01') {
+    if (endDate === '1970-01-01' || !endDate) {
       endDate = this.getMaxDate()
     }
 

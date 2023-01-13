@@ -203,6 +203,11 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/index.vue')
       })
       routes.push({
+        name: 'legal-notice',
+        path: '/mentions-legales/',
+        component: resolve(__dirname, 'pages/-highlights.vue')
+      })
+      routes.push({
         name: 'daily-review',
         path: '/:startDate/',
         component: resolve(__dirname, 'pages/-highlights.vue')
