@@ -378,23 +378,43 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return `${Config.getSchemeAndHost()}${action.route}`
   }
 
-  highlightListHeight() {
-    const highlights = this.$refs.highlights
+  head() {
+    if (this.highlights.length > 1) {
+      const whitespace = '\\s'
+      const pattern = `https?://[^${whitespace}]+`
+      const description = this.highlights[1].status.text
+        .replaceAll(new RegExp(pattern, 'ig'), '')
+        // eslint-disable-next-line no-control-regex
+        .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
+      const title = `${description} - Revue de presse du ${this.startDate}`
 
-    if (!this.$refs.highlights) {
-      return '0'
+      return {
+        title,
+        meta: [
+          { hid: 'description', name: 'description', content: description },
+          {
+            hid: 'og:url',
+            property: 'og:url',
+            content: `https://revue-de-presse.org/${this.startDate}/`
+          },
+          {
+            hid: 'og:title',
+            property: 'og:title',
+            content: title
+          },
+          {
+            hid: 'og:description',
+            property: 'og:description',
+            content: description
+          },
+          {
+            hid: 'twitter:description',
+            property: 'twitter:description',
+            content: description
+          }
+        ]
+      }
     }
-
-    return `${highlights.offsetHeight}`
-  }
-
-  introHeight() {
-    let height = 0
-    if (this.$refs.header) {
-      height = this.$refs.header.height()
-    }
-
-    return height
   }
 
   isIntro(key: number) {
