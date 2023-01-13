@@ -1,4 +1,5 @@
 <template>
+
   <div :class="highlightsClasses">
     <link rel="preconnect" :href="getApiHost">
     <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin>
@@ -52,56 +53,7 @@
           :show-loading-spinner="showLoadingSpinner"
         />
 
-        <div
-          v-if="isLegalNoticeRoute"
-          class="highlight-list__legal-notice"
-        >
-          <h1>En vigueur au 07/10/14</h1>
-
-          <p>Conformément aux dispositions des Articles 6-III et<br />
-          19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l'économie numérique,
-          dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs, ci-après l'"Utilisateur",
-          du site https://revue-de-presse.org,<br />
-          ci-après le "Site", les présentes mentions légales.<br />
-
-          La connexion et la navigation sur le Site par l'Utilisateur implique acceptation intégrale et sans réserve des présentes mentions légales.
-          <br />
-
-          Ces dernières sont accessibles sur le Site à la rubrique « Mentions légales ».</p>
-
-          <h2>ARTICLE 1 - L'EDITEUR</h2>
-
-          <p>L'édition et la direction de la publication du Site est assurée par Thierry Marianne, domicilié au<br />
-
-          5 boulevard Victor Hugo Poissy 78300, dont l'adresse e-mail est<br />
-
-          contact [chez]  revue [tiret] de [tiret] presse [point] org<br />
-
-          ci-après l'"Editeur".</p>
-
-          <h2>ARTICLE 2 - HEBERGEURS</h2>
-
-          <p>Les hébergeur du Site sont la société SCALEWAY, dont le siège social est situé au<br />
-          8 rue de la Ville l'Evêque, 75008 Paris, <br />
-          avec le numéro de téléphone : +33 (0)1 84 13 00 00<br />
-          ainsi que la société Netlify situé au<br />
-          44 Montgomery Street, Suite 300, San Francisco, California 94104, dont l'adresse de support est support@netlify.com</p>
-
-          <h2>ARTICLE 3 - ACCES AU SITE</h2>
-
-          <p>Le Site est accessible en tout endroit, 7j/7, 24h/24 sauf cas de force majeure, interruption programmée ou non et pouvant découlant d'une nécessité de maintenance.<br />
-
-          En cas de modification, interruption ou suspension du Site,<br />
-
-          l'Editeur ne saurait être tenu responsable.</p>
-
-          <h2>ARTICLE 4 - COLLECTE DES DONNEES</h2>
-
-          <p>Le Site est exempté de déclaration à la Commission Nationale Informatique et Libertés (CNIL) dans la mesure où il ne collecte aucune donnée concernant les utilisateurs.<br />
-
-          Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site, sans autorisation de l'Editeur est prohibée
-          et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.</p>
-        </div>
+        <LegalNotice/>
 
       </div>
 
@@ -120,6 +72,7 @@ import AppHeader, {HeightAware} from '../app-header/app-header.vue'
 import Intro from '../intro/intro.vue'
 import DatePicker from '../date-picker/date-picker.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
+import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, {RawStatus} from '~/mixins/status-format'
@@ -151,6 +104,7 @@ type RequestOptions = {
     AppHeader,
     DatePicker,
     Intro,
+    LegalNotice,
     LoadingSpinner,
     Outro,
     Status
@@ -166,7 +120,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   includeRetweets: string = RETWEETS_EXCLUDED
   items: Array<{ status: RawStatus }> = []
   logger = new SharedState.Logger()
-  heightOfComponentsBeforeOutro: string = '--height-components-before-outro: 0'
   minDate = this.getMinDate()
   maxDate = this.getMaxDate()
   selectedAggregates: number[] = []
@@ -235,25 +188,20 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return Config.getSchemeAndHost()
   }
 
-  get canIdentifyRetweets() {
-    return this.setTimezone(new Date(this.startDate)) >= this.setTimezone(new Date('2018-12-09'))
-  }
-
-  get canFilterByRetweet() {
-    return false
-  }
-
   get highlights() {
     let highlights = this.items
 
-    if (this.isLegalNoticeRoute) {
-      return [{status: this.intro}]
+    let intro: Array<{ status: RawStatus }> = []
+    if (this.$device.isDesktop) {
+      intro = [{status: this.intro}]
+    }
+
+    if (this.isShowingLegalNotice) {
+      return intro
     }
 
     if (this.isBaselineView) {
-      if (this.$device.isDesktop) {
-        return [{status: this.intro}].concat(highlights)
-      }
+      return intro.concat(highlights)
     } else {
       highlights = highlights.slice(0, 3)
     }
@@ -269,18 +217,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
-  get highlightListOffsetHeight() {
-    if (!this.$refs.highlights) {
-      return 0
-    }
-
-    return this.$refs.highlights.offsetHeight
-  }
-
-  get includedRetweetsLabel() {
-    return 'included'
-  }
-
   get isBaselineView() {
     if (this.$route === undefined) {
       return true
@@ -290,10 +226,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     const isBaselineViewActive = paramNames.find((p) => p === 'naked') === undefined
 
     return this.$device.isDesktop || isBaselineViewActive
-  }
-
-  get excludedRetweetsLabel() {
-    return 'excluded'
   }
 
   get intro(): RawStatus {
@@ -333,14 +265,14 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   get showLoadingSpinner(): boolean {
-    return this.$fetchState.pending === true
+    return this.$fetchState.pending
   }
 
   get isNotLegalNoticeRoute() {
-    return ! this.isLegalNoticeRoute
+    return !this.isShowingLegalNotice
   }
 
-  get isLegalNoticeRoute() {
+  get isShowingLegalNotice() {
     return this.$route.name === 'legal-notice'
   }
 
@@ -381,11 +313,11 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   defaultDates() {
     let {startDate, endDate} = this.$route.params
 
-    if (startDate === '1970-01-01') {
+    if (startDate === '1970-01-01' || !startDate) {
       startDate = this.getMaxDate()
     }
 
-    if (endDate === '1970-01-01') {
+    if (endDate === '1970-01-01' || !endDate) {
       endDate = this.getMaxDate()
     }
 
