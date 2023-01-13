@@ -55,30 +55,6 @@
     flex-direction: column-reverse;
   }
 
-  &__legal-notice {
-    border-radius: var(--separation-1);
-    background-color: var(--color-white);
-    margin-top: var(--separation-1);
-    margin-bottom: var(--separation-2);
-
-    p {
-      color: var(--color-black);
-      font: normal normal normal var(--font-size-footer-paragraph)/var(--line-spacing-footer-paragraph) Roboto;
-      letter-spacing: 0;
-      margin: var(--separation-3);
-      margin-top: 0;
-      text-align: left;
-    }
-
-    h1 {
-      margin-left: var(--separation-3);
-    }
-
-    h2 {
-      margin-bottom: var(--separation-1);
-    }
-  }
-
   @media (min-width: $width-desktop) {
     .highlight-list__content {
       flex-direction: row;
