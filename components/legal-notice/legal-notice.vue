@@ -19,8 +19,8 @@
     <h2>ARTICLE 1 - L'EDITEUR</h2>
 
     <p>L'édition et la direction de la publication du Site est assurée par <br />
-      {{ editor }}, domiciliés au<br/>
-      {{ address }}, dont l'adresse e-mail est<br/>
+      {{ editor }},<br/>
+      dont l'adresse e-mail est<br/>
       {{ email }}<br/>
       ci-après l'"Editeur".</p>
 
@@ -69,10 +69,6 @@ class LegalNotice extends Vue {
 
   get site() {
     return 'https://revue-de-presse.org'
-  }
-
-  get address() {
-    return atob('NSBib3VsZXZhcmQgVmljdG9yIEh1Z28gUG9pc3N5IDc4MzAw')
   }
 
   get email() {
