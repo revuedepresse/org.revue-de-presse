@@ -57,7 +57,7 @@
               v-if="isReviewAvailable(weekDay)"
               :href="canonicalUrl(weekDay)"
               class="calendar-month__day-cell"
-              @click="pickDate(weekDay)"
+              @click.stop.prevent="pickDate(weekDay)"
               v-text="weekDay.getDate()"
             />
             <span
@@ -306,8 +306,7 @@ class CalendarMonth extends mixins(DateMixin) {
   }
 
   isReviewAvailable(date: Date) {
-    return this.setTimezone(date) < this.now()
-    && this.setTimezone(date) >= this.getMinDate()
+    return this.setTimezone(date) <= this.now()
   }
 
   pickDate (date: Date) {
@@ -317,8 +316,6 @@ class CalendarMonth extends mixins(DateMixin) {
       name: 'daily-review',
       params: { startDate }
     })
-
-    return false
   }
 
   canonicalUrl(date: Date) {
