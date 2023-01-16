@@ -54,10 +54,17 @@
             :class="weekDayClasses(weekDay)"
           >
             <a
+              v-if="isReviewAvailable(weekDay)"
+              :href="canonicalUrl(weekDay)"
               class="calendar-month__day-cell"
-              @click="pickDate(weekDay)"
+              @click.stop.prevent="pickDate(weekDay)"
               v-text="weekDay.getDate()"
             />
+            <span
+              v-else
+              class="calendar-month__day-cell"
+              v-text="weekDay.getDate()"
+            ></span>
           </td>
         </tr>
       </tbody>
@@ -72,6 +79,7 @@ import Time from '../../modules/time'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import Site from '~/modules/site'
 
 const DatePickerStore = namespace('date-picker')
 
@@ -297,6 +305,10 @@ class CalendarMonth extends mixins(DateMixin) {
     }
   }
 
+  isReviewAvailable(date: Date) {
+    return this.setTimezone(date) <= this.now()
+  }
+
   pickDate (date: Date) {
     const startDate = Time.formatDate(date)
 
@@ -304,6 +316,12 @@ class CalendarMonth extends mixins(DateMixin) {
       name: 'daily-review',
       params: { startDate }
     })
+  }
+
+  canonicalUrl(date: Date) {
+    const startDate = Time.formatDate(date)
+
+    return `${Site.baseURL}/${startDate}`
   }
 
   weekDayClasses (weekDay?: Date) {

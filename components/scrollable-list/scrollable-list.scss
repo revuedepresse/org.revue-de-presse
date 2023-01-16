@@ -57,6 +57,7 @@ $item-height: calc(
 
     &--disabled {
       color: var(--color-content-font);
+      cursor: default;
     }
 
     &--selected {

@@ -1,11 +1,12 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
 import { setTimezone } from './mixins/date'
+import Site from './modules/site'
 
 const description =
   'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
 const title = 'Revue de presse'
-const banner = 'https://revue-de-presse.org/revue-de-presse-banner.jpg'
+const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
 const days = () => {
@@ -69,7 +70,7 @@ const config: NuxtConfig = {
       {
         hid: 'og:url',
         property: 'og:url',
-        content: 'https://revue-de-presse.org'
+        content: Site.baseURL
       },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       {
