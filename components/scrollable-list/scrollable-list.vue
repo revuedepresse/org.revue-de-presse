@@ -10,7 +10,7 @@
         <label
           :class="getLabelClasses(item)"
           for="selectable"
-          @click="handleClick(item)"
+          @click.stop.prevent="handleClick(item)"
         >
           <input
             class="scrollable-list__selectable"
