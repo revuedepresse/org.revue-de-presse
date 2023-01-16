@@ -144,6 +144,7 @@ $max-width: 336px;
     border: 1px solid var(--color-content-font);
     background: var(--color-white) 0% 0% no-repeat padding-box;
     border-radius: var(--border-radius-date-picker);
+    box-sizing: border-box;
     color: var(--color-content-text);
     cursor: pointer;
     font: normal normal normal var(--font-size-calendar-month-day-cell)/var(--line-spacing-calendar-month-day-cell) Arial;
@@ -152,7 +153,7 @@ $max-width: 336px;
     line-height: 32px;
     text-align: center;
     opacity: 1;
-    box-sizing: border-box;
+    text-decoration: none;
     width: $cell-width;
 
     &:hover {

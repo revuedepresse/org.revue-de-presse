@@ -54,6 +54,7 @@
             :class="weekDayClasses(weekDay)"
           >
             <a
+              :href="canonicalUrl(weekDay)"
               class="calendar-month__day-cell"
               @click="pickDate(weekDay)"
               v-text="weekDay.getDate()"
@@ -72,6 +73,7 @@ import Time from '../../modules/time'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import Site from '~/modules/site'
 
 const DatePickerStore = namespace('date-picker')
 
@@ -304,6 +306,14 @@ class CalendarMonth extends mixins(DateMixin) {
       name: 'daily-review',
       params: { startDate }
     })
+
+    return false
+  }
+
+  canonicalUrl(date: Date) {
+    const startDate = Time.formatDate(date)
+
+    return `${Site.baseURL}/${startDate}`
   }
 
   weekDayClasses (weekDay?: Date) {
