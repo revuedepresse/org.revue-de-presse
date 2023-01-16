@@ -384,8 +384,8 @@ export default class DatePicker extends mixins(DateMixin) {
 
   visibleDaysInterval () {
     return {
-      start: this.setTimezone(new Date(this.getMinDate())),
-      end: this.setTimezone(new Date(this.getMaxDate()))
+      start: this.setTimezone(new Date(this.formatMinDate())),
+      end: this.setTimezone(new Date(this.formatMaxDate()))
     }
   }
 }
