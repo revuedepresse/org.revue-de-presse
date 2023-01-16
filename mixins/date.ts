@@ -43,11 +43,12 @@ export default class DateMixin extends Vue {
     return Time.today()
   }
 
-  getMinDate () {
+  formatMinDate () {
     return Time.formatDate(this.setTimezone(new Date('2018-01-01')))
   }
 
-  getMaxDate (): string {
+
+  formatMaxDate (): string {
     return this.getCurrentDate()
   }
 

@@ -120,8 +120,8 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   includeRetweets: string = RETWEETS_EXCLUDED
   items: Array<{ status: RawStatus }> = []
   logger = new SharedState.Logger()
-  minDate = this.getMinDate()
-  maxDate = this.getMaxDate()
+  minDate = this.formatMinDate()
+  maxDate = this.formatMaxDate()
   selectedAggregates: number[] = []
   pageIndex: number = 1
   pageSize: number = 10
@@ -314,11 +314,11 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     let {startDate, endDate} = this.$route.params
 
     if (startDate === '1970-01-01' || !startDate) {
-      startDate = this.getMaxDate()
+      startDate = this.formatMaxDate()
     }
 
     if (endDate === '1970-01-01' || !endDate) {
-      endDate = this.getMaxDate()
+      endDate = this.formatMaxDate()
     }
 
     return {

@@ -54,11 +54,17 @@
             :class="weekDayClasses(weekDay)"
           >
             <a
+              v-if="isReviewAvailable(weekDay)"
               :href="canonicalUrl(weekDay)"
               class="calendar-month__day-cell"
               @click="pickDate(weekDay)"
               v-text="weekDay.getDate()"
             />
+            <span
+              v-else
+              class="calendar-month__day-cell"
+              v-text="weekDay.getDate()"
+            ></span>
           </td>
         </tr>
       </tbody>
@@ -297,6 +303,11 @@ class CalendarMonth extends mixins(DateMixin) {
       'calendar-month__previous-item': true,
       'calendar-month__previous-item--disabled': !this.isPreviousItemAvailable
     }
+  }
+
+  isReviewAvailable(date: Date) {
+    return this.setTimezone(date) < this.now()
+    && this.setTimezone(date) >= this.getMinDate()
   }
 
   pickDate (date: Date) {
