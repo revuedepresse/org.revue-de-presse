@@ -1,7 +1,7 @@
 .loading-spinner {
   display: flex;
-  height: $line-height-base;
-  line-height: $line-height-base;
+  height: var(--line-height-base);
+  line-height: var(--line-height-base);
   text-align: center;
 
   &__container {
@@ -38,7 +38,7 @@
   p {
     color: var(--color-content-text);
     margin: auto auto auto var(--separation-0);
-    height: $line-height-base;
-    line-height: $line-height-base;
+    height: var(--line-height-base);
+    line-height: var(--line-height-base);
   }
 }

@@ -16,6 +16,8 @@
   --height-status-text: 21px;
   --height-year-picker-buttons: 34px;
 
+  --line-height-base: 1.4em;
+
   --margin-title: 20px;
   --margin-navigation: 10px;
   --margin-year-picker-buttons-margin: 10px;
@@ -117,12 +119,8 @@ $filter-white: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1
 $filter-content: invert(100%) sepia(0%) saturate(881%) hue-rotate(86deg) brightness(113%) contrast(80%);
 
 $font-size-base: 1.1em;
-$line-height-base: 1.4em;
-
 $font-size-date: 0.9em;
-
 $font-size-menu-item: 1em;
-$line-height-menu-item: 1.4em;
 
 $separation-0: var(--separation-0);
 $separation-1: var(--separation-1);
