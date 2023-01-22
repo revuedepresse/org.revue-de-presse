@@ -26,6 +26,7 @@
     "build": "make build",
     "lint": "make lint",
     "remove-extraneous-packages": "npm prune --production",
+    "rebuild-node-sass": "npm rebuild node-sass",
     "start": "make start"
   },
   "engines": {
