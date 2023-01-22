@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="isIntroVisible"
+    v-if="isIntroVisible"
     ref="intro"
     class="intro"
   >
@@ -42,7 +42,7 @@ export default class Intro extends Vue {
   })
   isBaselineView!: boolean
 
-  isIntroVisible: boolean = true;
+  isIntroVisible: boolean = false;
   currentRoute: string = this.$router.currentRoute.path
   logo = logo
 
