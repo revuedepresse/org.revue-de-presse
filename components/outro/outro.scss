@@ -1,6 +1,6 @@
 
 .outro {
-  background: var(--color-content-background) 0% 0% no-repeat padding-box;
+  background: var(--color-content-background) 0 0 no-repeat padding-box;
   border-top: 1px $color-black solid;
   margin: 0;
   width: 100%;
@@ -52,32 +52,45 @@
     line-height: 1.5em;
   }
 
-  &__subscribe-to {
+  &__subscribe-to,
+  &__subscribe-to:active,
+  &__subscribe-to:hover,
+  &__subscribe-to:link,
+  &__subscribe-to:visited {
     display: inline-flex;
-    background: var(--color-brand-twitter) 0% 0% no-repeat padding-box;
+    background: var(--color-brand-twitter) 0 0 no-repeat padding-box;
     border-radius: 4px;
-    opacity: 1;
-    margin-top: var(--separation-2);
-    padding: var(--separation-0);
-    color: var(--color-white);
     font: normal normal normal var(--font-size-footer-outer-link)/var(--line-spacing-footer-outer-link) Arial;
+    opacity: 1;
     letter-spacing: 0;
+    padding: 0;
+    margin-top: var(--separation-0);
     text-align: left;
-
-    :active,
-    :hover,
-    :link,
-    :visited {
-      @extend .outro__subscribe-to;
-
-      margin-top: 0;
-      padding: 0;
-      text-decoration: none;
-    }
   }
 
-  &__subscription-label {
+  &__subscribe-to-anchor,
+  &__subscribe-to-anchor:active,
+  &__subscribe-to-anchor:hover,
+  &__subscribe-to-anchor:link,
+  &__subscribe-to-anchor:visited {
+    color: var(--color-white);
+    height: var(--line-height-base);
+    line-height: var(--line-height-base);
+    padding: 5px var(--separation-0) 4px;
+    text-decoration: none;
+  }
+
+  &__subscription-label,
+  &__subscription-label:active,
+  &__subscription-label:link,
+  &__subscription-label:hover,
+  &__subscription-label:visited {
     padding-left: var(--separation-0);
+  }
+
+  &__icon {
+    height: 1.2em;
+    line-height: 1.2em;
   }
 
   &__title {

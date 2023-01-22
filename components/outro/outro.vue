@@ -28,9 +28,11 @@
         class="outro__subscribe-to"
       ><!--
           --><a
+        class="outro__subscribe-to-anchor"
         href="https://twitter.com/revue_2_presse"
       ><!--
             --><font-awesome-icon
+        class="outro__icon"
         :icon="['fab', 'twitter']"
       />
               <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
