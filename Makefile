@@ -5,10 +5,13 @@ SHELL:=/bin/bash
 build: clean ## Build production package
 	@/bin/bash -c 'NODE_OPTIONS='--openssl-legacy-provider' NODE_ENV=production npx nuxt generate'
 
-clean-dist-files: ## Remove files in /dist subdirectories
-	@/bin/bash -c 'find ./dist/* -type f -exec rm --verbose {} \;' >> /dev/null 2>&1 || true
+show-files: ## Show files to be removed beforehand
+	@/bin/bash -c 'find ./dist/* -type f -exec ls {} \;' || true
 
-clean: clean-dist-files ## Remove build application directory
+clean-dist-files: ## Remove files in /dist subdirectories
+	@/bin/bash -c 'find ./dist/* -type f -exec rm -f --verbose {} \;' || true
+
+clean: show-files clean-dist-files ## Remove build application directory
 	@export IFS=$$'\n'
 	for directory in $$(find ./dist/* -type d | sort --reverse);
 	do
