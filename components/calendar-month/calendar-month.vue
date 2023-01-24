@@ -313,15 +313,14 @@ class CalendarMonth extends mixins(DateMixin) {
     const day = Time.formatDate(date)
 
     this.$router.push({
-      name: 'curated-highlights',
-      params: { day }
-    })
+      path: `/${day}/`
+    }).catch(() => {})
   }
 
   canonicalUrl(date: Date) {
     const startDate = Time.formatDate(date)
 
-    return `${Site.baseURL}/${startDate}`
+    return `${Site.baseURL}/${startDate}/`
   }
 
   weekDayClasses (weekDay?: Date) {
