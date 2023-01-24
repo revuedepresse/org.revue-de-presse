@@ -220,11 +220,11 @@ class MonthPicker extends mixins(DateMixin) {
   }
 
   pickDate (date: Date) {
-    const startDate = Time.formatDate(date)
+    const day = Time.formatDate(date)
 
     this.$router.push({
-      name: 'daily-review',
-      params: { startDate }
+      name: 'curated-highlights',
+      params: { day }
     })
   }
 

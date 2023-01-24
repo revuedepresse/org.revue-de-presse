@@ -38,12 +38,10 @@ class ModalWindow extends Vue {
       overflow-y: auto;
     `
 
-    if (typeof document !== 'undefined') {
-      const body = document.querySelector('body')
+    const body = document.querySelector('body')
 
-      if (body !== null) {
-        this.body = body
-      }
+    if (body !== null) {
+      this.body = body
     }
   }
 
