@@ -7,9 +7,9 @@
 
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-import HighlightList from '~/components/highlight-list/highlight-list.vue'
-import SharedState from '~/modules/shared-state'
-import ModalWindow from '~/components/modal-window/modal-window.vue'
+import HighlightList from '../../components/highlight-list/highlight-list.vue'
+import SharedState from '../../modules/shared-state'
+import ModalWindow from '../../components/modal-window/modal-window.vue'
 import {Context} from "@nuxt/types";
 import {now, setTimezone} from "~/mixins/date";
 
@@ -62,7 +62,7 @@ export default class Highlights extends Vue {
       return true;
     }
 
-    const selectedDate = setTimezone(new Date(ctx.params.startDate))
+    const selectedDate = setTimezone(new Date(ctx.params.day))
     const greaterThanMinDate = setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))) <= selectedDate
     const lesserThanMaxDate = selectedDate <= now()
 

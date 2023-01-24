@@ -311,10 +311,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   defaultDates() {
-    let {startDate, endDate} = this.$route.params
+    let {day, endDate} = this.$route.params
 
-    if (startDate === '1970-01-01' || !startDate) {
-      startDate = this.formatMaxDate()
+    if (day === '1970-01-01' || !day) {
+      day = this.formatMaxDate()
     }
 
     if (endDate === '1970-01-01' || !endDate) {
@@ -322,7 +322,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
 
     return {
-      startDate,
+      startDate: day,
       endDate
     }
   }
