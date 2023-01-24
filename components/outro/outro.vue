@@ -48,9 +48,12 @@
     </h2>
 
     <p class="outro__paragraph">
+      Ce projet est porté avec 💙 par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et
+      <a href="https://twitter.com/thierrymarianne">@thierrymarianne</a>.<br /><br />
+      <a href="/mentions-legales/">Mentions Légales</a><br /><br />
       Depuis la naissance du projet en 2015 jusqu'en 2022,
-      Revue de presse n'a reçu aucun financement extérieur.<br>
-      De manière à rendre le projet plus soutenable,
+      Revue de presse n'a reçu aucun financement extérieur.
+      C'est pourquoi afin de pérenniser la maintenance et les développements du projet,
       des pages de contribution ont été ouvertes :<br>
     </p>
 
@@ -62,11 +65,19 @@
     </ul>
 
     <p class="outro__paragraph">
-      Ce projet est porté avec 💙 par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et <a
-        href="https://twitter.com/thierrymarianne"
-      >@thierrymarianne</a> et est hébergé par <a target="_blank" href="https://netlify.com">netlify</a>.<br />
-      <a href="/mentions-legales/">Mentions Légales</a>
+      Dans le cadre de leurs programmes respectifs de soutien aux projets dont le code source est ouvert et libre,
+      Revue de presse est hébergé par <a target="_blank" href="https://www.netlify.com/legal/open-source-policy/">netlify</a>
+      et <a href="https://jb.gg/OpenSourceSupport" target="_blank">Jetbrains</a> met à notre disposition ses éditeurs.<br />
+
+      <a href="https://jb.gg/OpenSourceSupport" target="_blank"><img
+        alt="Revue de Presse logo"
+        width="48"
+        height="48"
+        :src="vendorLogo"
+      ></a>
+
     </p>
+
 
     <div class="outro__copyright-footer">
       <div class="outro__copyright">
@@ -87,11 +98,16 @@ import IntroducingIcon from '../../assets/icons/icon-introducing.svg'
 import SharingIcon from '../../assets/icons/icon-sharing.svg'
 import FundingIcon from '../../assets/icons/icon-funding.svg'
 import DateMixin from "~/mixins/date";
+import VendorLogo from '~/assets/sponsors/jetbrains-logo.svg?data'
 
 @Component
 class Outro extends mixins(DateMixin) {
   get year () {
     return this.now().getFullYear()
+  }
+
+  get vendorLogo() {
+    return VendorLogo
   }
 
   get fundingIcon () {
