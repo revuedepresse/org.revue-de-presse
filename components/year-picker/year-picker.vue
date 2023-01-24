@@ -140,7 +140,7 @@ class YearPicker extends mixins(DateMixin) {
     const day = Time.formatDate(date)
 
     this.$router.push({
-      name: 'daily-review',
+      name: 'curated-highlights',
       params: { day }
     })
   }

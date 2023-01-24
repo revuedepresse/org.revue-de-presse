@@ -4,7 +4,7 @@ import Time from '../modules/time'
 const RedirectMiddleware: Middleware = ({ route, redirect }) => {
   if (
     route.name !== 'homepage' &&
-    route.name !== 'daily-review' &&
+    route.name !== 'curated-highlights' &&
     route.name !== 'legal-notice') {
     return redirect(`/${Time.today()}/`)
   }
