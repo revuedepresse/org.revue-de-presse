@@ -12,7 +12,7 @@
       v-text="popularNews"
     />
     <Intro
-      v-show="$device.isMobile"
+      v-if="$device.isMobile"
       ref="intro"
       :is-baseline-view="isBaselineView"
     />
