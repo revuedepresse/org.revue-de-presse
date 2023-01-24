@@ -127,7 +127,11 @@ const config: NuxtConfig = {
           'Revue de presse nécessite JavaScript pour son bon fonctionnement.'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: icon }]
+    link: [
+      { rel: 'icon', type: 'image/png', href: icon },
+      { rel: 'preload', href: '/fonts/signika-regular.woff2', as: "font", type: "font/woff2", crossorigin: true },
+      { rel: 'preload', href: '/fonts/roboto-regular.woff2', as: "font", type: "font/woff2", crossorigin: true }
+    ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)

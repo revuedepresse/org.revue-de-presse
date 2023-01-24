@@ -139,16 +139,16 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   font-family: 'Signika';
   font-style: normal;
   font-weight: normal;
-  font-display: swap;
-  src: url('~assets/fonts/signika-regular.ttf') format('truetype');
+  font-display: optional;
+  src: url('/fonts/signika-regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
-  font-display: swap;
-  src: url('~assets/fonts/roboto-regular.ttf') format('truetype');
+  font-display: optional;
+  src: url('/fonts/roboto-regular.woff2') format('woff2');
 }
 
 .font-logo-title {
