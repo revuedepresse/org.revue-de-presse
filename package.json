@@ -39,7 +39,7 @@
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^1.0.0",
-    "@typescript-eslint/typescript-estree": "^5.48.1",
+    "@typescript-eslint/typescript-estree": "^5.49.0",
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.27.1",
     "csstype": "^3.1.1",
