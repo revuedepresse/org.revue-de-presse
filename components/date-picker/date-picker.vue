@@ -314,11 +314,11 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   changeDate (date: Date) {
-    const startDate = Time.formatDate(date)
+    const day = Time.formatDate(date)
 
     this.$router.push({
       name: 'daily-review',
-      params: { startDate }
+      params: { day }
     })
   }
 
