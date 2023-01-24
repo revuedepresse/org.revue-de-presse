@@ -31,7 +31,7 @@
   },
   "engines": {
     "npm": ">=8.19.0",
-    "node": ">=18.13.0"
+    "node": ">=18.12.0"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
@@ -51,8 +51,7 @@
     "serialize-javascript": "^6.0.1",
     "vue-date-fns": "^2.0.1",
     "vue-property-decorator": "^9.1.2",
-    "vue-spinkit": "^2.0.0",
-    "vuex-module-decorators": "^1.2.0"
+    "vue-spinkit": "^2.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
