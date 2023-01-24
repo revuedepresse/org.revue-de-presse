@@ -228,12 +228,6 @@ const config: NuxtConfig = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    devMiddleware: {
-      headers: {
-        'Cache-Control': 'no-store',
-        Vary: '*'
-      }
-    },
     optimization: {
       minimize: true,
       minimizer: [
