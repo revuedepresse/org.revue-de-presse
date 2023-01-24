@@ -42,7 +42,14 @@ export default class Intro extends Vue {
   })
   isBaselineView!: boolean
 
-  isIntroVisible: boolean = false;
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  showIntro: boolean = false;
+
+  isIntroVisible: boolean = false
+
   currentRoute: string = this.$router.currentRoute.path
   logo = logo
 

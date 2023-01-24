@@ -6,6 +6,10 @@ export const setTimezone = (date: Date, timezone = 'Europe/Paris'): Date => {
   return new Date(date.toLocaleString('en-US', {timeZone: timezone}))
 }
 
+export const now = (timezone = 'Europe/Paris'): Date => {
+  return setTimezone(new Date(), timezone)
+}
+
 @Component
 export default class DateMixin extends Vue {
   get daysOfWeek (): Array<string> {
@@ -39,17 +43,16 @@ export default class DateMixin extends Vue {
     }
   }
 
-  getCurrentDate () {
-    return Time.today()
+  getMinDate (): Date {
+    return new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))
   }
 
   formatMinDate () {
-    return Time.formatDate(this.setTimezone(new Date('2018-01-01')))
+    return Time.formatDate(this.setTimezone(this.getMinDate()))
   }
 
-
   formatMaxDate (): string {
-    return this.getCurrentDate()
+    return Time.today()
   }
 
   getNextMonth (month: number, year: number): Date {
@@ -73,7 +76,7 @@ export default class DateMixin extends Vue {
   }
 
   now(timezone = 'Europe/Paris'): Date {
-    return this.setTimezone(new Date(), timezone);
+    return now(timezone);
   }
 
   whichDayOfWeek (dayNumber: number): string {

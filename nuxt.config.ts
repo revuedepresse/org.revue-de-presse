@@ -206,12 +206,12 @@ const config: NuxtConfig = {
       routes.push({
         name: 'legal-notice',
         path: '/mentions-legales/',
-        component: resolve(__dirname, 'pages/-highlights.vue')
+        component: resolve(__dirname, 'pages/-highlight.vue')
       })
       routes.push({
         name: 'daily-review',
         path: '/:startDate/',
-        component: resolve(__dirname, 'pages/-highlights.vue')
+        component: resolve(__dirname, 'pages/-highlight.vue')
       })
     }
   },
@@ -222,7 +222,7 @@ const config: NuxtConfig = {
 
   generate: {
     fallback: true,
-    routes: ['/', ...days()]
+    routes: ['/']
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
