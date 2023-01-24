@@ -41,9 +41,9 @@ export default class Highlights extends Vue {
 
     if (this.$route.path[this.$route.path.length - 1] === '/') {
         href = `https://revue-de-presse.org${this.$route.path}`
-          .replaceAll(new RegExp('/+', 'g'), '/')
+          .replaceAll(new RegExp('/+$', 'g'), '')
     } else {
-        href = `https://revue-de-presse.org${this.$route.path}/`
+        href = `https://revue-de-presse.org${this.$route.path}`
     }
 
     return {
@@ -60,6 +60,10 @@ export default class Highlights extends Vue {
   validate(ctx: Context) {
     if (ctx.route.name === 'legal-notice') {
       return true;
+    }
+
+    if (ctx.route.name === 'curated-highlights' && ctx.route.path.endsWith('/')) {
+      return false
     }
 
     const selectedDate = setTimezone(new Date(ctx.params.day))
