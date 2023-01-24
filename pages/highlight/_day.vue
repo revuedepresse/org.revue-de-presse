@@ -62,6 +62,10 @@ export default class Highlights extends Vue {
       return true;
     }
 
+    if (ctx.route.name === 'curated-highlights' && ctx.route.path.endsWith('/')) {
+      return false
+    }
+
     const selectedDate = setTimezone(new Date(ctx.params.day))
     const greaterThanMinDate = setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))) <= selectedDate
     const lesserThanMaxDate = selectedDate <= now()
