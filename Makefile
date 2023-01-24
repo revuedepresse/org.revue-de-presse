@@ -3,7 +3,16 @@ SHELL:=/bin/bash
 .PHONY: dev generate help install start
 
 generate: ## Build production package
-	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate >> out.log 2>&1 && cat out.log 2>&1'
+	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate'
+
+build: generate ## Build production package
+	@export IFS=$$'\n'
+
+	for page in $$(find ./dist/* -type f | sort --reverse);
+	do
+		\cat $$page | sed -E 's#\{\{ date \}\}#'"$$(echo "$${page}" | sed -E 's/\.\/dist\///g' | sed 's#\.html##g')"'#g' > ./template.html
+		mv ./template.html $$page
+	done
 
 dev: ## Start development server
 	@/bin/bash -c 'source .env && NODE_OPTIONS="--openssl-legacy-provider" npx nuxt'

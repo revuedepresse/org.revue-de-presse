@@ -116,9 +116,9 @@ const config: NuxtConfig = {
         content: banner
       },
       {
-        hid: 'timestamp',
-        name: 'timestamp',
-        content: now().getTime().toString()
+        hid: 'date',
+        name: 'date',
+        content: '{{ date }}'
       }
     ],
     noscript: [
