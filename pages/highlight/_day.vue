@@ -7,9 +7,9 @@
 
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-import HighlightList from '../components/highlight-list/highlight-list.vue'
-import SharedState from '../modules/shared-state'
-import ModalWindow from '../components/modal-window/modal-window.vue'
+import HighlightList from '~/components/highlight-list/highlight-list.vue'
+import SharedState from '~/modules/shared-state'
+import ModalWindow from '~/components/modal-window/modal-window.vue'
 import {Context} from "@nuxt/types";
 import {now, setTimezone} from "~/mixins/date";
 
