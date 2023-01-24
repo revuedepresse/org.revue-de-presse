@@ -221,8 +221,7 @@ const config: NuxtConfig = {
   },
 
   generate: {
-    fallback: true,
-    routes: ['/', ...days()]
+    fallback: true
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
