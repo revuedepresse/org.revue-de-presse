@@ -49,6 +49,9 @@ type Route = {
 const config: NuxtConfig = {
   pattern: '**/*.{vue,js}',
 
+  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+  ssr: false,
+
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
@@ -218,7 +221,8 @@ const config: NuxtConfig = {
   },
 
   generate: {
-    fallback: true
+    fallback: true,
+    routes: ['/', ...days()]
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
