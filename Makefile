@@ -3,7 +3,7 @@ SHELL:=/bin/bash
 .PHONY: dev generate help install start
 
 generate: ## Build production package
-	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate >> out.log 2>&1 && cat out.log'
+	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate >> out.log 2>&1 && cat out.log 2>&1'
 
 dev: ## Start development server
 	@/bin/bash -c 'source .env && NODE_OPTIONS="--openssl-legacy-provider" npx nuxt'
