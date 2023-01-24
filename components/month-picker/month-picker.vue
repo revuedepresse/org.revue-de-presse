@@ -224,7 +224,7 @@ class MonthPicker extends mixins(DateMixin) {
 
     this.$router.push({
       path: `/${day}`
-    }).catch(() => {})
+    })
   }
 
   switchToYearPicking (): void {

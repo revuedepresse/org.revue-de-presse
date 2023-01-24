@@ -314,7 +314,7 @@ class CalendarMonth extends mixins(DateMixin) {
 
     this.$router.push({
       path: `/${day}`
-    }).catch(() => {})
+    })
   }
 
   canonicalUrl(date: Date) {

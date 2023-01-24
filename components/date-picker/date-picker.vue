@@ -318,7 +318,7 @@ export default class DatePicker extends mixins(DateMixin) {
 
     this.$router.push({
       path: `/${day}`
-    }).catch(() => {})
+    })
   }
 
   pickDate () {

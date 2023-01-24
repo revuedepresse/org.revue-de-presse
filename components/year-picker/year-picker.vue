@@ -141,7 +141,7 @@ class YearPicker extends mixins(DateMixin) {
 
     this.$router.push({
       path: `/${day}`
-    }).catch(() => {})
+    })
   }
 }
 

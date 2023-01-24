@@ -433,7 +433,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
     this.$router.push({
       path: `/${day}`
-    }).catch(() => {})
+    })
   }
 }
 </script>
