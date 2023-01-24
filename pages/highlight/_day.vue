@@ -41,9 +41,9 @@ export default class Highlights extends Vue {
 
     if (this.$route.path[this.$route.path.length - 1] === '/') {
         href = `https://revue-de-presse.org${this.$route.path}`
-          .replaceAll(new RegExp('/+', 'g'), '/')
+          .replaceAll(new RegExp('/+$', 'g'), '')
     } else {
-        href = `https://revue-de-presse.org${this.$route.path}/`
+        href = `https://revue-de-presse.org${this.$route.path}`
     }
 
     return {

@@ -429,9 +429,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
   updateHighlights() {
     this.items = []
+    const day = this.startDate
 
     this.$router.push({
-      path: `/${this.startDate}/`
+      path: `/${day}`
     }).catch(() => {})
   }
 }

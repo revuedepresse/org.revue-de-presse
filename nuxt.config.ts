@@ -200,7 +200,7 @@ const config: NuxtConfig = {
   },
 
   router: {
-    trailingSlash: true,
+    trailingSlash: false,
     middleware: 'redirect',
     extendRoutes (routes: Route[], resolve: (dir: string, path: string) => string): void {
       routes.push({
