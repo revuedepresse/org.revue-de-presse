@@ -68,7 +68,7 @@
     "@types/emoji-js": "^3.5.0",
     "@types/he": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
-    "@typescript-eslint/parser": "^5.48.1",
+    "@typescript-eslint/parser": "^5.49.0",
     "emoji-js": "^3.5.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
