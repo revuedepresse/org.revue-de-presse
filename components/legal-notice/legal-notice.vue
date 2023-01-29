@@ -2,7 +2,9 @@
   <div
     v-if="isShowingLegalNotice"
     class="legal-notice">
-    <h1>En vigueur au 07/10/14</h1>
+    <h1>Mentions légales de revue-de-presse.org</h1>
+
+    <p>En vigueur au 07/10/14</p>
 
     <p>Conformément aux dispositions des Articles 6-III et<br/>
       19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l'économie numérique,
