@@ -182,6 +182,14 @@ const config: NuxtConfig = {
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
     [
+      'nuxt-compress',
+      {
+        brotli: {
+          threshold: 8192
+        }
+      }
+    ],
+    [
       'nuxt-fontawesome',
       {
         imports: [
