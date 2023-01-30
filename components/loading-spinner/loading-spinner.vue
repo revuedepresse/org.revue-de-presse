@@ -7,10 +7,7 @@
       v-if="showLoadingSpinner"
       class="loading-spinner__spinner-container"
     >
-      <Spinner
-        name="folding-cube"
-        :color="brandColor"
-      />
+      <div class="loading-spinner__animation"></div>
     </div>
     <div
       v-else-if="showErrorMessage"

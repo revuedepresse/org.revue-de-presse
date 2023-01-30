@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -47,11 +47,11 @@
     "nuxt": "^2.15.8",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-property-decorator": "^2.9.1",
+    "nuxt-purgecss": "^1.0.0",
     "nuxt-vuex-router-sync": "^0.0.3",
     "serialize-javascript": "^6.0.1",
     "vue-date-fns": "^2.0.1",
-    "vue-property-decorator": "^9.1.2",
-    "vue-spinkit": "^2.0.0"
+    "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
@@ -69,12 +69,13 @@
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "emoji-js": "^3.5.0",
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^9.9.0",
     "node-sass": "8.0.0",
+    "nuxt-compress": "^5.0.0",
     "nuxt-lazysizes": "1.4.0",
     "prettier": "^2.8.3",
     "sass-loader": "^10.4.1",

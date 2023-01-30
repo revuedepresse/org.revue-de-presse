@@ -153,7 +153,8 @@ const config: NuxtConfig = {
     '@nuxtjs/svg',
     'cookie-universal-nuxt',
     'nuxt-lazysizes',
-    'nuxt-vuex-router-sync'
+    'nuxt-purgecss',
+    'nuxt-vuex-router-sync',
   ],
 
   pwa: {
@@ -180,6 +181,14 @@ const config: NuxtConfig = {
   modules: [
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
+    [
+      'nuxt-compress',
+      {
+        brotli: {
+          threshold: 8192
+        }
+      }
+    ],
     [
       'nuxt-fontawesome',
       {
@@ -253,10 +262,6 @@ const config: NuxtConfig = {
       ]
     }
   },
-
-  plugins: [
-    '@plugins/vue-loader',
-  ],
 
   typescript: {
     typeCheck: {
