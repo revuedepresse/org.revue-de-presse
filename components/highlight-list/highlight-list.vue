@@ -1,8 +1,7 @@
 <template>
 
   <div :class="highlightsClasses">
-    <link rel="preconnect" :href="getApiHost">
-    <link rel="preconnect" href="https://pbs.twimg.com/" crossorigin>
+    <link rel="preconnect" :href="getApiHost" crossorigin>
 
     <AppHeader
       ref="header"
