@@ -153,7 +153,8 @@ const config: NuxtConfig = {
     '@nuxtjs/svg',
     'cookie-universal-nuxt',
     'nuxt-lazysizes',
-    'nuxt-vuex-router-sync'
+    'nuxt-purgecss',
+    'nuxt-vuex-router-sync',
   ],
 
   pwa: {
