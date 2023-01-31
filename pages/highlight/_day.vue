@@ -83,6 +83,8 @@ if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
 }
 
+const MEDIA_INCLUDED = 0;
+const MEDIA_EXCLUDED = 1;
 
 const RETWEETS_EXCLUDED = 0
 const RETWEETS_INCLUDED = 1
@@ -93,6 +95,7 @@ type Params = {
   pageIndex?: number,
   pageSize?: number,
   includeRetweets?: number,
+  excludeMedia?: number
   selectedAggregates?: number[],
   [key: string]: any
 }
@@ -212,6 +215,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       headers: requestHeaders,
       params: {
         includeRetweets: RETWEETS_INCLUDED,
+        excludeMedia: MEDIA_INCLUDED,
         startDate: this.startDate,
         endDate: this.startDate
       }
@@ -231,6 +235,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
     if (this.includeRetweets === RETWEETS_EXCLUDED) {
       requestOptions.params.includeRetweets = RETWEETS_EXCLUDED
+    }
+
+    if (!this.$device.isDesktop) {
+      requestOptions.params.excludeMedia = MEDIA_EXCLUDED
     }
 
     if (this.selectedAggregates.length > 0) {
