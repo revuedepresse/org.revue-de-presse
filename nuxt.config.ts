@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { now, setTimezone } from './mixins/date'
+import { setTimezone } from './mixins/date'
 import Site from './modules/site'
 
 const description =
@@ -17,9 +17,9 @@ const days = () => {
   const nextYear = today.getFullYear()
 
   do {
-    const nextDate = new Date();
-    nextDate.setMonth(next.getMonth());
-    nextDate.setFullYear(next.getFullYear());
+    const nextDate = new Date()
+    nextDate.setMonth(next.getMonth())
+    nextDate.setFullYear(next.getFullYear())
 
     days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
@@ -129,8 +129,8 @@ const config: NuxtConfig = {
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: icon },
-      { rel: 'preload', href: '/fonts/signika-regular.woff2', as: "font", type: "font/woff2", crossorigin: true },
-      { rel: 'preload', href: '/fonts/roboto-regular.woff2', as: "font", type: "font/woff2", crossorigin: true }
+      { rel: 'preload', href: '/fonts/signika-regular.woff2', as: 'font', type: 'font/woff2', crossorigin: true },
+      { rel: 'preload', href: '/fonts/roboto-regular.woff2', as: 'font', type: 'font/woff2', crossorigin: true }
     ]
   },
 
@@ -154,7 +154,7 @@ const config: NuxtConfig = {
     'cookie-universal-nuxt',
     'nuxt-lazysizes',
     'nuxt-purgecss',
-    'nuxt-vuex-router-sync',
+    'nuxt-vuex-router-sync'
   ],
 
   pwa: {
@@ -208,7 +208,7 @@ const config: NuxtConfig = {
       routes.push({
         name: 'homepage',
         path: '/',
-        component: resolve(__dirname, 'pages/index.vue')
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
         name: 'legal-notice',
@@ -217,7 +217,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'curated-highlights',
-        path: '/:day/',
+        path: '/:day',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
@@ -235,6 +235,12 @@ const config: NuxtConfig = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    devMiddleware: {
+      headers: {
+        'Cache-Control': 'no-store',
+        Vary: '*'
+      }
+    },
     optimization: {
       minimize: true,
       minimizer: [

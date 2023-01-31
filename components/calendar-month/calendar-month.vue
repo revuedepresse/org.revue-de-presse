@@ -89,31 +89,31 @@ class CalendarMonth extends mixins(DateMixin) {
     type: Boolean,
     default: false
   })
-  isNextItemAvailable!: boolean
+    isNextItemAvailable!: boolean
 
   @Prop({
     type: Boolean,
     default: false
   })
-  isPreviousItemAvailable!: boolean
+    isPreviousItemAvailable!: boolean
 
   @Prop({
     type: Date,
     required: true
   })
-  pickedDate!: Date
+    pickedDate!: Date
 
   @Prop({
     type: Number,
     required: true
   })
-  month!: number
+    month!: number
 
   @Prop({
     type: Number,
     required: true
   })
-  year!: number
+    year!: number
 
   days: String[] = ['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']
 
@@ -305,7 +305,7 @@ class CalendarMonth extends mixins(DateMixin) {
     }
   }
 
-  isReviewAvailable(date: Date) {
+  isReviewAvailable (date: Date) {
     return this.setTimezone(date) <= this.now()
   }
 
@@ -317,7 +317,7 @@ class CalendarMonth extends mixins(DateMixin) {
     })
   }
 
-  canonicalUrl(date: Date) {
+  canonicalUrl (date: Date) {
     const day = Time.formatDate(date)
 
     return `${Site.baseURL}/${day}`

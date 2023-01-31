@@ -14,13 +14,13 @@ export default class PublicationDate extends mixins(DateMixin) {
     type: Date,
     required: true
   })
-  date!: Date
+    date!: Date
 
   @Prop({
     type: String,
     required: true
   })
-  publicationUrl!: string
+    publicationUrl!: string
 
   get time () {
     return this.date

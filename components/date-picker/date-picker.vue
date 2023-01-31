@@ -83,11 +83,11 @@ export default class DatePicker extends mixins(DateMixin) {
     type: String,
     required: true
   })
-  startDate!: string
+    startDate!: string
 
   startDateLabel: string = this.refreshStartDateLabel(this.startDate)
 
-  pickedDate: boolean = false
+  pickedDate = false
 
   @DatePickerStore.Getter
   public pickingDay!: boolean

@@ -43,19 +43,19 @@ class ScrollableList extends Vue {
     type: Array,
     required: true
   })
-  items!: Item
+    items!: Item
 
   @Prop({
     type: Number,
     required: true
   })
-  selected!: number
+    selected!: number
 
   @Prop({
     type: Boolean,
     default: false
   })
-  autoHeight!: boolean
+    autoHeight!: boolean
 
   $refs!: {
     list: HTMLElement,

@@ -1,36 +1,35 @@
 <template>
-
-    <ul
-      class="list__items">
-      <li
-        v-for="(curatedHighlight, index) in curatedHighlights"
-        :key="curatedHighlight.tweetId"
-        :data-key="curatedHighlight.tweetId"
-        class="list__item"
-      >
-        <Status
-          :status-at-first="formatStatus(curatedHighlight.tweet)"
-          :show-media="showMedia"
-          :is-baseline-view="isBaselineView"
-          :is-intro="isIntro(index)"
-          :ref-name="index"
-        />
-      </li>
-    </ul>
-
+  <ul
+    class="list__items"
+  >
+    <li
+      v-for="(curatedHighlight, index) in curatedHighlights"
+      :key="curatedHighlight.tweetId"
+      :data-key="curatedHighlight.tweetId"
+      class="list__item"
+    >
+      <Status
+        :status-at-first="formatStatus(curatedHighlight.tweet)"
+        :show-media="showMedia"
+        :is-baseline-view="isBaselineView"
+        :is-intro="isIntro(index)"
+        :ref-name="index"
+      />
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import {Component, Prop, mixins} from 'nuxt-property-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Intro from '../intro/intro.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
-import StatusFormatMixin, {RawStatus} from '~/mixins/status-format'
+import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
-import Logo from "~/assets/revue-de-presse-logo.svg";
+import Logo from '~/assets/revue-de-presse-logo.svg'
 
 @Component({
   components: {
@@ -42,45 +41,44 @@ import Logo from "~/assets/revue-de-presse-logo.svg";
   }
 })
 export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
+  @Prop({
+    type: String,
+    required: true
+  })
+    endDate: string = this.defaultDates().endDate
 
   @Prop({
     type: String,
-    required:  true
+    required: true
   })
-  endDate: string = this.defaultDates().endDate
-
-  @Prop({
-    type: String,
-    required:  true
-  })
-  startDate: string = this.defaultDates().startDate
+    startDate: string = this.defaultDates().startDate
 
   @Prop({
     type: Boolean,
     default: true
   })
-  showMedia!: boolean
+    showMedia!: boolean
 
   @Prop({
     type: Boolean,
     required: true
   })
-  isShowingLegalNotice: boolean = false
+    isShowingLegalNotice = false
 
   @Prop({
     type: Boolean,
     required: true,
     default: false
   })
-  isBaselineView!: boolean
+    isBaselineView!: boolean
 
   @Prop({
     type: Array,
     default: []
   })
-  items!: Array<{ status: RawStatus }>
+    items!: Array<{ status: RawStatus }>
 
-  get intro(): RawStatus {
+  get intro (): RawStatus {
     const text = 'Revue de presse est un projet citoyen indépendant ' +
       'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
       'à l\'actualité et à l\'influence des médias sur l\'opinion.'
@@ -102,28 +100,28 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       retweet_count: 0,
       favorite_count: 0,
       links: [],
-      original_document: JSON.stringify({user: {name: 'Revue de presse'}})
+      original_document: JSON.stringify({ user: { name: 'Revue de presse' } })
     }
 
     return intro
   }
 
-  get curatedHighlights(): Array<{tweet: RawStatus, tweetId: string}> {
-    return this.highlights.map(h => {
-      const tweet = structuredClone(h.status);
+  get curatedHighlights (): Array<{tweet: RawStatus, tweetId: string}> {
+    return this.highlights.map((h) => {
+      const tweet = structuredClone(h.status)
       return {
         tweet,
         tweetId: tweet.statusId
-      };
-    });
+      }
+    })
   }
 
-  get highlights() {
-    let highlights = this.items
+  get highlights () {
+    const highlights = this.items
 
     let intro: Array<{ status: RawStatus }> = []
     if (this.$device.isDesktop) {
-      intro = [{status: this.intro}]
+      intro = [{ status: this.intro }]
     }
 
     if (this.isShowingLegalNotice) {
@@ -137,7 +135,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
-  head() {
+  head () {
     if (this.highlights.length > 1) {
       const whitespace = '\\s'
       const pattern = `https?://[^${whitespace}]+`
@@ -149,7 +147,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
       const description = this.highlights[highlightIndex].status.text
         .replaceAll(new RegExp(pattern, 'ig'), '')
-        // eslint-disable-next-line no-control-regex
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
       const title = `${description} - Revue de presse du ${this.startDate}`
 
@@ -182,7 +179,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
-  isIntro(key: number) {
+  isIntro (key: number) {
     return this.$device.isDesktop && key === 0
   }
 }

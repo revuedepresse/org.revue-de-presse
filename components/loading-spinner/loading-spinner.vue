@@ -29,24 +29,24 @@ import warningIcon from '~/assets/icons/icon-warning.svg'
 
 @Component
 class LoadingSpinner extends Vue {
-  brandColor: string = '#00cdc7'
+  brandColor = '#00cdc7'
 
   @Prop({
     type: String
   })
-  message!: string
+    message!: string
 
   @Prop({
     type: Boolean,
     default: false
   })
-  showErrorMessage!: boolean
+    showErrorMessage!: boolean
 
   @Prop({
     type: Boolean,
     default: false
   })
-  showLoadingSpinner!: boolean
+    showLoadingSpinner!: boolean
 
   get warningIcon () {
     const widthOrHeight = '20px'

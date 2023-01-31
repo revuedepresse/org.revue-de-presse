@@ -40,15 +40,15 @@ class AppHeader extends Vue implements HeightAware {
     type: Boolean,
     default: true
   })
-  isBaselineView!: boolean
+    isBaselineView!: boolean
 
   @Prop({
     type: String,
     required: true
   })
-  pickedDate!: string
+    pickedDate!: string
 
-  get popularNews() {
+  get popularNews () {
     return `
       Les 3 actus les + relayées le ${this.pickedDate}
 `
