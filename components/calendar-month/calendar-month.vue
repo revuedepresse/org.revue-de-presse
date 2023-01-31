@@ -320,6 +320,10 @@ class CalendarMonth extends mixins(DateMixin) {
   canonicalUrl (date: Date) {
     const day = Time.formatDate(date)
 
+    if (day === Time.formatDate(this.now())) {
+      return `${Site.baseURL}`
+    }
+
     return `${Site.baseURL}/${day}`
   }
 

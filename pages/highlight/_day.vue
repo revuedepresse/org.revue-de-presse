@@ -335,7 +335,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   validate (ctx: Context) {
-    if (ctx.route.name === 'legal-notice') {
+    if (['legal-notice', 'homepage'].find(route => route === ctx.route.name)) {
       return true
     }
 
