@@ -61,9 +61,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
   @Prop({
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   })
-    isShowingLegalNotice = false
+    isShowingLegalNotice!: boolean
 
   @Prop({
     type: Boolean,
