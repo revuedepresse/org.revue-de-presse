@@ -22,6 +22,7 @@
   ],
   "private": true,
   "scripts": {
+    "analyze-deps": "make deps-analysis",
     "dev": "make dev",
     "build": "make build",
     "lint": "make lint",
