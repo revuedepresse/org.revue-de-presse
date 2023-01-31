@@ -68,8 +68,8 @@
             :title="getMediaTitle(document)"
             :src="getMediaDataUri(status)"
             :style="getMediaProperties()"
-            :width="getMediaWidth(document)"
-            height="auto"
+            :height="getMediaHeight(document)"
+            :width="getMediaWidth()"
             @click="openMediaItem(document)"
           >
         </div>
@@ -322,8 +322,12 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return status.base64EncodedMedia
   }
 
-  getMediaWidth (media: Media) {
-    return Math.min(media.sizes.small.w, 570)
+  getMediaHeight (media: Media): Number {
+    return Math.ceil(572 * media.sizes.small.h / media.sizes.small.w);
+  }
+
+  getMediaWidth (): Number {
+    return 572
   }
 
   getMediaTitle (media: Media) {
