@@ -9,6 +9,7 @@
   justify-content: center;
   z-index: 1000;
   flex-direction: column;
+
   @media (min-width: $width-desktop) {
     flex-direction: row;
   }

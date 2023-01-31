@@ -1,0 +1,15 @@
+@import '../../components/member-status-list/member-status-list.scss';
+
+._day {
+
+  position: relative;
+  margin-top: 64px;
+
+  &--naked {
+    // original margin-top + most retweeted news paragraph height in header + separator
+    margin-top: calc(64px + 25px + var(--separation-0));
+  }
+
+  @extend .member-status-list;
+
+}

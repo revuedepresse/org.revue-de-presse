@@ -1,15 +1,6 @@
 @import '../member-status-list/member-status-list.scss';
 
 .highlight-list {
-  position: relative;
-  margin-top: 64px;
-
-  &--naked {
-    // original margin-top + most retweeted news paragraph height in header + separator
-    margin-top: calc(64px + 25px + var(--separation-0));
-  }
-
-  @extend .member-status-list;
 
   &__loading,
   &__empty-list {
@@ -21,8 +12,7 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin: auto;
-    margin-top: 0;
+    margin: 0 auto auto;
     width: calc(100% - 2*var(--separation-2));
 
     &--filled {
@@ -35,35 +25,35 @@
     width: 100%;
     margin-bottom: $separation-1;
   }
+}
 
-  .highlight-list__clear-selection {
-    cursor: pointer;
-    background: transparent;
-    height: 2em;
+.highlight-list__clear-selection {
+  cursor: pointer;
+  background: transparent;
+  height: 2em;
 
-    &:hover {
-      border-color: $color-orange;
-    }
+  &:hover {
+    border-color: $color-orange;
   }
+}
 
-  .list__item:last-child {
-    border-bottom: none;
-  }
+.list__item:last-child {
+  border-bottom: none;
+}
 
+.highlight-list__content {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+@media (min-width: $width-desktop) {
   .highlight-list__content {
-    display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row;
   }
 
-  @media (min-width: $width-desktop) {
-    .highlight-list__content {
-      flex-direction: row;
-    }
-
-    .highlight-list__container {
-      min-width: var(--width-right-column-desktop);
-      max-width: var(--width-right-column-desktop);
-      margin-left: var(--separation-2);
-    }
+  .highlight-list__container {
+    min-width: var(--width-right-column-desktop);
+    max-width: var(--width-right-column-desktop);
+    margin-left: var(--separation-2);
   }
 }

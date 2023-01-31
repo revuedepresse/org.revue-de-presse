@@ -1,28 +1,75 @@
 <template>
+
   <div>
-    <HighlightList :show-media="areMediaVisible" />
+    <link rel="preconnect" :href="getApiHost" crossorigin>
+
+    <div :class="daysClasses">
+
+      <AppHeader
+        ref="header"
+        :is-baseline-view="isBaselineView"
+        :picked-date="startDate"
+      />
+
+      <HighlightList
+        :show-media="areMediaVisible"
+        :end-date="endDate"
+        :start-date="startDate"
+      />
+
+    </div>
+
     <ModalWindow />
+
   </div>
+
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'nuxt-property-decorator'
+import {Component, mixins, Vue} from 'nuxt-property-decorator'
+import {HeightAware} from '../../components/app-header/app-header.vue'
+import AppHeader from '../../components/app-header/app-header.vue'
 import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
 import ModalWindow from '../../components/modal-window/modal-window.vue'
 import {Context} from "@nuxt/types";
-import {now, setTimezone} from "~/mixins/date";
+import DateMixin, {now, setTimezone} from "~/mixins/date";
+import Config from "~/config";
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
 }
 
 @Component({
-  components: { HighlightList, ModalWindow }
+  components: {
+    AppHeader,
+    HighlightList,
+    ModalWindow
+  }
 })
-export default class Highlights extends Vue {
+export default class Highlights extends mixins(DateMixin) {
+  endDate: string = this.defaultDates().endDate
+  startDate: string = this.defaultDates().startDate
+
+  $refs!: {
+    header: HeightAware,
+    [key: string]: any
+  }
+
   get areMediaVisible() {
     return !this.$device.isMobile || !this.isBaselineView
+  }
+
+  get getApiHost() {
+    return Config.getSchemeAndHost()
+  }
+
+  get daysClasses() {
+    return {
+      '_day': true,
+      '_day--naked': !this.isBaselineView,
+      list: true
+    }
   }
 
   get isBaselineView() {
@@ -75,5 +122,6 @@ export default class Highlights extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import './_day.scss';
 </style>

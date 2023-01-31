@@ -1,14 +1,5 @@
 <template>
 
-  <div :class="highlightsClasses">
-    <link rel="preconnect" :href="getApiHost" crossorigin>
-
-    <AppHeader
-      ref="header"
-      :is-baseline-view="isBaselineView"
-      :picked-date="startDate"
-    />
-
     <div
       class="highlight-list__content">
 
@@ -58,8 +49,6 @@
 
     </div>
 
-  </div>
-
 </template>
 
 <script lang="ts">
@@ -67,7 +56,6 @@ import {Component, Prop, Watch, mixins} from 'nuxt-property-decorator'
 import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import SharedState from '../../modules/shared-state'
-import AppHeader, {HeightAware} from '../app-header/app-header.vue'
 import Intro from '../intro/intro.vue'
 import DatePicker from '../date-picker/date-picker.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
@@ -100,7 +88,6 @@ type RequestOptions = {
 
 @Component({
   components: {
-    AppHeader,
     DatePicker,
     Intro,
     LegalNotice,
@@ -110,6 +97,19 @@ type RequestOptions = {
   }
 })
 export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
+
+  @Prop({
+    type: String,
+    required:  true
+  })
+  endDate: string = this.defaultDates().endDate
+
+  @Prop({
+    type: String,
+    required:  true
+  })
+  startDate: string = this.defaultDates().startDate
+
   @Prop({
     type: Boolean,
     default: true
@@ -119,17 +119,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   includeRetweets: string = RETWEETS_EXCLUDED
   items: Array<{ status: RawStatus }> = []
   logger = new SharedState.Logger()
-  minDate = this.formatMinDate()
-  maxDate = this.formatMaxDate()
   selectedAggregates: number[] = []
-  pageIndex: number = 1
   pageSize: number = 10
-  totalPages: number | null = null
-  endDate: string = this.defaultDates().endDate
-  startDate: string = this.defaultDates().startDate
 
   $refs!: {
-    header: HeightAware,
     highlights: {
       offsetHeight: number
     },
@@ -183,9 +176,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return `Il semblerait qu'il n'y ait pas de contenu disponible pour cette date.`
   }
 
-  get getApiHost() {
-    return Config.getSchemeAndHost()
-  }
 
   get highlights() {
     let highlights = this.items
@@ -208,13 +198,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     return highlights
   }
 
-  get highlightsClasses() {
-    return {
-      'highlight-list': true,
-      'highlight-list--naked': !this.isBaselineView,
-      list: true
-    }
-  }
 
   get isBaselineView() {
     if (this.$route === undefined) {
