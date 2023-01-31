@@ -83,14 +83,16 @@ if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
 }
 
-const RETWEETS_EXCLUDED = '0'
+
+const RETWEETS_EXCLUDED = 0
+const RETWEETS_INCLUDED = 1
 
 type Params = {
   endDate?: string,
   startDate?: string,
   pageIndex?: number,
   pageSize?: number,
-  includeRetweets?: number
+  includeRetweets?: number,
   selectedAggregates?: number[],
   [key: string]: any
 }
@@ -129,7 +131,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   items: Array<{ status: RawStatus }> = []
 
-  includeRetweets: string = RETWEETS_EXCLUDED
+  includeRetweets: number = RETWEETS_EXCLUDED
 
   logger = new SharedState.Logger()
 
@@ -209,7 +211,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const requestOptions: RequestOptions = {
       headers: requestHeaders,
       params: {
-        includeRetweets: 1,
+        includeRetweets: RETWEETS_INCLUDED,
         startDate: this.startDate,
         endDate: this.startDate
       }
@@ -228,7 +230,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     if (this.includeRetweets === RETWEETS_EXCLUDED) {
-      requestOptions.params.includeRetweets = 0
+      requestOptions.params.includeRetweets = RETWEETS_EXCLUDED
     }
 
     if (this.selectedAggregates.length > 0) {
