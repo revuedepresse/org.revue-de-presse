@@ -312,6 +312,14 @@ class CalendarMonth extends mixins(DateMixin) {
   pickDate (date: Date) {
     const day = Time.formatDate(date)
 
+    if (day === Time.formatDate(this.now())) {
+      this.$router.push({
+        path: '/'
+      })
+
+      return
+    }
+
     this.$router.push({
       path: `/${day}`
     })

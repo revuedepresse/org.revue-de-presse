@@ -61,6 +61,7 @@ import Config from '~/config'
 import { RawStatus } from '~/mixins/status-format'
 import ApiMixin from '~/mixins/api'
 import EventHub from '~/modules/event-hub'
+import Time from '~/modules/time'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
@@ -328,6 +329,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   updateHighlights () {
     this.items = []
     const day = this.startDate
+
+    if (day === Time.formatDate(this.now())) {
+      this.$router.push({
+        path: '/'
+      })
+
+      return
+    }
 
     this.$router.push({
       path: `/${day}`
