@@ -245,7 +245,6 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   removeTrackingParams (subject: string) {
-    // eslint-disable-next-line prefer-regex-literals
     return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '')
   }
 

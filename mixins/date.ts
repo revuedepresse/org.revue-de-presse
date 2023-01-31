@@ -3,7 +3,7 @@ import Time from '../modules/time'
 import Errors from '../modules/errors'
 
 export const setTimezone = (date: Date, timezone = 'Europe/Paris'): Date => {
-  return new Date(date.toLocaleString('en-US', {timeZone: timezone}))
+  return new Date(date.toLocaleString('en-US', { timeZone: timezone }))
 }
 
 export const now = (timezone = 'Europe/Paris'): Date => {
@@ -33,8 +33,8 @@ export default class DateMixin extends Vue {
     ]
   }
 
-  defaultDates() {
-    let {day, endDate} = this.$route.params
+  defaultDates () {
+    let { day, endDate } = this.$route.params
 
     if (day === '1970-01-01' || !day) {
       day = this.formatMaxDate()
@@ -88,12 +88,12 @@ export default class DateMixin extends Vue {
     return this.setTimezone(new Date(year, month - 1, 1))
   }
 
-  setTimezone(date: Date, timezone = 'Europe/Paris'): Date {
-    return setTimezone(date, timezone);
+  setTimezone (date: Date, timezone = 'Europe/Paris'): Date {
+    return setTimezone(date, timezone)
   }
 
-  now(timezone = 'Europe/Paris'): Date {
-    return now(timezone);
+  now (timezone = 'Europe/Paris'): Date {
+    return now(timezone)
   }
 
   whichDayOfWeek (dayNumber: number): string {

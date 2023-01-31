@@ -1,37 +1,27 @@
 <template>
-
   <div>
     <link rel="preconnect" :href="getApiHost" crossorigin>
-
     <div :class="daysClasses">
-
       <AppHeader
         ref="header"
         :is-baseline-view="isBaselineView"
         :picked-date="startDate"
       />
-
-      <div
-        class="_day__content">
-
+      <div class="_day__content">
         <div
           v-if="isBaselineView"
-          class="_day__navigation">
-
+          class="_day__navigation"
+        >
           <DatePicker
             v-if="startDate"
             :start-date="startDate"
           />
-
-          <Outro/>
-
+          <Outro />
         </div>
-
         <div
           ref="day"
           :class="containerClass"
         >
-
           <HighlightList
             :show-media="areMediaVisible"
             :end-date="endDate"
@@ -40,31 +30,25 @@
             :is-showing-legal-notice="isShowingLegalNotice"
             :is-baseline-view="isBaselineView"
           />
-
           <LoadingSpinner
             v-if="showLoadingSpinner"
             :message="errorMessage"
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
           />
-
-          <LegalNotice/>
-
+          <LegalNotice />
         </div>
-
       </div>
     </div>
-
     <LazyModalWindow />
-
   </div>
-
 </template>
 
 <script lang="ts">
-import {Component, mixins, Vue, Watch} from 'nuxt-property-decorator'
-import {HeightAware} from '../../components/app-header/app-header.vue'
-import AppHeader from '../../components/app-header/app-header.vue'
+import { Component, mixins, Vue, Watch } from 'nuxt-property-decorator'
+import { Context } from '@nuxt/types'
+
+import AppHeader, { HeightAware } from '../../components/app-header/app-header.vue'
 import DatePicker from '../../components/date-picker/date-picker.vue'
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner.vue'
 import LegalNotice from '../../components/legal-notice/legal-notice.vue'
@@ -72,19 +56,18 @@ import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
 import ModalWindow from '../../components/modal-window/modal-window.vue'
 import Outro from '../../components/outro/outro.vue'
-import {Context} from "@nuxt/types";
-import DateMixin, {now, setTimezone} from "~/mixins/date";
-import Config from "~/config";
-import {RawStatus} from "~/mixins/status-format";
-import ApiMixin from "~/mixins/api";
-import EventHub from "~/modules/event-hub";
+import DateMixin, { now, setTimezone } from '~/mixins/date'
+import Config from '~/config'
+import { RawStatus } from '~/mixins/status-format'
+import ApiMixin from '~/mixins/api'
+import EventHub from '~/modules/event-hub'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
 }
 
-const MEDIA_INCLUDED = 0;
-const MEDIA_EXCLUDED = 1;
+const MEDIA_INCLUDED = 0
+const MEDIA_EXCLUDED = 1
 
 const RETWEETS_EXCLUDED = 0
 const RETWEETS_INCLUDED = 1
@@ -119,7 +102,6 @@ type RequestOptions = {
   }
 })
 export default class Highlights extends mixins(ApiMixin, DateMixin) {
-
   $refs!: {
     header: HeightAware,
     day: {
@@ -138,15 +120,15 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   logger = new SharedState.Logger()
 
-  pageSize: number = 10
+  pageSize = 10
 
   selectedAggregates: number[] = []
 
-  get areMediaVisible() {
+  get areMediaVisible () {
     return !this.$device.isMobile || !this.isBaselineView
   }
 
-  get containerClass() {
+  get containerClass () {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
@@ -157,23 +139,23 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return '_day__container'
   }
 
-  get getApiHost() {
+  get getApiHost () {
     return Config.getSchemeAndHost()
   }
 
-  get daysClasses() {
+  get daysClasses () {
     return {
-      '_day': true,
-      '_day--naked': !this.isBaselineView,
-      list: true
+      _day: true,
+      list: true,
+      '_day--naked': !this.isBaselineView
     }
   }
 
-  get errorMessage() {
-    return `Il semblerait qu'il n'y ait pas de contenu disponible pour cette date.`
+  get errorMessage () {
+    return "Il semblerait qu'il n'y ait pas de contenu disponible pour cette date."
   }
 
-  async fetch() {
+  async fetch () {
     const action = this.getHighlightsAction()
     const route = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
@@ -205,7 +187,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     this.items = response.statuses
   }
 
-  getRequestOptions(params: Params = {}) {
+  getRequestOptions (params: Params = {}) {
     const authenticationToken = localStorage.getItem('x-auth-token')
 
     const requestHeaders: Headers = new Headers()
@@ -248,47 +230,43 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return requestOptions
   }
 
-  getHighlightsAction() {
+  getHighlightsAction () {
     return this.routes.actions.fetchHighlights
   }
 
-  getHighlightsRoute() {
+  getHighlightsRoute () {
     const action = this.getHighlightsAction()
     return `${Config.getSchemeAndHost()}${action.route}`
   }
 
-  get isBaselineView() {
+  get isBaselineView () {
     if (this.$route === undefined) {
       return true
     }
 
-    const paramNames = Object.keys(this.$route.query);
-    const isBaselineViewActive = paramNames.find((p) => p === 'naked') === undefined
+    const paramNames = Object.keys(this.$route.query)
+    const isBaselineViewActive = paramNames.find(p => p === 'naked') === undefined
 
     return this.$device.isDesktop || isBaselineViewActive
   }
 
-  get showEndDate() {
+  get showEndDate () {
     return this.$route.name !== 'highlights'
   }
 
-  get showErrorMessage(): boolean {
+  get showErrorMessage (): boolean {
     return this.$fetchState.error !== null || this.items.length === 0
   }
 
-  get showLoadingSpinner(): boolean {
+  get showLoadingSpinner (): boolean {
     return this.$fetchState.pending
   }
 
-  get isNotLegalNoticeRoute() {
-    return !this.isShowingLegalNotice
-  }
-
-  get isShowingLegalNotice() {
+  get isShowingLegalNotice () {
     return this.$route.name === 'legal-notice'
   }
 
-  get isLoadingSpinnerVisible() {
+  get isLoadingSpinnerVisible () {
     if (this.isBaselineView && this.$device.isDesktop) {
       return this.items.length === 1
     }
@@ -297,43 +275,43 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   @Watch('startDate')
-  onStartDateChange() {
+  onStartDateChange () {
     this.updateHighlights()
   }
 
   @Watch('endDate')
-  onEndDateChange() {
+  onEndDateChange () {
     this.updateHighlights()
   }
 
   @Watch('includeRetweets')
-  onIncludeRetweetsChange() {
+  onIncludeRetweetsChange () {
     this.updateHighlights()
   }
 
-  destroyed() {
+  destroyed () {
     EventHub.$off('_day.reload_intended')
   }
 
-  created() {
+  created () {
     EventHub.$off('_day.reload_intended')
     EventHub.$on('_day.reload_intended', this.fetchHighlights)
 
     this.fetchHighlights()
   }
 
-  fetchHighlights() {
+  fetchHighlights () {
     this.$fetch()
   }
 
-  head() {
+  head () {
     let href
+    const domain = `https://revue-de-presse.org${this.$route.path}`
 
     if (this.$route.path[this.$route.path.length - 1] === '/') {
-        href = `https://revue-de-presse.org${this.$route.path}`
-          .replaceAll(new RegExp('/+$', 'g'), '')
+      href = domain.replaceAll(new RegExp('/+$', 'g'), '')
     } else {
-        href = `https://revue-de-presse.org${this.$route.path}`
+      href = domain
     }
 
     return {
@@ -344,10 +322,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
           href
         }
       ]
-    };
+    }
   }
 
-  updateHighlights() {
+  updateHighlights () {
     this.items = []
     const day = this.startDate
 
@@ -356,9 +334,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     })
   }
 
-  validate(ctx: Context) {
+  validate (ctx: Context) {
     if (ctx.route.name === 'legal-notice') {
-      return true;
+      return true
     }
 
     if (ctx.route.name === 'curated-highlights' && ctx.route.path.endsWith('/')) {
