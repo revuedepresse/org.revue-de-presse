@@ -131,8 +131,8 @@ export default class StatusFormat extends Vue {
     return statuses
   }
 
-  formatStatus (status: RawStatus) {
-    const formattedStatuses = this.formatStatuses([status])
+  formatStatus (tweet: RawStatus) {
+    const formattedStatuses = this.formatStatuses([tweet])
 
     return formattedStatuses[0]
   }
