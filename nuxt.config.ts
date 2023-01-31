@@ -188,17 +188,6 @@ const config: NuxtConfig = {
           threshold: 8192
         }
       }
-    ],
-    [
-      'nuxt-fontawesome',
-      {
-        imports: [
-          {
-            set: '@fortawesome/free-brands-svg-icons',
-            icons: ['faTwitter']
-          }
-        ]
-      }
     ]
   ],
 
