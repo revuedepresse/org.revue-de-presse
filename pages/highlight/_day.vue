@@ -42,6 +42,7 @@
           />
 
           <LoadingSpinner
+            v-if="showLoadingSpinner"
             :message="errorMessage"
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
