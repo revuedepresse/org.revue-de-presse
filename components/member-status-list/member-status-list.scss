@@ -9,7 +9,7 @@
   margin: auto;
   width: 100%;
 
-  .list__item {
+  ::v-deep .list__item {
     height: auto;
     margin-top: var(--separation-2);
 

@@ -35,15 +35,15 @@ export default class WebIntent extends Vue {
     type: String,
     required: true
   })
-  statusId!: string
+    statusId!: string
 
   @Prop({
     type: String,
     required: true
   })
-  intentType!: string
+    intentType!: string
 
-  hoveringIcon: boolean = false
+  hoveringIcon = false
 
   get label (): string {
     if (this.intentType === 'reply') {

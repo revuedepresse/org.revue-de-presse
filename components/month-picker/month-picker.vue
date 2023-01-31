@@ -59,31 +59,31 @@ class MonthPicker extends mixins(DateMixin) {
     type: Boolean,
     required: true
   })
-  isNextItemAvailable!: boolean
+    isNextItemAvailable!: boolean
 
   @Prop({
     type: Boolean,
     required: true
   })
-  isPreviousItemAvailable!: boolean
+    isPreviousItemAvailable!: boolean
 
   @Prop({
     type: Number,
     required: true
   })
-  month!: number
+    month!: number
 
   @Prop({
     type: Object,
     required: true
   })
-  visibleDaysInterval!: DateInterval
+    visibleDaysInterval!: DateInterval
 
   @Prop({
     type: Number,
     required: true
   })
-  year!: number
+    year!: number
 
   @DatePickerStore.Mutation
   public pickYear!: () => void
@@ -110,7 +110,7 @@ class MonthPicker extends mixins(DateMixin) {
           isDisabled: !isEnabled,
           onClick: () => {
             if (!isEnabled) {
-              return false;
+              return false
             }
 
             this.pickDate(this.setTimezone(new Date(`${this.year}-${index + 1}-01`)))

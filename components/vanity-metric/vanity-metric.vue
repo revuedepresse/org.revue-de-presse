@@ -29,13 +29,13 @@ export default class VanityMetric extends Vue {
     type: Number,
     required: true
   })
-  count!: number
+    count!: number
 
   @Prop({
     type: String,
     required: true
   })
-  metricType!: string
+    metricType!: string
 
   get color (): string {
     return `var(--background-vanity-metric-${this.metricType.toLowerCase()})`

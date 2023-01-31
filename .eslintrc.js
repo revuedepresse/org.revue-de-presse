@@ -8,8 +8,13 @@ module.exports = {
     'plugin:vue/recommended',
     'eslint:recommended',
     'prettier',
+    '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
+    'comma-dangle': 'off',
+    'no-control-regex': 'off',
+    'prefer-regex-literals': 'off',
+    'vue/html-self-closing': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
@@ -17,7 +22,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     camelcase: 'off',
     '@typescript-eslint/camelcase': 'off',
-    "no-unused-vars": "off",
+    'no-unused-vars': 'off'
   },
   globals: {
     $nuxt: true

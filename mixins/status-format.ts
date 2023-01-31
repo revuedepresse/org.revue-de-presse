@@ -1,11 +1,10 @@
+import Convertor from 'emoji-js'
+import { escape } from 'he'
 import { Component, Vue } from 'nuxt-property-decorator'
-import he from 'he'
-import EmojiConvertor from 'emoji-js'
 import SharedState from '../modules/shared-state'
-import { setTimezone } from './date'
-
 import EventHub from '../modules/event-hub'
 import Errors from '../modules/errors'
+import { setTimezone } from './date'
 
 type Media = {
   url: string,
@@ -131,8 +130,8 @@ export default class StatusFormat extends Vue {
     return statuses
   }
 
-  formatStatus (status: RawStatus) {
-    const formattedStatuses = this.formatStatuses([status])
+  formatStatus (tweet: RawStatus) {
+    const formattedStatuses = this.formatStatuses([tweet])
 
     return formattedStatuses[0]
   }
@@ -262,8 +261,8 @@ export default class StatusFormat extends Vue {
       textContent = dom.body.textContent
     }
 
-    const parsedSubject = he.escape(textContent)
-    const emoji = new EmojiConvertor()
+    const parsedSubject = escape(textContent)
+    const emoji = new Convertor()
 
     // Emoji are publicly available as soon as the following command has been executed
     // to expose the required assets (from the API root directory)

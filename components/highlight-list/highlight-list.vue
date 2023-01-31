@@ -1,107 +1,38 @@
 <template>
-
-  <div :class="highlightsClasses">
-    <link rel="preconnect" :href="getApiHost" crossorigin>
-
-    <AppHeader
-      ref="header"
-      :is-baseline-view="isBaselineView"
-      :picked-date="startDate"
-    />
-
-    <div
-      class="highlight-list__content">
-
-      <div
-        v-if="isBaselineView"
-        class="highlight-list__navigation">
-        <DatePicker
-          v-if="startDate"
-          :start-date="startDate"
-        />
-        <Outro/>
-      </div>
-
-      <div
-        ref="highlights"
-        :class="containerClass"
-      >
-
-        <ul
-          class="list__items">
-          <li
-            v-for="(highlight, index) in highlights"
-            :key="highlight.statusId"
-            :data-key="highlight.statusId"
-            class="list__item"
-          >
-            <Status
-              :status-at-first="formatStatus(highlight.status)"
-              :show-media="showMedia"
-              :is-baseline-view="isBaselineView"
-              :is-intro="isIntro(index)"
-              :ref-name="index"
-            />
-          </li>
-        </ul>
-
-        <LoadingSpinner
-          v-if="isLoadingSpinnerVisible && isNotLegalNoticeRoute"
-          :message="errorMessage"
-          :show-error-message="showErrorMessage"
-          :show-loading-spinner="showLoadingSpinner"
-        />
-
-        <LegalNotice/>
-
-      </div>
-
-    </div>
-
-  </div>
-
+  <ul
+    class="list__items"
+  >
+    <li
+      v-for="(curatedHighlight, index) in curatedHighlights"
+      :key="curatedHighlight.tweetId"
+      :data-key="curatedHighlight.tweetId"
+      class="list__item"
+    >
+      <Status
+        :status-at-first="formatStatus(curatedHighlight.tweet)"
+        :show-media="showMedia"
+        :is-baseline-view="isBaselineView"
+        :is-intro="isIntro(index)"
+        :ref-name="index"
+      />
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Watch, mixins} from 'nuxt-property-decorator'
-import Config from '../../config'
-import EventHub from '../../modules/event-hub'
-import SharedState from '../../modules/shared-state'
-import AppHeader, {HeightAware} from '../app-header/app-header.vue'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Intro from '../intro/intro.vue'
-import DatePicker from '../date-picker/date-picker.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
-import StatusFormatMixin, {RawStatus} from '~/mixins/status-format'
+import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
 import Logo from '~/assets/revue-de-presse-logo.svg'
 
-const RETWEETS_EXCLUDED = '0'
-
-type Params = {
-  endDate?: string,
-  startDate?: string,
-  pageIndex?: number,
-  pageSize?: number,
-  includeRetweets?: number
-  selectedAggregates?: number[],
-  [key: string]: any
-}
-
-type RequestOptionsHeaders = Headers
-
-type RequestOptions = {
-  headers: RequestOptionsHeaders,
-  params: Params
-}
-
 @Component({
   components: {
-    AppHeader,
-    DatePicker,
     Intro,
     LegalNotice,
     LoadingSpinner,
@@ -111,123 +42,43 @@ type RequestOptions = {
 })
 export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   @Prop({
+    type: String,
+    required: true
+  })
+    endDate: string = this.defaultDates().endDate
+
+  @Prop({
+    type: String,
+    required: true
+  })
+    startDate: string = this.defaultDates().startDate
+
+  @Prop({
     type: Boolean,
     default: true
   })
-  showMedia!: boolean
+    showMedia!: boolean
 
-  includeRetweets: string = RETWEETS_EXCLUDED
-  items: Array<{ status: RawStatus }> = []
-  logger = new SharedState.Logger()
-  minDate = this.formatMinDate()
-  maxDate = this.formatMaxDate()
-  selectedAggregates: number[] = []
-  pageIndex: number = 1
-  pageSize: number = 10
-  totalPages: number | null = null
-  endDate: string = this.defaultDates().endDate
-  startDate: string = this.defaultDates().startDate
+  @Prop({
+    type: Boolean,
+    required: true
+  })
+    isShowingLegalNotice = false
 
-  $refs!: {
-    header: HeightAware,
-    highlights: {
-      offsetHeight: number
-    },
-    [key: string]: any
-  }
+  @Prop({
+    type: Boolean,
+    required: true,
+    default: false
+  })
+    isBaselineView!: boolean
 
-  async fetch() {
-    const action = this.getHighlightsAction()
-    const route = this.getHighlightsRoute()
-    const requestOptions = this.getRequestOptions()
+  @Prop({
+    type: Array,
+    default: []
+  })
+    items!: Array<{ status: RawStatus }>
 
-    const url = new URL(route)
-    Object.keys(requestOptions.params).map((key: string) => {
-      let param: string | null = requestOptions.params[key]
-      if (param == null) {
-        param = ''
-      }
-
-      return url.searchParams.set(key, param)
-    })
-
-    const response = await fetch(
-      url.toString(),
-      {
-        method: action.method,
-        headers: requestOptions.headers
-      }
-    )
-      .then(res => res.json())
-      .catch((_e) => {
-        this.logger.error(
-          // e.message, 'highlight-list', e
-        )
-      })
-
-    this.items = response.statuses
-  }
-
-  get containerClass() {
-    const filledContainerClass = 'highlight-list__container highlight-list__container--filled'
-    const nonEmptyList = this.$nuxt.isOnline && this.highlights.length > 0
-
-    if (nonEmptyList || this.$fetchState.pending) {
-      return filledContainerClass
-    }
-
-    return 'highlight-list__container'
-  }
-
-  get errorMessage() {
-    return `Il semblerait qu'il n'y ait pas de contenu disponible pour cette date.`
-  }
-
-  get getApiHost() {
-    return Config.getSchemeAndHost()
-  }
-
-  get highlights() {
-    let highlights = this.items
-
-    let intro: Array<{ status: RawStatus }> = []
-    if (this.$device.isDesktop) {
-      intro = [{status: this.intro}]
-    }
-
-    if (this.isShowingLegalNotice) {
-      return intro
-    }
-
-    if (this.isBaselineView) {
-      return intro.concat(highlights)
-    } else {
-      highlights = highlights.slice(0, 3)
-    }
-
-    return highlights
-  }
-
-  get highlightsClasses() {
-    return {
-      'highlight-list': true,
-      'highlight-list--naked': !this.isBaselineView,
-      list: true
-    }
-  }
-
-  get isBaselineView() {
-    if (this.$route === undefined) {
-      return true
-    }
-
-    const paramNames = Object.keys(this.$route.query);
-    const isBaselineViewActive = paramNames.find((p) => p === 'naked') === undefined
-
-    return this.$device.isDesktop || isBaselineViewActive
-  }
-
-  get intro(): RawStatus {
+  get intro (): RawStatus {
     const text = 'Revue de presse est un projet citoyen indépendant ' +
       'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
       'à l\'actualité et à l\'influence des médias sur l\'opinion.'
@@ -249,135 +100,42 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       retweet_count: 0,
       favorite_count: 0,
       links: [],
-      original_document: JSON.stringify({user: {name: 'Revue de presse'}})
+      original_document: JSON.stringify({ user: { name: 'Revue de presse' } })
     }
 
     return intro
   }
 
-  get showEndDate() {
-    return this.$route.name !== 'highlights'
-  }
-
-  get showErrorMessage(): boolean {
-    return this.$fetchState.error !== null || this.items.length === 0
-  }
-
-  get showLoadingSpinner(): boolean {
-    return this.$fetchState.pending
-  }
-
-  get isNotLegalNoticeRoute() {
-    return !this.isShowingLegalNotice
-  }
-
-  get isShowingLegalNotice() {
-    return this.$route.name === 'legal-notice'
-  }
-
-  get isLoadingSpinnerVisible() {
-    if (this.isBaselineView && this.$device.isDesktop) {
-      return this.highlights.length === 1
-    }
-
-    return this.highlights.length === 0
-  }
-
-  @Watch('startDate')
-  onStartDateChange() {
-    this.updateHighlights()
-  }
-
-  @Watch('endDate')
-  onEndDateChange() {
-    this.updateHighlights()
-  }
-
-  @Watch('includeRetweets')
-  onIncludeRetweetsChange() {
-    this.updateHighlights()
-  }
-
-  destroyed() {
-    EventHub.$off('highlight_list.reload_intended')
-  }
-
-  created() {
-    EventHub.$off('highlight_list.reload_intended')
-    EventHub.$on('highlight_list.reload_intended', this.fetchHighlights)
-
-    this.fetchHighlights()
-  }
-
-  defaultDates() {
-    let {day, endDate} = this.$route.params
-
-    if (day === '1970-01-01' || !day) {
-      day = this.formatMaxDate()
-    }
-
-    if (endDate === '1970-01-01' || !endDate) {
-      endDate = this.formatMaxDate()
-    }
-
-    return {
-      startDate: day,
-      endDate
-    }
-  }
-
-  fetchHighlights() {
-    this.$fetch()
-  }
-
-  getRequestOptions(params: Params = {}) {
-    const authenticationToken = localStorage.getItem('x-auth-token')
-
-    const requestHeaders: Headers = new Headers()
-    requestHeaders.set('x-auth-token', authenticationToken || '')
-
-    const requestOptions: RequestOptions = {
-      headers: requestHeaders,
-      params: {
-        includeRetweets: 1,
-        startDate: this.startDate,
-        endDate: this.startDate
+  get curatedHighlights (): Array<{tweet: RawStatus, tweetId: string}> {
+    return this.highlights.map((h) => {
+      const tweet = structuredClone(h.status)
+      return {
+        tweet,
+        tweetId: tweet.statusId
       }
-    }
-
-    if (!this.showEndDate) {
-      requestOptions.params.endDate = this.startDate
-    }
-
-    if (params.pageIndex) {
-      requestOptions.params.pageIndex = params.pageIndex
-    }
-
-    if (this.pageSize > 0) {
-      requestOptions.params.pageSize = this.pageSize
-    }
-
-    if (this.includeRetweets === RETWEETS_EXCLUDED) {
-      requestOptions.params.includeRetweets = 0
-    }
-
-    if (this.selectedAggregates.length > 0) {
-      requestOptions.params.selectedAggregates = this.selectedAggregates
-    }
-
-    return requestOptions
+    })
   }
 
-  getHighlightsAction() {
-    return this.routes.actions.fetchHighlights
+  get highlights () {
+    const highlights = this.items
+
+    let intro: Array<{ status: RawStatus }> = []
+    if (this.$device.isDesktop) {
+      intro = [{ status: this.intro }]
+    }
+
+    if (this.isShowingLegalNotice) {
+      return intro
+    }
+
+    if (this.isBaselineView) {
+      return intro.concat(highlights)
+    } else {
+      return highlights.slice(0, 3)
+    }
   }
 
-  getHighlightsRoute() {
-    const action = this.getHighlightsAction()
-    return `${Config.getSchemeAndHost()}${action.route}`
-  }
-
-  head() {
+  head () {
     if (this.highlights.length > 1) {
       const whitespace = '\\s'
       const pattern = `https?://[^${whitespace}]+`
@@ -389,7 +147,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
       const description = this.highlights[highlightIndex].status.text
         .replaceAll(new RegExp(pattern, 'ig'), '')
-        // eslint-disable-next-line no-control-regex
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
       const title = `${description} - Revue de presse du ${this.startDate}`
 
@@ -422,17 +179,8 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
-  isIntro(key: number) {
+  isIntro (key: number) {
     return this.$device.isDesktop && key === 0
-  }
-
-  updateHighlights() {
-    this.items = []
-    const day = this.startDate
-
-    this.$router.push({
-      path: `/${day}`
-    })
   }
 }
 </script>

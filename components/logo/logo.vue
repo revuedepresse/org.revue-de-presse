@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts">
-import Logotype from '~/assets/revue-de-presse-logo.svg?data'
 import { Component, Vue } from 'nuxt-property-decorator'
+import Logotype from '~/assets/revue-de-presse-logo.svg?data'
 
 @Component
 export default class Logo extends Vue {
-  get logo() {
+  get logo () {
     return Logotype
   }
 }

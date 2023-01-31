@@ -1,7 +1,8 @@
 <template>
   <div
     v-if="isBaselineView || !isIntro"
-    :class="statusClasses()">
+    :class="statusClasses()"
+  >
     <div
       v-show="!isIntro"
       class="status__vanity-metrics"
@@ -68,8 +69,8 @@
             :title="getMediaTitle(document)"
             :src="getMediaDataUri(status)"
             :style="getMediaProperties()"
-            :width="getMediaWidth(document)"
-            height="auto"
+            :height="getMediaHeight(document)"
+            :width="getMediaWidth()"
             @click="openMediaItem(document)"
           >
         </div>
@@ -82,7 +83,7 @@
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import ApiMixin from '../../mixins/api'
 import DateMixin from '../../mixins/date'
-import StatusFormatMixin, {TweetUrl, FormattedStatus, Media} from '../../mixins/status-format'
+import StatusFormatMixin, { TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
@@ -98,31 +99,31 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     type: Object,
     required: true
   })
-  statusAtFirst!: FormattedStatus
+    statusAtFirst!: FormattedStatus
 
   @Prop({
     type: Boolean,
     default: true
   })
-  showMedia!: boolean
+    showMedia!: boolean
 
   @Prop({
     type: Boolean,
     default: true
   })
-  isBaselineView!: boolean
+    isBaselineView!: boolean
 
   @Prop({
     type: String,
     default: ''
   })
-  fromAggregateType!: string
+    fromAggregateType!: string
 
   @Prop({
     type: Boolean,
     default: false
   })
-  isIntro!: boolean
+    isIntro!: boolean
 
   errorMessages: Errors = SharedState.errors
   logger = new SharedState.Logger()
@@ -130,7 +131,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
 
-  get avatarUrl(): string {
+  get avatarUrl (): string {
     if (this.status.base64EncodedAvatar) {
       return this.status.base64EncodedAvatar
     }
@@ -243,8 +244,8 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return text.replace(/\s/g, ' ')
   }
 
-  removeTrackingParams(subject: string) {
-    return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '');
+  removeTrackingParams (subject: string) {
+    return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '')
   }
 
   replaceHyperlinksWithAnchors (subject: string, urls: Array<TweetUrl>) {
@@ -261,7 +262,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       }
 
       urls.forEach((u: TweetUrl) => {
-        const expandedUrl = this.removeTrackingParams(u.expanded_url);
+        const expandedUrl = this.removeTrackingParams(u.expanded_url)
 
         matchingText = matchingText.replaceAll(u.url,
           `<a class="status__text-external-link"
@@ -274,8 +275,8 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       })
 
       const obfuscatedTweetUrl = `http(s?)://t.co${not}${whitespace}]+`
-      if (null !== matchingText.match(new RegExp(obfuscatedTweetUrl, 'gi'))) {
-          return ''
+      if (matchingText.match(new RegExp(obfuscatedTweetUrl, 'gi')) !== null) {
+        return ''
       }
 
       return matchingText
@@ -314,16 +315,16 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     }
   }
 
-  getMediaUrl (media: Media) {
-    return `${media.url}:small`
-  }
-
   getMediaDataUri (status: FormattedStatus) {
     return status.base64EncodedMedia
   }
 
-  getMediaWidth (media: Media) {
-    return Math.min(media.sizes.small.w, 570)
+  getMediaHeight (media: Media): Number {
+    return Math.ceil(572 * media.sizes.small.h / media.sizes.small.w)
+  }
+
+  getMediaWidth (): Number {
+    return 572
   }
 
   getMediaTitle (media: Media) {

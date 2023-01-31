@@ -2,6 +2,9 @@ SHELL:=/bin/bash
 .ONESHELL:
 .PHONY: dev generate help install start
 
+deps-analysis: ## Analyze dependencies graph
+	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" npx nuxt build --modern --analyze'
+
 generate: ## Build production package
 	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate --modern'
 

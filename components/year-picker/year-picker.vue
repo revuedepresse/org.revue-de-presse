@@ -38,19 +38,19 @@ class YearPicker extends mixins(DateMixin) {
     type: Number,
     required: true
   })
-  year!: number
+    year!: number
 
   @Prop({
     type: Boolean,
     default: false
   })
-  isNextItemAvailable!: boolean
+    isNextItemAvailable!: boolean
 
   @Prop({
     type: Boolean,
     default: false
   })
-  isPreviousItemAvailable!: boolean
+    isPreviousItemAvailable!: boolean
 
   get acceptedYears () {
     const today = this.now()
@@ -60,7 +60,8 @@ class YearPicker extends mixins(DateMixin) {
       index: 0,
       label: 2018,
       isSelected: this.year === 2018,
-      onClick: () => {}
+      onClick: () => {
+      }
     }].concat(
       years
         .fill(2019)
@@ -69,7 +70,8 @@ class YearPicker extends mixins(DateMixin) {
             index: inc + 1,
             label: year + inc,
             isSelected: this.year === year + inc,
-            onClick: () => {}
+            onClick: () => {
+            }
           }
         })
     ).map((acceptedYear) => {
