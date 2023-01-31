@@ -8,7 +8,7 @@
     </h2>
 
     <p class="outro__paragraph">
-      Revue de presse s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse">revuedepresse/revue-de-presse.org</a>)
+      Revue de presse s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse">github.com/revuedepresse</a>)
       et met en perspective les publications des médias en
       fonction du succès que ces publications ont rencontré auprès du public.
       Un classement s'appuyant sur les «retweets», offre chaque jour une visibilité sur 10 posts médias.
