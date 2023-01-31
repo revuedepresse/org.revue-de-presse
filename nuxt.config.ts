@@ -181,6 +181,7 @@ const config: NuxtConfig = {
   modules: [
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
+    '@nuxtjs/web-vitals',
     [
       'nuxt-compress',
       {
