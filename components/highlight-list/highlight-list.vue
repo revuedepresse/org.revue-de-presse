@@ -309,23 +309,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     this.fetchHighlights()
   }
 
-  defaultDates() {
-    let {day, endDate} = this.$route.params
-
-    if (day === '1970-01-01' || !day) {
-      day = this.formatMaxDate()
-    }
-
-    if (endDate === '1970-01-01' || !endDate) {
-      endDate = this.formatMaxDate()
-    }
-
-    return {
-      startDate: day,
-      endDate
-    }
-  }
-
   fetchHighlights() {
     this.$fetch()
   }

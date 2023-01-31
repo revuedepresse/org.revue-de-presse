@@ -33,6 +33,23 @@ export default class DateMixin extends Vue {
     ]
   }
 
+  defaultDates() {
+    let {day, endDate} = this.$route.params
+
+    if (day === '1970-01-01' || !day) {
+      day = this.formatMaxDate()
+    }
+
+    if (endDate === '1970-01-01' || !endDate) {
+      endDate = this.formatMaxDate()
+    }
+
+    return {
+      startDate: day,
+      endDate
+    }
+  }
+
   formatDate (date: Date) {
     return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
   }
