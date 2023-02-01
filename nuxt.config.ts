@@ -179,6 +179,7 @@ const config: NuxtConfig = {
   },
 
   modules: [
+    'nuxt-trailingslash-module',
     '@nuxtjs/device',
     '@nuxtjs/style-resources',
     [
@@ -188,7 +189,8 @@ const config: NuxtConfig = {
           threshold: 8192
         }
       }
-    ]
+    ],
+    '@nuxtjs/sitemap'
   ],
 
   dateFns: {
@@ -212,7 +214,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'legal-notice',
-        path: '/mentions-legales/',
+        path: '/mentions-legales',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
@@ -221,6 +223,34 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
+  },
+
+  sitemap: {
+    hostname: 'https://revue-de-presse.org',
+    gzip: true,
+    trailingSlash: false,
+    exclude: [],
+    routes: [
+      {
+        url: '',
+        changefreq: 'daily',
+      },
+      {
+        url: '/mentions-legales',
+        lastmod: (new Date('2023-01-23').toISOString())
+      },
+      ...days()
+        .map((d: string) => {
+          const day = setTimezone(new Date(d.replace('/', '')))
+          day.setTime(day.getTime() + (3 * 60 * 60 * 1000))
+
+          return {
+            url: d.replace(/\/$/, ''),
+            lastmod: (day.toISOString())
+          }
+        })
+        .reverse()
+    ]
   },
 
   styleResources: {
