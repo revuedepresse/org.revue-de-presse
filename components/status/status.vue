@@ -320,7 +320,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   getMediaHeight (media: Media): Number {
-    return Math.ceil(570 * media.sizes.small.h / media.sizes.small.w)
+    return media.sizes.small.h
   }
 
   getMediaWidth (): Number {
