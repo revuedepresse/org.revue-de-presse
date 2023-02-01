@@ -5,6 +5,10 @@
   margin: 0;
   width: 100%;
 
+  &__paragraph {
+    font-size: 1.2em;
+  }
+
   @media (min-width: $width-large-device) {
     border-radius: var(--separation-1);
     margin-top: var(--separation-1);
