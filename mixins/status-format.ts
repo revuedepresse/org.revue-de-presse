@@ -1,5 +1,3 @@
-import Convertor from 'emoji-js'
-import { escape } from 'he'
 import { Component, Vue } from 'nuxt-property-decorator'
 import SharedState from '../modules/shared-state'
 import EventHub from '../modules/event-hub'
@@ -192,7 +190,7 @@ export default class StatusFormat extends Vue {
         avatarUrl: status.avatar_url,
         publishedAt: setTimezone(new Date(status.published_at)),
         statusId: status.status_id,
-        text: this.parseFromString(status.text),
+        text: status.text,
         url: status.url,
         isVisible: false,
         media: status.media,
@@ -246,36 +244,6 @@ export default class StatusFormat extends Vue {
     }
 
     return -1
-  }
-
-  // @see https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
-  parseFromString (subject: string) {
-    const parser = new DOMParser()
-    const dom = parser.parseFromString(
-        `<!doctype html><body>${subject}</body>`,
-        'text/html'
-    )
-
-    let textContent = ''
-    if (dom.body.textContent !== null) {
-      textContent = dom.body.textContent
-    }
-
-    const parsedSubject = escape(textContent)
-    const emoji = new Convertor()
-
-    // Emoji are publicly available as soon as the following command has been executed
-    // to expose the required assets (from the API root directory)
-    // @see https://github.com/iamcal/emoji-data
-    // ```
-    // make clone-emoji-repository
-    // ```
-    const protocolScheme = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-    emoji.img_sets.apple.path = `${protocolScheme}://${process.env.API_HOST}/emoji-data/img-apple-64/`
-    // @see https://github.com/iamcal/js-emoji/issues/96
-    emoji.allow_native = process.env.NODE_ENV === 'production'
-
-    return emoji.replace_unified(parsedSubject)
   }
 }
 
