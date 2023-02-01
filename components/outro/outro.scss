@@ -77,6 +77,7 @@
   &__subscribe-to-anchor:hover,
   &__subscribe-to-anchor:link,
   &__subscribe-to-anchor:visited {
+    display: inline-flex;
     color: var(--color-white);
     height: var(--line-height-base);
     line-height: var(--line-height-base);
