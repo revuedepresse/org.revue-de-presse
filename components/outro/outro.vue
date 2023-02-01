@@ -19,7 +19,7 @@
       @revue_2_presse
     </h2>
     <p class="outro__paragraph">
-      Retrouver chaque jour les 3 tweets médias ayant été les plus relayés au cours de la journée.
+      Retrouver chaque jour les 3 tweets médias ayant été les plus relayés au cours de la journée.<br />
       <span
         class="outro__subscribe-to"
       ><!--

@@ -187,18 +187,20 @@ $max-width: 336px;
 
   &__day-number--other-month {
     .calendar-month__day-cell {
-      color: var(--color-content-font);
+      background-color: var(--color-background-other-month);
+      color: var(--color-content-text);
     }
   }
 
   &__day-number--future-dates {
     .calendar-month__day-cell {
+      background-color: var(--color-background-future-date);
       border-color: var(--color-content-font);
-      color: var(--color-content-font);
-      cursor: default;
+      color: var(--color-content-text);
+      cursor: not-allowed;
 
       &:active {
-        background-color: var(--color-white);
+        background-color: var(--color-background-future-date);
       }
     }
   }
