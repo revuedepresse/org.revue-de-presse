@@ -1,5 +1,6 @@
 <template>
   <a
+    :aria-label="label"
     :href="intentUrl"
     class="web-intent"
     @mouseover="onMouseOver"
