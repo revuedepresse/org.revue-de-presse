@@ -46,11 +46,13 @@
         <button
           :class="getPreviousDayClasses()"
           :style="previousDayIcon"
+          aria-label="Aller au jour précédent"
           @click="goToDayBeforePickedDate()"
         />
         <button
           :class="getNextDayClasses()"
           :style="nextDayIcon"
+          aria-label="Aller au jour suivant"
           @click="goToDayFollowingPickedDate()"
         />
       </div>

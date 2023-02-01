@@ -11,6 +11,7 @@
         <button
           class="calendar-month__button"
           @click="switchToMonthPicking"
+          aria-label="Sélectionner un autre mois"
           v-text="monthYearLabel"
         />
       </div>
@@ -18,11 +19,13 @@
         <button
           :class="getPreviousItemClasses()"
           :style="previousItemIcon"
+          aria-label="Aller au mois précédent"
           @click="goToPreviousMonth()"
         />
         <button
           :class="getNextItemClasses()"
           :style="nextItemIcon"
+          aria-label="Aller au mois suivant"
           @click="goToNextMonth()"
         />
       </div>
