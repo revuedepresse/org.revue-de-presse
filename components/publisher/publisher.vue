@@ -4,29 +4,34 @@
     :style="publisherAvatar"
   >
     <div class="publisher__container">
-      <img
-        :alt="textAlternative"
-        :src="avatarUrl"
-        :class="avatarClasses()"
-        width="46px"
-        height="46px"
-        @error="onError"
-      />
+      <a :href="publisherUrl">
+        <img
+          :alt="textAlternative"
+          :src="avatarUrl"
+          :class="avatarClasses()"
+          width="46px"
+          height="46px"
+          @error="onError"
+        >
+      </a>
       <div class="publisher__identifiers">
-        <span
+        <a
           class="publisher__name"
+          :href="publisherUrl"
         >
           {{ name }}
-        </span>
-        <span
+        </a>
+        <a
           class="publisher__username"
+          :href="publisherUrl"
         >
           @{{ username }}
-        </span>
+        </a>
       </div>
     </div>
-    <span
+    <a
       v-show="!removeTwitterLogo"
+      :href="publicationUrl"
     >
       <svg
         aria-hidden="true"
@@ -44,7 +49,7 @@
         >
         </path>
       </svg>
-    </span>
+    </a>
   </div>
 </template>
 
