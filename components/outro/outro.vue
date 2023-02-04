@@ -74,7 +74,7 @@
       Revue de presse est hébergé par <a target="_blank" href="https://www.netlify.com/legal/open-source-policy/">netlify</a>
       et <a href="https://jb.gg/OpenSourceSupport" target="_blank">Jetbrains</a> met à notre disposition ses éditeurs.<br />
       <a href="https://jb.gg/OpenSourceSupport" target="_blank"><img
-        alt="Revue de Presse logo"
+        alt="Jetbrains logo"
         width="48"
         height="48"
         :src="vendorLogo"
