@@ -13,8 +13,8 @@ const days = () => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
-  const today = setTimezone(new Date())
-  const nextYear = today.getFullYear()
+  const yesterday = now()
+  yesterday.setTime(now().getTime() - (3 * 60 * 60 * 1000))
 
   do {
     const nextDate = new Date()
@@ -23,7 +23,7 @@ const days = () => {
 
     days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
-  } while (next <= setTimezone(new Date(`31 dec ${nextYear} 00:00:00 GMT`)))
+  } while (next <= yesterday)
 
   return days.map((d) => {
     let month = `${d.getMonth() + 1}`
