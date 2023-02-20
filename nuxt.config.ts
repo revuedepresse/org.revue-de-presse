@@ -243,7 +243,6 @@ const config: NuxtConfig = {
       ...days()
         .map((d: string) => {
           const day = setTimezone(new Date(d.replace('/', '')))
-          day.setTime(day.getTime() + (3 * 60 * 60 * 1000))
 
           return {
             url: d.replace(/\/$/, ''),
