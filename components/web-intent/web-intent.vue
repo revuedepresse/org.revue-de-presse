@@ -3,6 +3,7 @@
     :aria-label="label"
     :href="intentUrl"
     class="web-intent"
+    rel="nofollow noreferrer noopener"
     @mouseover="onMouseOver"
     @mouseleave="onMouseLeave"
   >

@@ -266,8 +266,8 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
         matchingText = matchingText.replaceAll(u.url,
           `<a class="status__text-external-link"
-                 rel="noreferrer"
-                 target="_blank" href="${expandedUrl}">${u.display_url}</a>`
+            rel="noreferrer nofollow noopener"
+            target="_blank" href="${expandedUrl}">${u.display_url}</a>`
 
         )
 
@@ -297,7 +297,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
         return `${prefix}<a
                    class="status__text-external-link"
-                   rel="noreferrer"
+                   rel="noreferrer nofollow noopener"
                    target="_blank"
                    href="https://twitter.com/${mention}">@${mention}</a>${suffix}`
       }

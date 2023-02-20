@@ -4,7 +4,7 @@
     :style="publisherAvatar"
   >
     <div class="publisher__container">
-      <a :href="publisherUrl">
+      <a rel="nofollow noreferrer noopener" :href="publisherUrl">
         <img
           :alt="textAlternative"
           :src="avatarUrl"
@@ -17,12 +17,14 @@
       <div class="publisher__identifiers">
         <a
           class="publisher__name"
+          rel="nofollow noreferrer noopener"
           :href="publisherUrl"
         >
           {{ name }}
         </a>
         <a
           class="publisher__username"
+          rel="nofollow noreferrer noopener"
           :href="publisherUrl"
         >
           @{{ username }}
