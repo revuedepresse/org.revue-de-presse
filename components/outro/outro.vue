@@ -7,7 +7,7 @@
       À propos
     </h2>
     <p class="outro__paragraph">
-      Revue de presse s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse">github.com/revuedepresse</a>)
+      Revue de presse s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse" rel="noreferrer nofollow noopener">github.com/revuedepresse</a>)
       et met en perspective les publications des médias en
       fonction du succès que ces publications ont rencontré auprès du public.
       Un classement s'appuyant sur les «retweets», offre chaque jour une visibilité sur 10 posts médias.
@@ -26,6 +26,7 @@
           --><a
         class="outro__subscribe-to-anchor"
         href="https://twitter.com/revue_2_presse"
+        rel="noreferrer nofollow noopener"
       ><!--
             --><svg
                     aria-hidden="true"
@@ -55,25 +56,25 @@
       Pro bono publico
     </h2>
     <p class="outro__paragraph">
-      Ce projet est porté avec 💙 par <a href="https://twitter.com/sylvaineg">@sylvaineg</a> et
-      <a href="https://twitter.com/thierrymarianne">@thierrymarianne</a>.<br /><br />
-      <a href="/mentions-legales/">Mentions Légales</a><br /><br />
+      Ce projet est porté avec 💙 par <a rel="noreferrer nofollow noopener" href="https://twitter.com/sylvaineg">@sylvaineg</a> et
+      <a href="https://twitter.com/thierrymarianne" rel="noreferrer nofollow noopener">@thierrymarianne</a>.<br /><br />
+      <a href="/mentions-legales/" rel="noreferrer nofollow noopener">Mentions Légales</a><br /><br />
       Depuis la naissance du projet en 2015 jusqu'en 2022,
       Revue de presse n'a reçu aucun financement extérieur.
       C'est pourquoi afin de pérenniser la maintenance et les développements du projet,
       des pages de contribution ont été ouvertes :<br>
     </p>
     <ul class="outro__list">
-      <li><a href="https://www.buymeacoffee.com/thierrymarianne">buymeacoffee.com</a></li>
-      <li><a href="https://ko-fi.com/thierrymarianne/">ko-fi.com</a></li>
-      <li><a href="https://liberapay.com/thierrymarianne/">liberapay.com</a></li>
-      <li><a href="https://github.com/sponsors/thierrymarianne">github.com</a></li>
+      <li><a href="https://www.buymeacoffee.com/thierrymarianne" rel="noreferrer nofollow noopener">buymeacoffee.com</a></li>
+      <li><a href="https://ko-fi.com/thierrymarianne/" rel="noreferrer nofollow noopener">ko-fi.com</a></li>
+      <li><a href="https://liberapay.com/thierrymarianne/" rel="noreferrer nofollow noopener">liberapay.com</a></li>
+      <li><a href="https://github.com/sponsors/thierrymarianne" rel="noreferrer nofollow noopener">github.com</a></li>
     </ul>
     <p class="outro__paragraph">
       Dans le cadre de leurs programmes respectifs de soutien aux projets dont le code source est ouvert et libre,
-      Revue de presse est hébergé par <a target="_blank" href="https://www.netlify.com/legal/open-source-policy/">netlify</a>
-      et <a href="https://jb.gg/OpenSourceSupport" target="_blank">Jetbrains</a> met à notre disposition ses éditeurs.<br />
-      <a href="https://jb.gg/OpenSourceSupport" target="_blank"><img
+      Revue de presse est hébergé par <a target="_blank" href="https://www.netlify.com/legal/open-source-policy/" rel="noreferrer nofollow noopener">netlify</a>
+      et <a href="https://jb.gg/OpenSourceSupport" target="_blank" rel="noreferrer nofollow noopener">Jetbrains</a> met à notre disposition ses éditeurs.<br />
+      <a href="https://jb.gg/OpenSourceSupport" target="_blank" rel="noreferrer nofollow noopener"><img
         alt="Jetbrains logo"
         width="48"
         height="48"
@@ -86,7 +87,8 @@
       --><a
         class="outro__outer-link"
         href="https://twitter.com/CcelestinC"
-        >@CcelestinC</a><!--
+        rel="noreferrer nofollow noopener"
+      >@CcelestinC</a><!--
     -->
       </div>
     </div>

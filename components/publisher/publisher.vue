@@ -33,6 +33,7 @@
     </div>
     <a
       v-show="!removeTwitterLogo"
+      rel="noreferrer nofollow noopener"
       :href="publicationUrl"
     >
       <svg
