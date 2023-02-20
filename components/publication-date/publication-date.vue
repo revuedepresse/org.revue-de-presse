@@ -2,7 +2,8 @@
   <a
     class="publication-date"
     rel="nofollow noreferrer noopener"
-    :href="publicationUrl">
+    :href="publicationUrl"
+  >
     {{ publicationDate }}
   </a>
 </template>

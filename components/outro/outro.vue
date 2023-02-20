@@ -85,10 +85,10 @@
       <div class="outro__copyright">
         &copy; {{ year }} · Design de <!--
       --><a
-        class="outro__outer-link"
-        href="https://twitter.com/CcelestinC"
-        rel="noreferrer nofollow noopener"
-      >@CcelestinC</a><!--
+          class="outro__outer-link"
+          href="https://twitter.com/CcelestinC"
+          rel="noreferrer nofollow noopener"
+        >@CcelestinC</a><!--
     -->
       </div>
     </div>
