@@ -14,7 +14,7 @@ const days = () => {
   let next = days[days.length - 1]
 
   const yesterday = now()
-  yesterday.setTime(now().getTime() - (3 * 60 * 60 * 1000))
+  yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
 
   do {
     const nextDate = new Date()
@@ -242,7 +242,7 @@ const config: NuxtConfig = {
       },
       ...days()
         .map((d: string) => {
-          const day = setTimezone(new Date(d.replace('/', '')))
+          const day = new Date(d.replace('/', ''))
 
           return {
             url: d.replace(/\/$/, ''),
