@@ -32,7 +32,7 @@
   },
   "engines": {
     "npm": ">=8.19.0",
-    "node": ">=18.13.0"
+    "node": ">=18.14.0"
   },
   "dependencies": {
     "@nuxt/typescript-build": "^2.1.0",

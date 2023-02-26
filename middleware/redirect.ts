@@ -6,7 +6,7 @@ const RedirectMiddleware: Middleware = ({ route, redirect }) => {
     route.name !== 'homepage' &&
     route.name !== 'curated-highlights' &&
     route.name !== 'legal-notice') {
-    return redirect(`/${Time.today()}`)
+    return redirect('/')
   }
 }
 
