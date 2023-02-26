@@ -36,7 +36,7 @@ const days = () => {
       date = `0${date}`
     }
 
-    return `/${d.getFullYear()}-${month}-${date}/`
+    return `/${d.getFullYear()}-${month}-${date}`
   })
 }
 
@@ -219,7 +219,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'curated-highlights',
-        path: '/:day/',
+        path: '/:day',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
@@ -242,10 +242,10 @@ const config: NuxtConfig = {
       },
       ...days()
         .map((d: string) => {
-          const day = new Date(d.replace('/', ''))
+          const day = new Date(d)
 
           return {
-            url: d.replace(/\/$/, ''),
+            url: d,
             lastmod: (day.toISOString())
           }
         })
