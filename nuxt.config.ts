@@ -168,7 +168,7 @@ const config: NuxtConfig = {
       useWebmanifestExtension: false
     },
     meta: {
-      theme_color: '#42CFC9'
+      theme_color: '#00cdc7'
     }
   },
 
