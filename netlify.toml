@@ -3,8 +3,8 @@
   command = "make build"
 
 [[redirects]]
-from = "/.well_known/assetlinks.json"
-to = "/well_known/assetlinks.json"
+from = "/.well-known/assetlinks.json"
+to = "/well-known/assetlinks.json"
 status = 200
 force = true
 
