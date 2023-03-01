@@ -27,7 +27,7 @@ import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
-import DateMixin from '~/mixins/date'
+import DateMixin, {setTimezone} from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
 import Logo from '~/assets/revue-de-presse-logo.svg'
 
@@ -149,7 +149,11 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       const description = this.highlights[highlightIndex].status.text
         .replaceAll(new RegExp(pattern, 'ig'), '')
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
-      const title = `${description} - Revue de presse du ${this.startDate}`
+
+      const event = setTimezone(new Date(this.startDate))
+      const localizedDate = event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+
+      const title = `Revue de presse du ${localizedDate}`
 
       return {
         title,

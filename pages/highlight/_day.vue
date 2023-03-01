@@ -9,16 +9,6 @@
       />
       <div class="_day__content">
         <div
-          v-if="isBaselineView"
-          class="_day__navigation"
-        >
-          <DatePicker
-            v-if="startDate"
-            :start-date="startDate"
-          />
-          <Outro />
-        </div>
-        <div
           ref="day"
           :class="containerClass"
         >
@@ -37,6 +27,16 @@
             :show-loading-spinner="showLoadingSpinner"
           />
           <LegalNotice />
+        </div>
+        <div
+          v-if="isBaselineView"
+          class="_day__navigation"
+        >
+          <DatePicker
+            v-if="startDate"
+            :start-date="startDate"
+          />
+          <Outro />
         </div>
       </div>
     </div>
