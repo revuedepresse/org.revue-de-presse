@@ -27,7 +27,7 @@ import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
-import DateMixin, {setTimezone} from '~/mixins/date'
+import DateMixin, { setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
 import Logo from '~/assets/revue-de-presse-logo.svg'
 
