@@ -27,12 +27,12 @@
 
   &__content {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   @media (min-width: $width-desktop) {
     ._day__content {
-      flex-direction: row;
+      flex-direction: row-reverse;
     }
 
     ._day__container {
