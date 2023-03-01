@@ -1,0 +1,43 @@
+{
+  "packageId": "org.revue_de_presse",
+  "host": "revue-de-presse.org",
+  "name": "Revue de presse",
+  "launcherName": "revue2presse",
+  "display": "standalone",
+  "themeColor": "#006663",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#006663",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://revue-de-presse.org/revue-de-presse_512x512_006663.png",
+  "maskableIconUrl": "https://revue-de-presse.org/revue-de-presse_512x512_006663.png",
+  "monochromeIconUrl": "https://revue-de-presse.org/revue-de-presse_48x48_monochrome.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/tmp/android.keystore",
+    "alias": "org.revue-de-presse"
+  },
+  "appVersionName": "6",
+  "appVersionCode": 6,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://revue-de-presse.org/_nuxt/manifest.319575d5.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://revue-de-presse.org/_nuxt/",
+  "minSdkVersion": 19,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "appVersion": "6"
+}
