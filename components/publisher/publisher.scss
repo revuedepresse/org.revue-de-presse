@@ -45,13 +45,6 @@
     line-height: 17px;
     text-align: left;
     text-decoration: none;
-
-    &:link,
-    &:active,
-    &:hover,
-    &:visited {
-      @extends .publisher__name;
-    }
   }
 
   &__username {
@@ -63,13 +56,6 @@
     line-height: 16px;
     text-align: left;
     text-decoration: none;
-
-    &:link,
-    &:active,
-    &:hover,
-    &:visited {
-      @extends .publisher__username;
-    }
   }
 
   &__intro {

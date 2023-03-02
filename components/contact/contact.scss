@@ -18,4 +18,8 @@
     margin-left: var(--separation-3);
     text-align: left;
   }
+
+  &__email {
+    @extend .clickable
+  }
 }

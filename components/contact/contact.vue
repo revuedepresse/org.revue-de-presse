@@ -5,8 +5,13 @@
   >
     <h1>Nous contacter</h1>
     <p>
-      Il est possible de prendre contact avec nous à l'adresse suivante <br />
-      <a :href="href" v-text="email"></a>
+      Il est possible de prendre contact avec nous à l'adresse suivante&nbsp;:<br />
+      <a
+        :href="href"
+        class="contact__email"
+      >
+        {{ email }}
+      </a>
     </p>
   </div>
 </template>
@@ -21,11 +26,11 @@ class ContactPage extends Vue {
   }
 
   get email () {
-    return atob('bm91cy1jb250YWN0ZXJAcmV2dWUtZGUtcHJlc3NlLm9yZw==')
+    return atob('Y29udGFjdEByZXZ1ZS1kZS1wcmVzc2Uub3Jn')
   }
 
   get href () {
-    return `mailto:${atob('bm91cy1jb250YWN0ZXJAcmV2dWUtZGUtcHJlc3NlLm9yZw==')}`
+    return `mailto:${this.email}`
   }
 }
 
