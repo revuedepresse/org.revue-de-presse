@@ -213,6 +213,16 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
+        name: 'contact',
+        path: '/nous-contacter',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
+        name: 'sources',
+        path: '/sources',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
         name: 'legal-notice',
         path: '/mentions-legales',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
@@ -237,8 +247,16 @@ const config: NuxtConfig = {
         lastmod: (now().toISOString())
       },
       {
+        url: '/contact',
+        lastmod: (new Date('2023-03-02').toISOString())
+      },
+      {
         url: '/mentions-legales',
         lastmod: (new Date('2023-01-23').toISOString())
+      },
+      {
+        url: '/sources',
+        lastmod: (new Date('2023-03-02').toISOString())
       },
       ...days()
         .map((d: string) => {

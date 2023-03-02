@@ -108,12 +108,11 @@
   &__next-day {
     background: transparent;
     border-color: transparent;
+    cursor: pointer;
     display: block;
-    margin: calc(var(--margin-navigation) - 4px) calc(16px - 4px) var(--margin-navigation);
+    margin: calc(var(--margin-navigation) - 4px) 16px var(--margin-navigation);
     margin-left: 0;
-    padding: 0;
-    padding-left: 4px;
-    padding-top: 4px;
+    padding: 4px 0 0 4px;
 
     &:before {
       background: var(--icon-previous-day-background);
@@ -137,6 +136,10 @@
         filter: none;
       }
     }
+  }
+
+  &__previous-day {
+    margin-right: 12px;
   }
 
   &__next-day {
@@ -168,7 +171,7 @@
   &__next-day {
     &--disabled {
       &:before {
-        cursor: default;
+        cursor: not-allowed;
         filter: $filter-active;
       }
 
