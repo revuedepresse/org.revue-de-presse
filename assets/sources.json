@@ -1,0 +1,406 @@
+[
+  { "name": "20 Minutes",
+    "username": "20minutes",
+    "url": "https://www.20minutes.fr/"
+  },
+  { "name": "28 minutes",
+    "username": "28minutes",
+    "url": "https://arte.tv/28minutes"
+  },
+  { "name": "Agence France-Presse",
+    "username": "afpfr",
+    "url": "https://www.afp.com/"
+  },
+  { "name": "Aleteia",
+    "username": "aleteiafr",
+    "url": "https://fr.aleteia.org/"
+  },
+  { "name": "Alternatives Économiques",
+    "username": "altereco_",
+    "url": "https://www.alternatives-economiques.fr/"
+  },
+  { "name": "Arrêt sur images",
+    "username": "arretsurimages",
+    "url": "https://www.arretsurimages.net/"
+  },
+  { "name": "ARTE",
+    "username": "artefr",
+    "url": "https://www.arte.tv/"
+  },
+  { "name": "Basta!",
+    "username": "bastamedia_",
+    "url": "https://www.basta.media/"
+  },
+  { "name": "BFMTV",
+    "username": "bfmtv",
+    "url": "https://www.bfmtv.com/"
+  },
+  { "name": "BLAST, Le souffle de l'info",
+    "username": "blast_france",
+    "url": "https://www.blast-info.fr/"
+  },
+  { "name": "Brut FR",
+    "username": "brutofficiel",
+    "url": "https://www.brut.media/"
+  },
+  { "name": "Le Canard enchaîné",
+    "username": "canardenchaine",
+    "url": "https://www.lecanardenchaine.fr/"
+  },
+  { "name": "CausetteLeMag",
+    "username": "causettelemag",
+    "url": "https://www.causette.fr/"
+  },
+  { "name": "Contexte",
+    "username": "contexte",
+    "url": "https://www.contexte.com/"
+  },
+  { "name": "Courrier picard",
+    "username": "courrierpicard",
+    "url": "https://www.courrier-picard.fr/"
+  },
+  { "name": "Les Décodeurs",
+    "username": "decodeurs",
+    "url": "https://www.lemonde.fr/les-decodeurs/"
+  },
+  { "name": "LesEchosEnergie",
+    "username": "echosenergie",
+    "url": "https://www.lesechos.fr/"
+  },
+  { "name": "Europe 1",
+    "username": "europe1",
+    "url": "https://www.europe1.fr/"
+  },
+  { "name": "France 3 Alpes",
+    "username": "f3alpes",
+    "url": "https://france3-regions.francetvinfo.fr/auvergne-rhone-alpes/"
+  },
+  { "name": "France 3 Alsace",
+    "username": "f3alsace",
+    "url": "https://france3-regions.francetvinfo.fr/alsace/"
+  },
+  { "name": "France 3 Aquitaine",
+    "username": "f3aquitaine",
+    "url": "https://france3-regions.francetvinfo.fr/nouvelle-aquitaine/"
+  },
+  { "name": "France 3 Bourgogne",
+    "username": "f3bourgogne",
+    "url": "https://bfc.france3.fr/"
+  },
+  { "name": "France 3 Centre-Val de Loire",
+    "username": "f3centre",
+    "url": "https://cvdl.france3.fr/"
+  },
+  { "name": "France3 Euskal Herri Pays Basque",
+    "username": "f3euskalherri",
+    "url": "https://france3-regions.francetvinfo.fr/nouvelle-aquitaine/"
+  },
+  { "name": "France 3 Franche-Comté",
+    "username": "f3franchecomte",
+    "url": "https://bfc.france3.fr/"
+  },
+  { "name": "France 3 Limousin",
+    "username": "f3limousin",
+    "url": "https://na.france3.fr/"
+  },
+  { "name": "France 3 Lorraine",
+    "username": "f3lorraine",
+    "url": "https://france3-regions.francetvinfo.fr/grand-est/"
+  },
+  { "name": "France 3 Nord Pas-de-Calais",
+    "username": "f3nord",
+    "url": "https://france3-regions.francetvinfo.fr/hauts-de-france/"
+  },
+  { "name": "France 3 Occitanie",
+    "username": "f3occitanielr",
+    "url": "https://france3-regions.francetvinfo.fr/occitanie/"
+  },
+  { "name": "France 3 Pays de la Loire",
+    "username": "f3paysdelaloire",
+    "url": "https://pdl.france3.fr/"
+  },
+  { "name": "France 3 Picardie",
+    "username": "f3picardie",
+    "url": "https://linktr.ee/france3picardie"
+  },
+  { "name": "France 3 Poitou-Charentes",
+    "username": "f3poitouchtes",
+    "url": "https://na.france3.fr/"
+  },
+  { "name": "France 3 Rhône-Alpes",
+    "username": "f3rhone_alpes",
+    "url": "https://france3-regions.francetvinfo.fr/auvergne-rhone-alpes/"
+  },
+  { "name": "Le FigaroTech",
+    "username": "figarotech",
+    "url": "https://www.lefigaro.fr/secteur/high-tech/"
+  },
+  { "name": "FIP",
+    "username": "fipradio",
+    "url": "https://www.fip.fr/"
+  },
+  { "name": "FRANCE 24",
+    "username": "france24",
+    "url": "https://www.france24.com/"
+  },
+  { "name": "France 2",
+    "username": "france2tv",
+    "url": "https://www.france.tv/france-2"
+  },
+  { "name": "France 3 Bretagne",
+    "username": "france3bretagne",
+    "url": "https://france3-regions.francetvinfo.fr/bretagne/"
+  },
+  { "name": "France 3 Champagne-Ardenne",
+    "username": "france3ca",
+    "url": "https://grandest.france3.fr/"
+  },
+  { "name": "France 3",
+    "username": "france3tv",
+    "url": "https://www.france.tv/france-3/"
+  },
+  { "name": "France 5",
+    "username": "france5tv",
+    "url": "https://france.tv/france-5"
+  },
+  { "name": "France Culture",
+    "username": "franceculture",
+    "url": "https://www.franceculture.fr/"
+  },
+  { "name": "franceinfo",
+    "username": "franceinfo",
+    "url": "https://franceinfo.fr/"
+  },
+  { "name": "franceinfo culture",
+    "username": "franceinfo_cult",
+    "url": "https://www.franceinfo.fr/culture"
+  },
+  { "name": "franceinfo plus",
+    "username": "franceinfoplus",
+    "url": "https://www.franceinfo.fr/"
+  },
+  { "name": "France Inter",
+    "username": "franceinter",
+    "url": "https://www.franceinter.fr/"
+  },
+  { "name": "Frustration",
+    "username": "frustration_web",
+    "url": "https://www.frustrationmagazine.fr/"
+  },
+  { "name": "France 3 Corse",
+    "username": "ftviastella",
+    "url": "https://france3-regions.francetvinfo.fr/corse/"
+  },
+  { "name": "L'Humanité",
+    "username": "humanite_fr",
+    "url": "https://www.humanite.fr/"
+  },
+  { "name": "Le Journal des Arts",
+    "username": "jdaofficiel",
+    "url": "https://www.lejournaldesarts.fr/"
+  },
+  { "name": "Journal du Net",
+    "username": "jdnebusiness",
+    "url": "https://www.journaldunet.com/"
+  },
+  { "name": "Kaizen",
+    "username": "kaizenmag",
+    "url": "https://kaizen-magazine.com/"
+  },
+  { "name": "Konbini",
+    "username": "konbinifr",
+    "url": "https://www.konbini.com/"
+  },
+  { "name": "Konbini news",
+    "username": "konbininews",
+    "url": "https://news.konbini.com/"
+  },
+  { "name": "La Croix",
+    "username": "lacroix",
+    "url": "https://www.la-croix.com/"
+  },
+  { "name": "La Matinale LCI",
+    "username": "lamatinalelci",
+    "url": "https://www.tf1info.fr/emission/les-matins-lci-11803/"
+  },
+  { "name": "La Provence",
+    "username": "laprovence",
+    "url": "https://www.laprovence.com/"
+  },
+  { "name": "La Tribune",
+    "username": "latribune",
+    "url": "https://www.latribune.fr/"
+  },
+  { "name": "La Voix du Nord",
+    "username": "lavoixdunord",
+    "url": "https://www.lavoixdunord.fr/"
+  },
+  { "name": "LCI",
+    "username": "lci",
+    "url": "https://tf1info.fr/"
+  },
+  { "name": "Le 1",
+    "username": "le1hebdo",
+    "url": "https://www.le1hebdo.fr/"
+  },
+  { "name": "Le Bondy Blog",
+    "username": "lebondyblog",
+    "url": "https://www.bondyblog.fr/"
+  },
+  { "name": "Le Dauphiné Libéré #dauphinelibere",
+    "username": "ledauphine",
+    "url": "https://www.ledauphine.com/"
+  },
+  { "name": "Le Figaro",
+    "username": "le_figaro",
+    "url": "https://www.lefigaro.fr/"
+  },
+  { "name": "Le Grand Jury",
+    "username": "legrandjury",
+    "url": "https://www.rtl.fr/emission/le-grand-jury"
+  },
+  { "name": "Le HuffPost",
+    "username": "lehuffpost",
+    "url": "https://www.huffingtonpost.fr/"
+  },
+  { "name": "Le JDD",
+    "username": "lejdd",
+    "url": "https://offres.lejdd.fr/abonnement"
+  },
+  { "name": "Le Média",
+    "username": "lemediatv",
+    "url": "https://www.lemediatv.fr/"
+  },
+  { "name": "Le Monde",
+    "username": "lemondefr",
+    "url": "https://www.lemonde.fr/"
+  },
+  { "name": "Le Monde Politique",
+    "username": "lemonde_pol",
+    "url": "https://www.lemonde.fr/politique/"
+  },
+  { "name": "Le Parisien",
+    "username": "le_parisien",
+    "url": "https://www.leparisien.fr/"
+  },
+  { "name": "Le Point",
+    "username": "lepoint",
+    "url": "https://www.lepoint.fr/"
+  },
+  { "name": "Le Républicain Lorrain",
+    "username": "lerepu",
+    "url": "https://www.republicain-lorrain.fr/"
+  },
+  { "name": "Les Echos",
+    "username": "lesechos",
+    "url": "https://www.lesechos.fr/"
+  },
+  { "name": "Les Inrockuptibles",
+    "username": "lesinrocks",
+    "url": "https://www.lesinrocks.com/"
+  },
+  { "name": "Le Télégramme",
+    "username": "letelegramme",
+    "url": "https://www.letelegramme.fr/"
+  },
+  { "name": "L'Express",
+    "username": "lexpress",
+    "url": "https://bit.ly/abos_lexpress"
+  },
+  { "name": "Libération",
+    "username": "libe",
+    "url": "https://www.liberation.fr/"
+  },
+  { "name": "L'Obs",
+    "username": "lobs",
+    "url": "https://www.nouvelobs.com/"
+  },
+  { "name": "Le Vent Se Lève",
+    "username": "lvslmedia",
+    "url": "https://lvsl.fr/"
+  },
+  { "name": "Magazine Marianne",
+    "username": "marianne2fr",
+    "url": "https://www.marianne.net/"
+  },
+  { "name": "Le Monde diplomatique",
+    "username": "mdiplo",
+    "url": "https://www.monde-diplomatique.fr/"
+  },
+  { "name": "Mediapart",
+    "username": "mediapart",
+    "url": "https://www.mediapart.fr/"
+  },
+  { "name": "Mediapart Vidéos",
+    "username": "mediapartvideos",
+    "url": "https://www.mediapart.fr/studio/videos"
+  },
+  { "name": "Nice-Matin",
+    "username": "nice_matin",
+    "url": "https://bit.ly/OffreNumerique_NiceMatin"
+  },
+  { "name": "Ouest-France",
+    "username": "ouestfrance",
+    "url": "https://www.ouest-france.fr/"
+  },
+  { "name": "Radio France",
+    "username": "radiofrance",
+    "url": "https://www.radiofrance.com/"
+  },
+  { "name": "reflets.info",
+    "username": "_reflets_",
+    "url": "https://reflets.info/"
+  },
+  { "name": "Reporterre | Le média de l'écologie",
+    "username": "reporterre",
+    "url": "https://reporterre.net/"
+  },
+  { "name": "RFI",
+    "username": "rfi",
+    "url": "https://www.rfi.fr/fr/"
+  },
+  { "name": "RTL France",
+    "username": "rtlfrance",
+    "url": "https://www.rtl.fr/"
+  },
+  { "name": "Rue89",
+    "username": "rue89",
+    "url": "https://www.nouvelobs.com/rue89/"
+  },
+  { "name": "Socialter",
+    "username": "socialter",
+    "url": "https://linktr.ee/socialter"
+  },
+  { "name": "Tribune de Genève",
+    "username": "tdgch",
+    "url": "https://www.tdg.ch/"
+  },
+  { "name": "Technikart",
+    "username": "technikartmag",
+    "url": "https://www.technikart.com/"
+  },
+  { "name": "Télérama",
+    "username": "telerama",
+    "url": "https://www.telerama.fr/abonnement/"
+  },
+  { "name": "Télérama Sortir",
+    "username": "teleramasortir",
+    "url": "https://sortir.telerama.fr/"
+  },
+  { "name": "Terrafemina",
+    "username": "terrafemina",
+    "url": "https://www.terrafemina.com/"
+  },
+  { "name": "Toute La Culture",
+    "username": "toutelaculture",
+    "url": "https://www.toutelaculture.com/"
+  },
+  { "name": "Usbek & Rica",
+    "username": "usbeketrica",
+    "url": "https://usbeketrica.com/"
+  },
+  { "name": "L'Usine Nouvelle",
+    "username": "usinenouvelle",
+    "url": "https://www.usinenouvelle.com/"
+  }
+]

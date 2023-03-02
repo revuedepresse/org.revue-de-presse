@@ -96,7 +96,7 @@ $status-margin: 1em;
       display: inline-flex;
       flex-direction: row;
       font: normal normal normal var(--font-size-publication-date)/var(--line-spacing-publication-date) Arial;
-      margin: var(--margin-status) auto auto var(--separation-0);
+      margin: var(--margin-status) auto auto 0;
     }
   }
 

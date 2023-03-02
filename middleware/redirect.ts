@@ -6,6 +6,7 @@ const RedirectMiddleware: Middleware = ({ route, redirect }) => {
     route.name !== 'contact' &&
     route.name !== 'curated-highlights' &&
     route.name !== 'legal-notice' &&
+    route.name !== 'source' &&
     route.name !== 'sources'
   ) {
     return redirect('/')
