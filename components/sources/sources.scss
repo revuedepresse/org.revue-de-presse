@@ -20,19 +20,29 @@
   }
 
   &__media {
+
     .sources__external-link {
       @extend .clickable;
+
+      color: var(--color-black);
+      display: inline-block;
+      max-width: 300px;
+      text-decoration: underline var(--color-black);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
   .sources__internal-link {
-    text-decoration: none;
+    color: var(--color-black);
+    text-decoration: underline var(--color-black);
 
     :active,
     :hover,
     :link,
     :visited {
-      text-decoration: none;
+      color: var(--color-black);
+      text-decoration: underline var(--color-black);
     }
   }
 
