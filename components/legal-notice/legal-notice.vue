@@ -85,7 +85,7 @@ class LegalNotice extends Vue {
   }
 
   get email () {
-    return atob('Y29udGFjdCBbY2hlel0gcmV2dWUgW3RpcmV0XSBkZSBbdGlyZXRdIHByZXNzZSBbcG9pbnRdIG9yZw==')
+    return atob('bWVudGlvbnMtbGVnYWxlc0ByZXZ1ZS1kZS1wcmVzc2Uub3Jn')
   }
 }
 

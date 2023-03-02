@@ -40,10 +40,6 @@ $status-margin: 1em;
     letter-spacing: 0;
     color: var(--color-black);
     opacity: 1;
-
-    a {
-      @extends .status__text;
-    }
   }
 
   &__intro {
