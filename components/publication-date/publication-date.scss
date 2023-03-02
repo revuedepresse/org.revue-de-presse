@@ -1,18 +1,23 @@
 
 .publication-date {
-  color: $color-publication-date;
-  display: flex;
+
+  &__container {
+    display: flex;
+  }
+
+  color: var(--color-light-grey);
+  display: inline-flex;
   font: normal normal normal var(--font-size-publication-date)/var(--line-spacing-publication-date) Arial;
   letter-spacing: 0;
   text-align: left;
   margin: var(--margin-status);
   margin-bottom: 0;
-  width: calc(100% - 2 * var(--margin-status));
+  margin-right: var(--separation-1);
 
   &:hover,
   &:link,
   &:visited,
   &:active {
-    color: $color-publication-date;
+    color: var(--color-light-grey);
   }
 }

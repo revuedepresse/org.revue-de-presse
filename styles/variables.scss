@@ -104,11 +104,9 @@ $color-hyperlink: $color-black;
 $color-yellow: #dab988;
 $color-blue: #569cd3;
 $color-white: var(--color-white);
-$color-pitch-black: var(--color-black);
 $color-brand: var(--color-brand);
 $color-content: var(--color-content-text);
 $color-username: var(--color-light-grey);
-$color-publication-date: var(--color-light-grey);
 
 $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: var(--color-taupe-grey);
@@ -156,7 +154,7 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
 }
 
 .font-logo-title {
-  color: $color-pitch-black;
+  color: var(--color-black);
   font-family: Signika, serif;
   font-size: 24px;
   letter-spacing: 0;

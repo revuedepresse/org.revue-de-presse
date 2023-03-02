@@ -31,7 +31,7 @@
       <div
         :class="datePickerClasses()"
         :data-disabled="disabled"
-        @click="pickDate()"
+        @click.stop.prevent="pickDate()"
         @mouseout="releaseDate()"
       >
         <button
@@ -43,17 +43,19 @@
       </div>
 
       <div class="date-picker__navigation">
-        <button
+        <a
           :class="getPreviousDayClasses()"
+          :href="previousDayPath"
           :style="previousDayIcon"
           aria-label="Aller au jour précédent"
-          @click="goToDayBeforePickedDate()"
+          @click.stop.prevent="goToDayBeforePickedDate()"
         />
-        <button
+        <a
           :class="getNextDayClasses()"
+          :href="nextDayPath"
           :style="nextDayIcon"
           aria-label="Aller au jour suivant"
-          @click="goToDayFollowingPickedDate()"
+          @click.stop.prevent="goToDayFollowingPickedDate()"
         />
       </div>
     </div>
@@ -165,6 +167,26 @@ export default class DatePicker extends mixins(DateMixin) {
     `
   }
 
+  get previousDayPath () {
+    const day = Time.formatDate(this.dayBeforePickedDate)
+
+    if (day === Time.formatDate(this.now())) {
+      return '/'
+    }
+
+    return `/${day}`
+  }
+
+  get nextDayPath () {
+    const day = Time.formatDate(this.dayFollowingPickedDate)
+
+    if (day === Time.formatDate(this.now())) {
+      return '/'
+    }
+
+    return `/${day}`
+  }
+
   get startDateMonth (): number {
     return this.getStartDateMonth(this.startDate)
   }
@@ -183,7 +205,7 @@ export default class DatePicker extends mixins(DateMixin) {
 
   goToDayFollowingPickedDate () {
     if (!this.isNextDayAvailable()) {
-      return
+      return false
     }
 
     this.changeDate(this.dayFollowingPickedDate)
@@ -191,7 +213,7 @@ export default class DatePicker extends mixins(DateMixin) {
 
   goToDayBeforePickedDate () {
     if (!this.isPreviousDayAvailable()) {
-      return
+      return false
     }
 
     this.changeDate(this.dayBeforePickedDate)

@@ -37,7 +37,22 @@
         v-if="!isIntro"
         :date="publicationDate"
         :publication-url="status.url"
-      />
+      >
+        <div
+          v-if="!isIntro"
+          class="status__source-container"
+        >
+          <span class="status__sep">
+            -&nbsp;
+          </span>
+          <a
+            class="status__source"
+            :href="formatSource(status.username)"
+          >
+            Source
+          </a>
+        </div>
+      </publication-date>
       <div
         v-show="!isIntro"
         class="status__web-intents"
@@ -244,8 +259,16 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return text.replace(/\s/g, ' ')
   }
 
+  formatSource (username: string) {
+    return `/sources#source_${username}`
+  }
+
   removeTrackingParams (subject: string) {
-    return subject.replaceAll(new RegExp('[&?]utm[^=]*=[^&]*', 'gi'), '')
+    return subject
+      .replaceAll(new RegExp('&*utm[^=]*=[^&]*', 'gi'), '')
+      .replaceAll(new RegExp('[?&]*origine=[^&#]*', 'gi'), '')
+      .replaceAll(new RegExp('[#&?]*xtor=[^&#]*', 'gi'), '')
+      .replaceAll(new RegExp('[#&]*Echobox=[^=]*', 'gi'), '')
   }
 
   replaceHyperlinksWithAnchors (subject: string, urls: Array<TweetUrl>) {

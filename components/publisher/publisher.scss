@@ -37,7 +37,7 @@
   }
 
   &__name {
-    color: $color-pitch-black;
+    color: var(--color-black);
     font: normal normal bold 15px/25px Arial;
     display: inline-flex;
     height: 17px;

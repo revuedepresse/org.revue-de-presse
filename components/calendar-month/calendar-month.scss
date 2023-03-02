@@ -28,7 +28,7 @@ $max-width: 336px;
   }
 
   &__container {
-    background: var(--color-white) 0% 0% no-repeat padding-box;
+    background: var(--color-white) 0 0 no-repeat padding-box;
     border: 1px solid var(--color-brand);
     border-radius: var(--border-radius-date-picker);
     display: flex;
@@ -211,6 +211,7 @@ $max-width: 336px;
     border: 1px solid var(--color-white);
     border-radius: 50%;
     box-sizing: border-box;
+    cursor: pointer;
     display: flex;
     height: 32px;
     width: 32px;
@@ -255,7 +256,7 @@ $max-width: 336px;
 
   &__previous-item--disabled,
   &__next-item--disabled {
-    cursor: auto;
+    cursor: not-allowed;
 
     &:hover {
       border: 1px solid var(--color-white);

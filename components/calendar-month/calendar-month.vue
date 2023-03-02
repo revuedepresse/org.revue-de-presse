@@ -16,17 +16,19 @@
         />
       </div>
       <div class="calendar-month__navigation">
-        <button
+        <a
           :class="getPreviousItemClasses()"
+          :href="previousMonthPath"
           :style="previousItemIcon"
           aria-label="Aller au mois précédent"
-          @click="goToPreviousMonth()"
+          @click.stop.prevent="goToPreviousMonth()"
         />
-        <button
+        <a
           :class="getNextItemClasses()"
+          :href="nextMonthPath"
           :style="nextItemIcon"
           aria-label="Aller au mois suivant"
-          @click="goToNextMonth()"
+          @click.stop.prevent="goToNextMonth()"
         />
       </div>
     </div>
@@ -144,6 +146,26 @@ class CalendarMonth extends mixins(DateMixin) {
       --icon-next-item-height: ${widthOrHeight};
       --icon-next-item-width: ${widthOrHeight}
     `
+  }
+
+  get previousMonthPath () {
+    const day = Time.formatDate(this.previousMonth)
+
+    if (day === Time.formatDate(this.now())) {
+      return '/'
+    }
+
+    return `/${day}`
+  }
+
+  get nextMonthPath () {
+    const day = Time.formatDate(this.nextMonth)
+
+    if (day === Time.formatDate(this.now())) {
+      return '/'
+    }
+
+    return `/${day}`
   }
 
   get monthYearLabel () {

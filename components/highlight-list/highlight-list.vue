@@ -23,7 +23,6 @@
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Intro from '../intro/intro.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
-import LegalNotice from '../legal-notice/legal-notice.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
@@ -34,7 +33,6 @@ import Logo from '~/assets/revue-de-presse-logo.svg'
 @Component({
   components: {
     Intro,
-    LegalNotice,
     LoadingSpinner,
     Outro,
     Status
@@ -64,7 +62,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     required: true,
     default: false
   })
-    isShowingLegalNotice!: boolean
+    isShowingAnotherPage!: boolean
 
   @Prop({
     type: Boolean,
@@ -125,7 +123,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       intro = [{ status: this.intro }]
     }
 
-    if (this.isShowingLegalNotice) {
+    if (this.isShowingAnotherPage) {
       return intro
     }
 

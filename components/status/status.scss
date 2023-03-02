@@ -28,8 +28,7 @@ $status-margin: 1em;
   }
 
   &__text-container {
-    margin: auto;
-    margin-top: 10px;
+    margin: 10px auto auto;
     width: calc(100% - 2 * var(--margin-status));
   }
 
@@ -38,8 +37,8 @@ $status-margin: 1em;
     padding: 0;
     text-align: left;
     font: normal normal normal var(--font-size-status-text)/var(--line-spacing-status-text) Arial;
-    letter-spacing: 0px;
-    color: $color-pitch-black;
+    letter-spacing: 0;
+    color: var(--color-black);
     opacity: 1;
 
     a {
@@ -65,8 +64,7 @@ $status-margin: 1em;
   &__media {
     background-color: transparent;
     display: flex;
-    margin: auto;
-    margin-bottom: 15px;
+    margin: auto auto 15px;
     flex-direction: row;
     justify-content: center;
     width: 100%;
@@ -77,6 +75,33 @@ $status-margin: 1em;
       border: 1px solid #E6E6E6;
       width: calc(100% - 2 * var(--margin-status))
     }
+  }
+
+  &__source {
+    @extend .clickable;
+
+    display: flex;
+    color: var(--color-light-grey);
+
+    &:hover,
+    &:link,
+    &:visited,
+    &:active {
+      color: var(--color-light-grey);
+    }
+
+    &-container {
+      align-content: flex-start;
+      color: var(--color-light-grey);
+      display: inline-flex;
+      flex-direction: row;
+      font: normal normal normal var(--font-size-publication-date)/var(--line-spacing-publication-date) Arial;
+      margin: var(--margin-status) auto auto var(--separation-0);
+    }
+  }
+
+  &__sep {
+    margin-right: var(--separation-0);
   }
 
   &__text {
@@ -146,10 +171,7 @@ $status-margin: 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: auto;
-    margin-top: 0;
-    margin-bottom: 5px;
-    margin-right: var(--margin-status);
+    margin: 0 var(--margin-status) 5px auto;
     justify-content: flex-end;
   }
 

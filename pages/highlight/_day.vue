@@ -17,7 +17,7 @@
             :end-date="endDate"
             :start-date="startDate"
             :items="items"
-            :is-showing-legal-notice="isShowingLegalNotice"
+            :is-showing-another-page="isShowingAnotherPage"
             :is-baseline-view="isBaselineView"
           />
           <LoadingSpinner
@@ -27,6 +27,8 @@
             :show-loading-spinner="showLoadingSpinner"
           />
           <LegalNotice />
+          <Contact />
+          <Sources />
         </div>
         <div
           v-if="isBaselineView"
@@ -49,12 +51,14 @@ import { Component, mixins, Vue, Watch } from 'nuxt-property-decorator'
 import { Context } from '@nuxt/types'
 
 import AppHeader, { HeightAware } from '../../components/app-header/app-header.vue'
+import Contact from '../../components/contact/contact.vue'
 import DatePicker from '../../components/date-picker/date-picker.vue'
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner.vue'
 import LegalNotice from '../../components/legal-notice/legal-notice.vue'
 import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
 import ModalWindow from '../../components/modal-window/modal-window.vue'
+import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
 import DateMixin, { now, setTimezone } from '~/mixins/date'
 import Config from '~/config'
@@ -94,12 +98,14 @@ type RequestOptions = {
 @Component({
   components: {
     AppHeader,
+    Contact,
     DatePicker,
     LegalNotice,
     LoadingSpinner,
     HighlightList,
     ModalWindow,
-    Outro
+    Outro,
+    Sources
   }
 })
 export default class Highlights extends mixins(ApiMixin, DateMixin) {
@@ -263,8 +269,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.$fetchState.pending
   }
 
-  get isShowingLegalNotice () {
-    return this.$route.name === 'legal-notice'
+  get isShowingAnotherPage () {
+    return this.$route.name === 'legal-notice' ||
+      this.$route.name === 'contact' ||
+      this.$route.name === 'sources'
   }
 
   get isLoadingSpinnerVisible () {
@@ -344,7 +352,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   validate (ctx: Context) {
-    if (['legal-notice', 'homepage'].find(route => route === ctx.route.name)) {
+    if (['legal-notice', 'homepage', 'contact', 'sources'].find(route => route === ctx.route.name)) {
       return true
     }
 

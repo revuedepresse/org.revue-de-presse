@@ -1,11 +1,14 @@
 <template>
-  <a
-    class="publication-date"
-    rel="nofollow noreferrer noopener"
-    :href="publicationUrl"
-  >
-    {{ publicationDate }}
-  </a>
+  <div class="publication-date__container">
+    <a
+      class="publication-date"
+      rel="nofollow noreferrer noopener"
+      :href="publicationUrl"
+    >
+      {{ publicationDate }}
+    </a>
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">

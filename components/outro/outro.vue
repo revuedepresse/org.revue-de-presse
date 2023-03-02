@@ -7,6 +7,9 @@
       À propos
     </h2>
     <p class="outro__paragraph">
+      <a href="/nous-contacter">Nous contacter</a><br />
+      <a href="/mentions-legales">Mentions Légales</a><br />
+      <a href="/sources">Sources</a><br /><br />
       Revue de presse s'appuie sur l'API de Twitter (<a href="https://github.com/revuedepresse" rel="noreferrer nofollow noopener">github.com/revuedepresse</a>)
       et met en perspective les publications des médias en
       fonction du succès que ces publications ont rencontré auprès du public.
@@ -58,7 +61,6 @@
     <p class="outro__paragraph">
       Ce projet est porté avec 💙 par <a rel="noreferrer nofollow noopener" href="https://twitter.com/sylvaineg">@sylvaineg</a> et
       <a href="https://twitter.com/thierrymarianne" rel="noreferrer nofollow noopener">@thierrymarianne</a>.<br /><br />
-      <a href="/mentions-legales/" rel="noreferrer nofollow noopener">Mentions Légales</a><br /><br />
       Depuis la naissance du projet en 2015 jusqu'en 2022,
       Revue de presse n'a reçu aucun financement extérieur.
       C'est pourquoi afin de pérenniser la maintenance et les développements du projet,
