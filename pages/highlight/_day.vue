@@ -272,6 +272,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   get isShowingAnotherPage () {
     return this.$route.name === 'legal-notice' ||
       this.$route.name === 'contact' ||
+      this.$route.name === 'source' ||
       this.$route.name === 'sources'
   }
 
@@ -352,7 +353,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   validate (ctx: Context) {
-    if (['legal-notice', 'homepage', 'contact', 'sources'].find(route => route === ctx.route.name)) {
+    if (['legal-notice', 'homepage', 'contact', 'source', 'sources'].find(route => route === ctx.route.name)) {
       return true
     }
 

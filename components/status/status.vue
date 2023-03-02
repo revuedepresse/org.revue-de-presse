@@ -260,7 +260,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   formatSource (username: string) {
-    return `/sources#source_${username}`
+    return `/source/${username}`
   }
 
   removeTrackingParams (subject: string) {

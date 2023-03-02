@@ -23,6 +23,7 @@
         "./*"
       ]
     },
+    "resolveJsonModule": true,
     "types": [
       "cookie-universal-nuxt",
       "@types/he",

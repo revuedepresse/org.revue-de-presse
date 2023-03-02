@@ -218,6 +218,11 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
+        name: 'source',
+        path: '/source/:source',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
         name: 'sources',
         path: '/sources',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
