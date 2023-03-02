@@ -266,7 +266,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showLoadingSpinner (): boolean {
-    if (this.isShowingAnotherPage()) {
+    if (this.isShowingAnotherPage) {
       return false
     }
 
