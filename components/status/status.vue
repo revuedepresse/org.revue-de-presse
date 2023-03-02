@@ -86,7 +86,7 @@
             :style="getMediaProperties()"
             :height="getMediaHeight(document)"
             :width="getMediaWidth()"
-            @click="openMediaItem(document)"
+            @click="openMediaItem(getMediaDataUri(status))"
           >
         </div>
       </div>
@@ -354,7 +354,10 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return media.title ? media.title : ''
   }
 
-  openMediaItem (media: Media) {
+  openMediaItem (uri: string) {
+    const media = {
+      url: uri
+    }
     EventHub.$emit('modal_window.show_intended', { media })
   }
 }
