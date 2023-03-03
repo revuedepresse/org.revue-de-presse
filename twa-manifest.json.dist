@@ -20,8 +20,8 @@
     "path": "/tmp/android.keystore",
     "alias": "org.revue-de-presse"
   },
-  "appVersionName": "6",
-  "appVersionCode": 6,
+  "appVersionName": "10",
+  "appVersionCode": 10,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://revue-de-presse.org/_nuxt/manifest.319575d5.json",
@@ -39,5 +39,5 @@
   "fingerprints": [],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
-  "appVersion": "6"
+  "appVersion": "10"
 }
