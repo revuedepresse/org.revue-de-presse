@@ -25,6 +25,12 @@
     font-style: normal;
   }
 
+  &__external-link:before {
+    content: " ";
+    display: inline-flex;
+    zoom: 1.5;
+  }
+
   &__iconography {
     &-introducing:before {
       background: var(--icon-introducing-background);
@@ -48,6 +54,15 @@
       height: var(--icon-funding-height);
       left: -2px;
       top: -5px;
+    }
+
+    &-github:before {
+      background: var(--icon-github-background);
+      width: var(--icon-github-width);
+      height: var(--icon-github-height);
+      left: -2px;
+      top: -5px;
+      margin-right: var(--separation-0);
     }
   }
 
