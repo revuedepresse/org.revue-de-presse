@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="isBaselineView || !isIntro"
+    ref="status"
     :class="statusClasses()"
   >
     <div
@@ -53,6 +54,10 @@
           </a>
         </div>
       </publication-date>
+      <div ref="sparklines" class="status__sparklines">
+        <div class="status__retweets"></div>
+        <div class="status__favorites"></div>
+      </div>
       <div
         v-show="!isIntro"
         class="status__web-intents"
@@ -96,9 +101,10 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
+import Sparkline from 'sparklines'
 import ApiMixin from '../../mixins/api'
 import DateMixin from '../../mixins/date'
-import StatusFormatMixin, { TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
+import StatusFormatMixin, { FavoritesMetrics, RetweetsMetrics, TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
@@ -139,6 +145,11 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     default: false
   })
     isIntro!: boolean
+
+  $refs!: {
+    sparklines: any
+    status: any
+  }
 
   errorMessages: Errors = SharedState.errors
   logger = new SharedState.Logger()
@@ -359,6 +370,71 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       url: uri
     }
     EventHub.$emit('modal_window.show_intended', { media })
+  }
+
+  mounted () {
+    if (
+      this.status.metrics === undefined ||
+      this.$refs.sparklines === undefined ||
+      this.isIntro
+    ) {
+      return
+    }
+
+    const width = (this.$refs.status.clientWidth - (2 * 15)) / 2
+    const metrics = structuredClone(this.status.metrics)
+
+    const retweetsSparkline = new Sparkline(
+      this.$refs.sparklines.querySelector('.status__retweets'),
+      {
+        endColor: 'green',
+        lineColor: '#19cf86',
+        height: 50,
+        width,
+        tooltip: function (_: any, index: any, _1: any) {
+          let previousMetric = metrics.retweets[0]
+          if (index > 0) {
+            previousMetric = metrics.retweets[index - 1]
+          }
+
+          let prefix = '-'
+          if (previousMetric.delta < metrics.retweets[index].delta) {
+            prefix = '+'
+          }
+
+          return `${metrics.retweets[index].value} RT(s) à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')}
+soit ${prefix} ${metrics.retweets[index].delta} RT(s)`
+        }
+      }
+    )
+    const retweetsMetrics = metrics.retweets.map((r: RetweetsMetrics) => r.delta)
+    retweetsSparkline.draw(retweetsMetrics)
+
+    const favoritesSparkline = new Sparkline(
+      this.$refs.sparklines.querySelector('.status__favorites'),
+      {
+        endColor: 'red',
+        lineColor: '#e81c4f',
+        height: 50,
+        width,
+        tooltip: function (_: any, index: any, _1: any) {
+          let previousMetric = metrics.favorites[0]
+          if (index > 0) {
+            previousMetric = metrics.favorites[index - 1]
+          }
+
+          let prefix = '-'
+          if (previousMetric.delta < metrics.favorites[index].delta) {
+            prefix = '+'
+          }
+
+          return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}
+soit ${prefix} ${metrics.favorites[index].delta} 🤍`
+        }
+      }
+    )
+    const favoritesMetrics = metrics.favorites.map((f: FavoritesMetrics) => f.delta)
+    favoritesSparkline.draw(favoritesMetrics)
   }
 }
 

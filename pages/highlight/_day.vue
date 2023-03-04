@@ -60,12 +60,12 @@ import SharedState from '../../modules/shared-state'
 import ModalWindow from '../../components/modal-window/modal-window.vue'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
-import DateMixin, { now, setTimezone } from '~/mixins/date'
-import Config from '~/config'
-import { RawStatus } from '~/mixins/status-format'
-import ApiMixin from '~/mixins/api'
-import EventHub from '~/modules/event-hub'
-import Time from '~/modules/time'
+import DateMixin, { now, setTimezone } from '../../mixins/date'
+import Config from '../../config'
+import { RawStatus } from '../../mixins/status-format'
+import ApiMixin from '../../mixins/api'
+import EventHub from '../../modules/event-hub'
+import Time from '../../modules/time'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false

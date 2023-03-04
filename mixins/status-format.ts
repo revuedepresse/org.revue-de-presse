@@ -10,6 +10,35 @@ type Media = {
   title: string,
 }
 
+type RawFavoritesMetrics = {
+  delta?: number,
+  favorites: number,
+  checkedAt: string
+}
+
+type RawRetweetsMetrics = {
+  delta?: number,
+  retweets: number,
+  checkedAt: string
+}
+
+type FavoritesMetrics = {
+  delta: number,
+  value: number,
+  checkedAt: Date
+}
+
+type RetweetsMetrics = {
+  delta: number,
+  value: number,
+  checkedAt: Date
+}
+
+type VanityMetrics = {
+  favorites: FavoritesMetrics[]
+  retweets: RetweetsMetrics[]
+}
+
 type RawStatus = {
   base64_encoded_avatar?: string,
   base64_encoded_media?: string,
@@ -34,7 +63,7 @@ type RawStatus = {
   full_text?: string,
   liked_by?: string,
   retweet?: number,
-  username_of_retweeting_member?: string,
+  username_of_retweeting_member?: string
 }
 
 type TweetUrl = {
@@ -61,7 +90,6 @@ type FormattedStatus = {
   media: Media[],
   totalRetweet: number,
   totalLike: number,
-
   links: RegExpMatchArray[]|null|Array<string>,
   inAggregate?: string,
   likedBy?: string,
@@ -71,7 +99,8 @@ type FormattedStatus = {
   key?: number,
   originalDocument: {
     entities: Entities
-  }
+  },
+  metrics?: VanityMetrics
 }
 
 type FilteringFn = (status: RawStatus) => boolean
@@ -181,6 +210,33 @@ export default class StatusFormat extends Vue {
 
       const originalDocument = JSON.parse(status.original_document)
 
+      const metrics: VanityMetrics = {
+        favorites: [],
+        retweets: []
+      }
+
+      if (originalDocument.metrics) {
+        metrics.favorites = originalDocument.metrics.favorites
+          .filter((f: RawFavoritesMetrics) => typeof f.delta !== 'undefined')
+          .map((f: RawFavoritesMetrics) => {
+            return {
+              checkedAt: setTimezone(new Date(f.checkedAt)),
+              delta: f.delta,
+              value: f.favorites,
+            }
+          })
+
+        metrics.retweets = originalDocument.metrics.retweets
+          .filter((r: RawRetweetsMetrics) => typeof r.delta !== 'undefined')
+          .map((r: RawRetweetsMetrics) => {
+            return {
+              checkedAt: setTimezone(new Date(r.checkedAt)),
+              delta: r.delta,
+              value: r.retweets,
+            }
+          })
+      }
+
       const formattedStatus: FormattedStatus = {
         base64EncodedAvatar: status.base64_encoded_avatar,
         base64EncodedMedia: status.base64_encoded_media,
@@ -197,7 +253,8 @@ export default class StatusFormat extends Vue {
         totalRetweet: status.retweet_count,
         totalLike: status.favorite_count,
         links,
-        originalDocument
+        originalDocument,
+        metrics
       }
 
       if (status.status_replied_to) {
@@ -247,4 +304,4 @@ export default class StatusFormat extends Vue {
   }
 }
 
-export { TweetUrl, FormattedStatus, RawStatus, Media }
+export { TweetUrl, FormattedStatus, RawStatus, Media, VanityMetrics, FavoritesMetrics, RetweetsMetrics }
