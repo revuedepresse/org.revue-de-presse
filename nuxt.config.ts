@@ -266,7 +266,7 @@ const config: NuxtConfig = {
       ...days()
         .map((d: string) => {
           const day = new Date(d.replace('/', ''))
-          day.setTime(day.getTime() - (60 * 60 * 1000))
+          day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
 
           return {
             url: d,
