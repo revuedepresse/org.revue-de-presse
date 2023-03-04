@@ -395,7 +395,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     const width = (this.$refs.status.clientWidth - (2 * 15)) / 2
     const metrics = structuredClone(this.status.metrics)
     const now = this.now()
-    const publicationDate = structuredClone(this.publicationDate);
+    const publicationDate = structuredClone(this.publicationDate)
 
     const retweetsSparkline = new Sparkline(
       this.$refs.sparklines.querySelector('.status__retweets'),
