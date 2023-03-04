@@ -394,6 +394,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
     const width = (this.$refs.status.clientWidth - (2 * 15)) / 2
     const metrics = structuredClone(this.status.metrics)
+    const now = this.now()
 
     const retweetsSparkline = new Sparkline(
       this.$refs.sparklines.querySelector('.status__retweets'),
@@ -403,6 +404,10 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
         height: 50,
         width,
         tooltip: function (_: any, index: any, _1: any) {
+          if (metrics.favorites[index].checkedAt > now) {
+            return 'Cette date n\'est pas encore révolue…'
+          }
+
           let previousMetric = metrics.retweets[0]
           if (index > 0) {
             previousMetric = metrics.retweets[index - 1]
@@ -437,6 +442,10 @@ ${prefix} ${metrics.retweets[index].delta} RT(s)`
           let prefix = '-'
           if (previousMetric.delta < metrics.favorites[index].delta) {
             prefix = '+'
+          }
+
+          if (metrics.favorites[index].checkedAt > now) {
+            return 'Cette date n\'est pas encore révolue…'
           }
 
           return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}
