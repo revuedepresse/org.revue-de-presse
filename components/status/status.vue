@@ -107,7 +107,7 @@
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import Sparkline from 'sparklines'
 import ApiMixin from '../../mixins/api'
-import DateMixin from '../../mixins/date'
+import DateMixin, {setTimezone} from '../../mixins/date'
 import StatusFormatMixin, { FavoritesMetrics, RetweetsMetrics, TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
@@ -395,6 +395,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     const width = (this.$refs.status.clientWidth - (2 * 15)) / 2
     const metrics = structuredClone(this.status.metrics)
     const now = this.now()
+    const publicationDate = structuredClone(this.publicationDate);
 
     const retweetsSparkline = new Sparkline(
       this.$refs.sparklines.querySelector('.status__retweets'),
@@ -404,8 +405,12 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
         height: 50,
         width,
         tooltip: function (_: any, index: any, _1: any) {
-          if (metrics.favorites[index].checkedAt > now) {
+          if (metrics.retweets[index].checkedAt > now) {
             return 'Cette date n\'est pas encore révolue…'
+          }
+
+          if (metrics.retweets[index].checkedAt < publicationDate) {
+            return 'Ce tweet n\'était alors pas encore publié à ce moment là…'
           }
 
           let previousMetric = metrics.retweets[0]
@@ -434,6 +439,14 @@ ${prefix} ${metrics.retweets[index].delta} RT(s)`
         height: 50,
         width,
         tooltip: function (_: any, index: any, _1: any) {
+          if (metrics.favorites[index].checkedAt > now) {
+            return 'Cette date n\'est pas encore révolue…'
+          }
+
+          if (metrics.favorites[index].checkedAt < publicationDate) {
+            return 'Ce tweet n\'était alors pas encore publié à ce moment là…'
+          }
+
           let previousMetric = metrics.favorites[0]
           if (index > 0) {
             previousMetric = metrics.favorites[index - 1]
@@ -442,10 +455,6 @@ ${prefix} ${metrics.retweets[index].delta} RT(s)`
           let prefix = '-'
           if (previousMetric.delta < metrics.favorites[index].delta) {
             prefix = '+'
-          }
-
-          if (metrics.favorites[index].checkedAt > now) {
-            return 'Cette date n\'est pas encore révolue…'
           }
 
           return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}
