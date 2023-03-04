@@ -54,7 +54,11 @@
           </a>
         </div>
       </publication-date>
-      <div ref="sparklines" class="status__sparklines">
+      <div
+        v-if="showVanityMetrics"
+        ref="sparklines"
+        class="status__sparklines"
+      >
         <div class="status__retweets"></div>
         <div class="status__favorites"></div>
       </div>
@@ -245,6 +249,13 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       `
   }
 
+  get showVanityMetrics () {
+    return !this.isIntro &&
+      this.status.metrics !== undefined &&
+      this.status.metrics.favorites.length > 0 &&
+      this.status.metrics.retweets.length > 0
+  }
+
   @Watch('statusAtFirst')
   onStatusAtFirstChange (_: FormattedStatus, newStatus: FormattedStatus) {
     this.status = newStatus
@@ -403,7 +414,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
           }
 
           return `${metrics.retweets[index].value} RT(s) à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')}
-soit ${prefix} ${metrics.retweets[index].delta} RT(s)`
+${prefix} ${metrics.retweets[index].delta} RT(s)`
         }
       }
     )
@@ -429,7 +440,7 @@ soit ${prefix} ${metrics.retweets[index].delta} RT(s)`
           }
 
           return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}
-soit ${prefix} ${metrics.favorites[index].delta} 🤍`
+${prefix} ${metrics.favorites[index].delta} 🤍`
         }
       }
     )
