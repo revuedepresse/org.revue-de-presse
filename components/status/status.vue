@@ -107,7 +107,7 @@
 import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import Sparkline from 'sparklines'
 import ApiMixin from '../../mixins/api'
-import DateMixin, {setTimezone} from '../../mixins/date'
+import DateMixin from '../../mixins/date'
 import StatusFormatMixin, { FavoritesMetrics, RetweetsMetrics, TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
