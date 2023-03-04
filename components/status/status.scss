@@ -73,6 +73,17 @@ $status-margin: 1em;
     }
   }
 
+  &__sparklines {
+    display: flex;
+    margin: auto auto auto var(--margin-status);
+    width: calc(100% - 2 * var(--margin-status));
+
+    .status__favorites,
+    .status__retweets {
+      margin: auto
+    }
+  }
+
   &__source {
     @extend .clickable;
 

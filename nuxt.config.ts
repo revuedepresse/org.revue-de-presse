@@ -303,8 +303,11 @@ const config: NuxtConfig = {
           parallel: false
         })
       ]
-    }
+    },
+    transpile: ['sparklines']
   },
+
+  plugins: ['~/plugins/sparklines.js'],
 
   typescript: {
     typeCheck: {
