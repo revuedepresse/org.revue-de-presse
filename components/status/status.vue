@@ -425,7 +425,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
           let secondTooltipRow = ''
           if (metrics.favorites[index].delta > 0) {
-            secondTooltipRow = `\n${prefix} ${metrics.favorites[index].delta} 🤍`
+            secondTooltipRow = `\n${prefix} ${metrics.favorites[index].delta} RT(s)`
           }
 
           return `${metrics.retweets[index].value} RT(s) à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')}${secondTooltipRow}`

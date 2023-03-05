@@ -2,8 +2,16 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import Time from '../modules/time'
 import Errors from '../modules/errors'
 
+export const isValidDate = (day: string): boolean => {
+  return Time.formatDate(new Date(day)) === day
+}
+
 export const setTimezone = (date: Date, timezone = 'Europe/Paris'): Date => {
   return new Date(date.toLocaleString('en-US', { timeZone: timezone }))
+}
+
+export const getMinDate = () => {
+  return new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))
 }
 
 export const now = (timezone = 'Europe/Paris'): Date => {
@@ -36,7 +44,7 @@ export default class DateMixin extends Vue {
   defaultDates () {
     let { day, endDate } = this.$route.params
 
-    if (day === '1970-01-01' || !day) {
+    if (day === '1970-01-01' || !day || !this.isValidDate(day)) {
       day = this.formatMaxDate()
     }
 
@@ -50,8 +58,12 @@ export default class DateMixin extends Vue {
     }
   }
 
+  isValidDate (day: string) {
+    return isValidDate(day)
+  }
+
   formatDate (date: Date) {
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    return Time.formatDate(date)
   }
 
   guardAgainstMissingMonthOrYear (candidate: string|undefined) {
@@ -61,7 +73,7 @@ export default class DateMixin extends Vue {
   }
 
   getMinDate (): Date {
-    return new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))
+    return getMinDate()
   }
 
   formatMinDate () {

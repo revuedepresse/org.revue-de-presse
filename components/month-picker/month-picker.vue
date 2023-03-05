@@ -116,6 +116,10 @@ class MonthPicker extends mixins(DateMixin) {
           isSelected: this.month === index,
           isDisabled: !isEnabled,
           onClick: () => {
+            if (!isEnabled) {
+              return false
+            }
+
             this.pickDate(this.setTimezone(new Date(`${this.year}-${index + 1}-01`)))
           }
         }

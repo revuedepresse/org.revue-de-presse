@@ -205,7 +205,6 @@ const config: NuxtConfig = {
 
   router: {
     trailingSlash: false,
-    middleware: 'redirect',
     extendRoutes (routes: Route[], resolve: (dir: string, path: string) => string): void {
       routes.push({
         name: 'homepage',
@@ -215,6 +214,11 @@ const config: NuxtConfig = {
       routes.push({
         name: 'contact',
         path: '/nous-contacter',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
+        name: 'not-found',
+        path: '/contenu-introuvable',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
