@@ -402,15 +402,15 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       {
         endColor: 'green',
         lineColor: '#19cf86',
-        height: 50,
+        height: 30,
         width,
         tooltip: function (_: any, index: any, _1: any) {
           if (metrics.retweets[index].checkedAt > now) {
-            return 'Cette date n\'est pas encore révolue…'
+            return 'Date non encore révolue selon le fuseau horaire UTC+1…'
           }
 
           if (metrics.retweets[index].checkedAt < publicationDate) {
-            return 'Ce tweet n\'était alors pas encore publié à ce moment là…'
+            return `Ce tweet n'était alors pas encore publié à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')} (UTC+1)…`
           }
 
           let previousMetric = metrics.retweets[0]
@@ -423,8 +423,12 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
             prefix = '+'
           }
 
-          return `${metrics.retweets[index].value} RT(s) à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')}
-${prefix} ${metrics.retweets[index].delta} RT(s)`
+          let secondTooltipRow = ''
+          if (metrics.favorites[index].delta > 0) {
+            secondTooltipRow = `\n${prefix} ${metrics.favorites[index].delta} 🤍`
+          }
+
+          return `${metrics.retweets[index].value} RT(s) à ${metrics.retweets[index].checkedAt.toLocaleTimeString('fr-FR')}${secondTooltipRow}`
         }
       }
     )
@@ -436,15 +440,15 @@ ${prefix} ${metrics.retweets[index].delta} RT(s)`
       {
         endColor: 'red',
         lineColor: '#e81c4f',
-        height: 50,
+        height: 30,
         width,
         tooltip: function (_: any, index: any, _1: any) {
           if (metrics.favorites[index].checkedAt > now) {
-            return 'Cette date n\'est pas encore révolue…'
+            return 'Date non encore révolue selon le fuseau horaire UTC+1…'
           }
 
           if (metrics.favorites[index].checkedAt < publicationDate) {
-            return 'Ce tweet n\'était alors pas encore publié à ce moment là…'
+            return `Ce tweet n'était alors pas encore publié à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')} (UTC+1)…`
           }
 
           let previousMetric = metrics.favorites[0]
@@ -457,8 +461,12 @@ ${prefix} ${metrics.retweets[index].delta} RT(s)`
             prefix = '+'
           }
 
-          return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}
-${prefix} ${metrics.favorites[index].delta} 🤍`
+          let secondTooltipRow = ''
+          if (metrics.favorites[index].delta > 0) {
+            secondTooltipRow = `\n${prefix} ${metrics.favorites[index].delta} 🤍`
+          }
+
+          return `${metrics.favorites[index].value} 🤍 à ${metrics.favorites[index].checkedAt.toLocaleTimeString('fr-FR')}${secondTooltipRow}`
         }
       }
     )

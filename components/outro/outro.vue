@@ -61,6 +61,7 @@
               <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
         --></a><!--
       --></span>
+      <br />
       <a
         class="outro__install-android"
         rel="noreferrer nofollow noopener"
