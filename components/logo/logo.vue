@@ -5,7 +5,7 @@
         <a href="/">
           <img
             class="logo__logo"
-            alt="Revue de Presse logo"
+            alt="logo de Revue de Presse"
             width="48"
             height="48"
             :src="logo"
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import Logotype from '~/assets/revue-de-presse-logo.svg?data'
+import Logotype from '~/assets/revue-de-presse_48x48.png?data'
 
 @Component
 export default class Logo extends Vue {

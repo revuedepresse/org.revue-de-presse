@@ -1,6 +1,7 @@
 <template>
   <div>
     <link rel="preconnect" :href="getApiHost" crossorigin>
+    <slot></slot>
     <div :class="daysClasses">
       <AppHeader
         ref="header"
@@ -21,7 +22,7 @@
             :is-baseline-view="isBaselineView"
           />
           <LoadingSpinner
-            v-if="showLoadingSpinner"
+            v-if="showLoadingSpinnerComponent"
             :message="errorMessage"
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
@@ -47,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { Component, mixins, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Prop, mixins, Vue, Watch } from 'nuxt-property-decorator'
 import { Context } from '@nuxt/types'
 
 import AppHeader, { HeightAware } from '../../components/app-header/app-header.vue'
@@ -60,7 +61,7 @@ import SharedState from '../../modules/shared-state'
 import ModalWindow from '../../components/modal-window/modal-window.vue'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
-import DateMixin, { now, setTimezone } from '../../mixins/date'
+import DateMixin, { getMinDate, isValidDate, now, setTimezone } from '../../mixins/date'
 import Config from '../../config'
 import { RawStatus } from '../../mixins/status-format'
 import ApiMixin from '../../mixins/api'
@@ -117,6 +118,18 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     [key: string]: any
   }
 
+  @Prop({
+    type: Object,
+    default: null
+  })
+    error: any
+
+  @Prop({
+    type: String,
+    default: 'Désolé, cette adresse ne mène à aucun contenu. 😬'
+  })
+    errorMessage!: string
+
   endDate: string = this.defaultDates().endDate
 
   startDate: string = this.defaultDates().startDate
@@ -139,7 +152,11 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
-    if (nonEmptyList || this.$fetchState.pending) {
+    if (nonEmptyList || (this.$fetchState && this.$fetchState.pending)) {
+      if (this.error && this.error.statusCode === 404) {
+        return `${filledContainerClass}-not-found`
+      }
+
       return filledContainerClass
     }
 
@@ -158,16 +175,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
   }
 
-  get errorMessage () {
-    return "Il semblerait qu'il n'y ait pas de contenu disponible pour cette date."
-  }
-
   async fetch () {
     const action = this.getHighlightsAction()
-    const route = this.getHighlightsRoute()
+    const curatedHighlightsRoute = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
 
-    const url = new URL(route)
+    const url = new URL(curatedHighlightsRoute)
     Object.keys(requestOptions.params).map((key: string) => {
       let param: string | null = requestOptions.params[key]
       if (param == null) {
@@ -261,23 +274,94 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.$route.name !== 'highlights'
   }
 
-  get showErrorMessage (): boolean {
-    return this.$fetchState.error !== null || this.items.length === 0
+  get showingNotFoundPage () {
+    return this.$route.name === 'not-found'
   }
 
-  get showLoadingSpinner (): boolean {
+  get showErrorMessage (): boolean {
+    if (
+      this.showingContactPage ||
+      this.showingLegalNoticePage ||
+      this.showingHomepage ||
+      this.showingSourcesPage ||
+      this.showingSourcePage
+    ) {
+      return false
+    }
+
+    return this.showingNotFoundPage ||
+      !this.validCuratedHighlightsDay ||
+      (this.$fetchState !== undefined && this.$fetchState.error !== null) ||
+      this.items.length === 0
+  }
+
+  get showLoadingSpinner () {
+    return this.showLoadingSpinnerComponent &&
+      !this.showingNotFoundPage &&
+      this.validCuratedHighlightsDay
+  }
+
+  get showLoadingSpinnerComponent (): boolean {
+    if (this.$route.name === 'curated-highlights') {
+      return !this.validCuratedHighlightsDay
+    }
+
     if (this.isShowingAnotherPage) {
       return false
+    }
+
+    if (this.showingNotFoundPage) {
+      return true
+    }
+
+    if (this.$fetchState === undefined) {
+      return true
     }
 
     return this.$fetchState.pending
   }
 
-  get isShowingAnotherPage () {
-    return this.$route.name === 'legal-notice' ||
-      this.$route.name === 'contact' ||
-      this.$route.name === 'source' ||
-      this.$route.name === 'sources'
+  get showingHomepage () {
+    return this.$route.name === 'homepage'
+  }
+
+  get showingContactPage () {
+    return this.$route.name === 'contact'
+  }
+
+  get showingLegalNoticePage () {
+    return this.$route.name === 'legal-notice'
+  }
+
+  get showingSourcesPage () {
+    return this.$route.name === 'sources'
+  }
+
+  get showingSourcePage () {
+    return this.$route.name === 'source'
+  }
+
+  get validCuratedHighlightsDay () {
+    if (this.$route.name !== 'curated-highlights') {
+      return false
+    }
+
+    return this.isValidDate(this.$route.params.day) &&
+      setTimezone(new Date(this.$route.params.day)) <= now() &&
+      setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
+  }
+
+  get isShowingAnotherPage (): boolean {
+    if (this.$route.name === 'curated-highlights') {
+      return !this.validCuratedHighlightsDay
+    }
+
+    return this.showingLegalNoticePage ||
+      this.showingContactPage ||
+      this.showingSourcePage ||
+      this.showingSourcesPage ||
+      this.showingNotFoundPage ||
+      this.$route.name === 'source'
   }
 
   get isLoadingSpinnerVisible () {
@@ -315,6 +399,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   fetchHighlights () {
+    if (this.$fetch === undefined) {
+      return
+    }
+
     this.$fetch()
   }
 
@@ -326,6 +414,61 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       href = domain.replaceAll(new RegExp('/+$', 'g'), '')
     } else {
       href = domain
+    }
+
+    if (
+      this.showingContactPage ||
+      this.showingLegalNoticePage ||
+      this.showingSourcesPage
+    ) {
+      let title
+      let description
+      let url
+
+      const suffix = ' - Revue-de-presse.org 🦉'
+
+      switch (true) {
+        case this.showingContactPage:
+
+          description = 'Page de contact de revue-de-presse.org'
+          title = `Nous contacter${suffix}`
+          url = 'https://revue-de-presse.org/nous-contacter'
+
+          break
+
+        case this.showingLegalNoticePage:
+
+          description = 'Mentions légales de revue-de-presse.org'
+          title = `Mentions légales${suffix}`
+          url = 'https://revue-de-presse.org/mentions-legales'
+
+          break
+
+        case this.showingSourcesPage:
+
+          description = 'Sources de revue-de-presse.org'
+          title = `Sources${suffix}`
+          url = 'https://revue-de-presse.org/sources'
+
+          break
+      }
+
+      return {
+        title,
+        meta: [
+          { hid: 'description', name: 'description', content: description },
+          {
+            hid: 'og:url',
+            property: 'og:url',
+            content: url
+          },
+          {
+            hid: 'og:title',
+            property: 'og:title',
+            content: title
+          }
+        ]
+      }
     }
 
     return {
@@ -357,7 +500,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   validate (ctx: Context) {
-    if (['legal-notice', 'homepage', 'contact', 'source', 'sources'].find(route => route === ctx.route.name)) {
+    if ([
+      'legal-notice',
+      'homepage',
+      'contact',
+      'source',
+      'sources',
+      'not-found'
+    ].find(route => route === ctx.route.name)) {
       return true
     }
 
@@ -370,6 +520,32 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const lesserThanMaxDate = selectedDate <= now()
 
     return greaterThanMinDate && lesserThanMaxDate
+  }
+
+  mounted () {
+    if (
+      this.$route.name === 'curated-highlights' && (
+        !isValidDate(this.$route.params.day) ||
+        setTimezone(new Date(this.$route.params.day)) > now() ||
+        setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
+      )
+    ) {
+      return this.$nuxt.error({ statusCode: 404, message: '?', path: '/contenu-introuvable' })
+    }
+
+    if (
+      [
+        'curated-highlights',
+        'homepage',
+        'contact',
+        'legal-notice',
+        'source',
+        'sources',
+        'not-found'
+      ].every(r => r !== this.$route.name)
+    ) {
+      return this.$nuxt.error({ statusCode: 404, message: '?', path: '/contenu-introuvable' })
+    }
   }
 }
 </script>

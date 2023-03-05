@@ -28,7 +28,7 @@ import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin, { setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
-import Logo from '~/assets/revue-de-presse-logo.svg'
+import Logo from '~/assets/revue-de-presse_48x48.png?data'
 
 @Component({
   components: {
@@ -135,7 +135,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   }
 
   head () {
-    if (this.highlights.length > 1) {
+    if (this.$route.name === 'curated-highlights' && this.highlights.length > 1) {
       const whitespace = '\\s'
       const pattern = `https?://[^${whitespace}]+`
 
@@ -151,7 +151,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       const event = setTimezone(new Date(this.startDate))
       const localizedDate = event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
-      const title = `Revue de presse du ${localizedDate}`
+      const title = `Revue de presse du ${localizedDate} - Revue-de-presse.org 🦉`
 
       return {
         title,

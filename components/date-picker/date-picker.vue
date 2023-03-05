@@ -68,7 +68,7 @@ import CalendarMonth from '../calendar-month/calendar-month.vue'
 import MonthPicker from '../month-picker/month-picker.vue'
 import YearPicker from '../year-picker/year-picker.vue'
 import DateMixin from '../../mixins/date'
-import calendardIcon from '~/assets/icons/icon-pick-day.svg'
+import calendarIcon from '~/assets/icons/icon-pick-day.svg'
 import previousDayIcon from '~/assets/icons/icon-previous-day.svg'
 import previousDayActiveIcon from '~/assets/icons/icon-previous-day-active.png'
 import previousDayHoverIcon from '~/assets/icons/icon-previous-day-hover.png'
@@ -113,7 +113,7 @@ export default class DatePicker extends mixins(DateMixin) {
     const widthOrHeight = '19px'
 
     return `
-      --icon-calendar-background: center / ${widthOrHeight} no-repeat url("${calendardIcon}");
+      --icon-calendar-background: center / ${widthOrHeight} no-repeat url("${calendarIcon}");
       --icon-calendar-height: ${widthOrHeight};
       --icon-calendar-width: ${widthOrHeight}
     `

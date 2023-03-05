@@ -22,6 +22,10 @@
 
     &--filled {
       min-height: 100vh;
+
+      &-not-found {
+        min-height: auto;
+      }
     }
   }
 

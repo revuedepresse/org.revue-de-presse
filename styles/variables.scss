@@ -1,17 +1,18 @@
 :root {
-  --color-black: #000;
-  --color-brand: #00cdc7;
-  --color-brand-twitter: #1d9bf0;
-  --color-content-background: #2f394d;
-  --color-content-font: #e6e6e6;
-  --color-content-text: #2f394d;
-  --color-error: #ffaa00;
-  --color-taupe-grey: #ebeef0;
-  --color-white: #fff;
+  --color-black:                    #000000;
+  --color-brand-active:             #00cdc7;
+  --color-brand:                    #006663;
+  --color-brand-twitter:            #1d9bf0;
+  --color-content-background:       #2f394d;
+  --color-content-font:             #e6e6e6;
+  --color-content-text:             #2f394d;
+  --color-error:                    #ffaa00;
+  --color-taupe-grey:               #ebeef0;
   --color-background-button-active: #006663;
-  --color-background-other-month: #e6e6e6;
-  --color-background-future-date: var(--color-white);
-  --color-light-grey: #657786;
+  --color-background-other-month:   #e6e6e6;
+  --color-background-future-date:   var(--color-white);
+  --color-light-grey:               #657786;
+  --color-white:                    #ffffff;
 
   --height-logo: 64px;
   --height-date-picker: 21px;
@@ -58,9 +59,9 @@
   --font-size-status-text: 19px;
   --line-spacing-status-text: 25px;
 
+  --background-vanity-metric-like: #851430;
   --background-vanity-metric-reply: #1d9bf0;
-  --background-vanity-metric-retweet: #19cf86;
-  --background-vanity-metric-like: #e81c4f;
+  --background-vanity-metric-retweet: #09442C;
 
   --border-color: #e6e6e6;
 
@@ -79,16 +80,16 @@
   --width-right-column-desktop: 600px;
 }
 
-$color-background-like-light: lighten(#e81c4f, 45%);
+$color-background-like-light: lighten(#851430, 45%);
 $color-background-reply-light: lighten(#1d9bf0, 75%);
-$color-background-retweet-light: lighten(#19cf86, 45%);
+$color-background-retweet-light: lighten(#09442C, 45%);
 
 $color-background-like-dark: lighten(#e81c4f, 45%);
 $color-background-reply-dark: darken(#1d9bf0, 45%);
 $color-background-retweet-dark: #19cf86;
 
-$color-background-like-clicked: lighten(#e81c4f, 35%);
-$color-stroke-like: lighten(#e81c4f, 25%);
+$color-background-like-clicked: lighten(#851430, 35%);
+$color-stroke-like: lighten(#851430, 25%);
 
 $color-black: #1e1e1e;
 $color-black-light: #252526;
@@ -112,8 +113,10 @@ $background-taupe-grey: var(--color-taupe-grey) 0% 0% no-repeat padding-box;
 $background-color: var(--color-taupe-grey);
 $border-color: darken(rgb(235, 238, 240), 20%);
 
-$filter-active: invert(27%) sepia(82%) saturate(501%) hue-rotate(129deg) brightness(99%) contrast(101%);
-$filter-brand: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
+$filter-active-legacy: invert(27%) sepia(82%) saturate(501%) hue-rotate(129deg) brightness(99%) contrast(101%);
+$filter-active: invert(100%) sepia(0%) saturate(7470%) hue-rotate(109deg) brightness(98%) contrast(107%);
+$filter-brand: invert(27%) sepia(41%) saturate(1864%) hue-rotate(143deg) brightness(94%) contrast(103%);
+$filter-brand-active: invert(60%) sepia(40%) saturate(1949%) hue-rotate(133deg) brightness(94%) contrast(108%);
 $filter-error-icon: brightness(0) saturate(100%) invert(71%) sepia(90%) saturate(3049%) hue-rotate(1deg) brightness(109%) contrast(102%);
 $filter-white: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 $filter-content: invert(100%) sepia(0%) saturate(881%) hue-rotate(86deg) brightness(113%) contrast(80%);

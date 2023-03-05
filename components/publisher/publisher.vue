@@ -4,25 +4,31 @@
     :style="publisherAvatar"
   >
     <div class="publisher__container">
-      <a rel="nofollow noreferrer noopener" :href="publisherUrl">
+      <a
+        :aria-label="label(name)"
+        :href="publisherUrl"
+        rel="nofollow noreferrer noopener"
+      >
         <img
           :alt="textAlternative"
           :src="avatarUrl"
           :class="avatarClasses()"
-          width="46px"
-          height="46px"
+          width="48px"
+          height="48px"
           @error="onError"
         >
       </a>
       <div class="publisher__identifiers">
         <a
+          :aria-label="label(name)"
+          :href="publisherUrl"
           class="publisher__name"
           rel="nofollow noreferrer noopener"
-          :href="publisherUrl"
         >
           {{ name }}
         </a>
         <a
+          :aria-label="label(name)"
           class="publisher__username"
           rel="nofollow noreferrer noopener"
           :href="publisherUrl"
@@ -33,8 +39,9 @@
     </div>
     <a
       v-show="!removeTwitterLogo"
-      rel="noreferrer nofollow noopener"
+      :aria-label="label(name)"
       :href="publicationUrl"
+      rel="noreferrer nofollow noopener"
     >
       <svg
         aria-hidden="true"
@@ -105,7 +112,7 @@ export default class Publisher extends Vue {
   }
 
   get publisherAvatar () {
-    const size = '46px'
+    const size = '48px'
 
     return `
       --avatar-background: center / ${size} repeat url(${this.avatarUrl});
@@ -123,6 +130,10 @@ export default class Publisher extends Vue {
       publisher__avatar: true,
       'publisher__avatar--hide': this.canNotLoadAvatar
     }
+  }
+
+  label (name: string): string {
+    return `Lien vers compte Twitter de ${name}`
   }
 
   onError () {

@@ -16,7 +16,7 @@
   }
 
   &__container {
-    background: var(--color-white) 0% 0% no-repeat padding-box;
+    background: var(--color-white) 0 0% no-repeat padding-box;
     border: 1px solid var(--color-brand);
     border-radius: var(--border-radius-date-picker);
     display: flex;
@@ -46,10 +46,10 @@
       border-color: var(--color-brand);
 
       .month-picker__button {
-        color: var(--color-brand);
+        color: var(--color-brand-active);
 
         &:before {
-          filter: $filter-brand;
+          filter: $filter-brand-active;
         }
       }
     }
@@ -78,13 +78,13 @@
   &__previous-item,
   &__next-item {
     background: transparent;
-    border: 1px solid var(--color-white);
+    border: 1px solid transparent;
     border-radius: 50%;
     box-sizing: border-box;
     display: flex;
-    height: 34px;
-    width: 34px;
-    line-height: 34px;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
     margin: var(--margin-navigation) 16px var(--margin-navigation);
     margin-left: 0;
     padding: 1px;
@@ -103,6 +103,7 @@
     }
 
     &:active {
+      color: var(--color-white);
       border-color: var(--color-background-button-active);
       background-color: var(--color-brand);
 
