@@ -63,10 +63,10 @@ $max-width: 336px;
       border-color: var(--color-brand);
 
       .calendar-month__button {
-        color: var(--color-brand);
+        color: var(--color-brand-active);
 
         &:before {
-          filter: $filter-brand;
+          filter: $filter-brand-active;
         }
       }
     }

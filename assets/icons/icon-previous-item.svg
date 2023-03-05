@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.a{fill:#fff;stroke:#fff;}.b{stroke:none;}.c{fill:none;}</style></defs><g class="a" transform="translate(32) rotate(90)"><circle class="b" cx="16" cy="16" r="16"/><circle class="c" cx="16" cy="16" r="15.5"/></g><path d="M7.989,0,9.867,1.88,3.768,8l6.1,6.12L7.989,16,0,8Z" transform="translate(24 10.667) rotate(90)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <style>.a{fill:#fff;stroke:#fff;}.b{stroke:none;}.c{fill:none;}</style>
+  </defs>
+  <g class="a" transform="translate(32) rotate(90)">
+    <circle class="b" cx="16" cy="16" r="16"/>
+    <circle class="c" cx="16" cy="16" r="15.5"/>
+  </g>
+  <path d="M7.989,0,9.867,1.88,3.768,8l6.1,6.12L7.989,16,0,8Z" transform="translate(24 10.667) rotate(90)"/>
+</svg>

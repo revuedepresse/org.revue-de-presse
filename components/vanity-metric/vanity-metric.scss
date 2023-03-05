@@ -4,7 +4,6 @@
   cursor: auto;
   flex-direction: row;
   height: 24px;
-  width: 24px;
   margin-left: 20px;
   padding: 0;
   width: auto;
@@ -26,14 +25,14 @@
   }
 
   &__like {
+    background-color: $color-background-like-dark;
     border-radius: 50%;
     color: var(--background-vanity-metric-like);
     stroke: var(--background-vanity-metric-like);
     width: 24px;
-    fill: $color-background-like-light;
 
     .a {
-      fill: #fdecf1;
+      fill: $color-background-like-light;
     }
   }
 

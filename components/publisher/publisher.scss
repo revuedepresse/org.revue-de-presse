@@ -71,13 +71,15 @@
     }
 
     .publisher__username {
-      color: var(--color-brand-twitter);
+      color: var(--color-white);
+      font-weight: bold;
 
       &:link,
       &:active,
       &:hover,
       &:visited {
-        color: var(--color-brand-twitter);
+        color: var(--color-white);
+        font-weight: bold;
       }
     }
   }

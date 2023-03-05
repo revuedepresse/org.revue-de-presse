@@ -55,21 +55,29 @@
     align-content: flex-end;
 
     &:hover {
-      border-color: var(--color-background-button-active);
+      border-color: var(--color-white);
 
       .date-picker__button {
         border-color: var(--color-background-button-active);
-        color: var(--color-white);
+        color: var(--color-brand-active);
+
+        &:before {
+          filter: $filter-brand-active;
+        }
       }
     }
 
     .date-picker__container--active,
     &:active {
       background-color: var(--color-background-button-active);
-      border-color: var(--color-background-button-active);
+      border-color: var(--color-brand-active);
 
       .date-picker__button {
-        color: var(--color-white);
+        color: var(--color-brand-active);
+
+        &:before {
+          filter: $filter-brand-active;
+        }
       }
     }
 
@@ -79,6 +87,18 @@
 
       .date-picker__button {
         cursor: default;
+      }
+
+      &:hover {
+        border-color: var(--color-background-button-active);
+
+        .date-picker__button {
+          color: var(--color-white);
+
+          &:before {
+            filter: $filter-active;
+          }
+        }
       }
     }
   }

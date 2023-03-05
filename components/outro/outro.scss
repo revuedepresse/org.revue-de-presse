@@ -17,7 +17,8 @@
 
   a {
     @extend .underline;
-    color: var(--color-brand-twitter);
+    color: var(--color-white);
+    text-decoration: underline;
   }
 
   em {
@@ -94,6 +95,7 @@
   &__subscribe-to-anchor:visited {
     display: inline-flex;
     color: var(--color-white);
+    font-weight: bold;
     height: var(--line-height-base);
     line-height: var(--line-height-base);
     padding: 5px var(--separation-0) 4px;
