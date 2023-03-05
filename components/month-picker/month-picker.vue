@@ -88,6 +88,13 @@ class MonthPicker extends mixins(DateMixin) {
   @DatePickerStore.Mutation
   public pickYear!: () => void
 
+  @DatePickerStore.Mutation
+  public pickDay!: () => void
+
+  switchToDayPicking (): void {
+    this.pickDay()
+  }
+
   get yearLabel () {
     return `${this.year}`
   }
@@ -109,10 +116,6 @@ class MonthPicker extends mixins(DateMixin) {
           isSelected: this.month === index,
           isDisabled: !isEnabled,
           onClick: () => {
-            if (!isEnabled) {
-              return false
-            }
-
             this.pickDate(this.setTimezone(new Date(`${this.year}-${index + 1}-01`)))
           }
         }
@@ -220,6 +223,7 @@ class MonthPicker extends mixins(DateMixin) {
   }
 
   pickDate (date: Date) {
+    this.switchToDayPicking()
     const day = Time.formatDate(date)
 
     if (day === Time.formatDate(this.now())) {
