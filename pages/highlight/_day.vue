@@ -119,6 +119,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   @Prop({
+    type: Object,
+    default: null
+  })
+    error: any
+
+  @Prop({
     type: String,
     default: 'Désolé, cette adresse ne mène à aucun contenu. 😬'
   })
@@ -147,6 +153,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
     if (nonEmptyList || (this.$fetchState && this.$fetchState.pending)) {
+      if (this.error && this.error.statusCode === 404) {
+        return `${filledContainerClass}-not-found`
+      }
+
       return filledContainerClass
     }
 

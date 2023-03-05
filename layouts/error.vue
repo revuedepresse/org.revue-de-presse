@@ -1,10 +1,13 @@
 <template>
-  <Highlights error-message="Désolé, cette adresse ne mène à aucun contenu. 😬">
+  <Highlights
+    :error="error"
+    error-message="Désolé, cette adresse ne mène à aucun contenu."
+  >
   </Highlights>
 </template>
 
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Highlights from '../pages/highlight/_day.vue'
 import ApiMixin from '../mixins/api'
 import DateMixin from '../mixins/date'
@@ -15,6 +18,12 @@ import DateMixin from '../mixins/date'
   }
 })
 export default class NuxtError extends mixins(ApiMixin, DateMixin) {
+  @Prop({
+    type: Object,
+    default: null
+  })
+    error: any
+
   head () {
     const suffix = ' - Revue-de-presse.org 🦉'
     const description = 'Contenu introuvable'
