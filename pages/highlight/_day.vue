@@ -1,7 +1,6 @@
 <template>
   <div>
     <link rel="preconnect" :href="getApiHost" crossorigin>
-    <slot></slot>
     <div :class="daysClasses">
       <AppHeader
         ref="header"
@@ -32,15 +31,17 @@
           <Sources />
           <Support />
         </div>
-        <div
-          v-if="isBaselineView"
-          class="_day__navigation"
-        >
-          <DatePicker
-            v-if="startDate"
-            :start-date="startDate"
-          />
+        <div class="_day__column">
           <Outro />
+          <div
+            v-if="isBaselineView"
+            class="_day__navigation"
+          >
+            <DatePicker
+              v-if="startDate"
+              :start-date="startDate"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -49,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, mixins, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Prop, Vue, Watch, mixins, namespace } from 'nuxt-property-decorator'
 import { Context } from '@nuxt/types'
 
 import AppHeader, { HeightAware } from '../../components/app-header/app-header.vue'
@@ -99,6 +100,8 @@ type RequestOptions = {
 }
 
 const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
+
+const DatePickerStore = namespace('date-picker')
 
 @Component({
   components: {
@@ -155,10 +158,6 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   })
     errorMessageProvider!: (day: string) => any
 
-  endDate: string = this.defaultDates().endDate
-
-  startDate: string = this.defaultDates().startDate
-
   items: Array<{ status: RawStatus }> = []
 
   includeRetweets: number = RETWEETS_EXCLUDED
@@ -168,6 +167,15 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   pageSize = 10
 
   selectedAggregates: number[] = []
+
+  @DatePickerStore.Getter
+  public pickingDay!: boolean
+
+  @DatePickerStore.Getter
+  public whichDateHasBeenPicked!: Date
+
+  @DatePickerStore.Mutation
+  public intendingToPick!: (date: Date) => void
 
   get day (): string {
     if (
@@ -217,88 +225,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
   }
 
-  async fetch () {
-    const action = this.getHighlightsAction()
-    const curatedHighlightsRoute = this.getHighlightsRoute()
-    const requestOptions = this.getRequestOptions()
-
-    const url = new URL(curatedHighlightsRoute)
-    Object.keys(requestOptions.params).map((key: string) => {
-      let param: string | null = requestOptions.params[key]
-      if (param == null) {
-        param = ''
-      }
-
-      return url.searchParams.set(key, param)
-    })
-
-    const response = await fetch(
-      url.toString(),
-      {
-        method: action.method,
-        headers: requestOptions.headers
-      }
-    )
-      .then(res => res.json())
-      .catch((_e) => {
-        this.logger.error(
-          // e.message, 'highlight-list', e
-        )
-      })
-
-    this.items = response.statuses
+  get endDate (): string {
+    return this.defaultDates(this.whichDateHasBeenPicked).endDate
   }
 
-  getRequestOptions (params: Params = {}) {
-    const authenticationToken = localStorage.getItem('x-auth-token')
-
-    const requestHeaders: Headers = new Headers()
-    requestHeaders.set('x-auth-token', authenticationToken || '')
-
-    const requestOptions: RequestOptions = {
-      headers: requestHeaders,
-      params: {
-        includeRetweets: RETWEETS_INCLUDED,
-        excludeMedia: MEDIA_INCLUDED,
-        startDate: this.startDate,
-        endDate: this.startDate
-      }
-    }
-
-    if (!this.showEndDate) {
-      requestOptions.params.endDate = this.startDate
-    }
-
-    if (params.pageIndex) {
-      requestOptions.params.pageIndex = params.pageIndex
-    }
-
-    if (this.pageSize > 0) {
-      requestOptions.params.pageSize = this.pageSize
-    }
-
-    if (this.includeRetweets === RETWEETS_EXCLUDED) {
-      requestOptions.params.includeRetweets = RETWEETS_EXCLUDED
-    }
-
-    if (!this.$device.isDesktop && !this.$device.isTablet) {
-      requestOptions.params.excludeMedia = MEDIA_EXCLUDED
-    }
-
-    if (this.selectedAggregates.length > 0) {
-      requestOptions.params.selectedAggregates = this.selectedAggregates
-    }
-
-    return requestOptions
-  }
-
-  getHighlightsAction () {
-    return this.routes.actions.fetchHighlights
-  }
-
-  getHighlightsRoute () {
-    const action = this.getHighlightsAction()
-    return `${Config.getSchemeAndHost()}${action.route}`
+  get startDate (): string {
+    return this.defaultDates(this.whichDateHasBeenPicked).startDate
   }
 
   get isBaselineView () {
@@ -310,10 +242,6 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const isBaselineViewActive = paramNames.find(p => p === 'naked') === undefined
 
     return this.$device.isDesktop || this.$device.isTablet || isBaselineViewActive
-  }
-
-  get showEndDate () {
-    return this.$route.name !== 'highlights'
   }
 
   get showingNotFoundPage () {
@@ -439,6 +367,86 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     this.updateHighlights()
   }
 
+  async fetch () {
+    const action = this.getHighlightsAction()
+    const curatedHighlightsRoute = this.getHighlightsRoute()
+    const requestOptions = this.getRequestOptions()
+
+    const url = new URL(curatedHighlightsRoute)
+    Object.keys(requestOptions.params).map((key: string) => {
+      let param: string | null = requestOptions.params[key]
+      if (param == null) {
+        param = ''
+      }
+
+      return url.searchParams.set(key, param)
+    })
+
+    const response = await fetch(
+      url.toString(),
+      {
+        method: action.method,
+        headers: requestOptions.headers
+      }
+    )
+      .then(res => res.json())
+      .catch((_e) => {
+        this.logger.error(
+          // e.message, 'highlight-list', e
+        )
+      })
+
+    this.items = response.statuses
+  }
+
+  getRequestOptions (params: Params = {}) {
+    const authenticationToken = localStorage.getItem('x-auth-token')
+
+    const requestHeaders: Headers = new Headers()
+    requestHeaders.set('x-auth-token', authenticationToken || '')
+
+    const requestOptions: RequestOptions = {
+      headers: requestHeaders,
+      params: {
+        includeRetweets: RETWEETS_INCLUDED,
+        excludeMedia: MEDIA_INCLUDED,
+        startDate: this.startDate,
+        endDate: this.startDate
+      }
+    }
+
+    if (params.pageIndex) {
+      requestOptions.params.pageIndex = params.pageIndex
+    }
+
+    if (this.pageSize > 0) {
+      requestOptions.params.pageSize = this.pageSize
+    }
+
+    if (this.includeRetweets === RETWEETS_EXCLUDED) {
+      requestOptions.params.includeRetweets = RETWEETS_EXCLUDED
+    }
+
+    if (!this.$device.isDesktop && !this.$device.isTablet) {
+      requestOptions.params.excludeMedia = MEDIA_EXCLUDED
+    }
+
+    if (this.selectedAggregates.length > 0) {
+      requestOptions.params.selectedAggregates = this.selectedAggregates
+    }
+
+    return requestOptions
+  }
+
+  getHighlightsAction () {
+    return this.routes.actions.fetchHighlights
+  }
+
+  getHighlightsRoute () {
+    const action = this.getHighlightsAction()
+    return `${Config.getSchemeAndHost()}${action.route}`
+  }
+
   destroyed () {
     EventHub.$off('_day.reload_intended')
   }
@@ -543,6 +551,13 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   updateHighlights () {
+    if (
+      (this.$device.isDesktop && !this.pickingDay) ||
+      this.$device.isMobile
+    ) {
+      return
+    }
+
     this.items = []
     const day = this.startDate
 
@@ -590,7 +605,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
       )
     ) {
-      return this.$nuxt.error({
+      this.$nuxt.error({
         statusCode: 404,
         message: NO_REVIEW_ERROR_MESSAGE.replace(
           '_date_',
@@ -602,6 +617,8 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         ),
         path: '/contenu-introuvable'
       })
+
+      return
     }
 
     if (
@@ -618,11 +635,24 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         !isValidDate(this.$route.params.day)
       )
     ) {
-      return this.$nuxt.error({
+      this.$nuxt.error({
         statusCode: 404,
         message: 'Aucun contenu à cette adresse.',
         path: '/contenu-introuvable'
       })
+    }
+
+    if (this.$route.name === 'homepage') {
+      this.intendingToPick(this.now())
+    }
+
+    if (
+      this.$route.name === 'curated-highlights' &&
+      isValidDate(this.$route.params.day) &&
+      setTimezone(new Date(this.$route.params.day)) <= now() &&
+      setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
+    ) {
+      this.intendingToPick(new Date(this.$route.params.day))
     }
   }
 }

@@ -89,8 +89,6 @@ export default class DatePicker extends mixins(DateMixin) {
   })
     startDate!: string
 
-  startDateLabel: string = this.refreshStartDateLabel(this.startDate)
-
   pickedDate = false
 
   @DatePickerStore.Getter
@@ -104,6 +102,9 @@ export default class DatePicker extends mixins(DateMixin) {
 
   @DatePickerStore.Mutation
   public pickDay!: () => void
+
+  @DatePickerStore.Mutation
+  public intendingToPick!: (date: Date) => void
 
   switchToDayPicking (): void {
     this.pickDay()
@@ -185,6 +186,31 @@ export default class DatePicker extends mixins(DateMixin) {
     }
 
     return `/${day}`
+  }
+
+  get startDateLabel () {
+    const date = this.setTimezone(new Date(this.startDate))
+    const dayOfMonth = date.getDate()
+    const daysOfWeek = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']
+    const months = [
+      'Jan.',
+      'Fév.',
+      'Mar.',
+      'Avr.',
+      'Mai',
+      'Juin',
+      'Juil.',
+      'Aou.',
+      'Sep.',
+      'Oct.',
+      'Nov.',
+      'Dec.'
+    ]
+    const dayOfWeek = daysOfWeek[date.getDay()]
+    const month = months[date.getMonth()]
+    const year = date.getFullYear()
+
+    return `${dayOfWeek} ${dayOfMonth} ${month} ${year}`
   }
 
   get startDateMonth (): number {
@@ -341,6 +367,7 @@ export default class DatePicker extends mixins(DateMixin) {
     const day = Time.formatDate(date)
 
     if (day === Time.formatDate(this.now())) {
+      this.intendingToPick(this.now())
       this.$router.push({
         path: '/'
       })
@@ -348,6 +375,7 @@ export default class DatePicker extends mixins(DateMixin) {
       return
     }
 
+    this.intendingToPick(this.setTimezone(new Date(day)))
     this.$router.push({
       path: `/${day}`
     })
@@ -386,31 +414,6 @@ export default class DatePicker extends mixins(DateMixin) {
     const date = this.setTimezone(new Date(startDate))
 
     return date.getFullYear()
-  }
-
-  refreshStartDateLabel (startDate: string) {
-    const date = this.setTimezone(new Date(startDate))
-    const dayOfMonth = date.getDate()
-    const daysOfWeek = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']
-    const months = [
-      'Jan.',
-      'Fév.',
-      'Mar.',
-      'Avr.',
-      'Mai',
-      'Juin',
-      'Juil.',
-      'Aou.',
-      'Sep.',
-      'Oct.',
-      'Nov.',
-      'Dec.'
-    ]
-    const dayOfWeek = daysOfWeek[date.getDay()]
-    const month = months[date.getMonth()]
-    const year = date.getFullYear()
-
-    return `${dayOfWeek} ${dayOfMonth} ${month} ${year}`
   }
 
   visibleDaysInterval () {

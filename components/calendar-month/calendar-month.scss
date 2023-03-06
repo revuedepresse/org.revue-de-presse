@@ -7,8 +7,7 @@ $max-width: 336px;
   background-color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
-  margin: auto;
-  margin-bottom: var(--separation-3);
+  margin: auto auto var(--separation-3);
   width: calc(100% - 2 * var(--separation-2));
 
   @media (min-width: $width-desktop) {

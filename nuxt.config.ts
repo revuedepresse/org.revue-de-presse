@@ -223,7 +223,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'source',
-        path: '/source/:source',
+        path: '/source/:twitterId/:username',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({

@@ -195,11 +195,16 @@
         filter: $filter-active;
       }
 
+      &:visited,
+      &:link,
       &:active,
       &:hover {
+        cursor: none;
+
         &:before {
           background: var(--icon-previous-day-background);
           filter: $filter-active;
+          opacity: 25%
         }
       }
     }
@@ -207,11 +212,16 @@
 
   &__next-day {
     &--disabled {
+      &:visited,
+      &:link,
       &:active,
       &:hover {
+        cursor: none;
+
         &:before {
           background: var(--icon-next-day-background);
           filter: $filter-active;
+          opacity: 25%
         }
       }
     }

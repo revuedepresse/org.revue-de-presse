@@ -41,7 +41,14 @@ export default class DateMixin extends Vue {
     ]
   }
 
-  defaultDates () {
+  defaultDates (date?: Date) {
+    if (date !== undefined) {
+      return {
+        startDate: Time.formatDate(date),
+        endDate: Time.formatDate(date)
+      }
+    }
+
     let { day, endDate } = this.$route.params
 
     if (day === '1970-01-01' || !day || !this.isValidDate(day)) {

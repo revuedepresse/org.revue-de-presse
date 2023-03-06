@@ -10,10 +10,12 @@ $item-height: calc(
 
 .scrollable-list {
   display: flex;
-  height: calc(8 * #{$item-height} + 23px);
+  height: calc(190px + var(--separation-2));
+  max-height: calc(190px + var(--separation-2));
   margin: auto;
   position: relative;
   width: 100%;
+  overscroll-behavior: contain;
 
   @media (min-width: var(--width-left-column-mobile)) {
     max-width: var(--width-left-column-mobile);
@@ -23,9 +25,7 @@ $item-height: calc(
     display: flex;
     flex-direction: column;
     height: calc(8 * #{$item-height});
-    margin: auto;
-    margin-top: 0px;
-    margin-bottom: 23px;
+    margin: 0 auto 23px;
     overflow-y: auto;
     padding: 0;
     width: calc(100% - 2 * var(--separation-2));
