@@ -96,6 +96,8 @@ type RequestOptions = {
   params: Params
 }
 
+const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
+
 @Component({
   components: {
     AppHeader,
@@ -126,7 +128,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   @Prop({
     type: String,
-    default: 'Désolé, cette adresse ne mène à aucun contenu. 😬'
+    default: NO_REVIEW_ERROR_MESSAGE
+      .replace(
+        '_date_',
+        now().toLocaleDateString(
+          'fr-FR',
+          { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+        )
+      )
   })
     errorMessage!: string
 
@@ -280,9 +289,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   get showErrorMessage (): boolean {
     if (
+      (this.showingHomepage && this.items.length > 0) ||
       this.showingContactPage ||
       this.showingLegalNoticePage ||
-      this.showingHomepage ||
       this.showingSourcesPage ||
       this.showingSourcePage
     ) {
@@ -302,8 +311,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showLoadingSpinnerComponent (): boolean {
-    if (this.$route.name === 'curated-highlights') {
-      return !this.validCuratedHighlightsDay
+    if (this.showingCuratedHighlights) {
+      if (this.validCuratedHighlightsDay || this.showingHomepage) {
+        return this.$fetchState.pending || this.items.length === 0
+      }
+
+      return true
     }
 
     if (this.isShowingAnotherPage) {
@@ -319,6 +332,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     return this.$fetchState.pending
+  }
+
+  get showingCuratedHighlights () {
+    return this.showingHomepage || this.$route.name === 'curated-highlights'
   }
 
   get showingHomepage () {
@@ -524,27 +541,44 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   mounted () {
     if (
-      this.$route.name === 'curated-highlights' && (
-        !isValidDate(this.$route.params.day) ||
+      this.$route.name === 'curated-highlights' &&
+      isValidDate(this.$route.params.day) && (
         setTimezone(new Date(this.$route.params.day)) > now() ||
         setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
       )
     ) {
-      return this.$nuxt.error({ statusCode: 404, message: '?', path: '/contenu-introuvable' })
+      return this.$nuxt.error({
+        statusCode: 404,
+        message: NO_REVIEW_ERROR_MESSAGE.replace(
+          '_date_',
+          (new Date(this.$route.params.day))
+            .toLocaleDateString(
+              'fr-FR',
+              { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+            )
+        ),
+        path: '/contenu-introuvable'
+      })
     }
 
     if (
       [
-        'curated-highlights',
         'homepage',
         'contact',
         'legal-notice',
         'source',
         'sources',
         'not-found'
-      ].every(r => r !== this.$route.name)
+      ].every(r => r !== this.$route.name) || (
+        this.$route.name === 'curated-highlights' &&
+        !isValidDate(this.$route.params.day)
+      )
     ) {
-      return this.$nuxt.error({ statusCode: 404, message: '?', path: '/contenu-introuvable' })
+      return this.$nuxt.error({
+        statusCode: 404,
+        message: 'Aucun contenu à cette adresse.',
+        path: '/contenu-introuvable'
+      })
     }
   }
 }
