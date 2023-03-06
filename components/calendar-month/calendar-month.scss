@@ -7,7 +7,7 @@ $max-width: 336px;
   background-color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
-  margin: auto auto var(--separation-3);
+  margin: 0 auto 9px;
   width: calc(100% - 2 * var(--separation-2));
 
   @media (min-width: $width-desktop) {
@@ -22,8 +22,12 @@ $max-width: 336px;
     display: flex;
     background-color: var(--color-white);
     justify-content: space-between;
-    margin: auto;
+    margin: auto auto var(--margin-navigation);
     width: 100%;
+
+    @media (min-width: $width-desktop) {
+      margin: auto;
+    }
   }
 
   &__container {
@@ -93,6 +97,11 @@ $max-width: 336px;
 
   &__days {
     margin: auto;
+    min-height: auto;
+
+    @media (min-width: $width-desktop) {
+      min-height: 222px;
+    }
 
     @media (min-width: var(--width-left-column-desktop)) {
       max-width: var(--width-left-column-desktop);
@@ -215,9 +224,12 @@ $max-width: 336px;
     height: 32px;
     width: 32px;
     line-height: 32px;
-    margin: var(--margin-navigation) 16px var(--margin-navigation);
-    margin-left: 0;
+    margin: var(--margin-navigation) 16px 0 0;
     padding: 1px;
+
+    @media (min-width: $width-desktop) {
+      margin: var(--margin-navigation) 16px var(--margin-navigation) 0;
+    }
 
     &:before {
       background: var(--icon-previous-item-background);
@@ -277,9 +289,11 @@ $max-width: 336px;
 
   &__navigation {
     display: flex;
+    max-height: 53px;
 
-    @media (min-width: $width-large-device) {
+    @media (min-width: $width-desktop) {
       margin-right: var(--separation-2);
+      max-height: none;
     }
   }
 }

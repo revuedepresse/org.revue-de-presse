@@ -6,7 +6,18 @@
   padding-bottom: 60px;
   width: 100%;
 
-  @media (min-width: $width-large-device) {
+
+  &--fixed {
+    position: fixed;
+    bottom: 0;
+  }
+
+  @media (min-width: $width-desktop) {
+    position: static;
+    bottom: auto;
+  }
+
+  @media (min-width: $width-desktop) {
     border-radius: var(--separation-1);
     margin-top: var(--separation-1);
     max-width: var(--width-left-column-desktop);

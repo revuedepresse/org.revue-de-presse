@@ -32,7 +32,7 @@
           <Support />
         </div>
         <div class="_day__column">
-          <Outro />
+          <Outro :class="outroClass" />
           <div
             v-if="isBaselineView"
             class="_day__navigation"
@@ -192,6 +192,18 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return !this.$device.isMobile || !this.isBaselineView
   }
 
+  get outroClass () {
+    if (
+      this.$nuxt.isOnline &&
+      this.items.length === 0 &&
+      this.$fetchState.pending === false
+    ) {
+      return 'outro--fixed'
+    }
+
+    return ''
+  }
+
   get containerClass () {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
@@ -208,6 +220,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       }
 
       return filledContainerClass
+    }
+
+    if (
+      this.$nuxt.isOnline &&
+      this.items.length === 0 &&
+      this.$fetchState.pending === false
+    ) {
+      return `${filledContainerClass}-with-emptiness`
     }
 
     return '_day__container'
@@ -405,13 +425,25 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const requestHeaders: Headers = new Headers()
     requestHeaders.set('x-auth-token', authenticationToken || '')
 
+    let requestedDate = this.startDate
+
+    if (
+      this.$route.name === 'homepage' &&
+      this.now().getHours() < 7
+    ) {
+      const d = new Date(this.startDate)
+      d.setTime(d.getTime() - 12 * 60 * 60 * 1000)
+
+      requestedDate = this.formatDate(setTimezone(d))
+    }
+
     const requestOptions: RequestOptions = {
       headers: requestHeaders,
       params: {
         includeRetweets: RETWEETS_INCLUDED,
         excludeMedia: MEDIA_INCLUDED,
-        startDate: this.startDate,
-        endDate: this.startDate
+        startDate: requestedDate,
+        endDate: requestedDate
       }
     }
 

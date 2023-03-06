@@ -28,6 +28,10 @@ class DatePickerStore extends VuexModule {
     return this.getPickingChoice === DatePickerChoices.year
   }
 
+  public get beingUndecided (): boolean {
+    return this.getPickingChoice === DatePickerChoices.none
+  }
+
   public get whichDateHasBeenPicked (): Date {
     return this.pickedDate
   }

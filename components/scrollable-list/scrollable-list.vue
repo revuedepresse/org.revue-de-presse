@@ -92,7 +92,7 @@ class ScrollableList extends Vue {
       return
     }
 
-    this.$refs.list.scrollTop = selectedItem.offsetTop - 15
+    selectedItem.scrollIntoView({ block: 'center' })
   }
 
   mounted () {

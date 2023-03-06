@@ -16,7 +16,7 @@
         :visible-days-interval="visibleDaysInterval()"
       />
       <CalendarMonth
-        v-show="pickingDay"
+        v-show="showingCalendar"
         :month="startDateMonth"
         :picked-date="pickedStartDate"
         :year="startDateYear"
@@ -95,6 +95,9 @@ export default class DatePicker extends mixins(DateMixin) {
   public pickingDay!: boolean
 
   @DatePickerStore.Getter
+  public beingUndecided!: boolean
+
+  @DatePickerStore.Getter
   public pickingMonth!: boolean
 
   @DatePickerStore.Getter
@@ -141,7 +144,7 @@ export default class DatePicker extends mixins(DateMixin) {
   }
 
   get disabled (): boolean {
-    return this.pickingDay
+    return this.pickingDay || (this.beingUndecided && this.$device.isDesktop)
   }
 
   get previousDayIcon () {
@@ -186,6 +189,11 @@ export default class DatePicker extends mixins(DateMixin) {
     }
 
     return `/${day}`
+  }
+
+  get showingCalendar () {
+    return this.pickingDay ||
+      (this.beingUndecided && this.$device.isDesktop)
   }
 
   get startDateLabel () {

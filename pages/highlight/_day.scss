@@ -27,6 +27,16 @@
       &-auto {
         min-height: auto;
       }
+
+      &-with-emptiness {
+        max-height: 100vh;
+        overflow: hidden;
+
+        @media (min-width: $width-desktop) {
+          max-height: none;
+          overflow: auto;
+        }
+      }
     }
   }
 
