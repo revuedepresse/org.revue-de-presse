@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -67,7 +67,7 @@
     "@nuxtjs/svg": "^0.4.0",
     "@types/emoji-js": "^3.5.0",
     "@types/he": "^1.2.0",
-    "@types/node": "^18.14.4",
+    "@types/node": "^18.14.6",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
     "emoji-js": "^3.5.0",
