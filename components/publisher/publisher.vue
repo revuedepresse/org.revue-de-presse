@@ -38,7 +38,7 @@
       </div>
     </div>
     <a
-      v-show="!removeTwitterLogo"
+      v-if="!removeTwitterLogo"
       :aria-label="label(name)"
       :href="publicationUrl"
       rel="noreferrer nofollow noopener"

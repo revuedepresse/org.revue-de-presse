@@ -1,7 +1,7 @@
 <template>
   <Highlights
     :error="error"
-    error-message="Désolé, cette adresse ne mène à aucun contenu."
+    :error-message="error.message"
   >
   </Highlights>
 </template>
