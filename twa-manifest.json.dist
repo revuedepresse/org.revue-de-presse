@@ -20,11 +20,11 @@
     "path": "/tmp/android.keystore",
     "alias": "org.revue-de-presse"
   },
-  "appVersionName": "10",
-  "appVersionCode": 10,
+  "appVersionName": "11",
+  "appVersionCode": 11,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://revue-de-presse.org/_nuxt/manifest.319575d5.json",
+  "webManifestUrl": "https://revue-de-presse.org/_nuxt/manifest.f894fda0.json",
   "fallbackType": "customtabs",
   "features": {},
   "alphaDependencies": {
@@ -39,5 +39,5 @@
   "fingerprints": [],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
-  "appVersion": "10"
+  "appVersion": "11"
 }
