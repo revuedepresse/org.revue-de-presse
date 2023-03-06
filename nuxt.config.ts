@@ -237,6 +237,11 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
+        name: 'support',
+        path: '/nous-soutenir',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
         name: 'curated-highlights',
         path: '/:day',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
@@ -266,6 +271,10 @@ const config: NuxtConfig = {
       {
         url: '/sources',
         lastmod: (new Date('2023-03-02').toISOString())
+      },
+      {
+        url: '/nous-soutenir',
+        lastmod: (new Date('2023-03-06').toISOString())
       },
       ...days()
         .map((d: string) => {

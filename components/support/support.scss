@@ -1,9 +1,9 @@
 
-.contact {
+.support {
   border-radius: var(--separation-1);
   background-color: var(--color-white);
   margin-top: var(--separation-1);
-  margin-bottom: 0;
+  margin-bottom: var(--separation-2);
 
   p {
     color: var(--color-black);
@@ -14,12 +14,27 @@
     text-align: left;
   }
 
+  &__external-link:before {
+    content: " ";
+    display: inline-flex;
+    zoom: 1.5;
+  }
+
+  &__iconography-github:before {
+    background: var(--icon-github-background);
+    width: var(--icon-github-width);
+    height: var(--icon-github-height);
+    left: -2px;
+    top: -5px;
+    margin-right: calc(var(--separation-0) / 2);
+  }
+
   h1 {
     margin-left: var(--separation-3);
     text-align: left;
   }
 
-  &__email {
-    @extend .clickable
+  a {
+    @extend .clickable;
   }
 }

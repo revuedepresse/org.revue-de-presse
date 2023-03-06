@@ -6,7 +6,11 @@
   width: 100%;
 
   &__paragraph {
-    font-size: 1.2em;
+    font-size: 1em;
+
+    &--sharing {
+      margin-bottom: 0
+    }
   }
 
   @media (min-width: $width-large-device) {
@@ -55,15 +59,6 @@
       height: var(--icon-funding-height);
       left: -2px;
       top: -5px;
-    }
-
-    &-github:before {
-      background: var(--icon-github-background);
-      width: var(--icon-github-width);
-      height: var(--icon-github-height);
-      left: -2px;
-      top: -5px;
-      margin-right: var(--separation-0);
     }
   }
 
@@ -119,6 +114,7 @@
     color: var(--color-white);
     position: relative;
     padding-left: 30px;
+    margin-top: calc(3 * var(--separation-1));
 
     &:before {
       color: var(--color-white);

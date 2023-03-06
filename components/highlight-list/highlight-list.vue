@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
+import Contents from '../../assets/contents.json'
 import Intro from '../intro/intro.vue'
 import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import Status from '../status/status.vue'
@@ -78,9 +79,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     items!: Array<{ status: RawStatus }>
 
   get intro (): RawStatus {
-    const text = 'Revue de presse est un projet citoyen indépendant ' +
-      'qui s\'adresse aux journalistes et à toute personne s\'intéressant ' +
-      'à l\'actualité et à l\'influence des médias sur l\'opinion.'
+    const text = Contents.description
 
     const intro: RawStatus = {
       username: 'revue_2_presse',
