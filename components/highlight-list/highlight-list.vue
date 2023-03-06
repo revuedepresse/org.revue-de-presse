@@ -44,13 +44,13 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     type: String,
     required: true
   })
-    endDate: string = this.defaultDates().endDate
+    endDate!: string
 
   @Prop({
     type: String,
     required: true
   })
-    startDate: string = this.defaultDates().startDate
+    startDate!: string
 
   @Prop({
     type: Boolean,

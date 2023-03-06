@@ -21,6 +21,7 @@
     width: calc(100% - 2*var(--separation-2));
 
     &--filled {
+      margin-bottom: var(--separation-1);
       min-height: 100vh;
 
       &-auto {
@@ -29,9 +30,21 @@
     }
   }
 
+  &__column {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
+  }
+
+  &__navigation {
+    bottom: 0;
+    position: fixed;
+    width: 100vw;
   }
 
   @media (min-width: $width-desktop) {
@@ -43,6 +56,16 @@
       min-width: var(--width-right-column-desktop);
       max-width: var(--width-right-column-desktop);
       margin-left: var(--separation-2);
+
+      &--filled {
+        margin-bottom: auto;
+      }
+    }
+
+    &__navigation {
+      position: static;
+      bottom: auto;
+      width: auto;
     }
   }
 }

@@ -48,7 +48,7 @@
           </span>
           <a
             class="status__source"
-            :href="formatSource(status.username)"
+            :href="formatSource(status)"
           >
             Source
           </a>
@@ -281,8 +281,8 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return text.replace(/\s/g, ' ')
   }
 
-  formatSource (username: string) {
-    return `/source/${username}`
+  formatSource (status: FormattedStatus) {
+    return `/source/${status.publisherId}/${status.username}`
   }
 
   removeTrackingParams (subject: string) {

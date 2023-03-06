@@ -70,6 +70,7 @@ import Sources from '../../assets/sources.json'
 
 type Source = {
   name: string,
+  twitterId: number,
   username: string,
   url: string
 }
@@ -107,9 +108,9 @@ class SourcesPage extends Vue {
       return 1
     })
 
-    if (this.$route.name === 'source' && this.$route.params.source) {
-      const sourceUsername: string = this.$route.params.source
-      const filteredSource = sortedSources.find(s => s.username === sourceUsername)
+    if (this.$route.name === 'source' && this.$route.params.twitterId) {
+      const twitterId: number = parseInt(this.$route.params.twitterId, 10)
+      const filteredSource = sortedSources.find(s => s.twitterId === twitterId)
 
       return [filteredSource]
     }

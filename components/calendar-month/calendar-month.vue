@@ -124,6 +124,12 @@ class CalendarMonth extends mixins(DateMixin) {
   @DatePickerStore.Mutation
   public pickMonth!: () => void
 
+  @DatePickerStore.Mutation
+  public intendingToPick!: (date: Date) => void
+
+  @DatePickerStore.Mutation
+  public resetPickingChoice!: () => void
+
   switchToMonthPicking (): void {
     this.pickMonth()
   }
@@ -180,20 +186,6 @@ class CalendarMonth extends mixins(DateMixin) {
       --icon-pick-item-height: ${widthOrHeight};
       --icon-pick-item-width: ${widthOrHeight}
     `
-  }
-
-  get dayBeforePickedDate (): Date {
-    const pickedDate = this.setTimezone(new Date(this.pickedDate.getTime()))
-    pickedDate.setDate(pickedDate.getDate() - 1)
-
-    return pickedDate
-  }
-
-  get dayFollowingPickedDate (): Date {
-    const pickedDate = this.setTimezone(new Date(this.pickedDate.getTime()))
-    pickedDate.setDate(pickedDate.getDate() + 1)
-
-    return pickedDate
   }
 
   get previousMonth (): Date {
@@ -336,17 +328,19 @@ class CalendarMonth extends mixins(DateMixin) {
   pickDate (date: Date) {
     const day = Time.formatDate(date)
 
+    if (!this.$device.isDesktop && !this.$device.isTablet) {
+      this.resetPickingChoice()
+    }
+
     if (day === Time.formatDate(this.now())) {
-      this.$router.push({
-        path: '/'
-      })
+      this.intendingToPick(this.now())
+      this.$router.push({ path: '/' })
 
       return
     }
 
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.intendingToPick(this.setTimezone(new Date(day)))
+    this.$router.push({ path: `/${day}` })
   }
 
   canonicalUrl (date: Date) {

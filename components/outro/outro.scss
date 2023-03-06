@@ -3,7 +3,15 @@
   background: var(--color-content-background) 0 0 no-repeat padding-box;
   border-top: 1px $color-black solid;
   margin: 0;
+  padding-bottom: 60px;
   width: 100%;
+
+  @media (min-width: $width-large-device) {
+    border-radius: var(--separation-1);
+    margin-top: var(--separation-1);
+    max-width: var(--width-left-column-desktop);
+    padding-bottom: 0;
+  }
 
   &__paragraph {
     font-size: 1em;
@@ -11,12 +19,6 @@
     &--sharing {
       margin-bottom: 0
     }
-  }
-
-  @media (min-width: $width-large-device) {
-    border-radius: var(--separation-1);
-    margin-top: var(--separation-1);
-    max-width: var(--width-left-column-desktop);
   }
 
   a {

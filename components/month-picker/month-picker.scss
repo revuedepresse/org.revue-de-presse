@@ -3,15 +3,20 @@
   background-color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
-  position: sticky;
-  bottom: 0;
+  height: 268px; /** See CalendarMonth max height **/
   width: 100%;
+
+  @media (min-width: $width-desktop) {
+    border-bottom-left-radius: var(--separation-1);
+    border-bottom-right-radius: var(--separation-1);
+    height: auto;
+  }
 
   &__buttons {
     display: flex;
     background-color: var(--color-white);
     justify-content: space-between;
-    margin: auto;
+    margin: 0 auto auto;
     width: calc(100% - 2 * var(--separation-2));
   }
 
@@ -24,7 +29,7 @@
     padding: 5px 4px 5px 4px;
     position: relative;
     line-height: calc(var(--height-date-picker) + 10px);
-    margin-bottom: var(--separation-2);
+    margin-bottom: var(--margin-navigation);
     margin-top: 10px;
     align-content: flex-end;
 
@@ -85,8 +90,7 @@
     height: 32px;
     width: 32px;
     line-height: 32px;
-    margin: var(--margin-navigation) 16px var(--margin-navigation);
-    margin-left: 0;
+    margin: var(--margin-navigation) 16px 0 0;
     padding: 1px;
 
     &:before {
@@ -126,11 +130,15 @@
 
   &__previous-item--disabled,
   &__next-item--disabled {
+    cursor: not-allowed;
+
     &:hover {
+      cursor: not-allowed;
       border: 1px solid var(--color-white);
     }
 
     &:before {
+      cursor: not-allowed;
       filter: $filter-content;
     }
   }

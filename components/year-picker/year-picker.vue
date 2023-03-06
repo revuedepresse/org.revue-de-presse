@@ -55,10 +55,13 @@ class YearPicker extends mixins(DateMixin) {
     isPreviousItemAvailable!: boolean
 
   @DatePickerStore.Mutation
-  public pickDay!: () => void
+  public pickMonth!: () => void
 
-  switchToDayPicking (): void {
-    this.pickDay()
+  @DatePickerStore.Mutation
+  public intendingToPick!: (date: Date) => void
+
+  switchToMonthPicking (): void {
+    this.pickMonth()
   }
 
   get acceptedYears () {
@@ -148,20 +151,17 @@ class YearPicker extends mixins(DateMixin) {
   }
 
   pickDate (date: Date) {
-    this.switchToDayPicking()
     const day = Time.formatDate(date)
 
     if (day === Time.formatDate(this.now())) {
-      this.$router.push({
-        path: '/'
-      })
+      this.intendingToPick(this.now())
+      this.switchToMonthPicking()
 
       return
     }
 
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.intendingToPick(this.setTimezone(new Date(day)))
+    this.switchToMonthPicking()
   }
 }
 

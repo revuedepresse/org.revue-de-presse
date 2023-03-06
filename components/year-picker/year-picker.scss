@@ -3,8 +3,17 @@
   background-color: var(--color-white);
   display: flex;
   flex-wrap: wrap;
+  min-height: 268px;
+  max-height: 268px;
   position: sticky;
   bottom: 0;
+
+  @media (min-width: $width-desktop) {
+    min-height: auto;
+    max-height: none;
+    border-bottom-left-radius: var(--separation-1);
+    border-bottom-right-radius: var(--separation-1);
+  }
 
   &__buttons {
     align-content: center;
@@ -25,8 +34,7 @@
     height: 32px;
     width: 32px;
     line-height: 32px;
-    margin: var(--margin-navigation) 16px var(--margin-navigation);
-    margin-left: 0;
+    margin: var(--margin-navigation) 16px calc(var(--margin-navigation) + 1px)  0;
     padding: 1px;
 
     &:before {
@@ -88,9 +96,5 @@
   &__navigation {
     display: flex;
     align-self: center;
-  }
-
-  &__scrollable-list {
-    height: auto;
   }
 }

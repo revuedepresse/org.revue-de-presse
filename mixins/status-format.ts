@@ -81,6 +81,7 @@ type FormattedStatus = {
   base64EncodedMedia?: string
   username: string,
   name: string,
+  publisherId: string,
   avatarUrl: string,
   publishedAt: Date,
   statusId: string,
@@ -241,6 +242,7 @@ export default class StatusFormat extends Vue {
         base64EncodedAvatar: status.base64_encoded_avatar,
         base64EncodedMedia: status.base64_encoded_media,
         name: originalDocument.user.name,
+        publisherId: originalDocument.user.id,
         inAggregate: aggregate,
         username: status.username,
         avatarUrl: status.avatar_url,
