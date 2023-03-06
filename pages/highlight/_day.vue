@@ -281,7 +281,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       requestOptions.params.includeRetweets = RETWEETS_EXCLUDED
     }
 
-    if (!this.$device.isDesktop) {
+    if (!this.$device.isDesktop && !this.$device.isTablet) {
       requestOptions.params.excludeMedia = MEDIA_EXCLUDED
     }
 
@@ -309,7 +309,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const paramNames = Object.keys(this.$route.query)
     const isBaselineViewActive = paramNames.find(p => p === 'naked') === undefined
 
-    return this.$device.isDesktop || isBaselineViewActive
+    return this.$device.isDesktop || this.$device.isTablet || isBaselineViewActive
   }
 
   get showEndDate () {
@@ -422,14 +422,6 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       this.showingSourcesPage ||
       this.showingSupportPage ||
       this.$route.name === 'source'
-  }
-
-  get isLoadingSpinnerVisible () {
-    if (this.isBaselineView && this.$device.isDesktop) {
-      return this.items.length === 1
-    }
-
-    return this.items.length === 0
   }
 
   @Watch('startDate')
