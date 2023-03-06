@@ -1,7 +1,7 @@
 <template>
   <Highlights
     :error="error"
-    :error-message="error.message"
+    :error-message-provider="errorMessageProvider"
   >
   </Highlights>
 </template>
@@ -23,6 +23,16 @@ export default class NuxtError extends mixins(ApiMixin, DateMixin) {
     default: null
   })
     error: any
+
+  get errorMessageProvider () {
+    return (_: string): string => {
+      if (this.error && this.error.message) {
+        return this.error.message
+      }
+
+      return ''
+    }
+  }
 
   head () {
     const suffix = ' - Revue-de-presse.org 🦉'

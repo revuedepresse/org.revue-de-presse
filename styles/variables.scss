@@ -74,10 +74,10 @@
   --separation-2: calc(2 * var(--separation-1));
   --separation-3: 19px;
 
-  --width-left-column-mobile: 336px;
+  --width-left-column-mobile:     336px;
 
-  --width-left-column-desktop: 336px;
-  --width-right-column-desktop: 600px;
+  --width-left-column-desktop:    336px;
+  --width-right-column-desktop:   600px;
 }
 
 $color-background-like-light: lighten(#851430, 45%);
@@ -142,8 +142,7 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   font-family: 'Signika';
   font-style: normal;
   font-weight: normal;
-  font-display: optional;
-  size-adjust: 91.6%;
+  font-display: auto;
   src: url('/fonts/signika-regular.woff2') format('woff2');
 }
 
@@ -151,8 +150,7 @@ $font-family: 'PT_serif', 'Open Sans', sans-serif;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
-  font-display: optional;
-  size-adjust: 91.6%;
+  font-display: auto;
   src: url('/fonts/roboto-regular.woff2') format('woff2');
 }
 

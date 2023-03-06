@@ -23,13 +23,14 @@
           />
           <LoadingSpinner
             v-if="showLoadingSpinnerComponent"
-            :message="errorMessage"
+            :message="errorMessageProvider(day)"
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
           />
-          <LegalNotice />
           <Contact />
+          <LegalNotice />
           <Sources />
+          <Support />
         </div>
         <div
           v-if="isBaselineView"
@@ -52,6 +53,7 @@ import { Component, Prop, mixins, Vue, Watch } from 'nuxt-property-decorator'
 import { Context } from '@nuxt/types'
 
 import AppHeader, { HeightAware } from '../../components/app-header/app-header.vue'
+import Support from '../../components/support/support.vue'
 import Contact from '../../components/contact/contact.vue'
 import DatePicker from '../../components/date-picker/date-picker.vue'
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner.vue'
@@ -108,7 +110,8 @@ const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
     HighlightList,
     ModalWindow,
     Outro,
-    Sources
+    Sources,
+    Support
   }
 })
 export default class Highlights extends mixins(ApiMixin, DateMixin) {
@@ -127,17 +130,30 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     error: any
 
   @Prop({
-    type: String,
-    default: NO_REVIEW_ERROR_MESSAGE
-      .replace(
-        '_date_',
-        now().toLocaleDateString(
-          'fr-FR',
-          { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+    type: Function,
+    default: (day = '') => {
+      if (day.length > 0) {
+        return NO_REVIEW_ERROR_MESSAGE
+          .replace(
+            '_date_',
+            setTimezone(new Date(day)).toLocaleDateString(
+              'fr-FR',
+              { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+            )
+          )
+      }
+
+      return NO_REVIEW_ERROR_MESSAGE
+        .replace(
+          '_date_',
+          now().toLocaleDateString(
+            'fr-FR',
+            { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+          )
         )
-      )
+    }
   })
-    errorMessage!: string
+    errorMessageProvider!: (day: string) => any
 
   endDate: string = this.defaultDates().endDate
 
@@ -153,6 +169,17 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   selectedAggregates: number[] = []
 
+  get day (): string {
+    if (
+      this.$route.name === 'curated-highlights' &&
+      this.isValidDate(this.$route.params.day)
+    ) {
+      return this.$route.params.day
+    }
+
+    return ''
+  }
+
   get areMediaVisible () {
     return !this.$device.isMobile || !this.isBaselineView
   }
@@ -162,8 +189,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
     if (nonEmptyList || (this.$fetchState && this.$fetchState.pending)) {
-      if (this.error && this.error.statusCode === 404) {
-        return `${filledContainerClass}-not-found`
+      if (
+        (
+          this.error &&
+          this.error.statusCode === 404
+        ) ||
+        this.isShowingAnotherPage
+      ) {
+        return `${filledContainerClass}-auto`
       }
 
       return filledContainerClass
@@ -293,7 +326,8 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       this.showingContactPage ||
       this.showingLegalNoticePage ||
       this.showingSourcesPage ||
-      this.showingSourcePage
+      this.showingSourcePage ||
+      this.showingSupportPage
     ) {
       return false
     }
@@ -301,13 +335,17 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.showingNotFoundPage ||
       !this.validCuratedHighlightsDay ||
       (this.$fetchState !== undefined && this.$fetchState.error !== null) ||
-      this.items.length === 0
+      (this.items.length === 0)
   }
 
   get showLoadingSpinner () {
     return this.showLoadingSpinnerComponent &&
       !this.showingNotFoundPage &&
-      this.validCuratedHighlightsDay
+      (
+        this.showingHomepage ||
+        this.validCuratedHighlightsDay
+      ) &&
+      (!this.$fetchState || this.$fetchState.pending)
   }
 
   get showLoadingSpinnerComponent (): boolean {
@@ -336,6 +374,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   get showingCuratedHighlights () {
     return this.showingHomepage || this.$route.name === 'curated-highlights'
+  }
+
+  get showingSupportPage () {
+    return this.$route.name === 'support'
   }
 
   get showingHomepage () {
@@ -373,11 +415,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return !this.validCuratedHighlightsDay
     }
 
-    return this.showingLegalNoticePage ||
-      this.showingContactPage ||
+    return this.showingContactPage ||
+      this.showingLegalNoticePage ||
+      this.showingNotFoundPage ||
       this.showingSourcePage ||
       this.showingSourcesPage ||
-      this.showingNotFoundPage ||
+      this.showingSupportPage ||
       this.$route.name === 'source'
   }
 
@@ -450,6 +493,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
           description = 'Page de contact de revue-de-presse.org'
           title = `Nous contacter${suffix}`
           url = 'https://revue-de-presse.org/nous-contacter'
+
+          break
+
+        case this.showingSupportPage:
+
+          description = 'Soutenir revue-de-presse.org'
+          title = `Nous soutenir${suffix}`
+          url = 'https://revue-de-presse.org/nous-soutenir'
 
           break
 
@@ -563,6 +614,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
     if (
       [
+        'curated-highlights',
         'homepage',
         'contact',
         'legal-notice',

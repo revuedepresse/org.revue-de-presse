@@ -5,7 +5,7 @@
     class="sources"
   >
     <h1 v-if="showAllSources">
-      Sources
+      Sources des brèves
     </h1>
     <p v-if="showAllSources">
       Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Twitter des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
