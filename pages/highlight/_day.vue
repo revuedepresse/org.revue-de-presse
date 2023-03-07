@@ -134,7 +134,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   @Prop({
     type: Function,
-    default: (day = '') => {
+    default: (day = ''): string => {
       if (day.length > 0) {
         return NO_REVIEW_ERROR_MESSAGE
           .replace(
@@ -156,7 +156,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         )
     }
   })
-    errorMessageProvider!: (day: string) => any
+    errorMessageProvider!: (day: string) => string
 
   items: Array<{ status: RawStatus }> = []
 
