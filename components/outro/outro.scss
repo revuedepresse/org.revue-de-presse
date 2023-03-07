@@ -10,11 +10,13 @@
   &--fixed {
     position: fixed;
     bottom: 0;
+    left: 0;
   }
 
   @media (min-width: $width-desktop) {
     position: static;
     bottom: auto;
+    left: auto;
   }
 
   @media (min-width: $width-desktop) {

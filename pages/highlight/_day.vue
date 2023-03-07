@@ -198,9 +198,13 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   get outroClass () {
     if (
-      this.$nuxt.isOnline &&
-      this.items.length === 0 &&
-      this.$fetchState.pending === false
+      this.showingSourcePage ||
+      this.showingContactPage ||
+      (
+        this.$nuxt.isOnline &&
+        this.items.length === 0 &&
+        this.$fetchState.pending === false
+      )
     ) {
       return 'outro--fixed'
     }
@@ -211,6 +215,13 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   get containerClass () {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
+
+    if (
+      this.showingSourcePage ||
+      this.showingContactPage
+    ) {
+      return `${filledContainerClass}-with-emptiness`
+    }
 
     if (nonEmptyList || this.fetchingData) {
       if (
