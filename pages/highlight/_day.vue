@@ -134,7 +134,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   @Prop({
     type: Function,
-    default: (day = '') => {
+    default: (day = ''): string => {
       if (day.length > 0) {
         return NO_REVIEW_ERROR_MESSAGE
           .replace(
@@ -156,7 +156,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         )
     }
   })
-    errorMessageProvider!: (day: string) => any
+    errorMessageProvider!: (day: string) => string
 
   items: Array<{ status: RawStatus }> = []
 
@@ -192,6 +192,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return !this.$device.isMobile || !this.isBaselineView
   }
 
+  get fetchingData () {
+    return this.$fetchState !== undefined && this.$fetchState.pending
+  }
+
   get outroClass () {
     if (
       this.$nuxt.isOnline &&
@@ -208,7 +212,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
-    if (nonEmptyList || (this.$fetchState && this.$fetchState.pending)) {
+    if (nonEmptyList || this.fetchingData) {
       if (
         (
           this.error &&
@@ -283,26 +287,19 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.showingNotFoundPage ||
       !this.validCuratedHighlightsDay ||
       (this.$fetchState !== undefined && this.$fetchState.error !== null) ||
-      (this.items.length === 0)
+      this.items.length === 0
   }
 
   get showLoadingSpinner () {
     return this.showLoadingSpinnerComponent &&
+      this.fetchingData &&
       !this.showingNotFoundPage &&
-      (
-        this.showingHomepage ||
-        this.validCuratedHighlightsDay
-      ) &&
-      (!this.$fetchState || this.$fetchState.pending)
+      (this.showingHomepage || this.validCuratedHighlightsDay)
   }
 
   get showLoadingSpinnerComponent (): boolean {
     if (this.showingCuratedHighlights) {
-      if (this.validCuratedHighlightsDay || this.showingHomepage) {
-        return this.$fetchState.pending || this.items.length === 0
-      }
-
-      return true
+      return this.fetchingData || this.items.length === 0
     }
 
     if (this.isShowingAnotherPage) {
@@ -313,11 +310,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return true
     }
 
-    if (this.$fetchState === undefined) {
-      return true
-    }
-
-    return this.$fetchState.pending
+    return this.fetchingData
   }
 
   get showingCuratedHighlights () {
@@ -416,6 +409,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         )
       })
 
+    this.items = []
     this.items = response.statuses
   }
 
@@ -590,7 +584,6 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return
     }
 
-    this.items = []
     const day = this.startDate
 
     if (day === Time.formatDate(this.now())) {
@@ -629,7 +622,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return greaterThanMinDate && lesserThanMaxDate
   }
 
-  mounted () {
+  detectError () {
     if (
       this.$route.name === 'curated-highlights' &&
       isValidDate(this.$route.params.day) && (
@@ -673,7 +666,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         path: '/contenu-introuvable'
       })
     }
+  }
 
+  mounted () {
     if (this.$route.name === 'homepage') {
       this.intendingToPick(this.now())
     }
@@ -686,6 +681,8 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     ) {
       this.intendingToPick(new Date(this.$route.params.day))
     }
+
+    this.detectError()
   }
 }
 </script>
