@@ -192,6 +192,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return !this.$device.isMobile || !this.isBaselineView
   }
 
+  get fetchingData () {
+    return this.$fetchState !== undefined && this.$fetchState.pending
+  }
+
   get outroClass () {
     if (
       this.$nuxt.isOnline &&
@@ -208,7 +212,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const filledContainerClass = '_day__container _day__container--filled'
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
-    if (nonEmptyList || (this.$fetchState && this.$fetchState.pending)) {
+    if (nonEmptyList || this.fetchingData) {
       if (
         (
           this.error &&
@@ -283,26 +287,22 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.showingNotFoundPage ||
       !this.validCuratedHighlightsDay ||
       (this.$fetchState !== undefined && this.$fetchState.error !== null) ||
-      (this.items.length === 0)
+      this.items.length === 0
   }
 
   get showLoadingSpinner () {
     return this.showLoadingSpinnerComponent &&
+      this.fetchingData &&
       !this.showingNotFoundPage &&
       (
         this.showingHomepage ||
         this.validCuratedHighlightsDay
       ) &&
-      (!this.$fetchState || this.$fetchState.pending)
   }
 
   get showLoadingSpinnerComponent (): boolean {
     if (this.showingCuratedHighlights) {
-      if (this.validCuratedHighlightsDay || this.showingHomepage) {
-        return this.$fetchState.pending || this.items.length === 0
-      }
-
-      return true
+      return this.fetchingData || this.items.length === 0
     }
 
     if (this.isShowingAnotherPage) {
@@ -313,11 +313,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return true
     }
 
-    if (this.$fetchState === undefined) {
-      return true
-    }
-
-    return this.$fetchState.pending
+    return this.fetchingData
   }
 
   get showingCuratedHighlights () {
