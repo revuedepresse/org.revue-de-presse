@@ -20,6 +20,12 @@
   }
 
   &__media {
+    display: flex;
+    flex-wrap: wrap;
+
+     @media (min-width: $width-desktop) {
+       display: block;
+     }
 
     .sources__external-link {
       @extend .clickable;
@@ -31,6 +37,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+
+  &__source {
+    width: 100%
   }
 
   .sources__internal-link {

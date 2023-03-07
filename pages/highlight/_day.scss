@@ -18,7 +18,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     margin: 0 auto auto;
-    width: calc(100% - 2*var(--separation-2));
+    width: calc(100vw - 2*var(--separation-2));
 
     &--filled {
       margin-bottom: var(--separation-1);
@@ -53,6 +53,7 @@
 
   &__navigation {
     bottom: 0;
+    left: 0;
     position: fixed;
     width: 100vw;
   }
@@ -75,6 +76,7 @@
     &__navigation {
       position: static;
       bottom: auto;
+      left: auto;
       width: auto;
     }
   }

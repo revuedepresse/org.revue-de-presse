@@ -30,7 +30,7 @@
         {{ source.name }}
       </h1>
       <ul class="sources__media">
-        <li>
+        <li class="sources__source">
           <span class="sources__external-link-container">
             <a
               class="sources__external-link"
@@ -41,7 +41,7 @@
             </a>
           </span>
         </li>
-        <li>
+        <li class="sources__source">
           <span class="sources__external-link-container">
             <a
               class="sources__external-link"
