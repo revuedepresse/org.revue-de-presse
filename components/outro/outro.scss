@@ -6,7 +6,6 @@
   padding-bottom: 60px;
   width: 100%;
 
-
   &--fixed {
     position: fixed;
     bottom: 0;
@@ -14,8 +13,9 @@
   }
 
   @media (min-width: $width-desktop) {
-    position: static;
     bottom: auto;
+    margin-bottom: var(--separation-1);
+    position: static;
     left: auto;
   }
 
