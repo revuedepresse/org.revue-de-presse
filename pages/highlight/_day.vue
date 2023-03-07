@@ -294,10 +294,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.showLoadingSpinnerComponent &&
       this.fetchingData &&
       !this.showingNotFoundPage &&
-      (
-        this.showingHomepage ||
-        this.validCuratedHighlightsDay
-      ) &&
+      (this.showingHomepage || this.validCuratedHighlightsDay)
   }
 
   get showLoadingSpinnerComponent (): boolean {
@@ -625,7 +622,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return greaterThanMinDate && lesserThanMaxDate
   }
 
-  mounted () {
+  detectError () {
     if (
       this.$route.name === 'curated-highlights' &&
       isValidDate(this.$route.params.day) && (
@@ -669,7 +666,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         path: '/contenu-introuvable'
       })
     }
+  }
 
+  mounted () {
     if (this.$route.name === 'homepage') {
       this.intendingToPick(this.now())
     }
@@ -682,6 +681,8 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     ) {
       this.intendingToPick(new Date(this.$route.params.day))
     }
+
+    this.detectError()
   }
 }
 </script>
