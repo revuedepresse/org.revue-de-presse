@@ -409,6 +409,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         )
       })
 
+    this.items = []
     this.items = response.statuses
   }
 
@@ -583,7 +584,6 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return
     }
 
-    this.items = []
     const day = this.startDate
 
     if (day === Time.formatDate(this.now())) {
