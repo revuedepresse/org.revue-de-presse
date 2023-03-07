@@ -198,8 +198,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   get outroClass () {
     if (
-      this.showingSourcePage ||
       this.showingContactPage ||
+      this.showingNotFoundPage ||
+      this.showingSourcePage ||
+      (
+        this.showingCuratedHighlights &&
+        !this.showingHomepage &&
+        !this.validCuratedHighlightsDay
+      ) ||
       (
         this.$nuxt.isOnline &&
         this.items.length === 0 &&
@@ -217,8 +223,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
     if (
-      this.showingSourcePage ||
-      this.showingContactPage
+      this.showingContactPage ||
+      this.showingNotFoundPage ||
+      this.showingSourcePage
     ) {
       return `${filledContainerClass}-with-emptiness`
     }
@@ -310,15 +317,15 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   get showLoadingSpinnerComponent (): boolean {
     if (this.showingCuratedHighlights) {
-      return this.fetchingData || this.items.length === 0
-    }
-
-    if (this.isShowingAnotherPage) {
-      return false
+      return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
     }
 
     if (this.showingNotFoundPage) {
       return true
+    }
+
+    if (this.isShowingAnotherPage) {
+      return false
     }
 
     return this.fetchingData
