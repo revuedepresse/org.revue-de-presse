@@ -15,10 +15,9 @@
     display: flex;
     border-radius: 50%;
     background: var(--avatar-url);
+    clip-path: circle(var(--avatar-size));
     height: var(--avatar-size);
     margin-right: var(--avatar-margin-right);
-    object-font: cover;
-    width: var(--avatar-size);
 
     &--hide {
       visibility: hidden;
