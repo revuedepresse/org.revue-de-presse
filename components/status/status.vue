@@ -20,7 +20,7 @@
 
     <div class="status__publication">
       <publisher
-        :avatar-url="avatarUrl"
+        :profile-pictures="profilePictures"
         :name="status.name"
         :username="status.username"
         :publication-url="status.url"
@@ -108,7 +108,14 @@ import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import Sparkline from 'sparklines'
 import ApiMixin from '../../mixins/api'
 import DateMixin from '../../mixins/date'
-import StatusFormatMixin, { FavoritesMetrics, RetweetsMetrics, TweetUrl, FormattedStatus, Media } from '../../mixins/status-format'
+import StatusFormatMixin, {
+  FavoritesMetrics,
+  RetweetsMetrics,
+  TweetUrl,
+  FormattedStatus,
+  Media,
+  ProfilePicture
+} from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
@@ -161,12 +168,16 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   visibleStatuses: VisibleStatuses = SharedState.state.visibleStatuses
   aggregateType: string = this.fromAggregateType
 
-  get avatarUrl (): string {
+  get profilePictures (): ProfilePicture {
     if (this.status.base64EncodedAvatar) {
       return this.status.base64EncodedAvatar
     }
 
-    return this.status.avatarUrl
+    return {
+      x1: this.status.avatarUrl,
+      x2: this.status.avatarUrl,
+      x3: this.status.avatarUrl
+    }
   }
 
   get webIntentTypes (): {[key: string]: string} {
