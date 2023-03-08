@@ -12,10 +12,9 @@
   align-content: space-between;
 
   &__avatar {
-    display: flex;
-    border-radius: 50%;
     background: var(--avatar-url);
-    clip-path: circle(var(--avatar-size));
+    clip-path: circle(23px at 24px 24px);
+    display: flex;
     height: var(--avatar-size);
     margin-right: var(--avatar-margin-right);
 

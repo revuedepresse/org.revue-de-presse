@@ -29,7 +29,9 @@ import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin, { setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
-import Logo from '~/assets/revue-de-presse_48x48.png?data'
+import Logo1x from '~/assets/revue-de-presse_48x48.png?data'
+import Logo2x from '~/assets/revue-de-presse_96x96.png?data'
+import Logo3x from '~/assets/revue-de-presse_144x144.png?data'
 
 @Component({
   components: {
@@ -81,10 +83,15 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
   get intro (): RawStatus {
     const text = Contents.description
 
-    const intro: RawStatus = {
+    return {
+      base64_encoded_avatar: {
+        x1: Logo1x,
+        x2: Logo2x,
+        x3: Logo3x
+      },
       username: 'revue_2_presse',
-      avatarUrl: Logo,
-      avatar_url: Logo,
+      avatarUrl: Logo1x,
+      avatar_url: Logo1x,
       published_at: this.formatDate(this.now()),
       publishedAt: this.now(),
       statusId: '0',
@@ -100,8 +107,6 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       links: [],
       original_document: JSON.stringify({ user: { name: 'Revue de presse' } })
     }
-
-    return intro
   }
 
   get curatedHighlights (): Array<{tweet: RawStatus, tweetId: string}> {

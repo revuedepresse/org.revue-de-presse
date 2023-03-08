@@ -11,7 +11,8 @@
       >
         <img
           :alt="textAlternative"
-          :src="avatarUrl"
+          :src="defaultProfilePicture"
+          :srcset="profilePicturesSet"
           :class="avatarClasses()"
           width="48px"
           height="48px"
@@ -65,6 +66,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ProfilePicture } from '~/mixins/status-format'
 
 @Component
 export default class Publisher extends Vue {
@@ -81,10 +83,10 @@ export default class Publisher extends Vue {
     username!: string
 
   @Prop({
-    type: String,
+    type: Object,
     required: true
   })
-    avatarUrl!: string
+    profilePictures!: ProfilePicture
 
   @Prop({
     type: String,
@@ -99,6 +101,14 @@ export default class Publisher extends Vue {
     removeTwitterLogo!: boolean
 
   canNotLoadAvatar = false
+
+  get defaultProfilePicture (): string {
+    return this.profilePictures.x1
+  }
+
+  get profilePicturesSet (): string {
+    return `${this.profilePictures.x1} 1x, ${this.profilePictures.x2} 2x, ${this.profilePictures.x3} 3x`
+  }
 
   get textAlternative () {
     return `${this.name} avatar`
@@ -115,8 +125,8 @@ export default class Publisher extends Vue {
     const size = '48px'
 
     return `
-      --avatar-background: center / ${size} repeat url(${this.avatarUrl});
-      --avatar-url: url(${this.avatarUrl});
+      --avatar-background: center / ${size} repeat url(${this.profilePictures.x1});
+      --avatar-url: url(${this.profilePictures.x1});
       --avatar-size: ${size};
     `
   }

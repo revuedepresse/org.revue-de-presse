@@ -39,8 +39,14 @@ type VanityMetrics = {
   retweets: RetweetsMetrics[]
 }
 
+type ProfilePicture = {
+  x1: string,
+  x2: string,
+  x3: string
+}
+
 type RawStatus = {
-  base64_encoded_avatar?: string,
+  base64_encoded_avatar?: ProfilePicture,
   base64_encoded_media?: string,
   username: string,
   avatarUrl: string,
@@ -77,7 +83,7 @@ type Entities = {
 }
 
 type FormattedStatus = {
-  base64EncodedAvatar?: string
+  base64EncodedAvatar?: ProfilePicture
   base64EncodedMedia?: string
   username: string,
   name: string,
@@ -306,4 +312,13 @@ export default class StatusFormat extends Vue {
   }
 }
 
-export { TweetUrl, FormattedStatus, RawStatus, Media, VanityMetrics, FavoritesMetrics, RetweetsMetrics }
+export {
+  TweetUrl,
+  ProfilePicture,
+  FormattedStatus,
+  RawStatus,
+  Media,
+  VanityMetrics,
+  FavoritesMetrics,
+  RetweetsMetrics
+}
