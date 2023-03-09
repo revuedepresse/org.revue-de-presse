@@ -1,6 +1,5 @@
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 import DatePickerChoices from '../components/date-picker/picking-choices'
-import { now } from '../mixins/date'
 
 @Module({
   name: 'date-picker',
@@ -10,7 +9,7 @@ import { now } from '../mixins/date'
 class DatePickerStore extends VuexModule {
   public pickingChoice: string = DatePickerChoices.none
 
-  public pickedDate: Date = now()
+  public pickedDate!: Date
 
   public get getPickingChoice (): string {
     return this.pickingChoice
