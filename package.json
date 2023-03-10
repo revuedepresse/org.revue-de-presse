@@ -67,7 +67,7 @@
     "@nuxtjs/svg": "^0.4.0",
     "@types/emoji-js": "^3.5.0",
     "@types/he": "^1.2.0",
-    "@types/node": "^18.14.6",
+    "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "emoji-js": "^3.5.0",
