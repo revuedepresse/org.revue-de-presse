@@ -7,7 +7,7 @@
       @revue_2_presse
     </h2>
     <p :class="firstParagraphClasses">
-      Retrouver chaque jour les 3 tweets médias ayant été les plus relayés au cours de la journée.<br />
+      Retrouver chaque jour les 10 tweets médias ayant été les plus relayés au cours de la journée.<br />
       <span
         v-if="showSubscribeToTwitterAccountButton"
         class="outro__subscribe-to"
