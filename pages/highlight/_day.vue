@@ -45,7 +45,6 @@
         </div>
       </div>
     </div>
-    <LazyModalWindow />
   </div>
 </template>
 
@@ -61,7 +60,6 @@ import LoadingSpinner from '../../components/loading-spinner/loading-spinner.vue
 import LegalNotice from '../../components/legal-notice/legal-notice.vue'
 import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
-import ModalWindow from '../../components/modal-window/modal-window.vue'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
 import DateMixin, { getMinDate, isValidDate, now, setTimezone } from '../../mixins/date'
@@ -111,7 +109,6 @@ const DatePickerStore = namespace('date-picker')
     LegalNotice,
     LoadingSpinner,
     HighlightList,
-    ModalWindow,
     Outro,
     Sources,
     Support

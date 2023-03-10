@@ -66,7 +66,7 @@ $status-margin: 1em;
     width: 100%;
 
     &-item {
-      cursor: pointer;
+      cursor: auto;
       border-radius: var(--separation-1);
       border: 1px solid #E6E6E6;
       width: calc(100% - 2 * var(--margin-status))

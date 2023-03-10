@@ -95,7 +95,6 @@
             :style="getMediaProperties()"
             :height="getMediaHeight(document)"
             :width="getMediaWidth()"
-            @click="openMediaItem(getMediaDataUri(status))"
           >
         </div>
       </div>
@@ -116,7 +115,6 @@ import StatusFormatMixin, {
   Media,
   ProfilePicture
 } from '../../mixins/status-format'
-import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
 import PublicationDate from '../publication-date/publication-date.vue'
@@ -385,13 +383,6 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
   getMediaTitle (media: Media) {
     return media.title ? media.title : ''
-  }
-
-  openMediaItem (uri: string) {
-    const media = {
-      url: uri
-    }
-    EventHub.$emit('modal_window.show_intended', { media })
   }
 
   mounted () {
