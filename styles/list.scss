@@ -46,6 +46,10 @@
     margin: 0;
     width: 100%;
 
+    @media (min-width: $width-desktop) {
+      margin: 0 0 var(--separation-1);
+    }
+
     .list__item {
       cursor: default;
       display: flex;
