@@ -115,7 +115,6 @@ import StatusFormatMixin, {
   Media,
   ProfilePicture
 } from '../../mixins/status-format'
-import EventHub from '../../modules/event-hub'
 import SharedState, { Errors, VisibleStatuses } from '../../modules/shared-state'
 import Publisher from '../publisher/publisher.vue'
 import PublicationDate from '../publication-date/publication-date.vue'
