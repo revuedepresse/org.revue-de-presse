@@ -147,7 +147,6 @@ const config: NuxtConfig = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/date-fns',
-    '@nuxtjs/emotion',
     '@nuxtjs/pwa',
     '@nuxtjs/router',
     '@nuxtjs/svg',
