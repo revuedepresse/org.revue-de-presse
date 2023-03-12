@@ -376,9 +376,7 @@ export default class DatePicker extends mixins(ApiMixin) {
 
     if (day === Time.formatDate(this.now())) {
       this.intendingToPick(this.now())
-      this.$router.push({
-        path: '/'
-      })
+      this.navigateToHomepage()
 
       return
     }
