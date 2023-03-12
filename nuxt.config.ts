@@ -242,7 +242,7 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'curated-highlights',
-        path: '/:day',
+        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
