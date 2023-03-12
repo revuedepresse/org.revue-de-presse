@@ -193,8 +193,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.$fetchState !== undefined && this.$fetchState.pending
   }
 
-  get outroClass () {
-    if (
+  get undefinedRoute () {
+    return this.$route && this.$route.name === null
+  }
+
+  get fixedStyle () {
+    return this.undefinedRoute ||
       this.showingNotFoundPage ||
       (
         this.showingCuratedHighlights &&
@@ -213,7 +217,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         ) &&
         this.$fetchState.pending === false
       )
-    ) {
+  }
+
+  get outroClass () {
+    if (this.fixedStyle) {
       return 'outro--fixed'
     }
 
@@ -228,7 +235,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return `${filledContainerClass}-with-emptiness`
     }
 
-    if (nonEmptyList || this.fetchingData) {
+    if (nonEmptyList || this.fetchingData || this.undefinedRoute) {
       if (
         (
           this.error &&
@@ -319,7 +326,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showLoadingSpinnerComponent (): boolean {
-    if (this.$route && this.$route.name === null) {
+    if (this.undefinedRoute) {
       return true
     }
 
@@ -406,8 +413,9 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   async fetch () {
-    if (this.$route.name === null) {
+    if (this.undefinedRoute) {
       this.items = []
+
       return
     }
 
@@ -677,7 +685,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     if (
-      this.$route.name === null ||
+      this.undefinedRoute ||
       [
         'curated-highlights',
         'homepage',
