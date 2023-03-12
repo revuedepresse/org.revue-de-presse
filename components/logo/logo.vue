@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import Logotype from '~/assets/revue-de-presse_48x48.png?data'
 import ApiMixin from '~/mixins/api'
 
