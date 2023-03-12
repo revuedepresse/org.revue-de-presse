@@ -175,7 +175,7 @@ export default class DatePicker extends mixins(ApiMixin) {
     const day = Time.formatDate(this.dayBeforePickedDate)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
     return `/${day}`
@@ -185,7 +185,7 @@ export default class DatePicker extends mixins(ApiMixin) {
     const day = Time.formatDate(this.dayFollowingPickedDate)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
     return `/${day}`

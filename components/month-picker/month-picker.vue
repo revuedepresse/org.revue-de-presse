@@ -235,7 +235,7 @@ class MonthPicker extends mixins(ApiMixin) {
     if (day === Time.formatDate(this.now())) {
       this.intendingToPick(this.now())
       this.switchToDayPicking()
-      this.$router.push({ path: '/' })
+      this.navigateToHomepage()
 
       return
     }

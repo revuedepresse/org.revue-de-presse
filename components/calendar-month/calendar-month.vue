@@ -158,7 +158,7 @@ class CalendarMonth extends mixins(ApiMixin) {
     const day = Time.formatDate(this.previousMonth)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
     return `/${day}`
@@ -168,7 +168,7 @@ class CalendarMonth extends mixins(ApiMixin) {
     const day = Time.formatDate(this.nextMonth)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
     return `/${day}`
@@ -333,7 +333,7 @@ class CalendarMonth extends mixins(ApiMixin) {
 
     if (day === Time.formatDate(this.now())) {
       this.intendingToPick(this.now())
-      this.$router.push({ path: '/' })
+      this.navigateToHomepage()
 
       return
     }

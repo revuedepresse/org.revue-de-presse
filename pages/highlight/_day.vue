@@ -643,9 +643,7 @@ export default class Highlights extends mixins(ApiMixin) {
     const day = this.startDate
 
     if (day === Time.formatDate(this.now())) {
-      this.$router.push({
-        path: '/'
-      })
+      this.navigateToHomepage()
 
       return
     }
