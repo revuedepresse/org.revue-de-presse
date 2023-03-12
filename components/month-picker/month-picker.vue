@@ -242,7 +242,7 @@ class MonthPicker extends mixins(ApiMixin) {
 
     this.intendingToPick(this.setTimezone(new Date(day)))
     this.switchToDayPicking()
-    this.$router.push({ path: `/${day}` })
+    this.navigateToHighlightsForDay(day)
   }
 
   switchToYearPicking (): void {

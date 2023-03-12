@@ -649,9 +649,7 @@ export default class Highlights extends mixins(ApiMixin) {
       return
     }
 
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.navigateToHighlightsForDay(day)
   }
 
   validate (ctx: Context) {

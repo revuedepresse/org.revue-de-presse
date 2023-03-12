@@ -178,7 +178,7 @@ export default class DatePicker extends mixins(ApiMixin) {
       return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get nextDayPath () {
@@ -188,7 +188,7 @@ export default class DatePicker extends mixins(ApiMixin) {
       return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get showingCalendar () {
@@ -382,9 +382,7 @@ export default class DatePicker extends mixins(ApiMixin) {
     }
 
     this.intendingToPick(this.setTimezone(new Date(day)))
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.navigateToHighlightsForDay(day)
   }
 
   pickDate () {

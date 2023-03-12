@@ -161,7 +161,7 @@ class CalendarMonth extends mixins(ApiMixin) {
       return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get nextMonthPath () {
@@ -171,7 +171,7 @@ class CalendarMonth extends mixins(ApiMixin) {
       return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get monthYearLabel () {
@@ -339,7 +339,7 @@ class CalendarMonth extends mixins(ApiMixin) {
     }
 
     this.intendingToPick(this.setTimezone(new Date(day)))
-    this.$router.push({ path: `/${day}` })
+    this.navigateToHighlightsForDay(day)
   }
 
   canonicalUrl (date: Date) {
