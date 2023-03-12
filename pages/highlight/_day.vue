@@ -562,7 +562,8 @@ export default class Highlights extends mixins(ApiMixin) {
     if (
       this.showingContactPage ||
       this.showingLegalNoticePage ||
-      this.showingSourcesPage
+      this.showingSourcesPage ||
+      this.showingSupportPage
     ) {
       let title
       let description
