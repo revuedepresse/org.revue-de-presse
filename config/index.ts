@@ -64,7 +64,9 @@ if (process.env.API_AUTH_TOKEN !== undefined) {
   apiAuthToken = process.env.API_AUTH_TOKEN
 }
 
-localStorage.setItem('x-auth-token', apiAuthToken)
+if (typeof localStorage !== 'undefined') {
+  localStorage.setItem('x-auth-token', apiAuthToken)
+}
 
 export { Api, Routes }
 
