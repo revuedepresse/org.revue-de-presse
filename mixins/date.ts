@@ -47,8 +47,8 @@ export default class DateMixin extends Vue {
     ]
   }
 
-  defaultDates (date?: Date) {
-    if (date !== undefined) {
+  defaultDates (date: Date|null) {
+    if (date !== null) {
       return {
         startDate: Time.formatDate(date),
         endDate: Time.formatDate(date)
