@@ -63,10 +63,10 @@ import SharedState from '../../modules/shared-state'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
 import Config from '../../config'
-import { RawStatus } from '../../mixins/status-format'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
 import ApiMixin from '~/mixins/api'
+import { RawStatus } from '~/mixins/status-format'
 import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
