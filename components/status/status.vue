@@ -339,7 +339,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
   replaceMentionsWithWithAnchors (subject: string) {
     const whitespace = 's'
-    const startCharacterClass = '[^<>\\'
+    const startCharacterClass = '[^\.,<>\\'
     const pattern = `(\\${whitespace}?)@(${startCharacterClass}${whitespace}]+)(\\${whitespace}?)`
 
     return subject.replace(
