@@ -1,7 +1,7 @@
 import { Component } from 'nuxt-property-decorator'
 import Config, { Routes } from '../config'
-import DateMixin, { now } from '~/mixins/date'
-import { FormattedStatus } from '~/mixins/status-format'
+import DateMixin, { now, setTimezone } from './date'
+import { FormattedStatus } from './status-format'
 
 @Component
 export default class ApiMixin extends DateMixin {
