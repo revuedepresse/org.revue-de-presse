@@ -346,10 +346,12 @@ class CalendarMonth extends mixins(ApiMixin) {
     const day = Time.formatDate(date)
 
     if (day === Time.formatDate(this.now())) {
-      return `${Site.baseURL}`
+      if (!this.showingDistinctSources) {
+        return `${Site.baseURL}`
+      }
     }
 
-    return `${Site.baseURL}/${day}`
+    return `${Site.baseURL}/${day}${this.localizeDatePath(day)}`
   }
 
   weekDayClasses (weekDay?: Date) {
