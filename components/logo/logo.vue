@@ -2,7 +2,7 @@
   <div class="logo">
     <div class="logo__container">
       <div class="logo__logo-container">
-        <a href="/">
+        <a :href="homepagePath">
           <img
             class="logo__logo"
             alt="logo de Revue de Presse"
