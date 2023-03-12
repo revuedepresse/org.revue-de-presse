@@ -228,15 +228,14 @@ class CalendarMonth extends mixins(ApiMixin) {
   dayNumbers (rowNumber: number) {
     const shift = (rowNumber - 1) * 7
 
-    const week = (new Array(7))
+    return (new Array(7))
       .fill('', 0, 7)
       .map((_, index) => {
         const dayOfWeek = this.setTimezone(new Date(this.dateOfFirstVisibleDay().getTime()))
         dayOfWeek.setDate(dayOfWeek.getDate() + index + shift)
+
         return dayOfWeek
       })
-
-    return week
   }
 
   goToPreviousMonth () {
