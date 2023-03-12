@@ -3,6 +3,12 @@ import Time from '../modules/time'
 import Errors from '../modules/errors'
 
 export const isValidDate = (day: string): boolean => {
+  const matching = day.match(new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d$', 'gi'))
+
+  if (matching === null) {
+    return false
+  }
+
   return Time.formatDate(new Date(day)) === day
 }
 
