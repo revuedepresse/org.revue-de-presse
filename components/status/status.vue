@@ -48,7 +48,7 @@
           </span>
           <a
             class="status__source"
-            :href="formatSource(status)"
+            :href="sourcePathPath(status)"
           >
             Source
           </a>
@@ -290,10 +290,6 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return text.replace(/\s/g, ' ')
   }
 
-  formatSource (status: FormattedStatus) {
-    return `/source/${status.publisherId}/${status.username}`
-  }
-
   removeTrackingParams (subject: string) {
     return subject
       .replaceAll(new RegExp('&*utm[^=]*=[^&]*', 'gi'), '')
@@ -339,7 +335,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
   replaceMentionsWithWithAnchors (subject: string) {
     const whitespace = 's'
-    const startCharacterClass = '[^<>\\'
+    const startCharacterClass = '[^\.,<>\\'
     const pattern = `(\\${whitespace}?)@(${startCharacterClass}${whitespace}]+)(\\${whitespace}?)`
 
     return subject.replace(

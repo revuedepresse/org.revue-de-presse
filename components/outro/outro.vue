@@ -7,7 +7,9 @@
       @revue_2_presse
     </h2>
     <p :class="firstParagraphClasses">
-      Retrouver chaque jour les 10 tweets médias ayant été les plus relayés au cours de la journée.<br />
+      Retrouver chaque jour les 10 tweets médias
+      ayant été les plus relayés au cours de la journée.<br /><br />
+      <a :href="switchBetweenFilteringModes" v-text="filterLabel" /><br /><br />
       <span
         v-if="showSubscribeToTwitterAccountButton"
         class="outro__subscribe-to"
@@ -58,10 +60,10 @@
       À propos
     </h2>
     <p class="outro__paragraph">
-      <a href="/mentions-legales">Mentions Légales</a><br />
-      <a href="/nous-contacter">Nous contacter</a><br />
-      <a href="/nous-soutenir">Nous soutenir</a><br />
-      <a href="/sources">Sources des brèves</a><br />
+      <a :href="legalNoticePagePath">Mentions Légales</a><br />
+      <a :href="contactPagePath">Nous contacter</a><br />
+      <a :href="supportPagePath">Nous soutenir</a><br />
+      <a :href="sourcesPagePath">Sources des brèves</a><br />
     </p>
     <h2
       class="outro__title outro__iconography-funding"
@@ -90,10 +92,10 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import IntroducingIcon from '../../assets/icons/icon-introducing.svg'
 import SharingIcon from '../../assets/icons/icon-sharing.svg'
 import FundingIcon from '../../assets/icons/icon-funding.svg'
-import DateMixin from '~/mixins/date'
+import ApiMixin from '~/mixins/api'
 
 @Component
-class Outro extends mixins(DateMixin) {
+class Outro extends mixins(ApiMixin) {
   get year () {
     return this.now().getFullYear()
   }
@@ -113,6 +115,14 @@ class Outro extends mixins(DateMixin) {
         --icon-funding-height: ${height};
         --icon-funding-width: ${width}
       `
+  }
+
+  get filterLabel () {
+    if (this.showingDistinctSources) {
+      return 'Autoriser l\'apparition d\'un même média plusieurs fois 📰'
+    }
+
+    return 'Empêcher qu\'un même média apparaisse plusieurs fois 🗞🗞🗞'
   }
 
   get introducingIcon () {

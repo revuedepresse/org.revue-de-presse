@@ -67,7 +67,6 @@ import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
 import CalendarMonth from '../calendar-month/calendar-month.vue'
 import MonthPicker from '../month-picker/month-picker.vue'
 import YearPicker from '../year-picker/year-picker.vue'
-import DateMixin from '../../mixins/date'
 import calendarIcon from '~/assets/icons/icon-pick-day.svg'
 import previousDayIcon from '~/assets/icons/icon-previous-day.svg'
 import previousDayActiveIcon from '~/assets/icons/icon-previous-day-active.png'
@@ -75,6 +74,7 @@ import previousDayHoverIcon from '~/assets/icons/icon-previous-day-hover.png'
 import nextDayIcon from '~/assets/icons/icon-next-day.svg'
 import nextDayActiveIcon from '~/assets/icons/icon-next-day-active.png'
 import nextDayHoverIcon from '~/assets/icons/icon-next-day-hover.png'
+import ApiMixin from '~/mixins/api'
 import Time from '~/modules/time'
 
 const DatePickerStore = namespace('date-picker')
@@ -82,7 +82,7 @@ const DatePickerStore = namespace('date-picker')
 @Component({
   components: { CalendarMonth, MonthPicker, YearPicker }
 })
-export default class DatePicker extends mixins(DateMixin) {
+export default class DatePicker extends mixins(ApiMixin) {
   @Prop({
     type: String,
     required: true
@@ -175,20 +175,20 @@ export default class DatePicker extends mixins(DateMixin) {
     const day = Time.formatDate(this.dayBeforePickedDate)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get nextDayPath () {
     const day = Time.formatDate(this.dayFollowingPickedDate)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get showingCalendar () {
@@ -376,17 +376,13 @@ export default class DatePicker extends mixins(DateMixin) {
 
     if (day === Time.formatDate(this.now())) {
       this.intendingToPick(this.now())
-      this.$router.push({
-        path: '/'
-      })
+      this.navigateToHomepage()
 
       return
     }
 
     this.intendingToPick(this.setTimezone(new Date(day)))
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.navigateToHighlightsForDay(day)
   }
 
   pickDate () {

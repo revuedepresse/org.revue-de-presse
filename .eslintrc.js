@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'comma-dangle': 'off',
     'no-control-regex': 'off',
+    'no-useless-escape': 'off',
     'prefer-regex-literals': 'off',
     'vue/html-self-closing': 'off',
     'vue/multi-word-component-names': 'off',

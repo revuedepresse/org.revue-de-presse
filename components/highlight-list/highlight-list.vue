@@ -27,7 +27,7 @@ import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
-import DateMixin, { setTimezone } from '~/mixins/date'
+import DateMixin, { now, setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
 import Logo1x from '~/assets/revue-de-presse_48x48.png?data'
 import Logo2x from '~/assets/revue-de-presse_96x96.png?data'
@@ -138,8 +138,13 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
     }
   }
 
+  get visitingCuratedHighlightsRoute () {
+    return this.$route.name === 'homepage' ||
+      this.$route.name === 'curated-highlights'
+  }
+
   head () {
-    if (this.$route.name === 'curated-highlights' && this.highlights.length > 1) {
+    if (this.visitingCuratedHighlightsRoute && this.highlights.length > 1) {
       const whitespace = '\\s'
       const pattern = `https?://[^${whitespace}]+`
 
@@ -152,7 +157,10 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
         .replaceAll(new RegExp(pattern, 'ig'), '')
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
 
-      const event = setTimezone(new Date(this.startDate))
+      let event = now()
+      if (this.$route.name !== 'homepage') {
+        event = setTimezone(new Date(this.startDate))
+      }
       const localizedDate = event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
       const title = `Revue de presse du ${localizedDate} - Revue-de-presse.org 🦉`

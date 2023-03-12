@@ -62,12 +62,12 @@ import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
-import DateMixin, { getMinDate, isValidDate, now, setTimezone } from '../../mixins/date'
 import Config from '../../config'
-import { RawStatus } from '../../mixins/status-format'
-import ApiMixin from '../../mixins/api'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
+import ApiMixin from '~/mixins/api'
+import { RawStatus } from '~/mixins/status-format'
+import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
@@ -75,6 +75,9 @@ if (SharedState.isProductionModeActive()) {
 
 const MEDIA_INCLUDED = 0
 const MEDIA_EXCLUDED = 1
+
+const HIGHLIGHTS_FROM_SHARED_SOURCES = 0
+const HIGHLIGHTS_FROM_DISTINCT_SOURCES = 1
 
 const RETWEETS_EXCLUDED = 0
 const RETWEETS_INCLUDED = 1
@@ -114,7 +117,7 @@ const DatePickerStore = namespace('date-picker')
     Support
   }
 })
-export default class Highlights extends mixins(ApiMixin, DateMixin) {
+export default class Highlights extends mixins(ApiMixin) {
   $refs!: {
     header: HeightAware,
     day: {
@@ -168,15 +171,16 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   @DatePickerStore.Getter
   public pickingDay!: boolean
 
-  @DatePickerStore.Getter
-  public whichDateHasBeenPicked!: Date
-
   @DatePickerStore.Mutation
   public intendingToPick!: (date: Date) => void
 
+  get visitingCuratedHighlightsRoute () {
+    return this.$route.name === 'curated-highlights' || this.$route.name === 'highlights-from-distinct-sources'
+  }
+
   get day (): string {
     if (
-      this.$route.name === 'curated-highlights' &&
+      this.visitingCuratedHighlightsRoute &&
       this.isValidDate(this.$route.params.day)
     ) {
       return this.$route.params.day
@@ -193,8 +197,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     return this.$fetchState !== undefined && this.$fetchState.pending
   }
 
-  get outroClass () {
-    if (
+  get undefinedRoute () {
+    return this.$route && this.$route.name === null
+  }
+
+  get fixedStyle () {
+    return this.undefinedRoute ||
       this.showingNotFoundPage ||
       (
         this.showingCuratedHighlights &&
@@ -213,7 +221,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         ) &&
         this.$fetchState.pending === false
       )
-    ) {
+  }
+
+  get outroClass () {
+    if (this.fixedStyle) {
       return 'outro--fixed'
     }
 
@@ -228,7 +239,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return `${filledContainerClass}-with-emptiness`
     }
 
-    if (nonEmptyList || this.fetchingData) {
+    if (nonEmptyList || this.fetchingData || this.undefinedRoute) {
       if (
         (
           this.error &&
@@ -268,6 +279,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       list: true,
       '_day--naked': !this.isBaselineView
     }
+  }
+
+  get whichDateHasBeenPicked (): Date|null {
+    return this.$store.getters['date-picker/datePicker']()
   }
 
   get endDate (): string {
@@ -319,6 +334,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showLoadingSpinnerComponent (): boolean {
+    if (this.undefinedRoute) {
+      return true
+    }
+
     if (this.showingCuratedHighlights) {
       return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
     }
@@ -335,7 +354,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showingCuratedHighlights () {
-    return this.showingHomepage || this.$route.name === 'curated-highlights'
+    return this.showingHomepage || this.visitingCuratedHighlightsRoute
   }
 
   get showingSupportPage () {
@@ -363,7 +382,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get validCuratedHighlightsDay () {
-    if (this.$route.name !== 'curated-highlights') {
+    if (!this.visitingCuratedHighlightsRoute) {
       return false
     }
 
@@ -372,8 +391,14 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
   }
 
+  get showingHighlightsFromDistinctSources () {
+    const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
+
+    return this.$route.name === 'highlights-from-distinct-sources' || typeof matchingParam !== 'undefined'
+  }
+
   get isShowingAnotherPage (): boolean {
-    if (this.$route.name === 'curated-highlights') {
+    if (this.visitingCuratedHighlightsRoute) {
       return !this.validCuratedHighlightsDay
     }
 
@@ -402,6 +427,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   async fetch () {
+    if (this.undefinedRoute) {
+      this.items = []
+
+      return
+    }
+
     const action = this.getHighlightsAction()
     const curatedHighlightsRoute = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
@@ -455,6 +486,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const requestOptions: RequestOptions = {
       headers: requestHeaders,
       params: {
+        distinctSources: HIGHLIGHTS_FROM_SHARED_SOURCES,
         includeRetweets: RETWEETS_INCLUDED,
         excludeMedia: MEDIA_INCLUDED,
         startDate: requestedDate,
@@ -476,6 +508,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
     if (!this.$device.isDesktop && !this.$device.isTablet) {
       requestOptions.params.excludeMedia = MEDIA_EXCLUDED
+    }
+
+    if (this.showingHighlightsFromDistinctSources) {
+      requestOptions.params.distinctSources = HIGHLIGHTS_FROM_DISTINCT_SOURCES
     }
 
     if (this.selectedAggregates.length > 0) {
@@ -526,7 +562,8 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     if (
       this.showingContactPage ||
       this.showingLegalNoticePage ||
-      this.showingSourcesPage
+      this.showingSourcesPage ||
+      this.showingSupportPage
     ) {
       let title
       let description
@@ -570,6 +607,13 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
       return {
         title,
+        link: [
+          {
+            hid: 'canonical',
+            rel: 'canonical',
+            href
+          }
+        ],
         meta: [
           { hid: 'description', name: 'description', content: description },
           {
@@ -608,16 +652,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     const day = this.startDate
 
     if (day === Time.formatDate(this.now())) {
-      this.$router.push({
-        path: '/'
-      })
+      this.navigateToHomepage()
 
       return
     }
 
-    this.$router.push({
-      path: `/${day}`
-    })
+    this.navigateToHighlightsForDay(day)
   }
 
   validate (ctx: Context) {
@@ -632,7 +672,12 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
       return true
     }
 
-    if (ctx.route.name === 'curated-highlights' && ctx.route.path.endsWith('/')) {
+    if (
+      (
+        ctx.route.name === 'highlights-from-distinct-sources' ||
+        ctx.route.name === 'curated-highlights'
+      ) && ctx.route.path.endsWith('/')
+    ) {
       return false
     }
 
@@ -645,7 +690,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
 
   detectError () {
     if (
-      this.$route.name === 'curated-highlights' &&
+      this.visitingCuratedHighlightsRoute &&
       isValidDate(this.$route.params.day) && (
         setTimezone(new Date(this.$route.params.day)) > now() ||
         setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
@@ -668,8 +713,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     if (
+      this.undefinedRoute ||
       [
         'curated-highlights',
+        'highlights-from-distinct-sources',
         'homepage',
         'contact',
         'legal-notice',
@@ -677,7 +724,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
         'sources',
         'not-found'
       ].every(r => r !== this.$route.name) || (
-        this.$route.name === 'curated-highlights' &&
+        this.visitingCuratedHighlightsRoute &&
         !isValidDate(this.$route.params.day)
       )
     ) {
@@ -695,7 +742,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     if (
-      this.$route.name === 'curated-highlights' &&
+      this.visitingCuratedHighlightsRoute &&
       isValidDate(this.$route.params.day) &&
       setTimezone(new Date(this.$route.params.day)) <= now() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())

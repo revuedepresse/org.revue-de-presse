@@ -7,8 +7,8 @@
   width: 100%;
 
   &--fixed {
-    position: fixed;
     bottom: 0;
+    position: fixed;
     left: 0;
   }
 
@@ -57,7 +57,7 @@
       width: var(--icon-introducing-width);
       height: var(--icon-introducing-height);
       left: -5px;
-      top: -2px;
+      top: 2px;
     }
 
     &-sharing:before {
@@ -65,7 +65,7 @@
       width: var(--icon-sharing-width);
       height: var(--icon-sharing-height);
       left: -5px;
-      top: -2px;
+      top: 2px;
     }
 
     &-funding:before {
@@ -73,7 +73,7 @@
       width: var(--icon-funding-width);
       height: var(--icon-funding-height);
       left: -2px;
-      top: -5px;
+      top: 0;
     }
   }
 
@@ -129,7 +129,9 @@
     color: var(--color-white);
     position: relative;
     padding-left: 30px;
+    line-height: 30px;
     margin-top: calc(3 * var(--separation-1));
+    margin-bottom: var(--separation-1);
 
     &:before {
       color: var(--color-white);

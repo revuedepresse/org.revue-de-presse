@@ -78,17 +78,17 @@
 
 <script lang="ts">
 import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
-import DateMixin from '../../mixins/date'
 import Time from '../../modules/time'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import ApiMixin from '~/mixins/api'
 import Site from '~/modules/site'
 
 const DatePickerStore = namespace('date-picker')
 
 @Component
-class CalendarMonth extends mixins(DateMixin) {
+class CalendarMonth extends mixins(ApiMixin) {
   @Prop({
     type: Boolean,
     default: false
@@ -158,20 +158,20 @@ class CalendarMonth extends mixins(DateMixin) {
     const day = Time.formatDate(this.previousMonth)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get nextMonthPath () {
     const day = Time.formatDate(this.nextMonth)
 
     if (day === Time.formatDate(this.now())) {
-      return '/'
+      return this.homepagePath
     }
 
-    return `/${day}`
+    return this.dailyHighlightsPath(day)
   }
 
   get monthYearLabel () {
@@ -228,15 +228,14 @@ class CalendarMonth extends mixins(DateMixin) {
   dayNumbers (rowNumber: number) {
     const shift = (rowNumber - 1) * 7
 
-    const week = (new Array(7))
+    return (new Array(7))
       .fill('', 0, 7)
       .map((_, index) => {
         const dayOfWeek = this.setTimezone(new Date(this.dateOfFirstVisibleDay().getTime()))
         dayOfWeek.setDate(dayOfWeek.getDate() + index + shift)
+
         return dayOfWeek
       })
-
-    return week
   }
 
   goToPreviousMonth () {
@@ -334,23 +333,25 @@ class CalendarMonth extends mixins(DateMixin) {
 
     if (day === Time.formatDate(this.now())) {
       this.intendingToPick(this.now())
-      this.$router.push({ path: '/' })
+      this.navigateToHomepage()
 
       return
     }
 
     this.intendingToPick(this.setTimezone(new Date(day)))
-    this.$router.push({ path: `/${day}` })
+    this.navigateToHighlightsForDay(day)
   }
 
   canonicalUrl (date: Date) {
     const day = Time.formatDate(date)
 
     if (day === Time.formatDate(this.now())) {
-      return `${Site.baseURL}`
+      if (!this.showingDistinctSources) {
+        return `${Site.baseURL}`
+      }
     }
 
-    return `${Site.baseURL}/${day}`
+    return `${Site.baseURL}/${day}${this.localizeDatePath(day)}`
   }
 
   weekDayClasses (weekDay?: Date) {

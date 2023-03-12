@@ -2,7 +2,7 @@
   <div class="logo">
     <div class="logo__container">
       <div class="logo__logo-container">
-        <a href="/">
+        <a :href="homepagePath">
           <img
             class="logo__logo"
             alt="logo de Revue de Presse"
@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import Logotype from '~/assets/revue-de-presse_48x48.png?data'
+import ApiMixin from '~/mixins/api'
 
 @Component
-export default class Logo extends Vue {
+export default class Logo extends ApiMixin {
   get logo () {
     return Logotype
   }

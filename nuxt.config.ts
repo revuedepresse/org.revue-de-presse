@@ -1,6 +1,7 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
 import { now, setTimezone } from './mixins/date'
+import { localizeDate, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
 import Site from './modules/site'
 
 const description =
@@ -9,12 +10,14 @@ const title = 'Revue de presse'
 const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
-const days = () => {
+const days = (until = { today: false }) => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
   const yesterday = now()
-  yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
+  if (!until.today) {
+    yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
+  }
 
   do {
     const nextDate = new Date()
@@ -241,8 +244,13 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
+        name: 'highlights-from-distinct-sources',
+        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)/actualites-du-:localizedDate([-\\S]+)',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
         name: 'curated-highlights',
-        path: '/:day',
+        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
@@ -275,6 +283,17 @@ const config: NuxtConfig = {
         url: '/nous-soutenir',
         lastmod: (new Date('2023-03-06').toISOString())
       },
+      ...days({ today: true })
+        .map((d: string) => {
+          const day = new Date(d.replace('/', ''))
+          day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
+
+          return {
+            url: `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
+            lastmod: (day.toISOString())
+          }
+        })
+        .reverse(),
       ...days()
         .map((d: string) => {
           const day = new Date(d.replace('/', ''))

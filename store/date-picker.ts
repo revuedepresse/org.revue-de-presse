@@ -9,7 +9,7 @@ import DatePickerChoices from '../components/date-picker/picking-choices'
 class DatePickerStore extends VuexModule {
   public pickingChoice: string = DatePickerChoices.none
 
-  public pickedDate!: Date
+  public pickedDate: Date|null = null
 
   public get getPickingChoice (): string {
     return this.pickingChoice
@@ -31,8 +31,10 @@ class DatePickerStore extends VuexModule {
     return this.getPickingChoice === DatePickerChoices.none
   }
 
-  public get whichDateHasBeenPicked (): Date {
-    return this.pickedDate
+  public get datePicker (): () => Date|null {
+    const pickedDate = this.pickedDate
+
+    return () => pickedDate
   }
 
   @Mutation

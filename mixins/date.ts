@@ -3,6 +3,12 @@ import Time from '../modules/time'
 import Errors from '../modules/errors'
 
 export const isValidDate = (day: string): boolean => {
+  const matching = day.match(new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d$', 'gi'))
+
+  if (matching === null) {
+    return false
+  }
+
   return Time.formatDate(new Date(day)) === day
 }
 
@@ -41,8 +47,8 @@ export default class DateMixin extends Vue {
     ]
   }
 
-  defaultDates (date?: Date) {
-    if (date !== undefined) {
+  defaultDates (date: Date|null) {
+    if (date !== null) {
       return {
         startDate: Time.formatDate(date),
         endDate: Time.formatDate(date)
