@@ -7,7 +7,9 @@
       @revue_2_presse
     </h2>
     <p :class="firstParagraphClasses">
-      Retrouver chaque jour les 10 tweets médias ayant été les plus relayés au cours de la journée.<br />
+      Retrouver chaque jour les 10 tweets médias
+      ayant été les plus relayés au cours de la journée.<br /><br />
+      <a :href="distinctSourcesRoute" v-text="sourcesKind" /><br /><br />
       <span
         v-if="showSubscribeToTwitterAccountButton"
         class="outro__subscribe-to"
@@ -113,6 +115,35 @@ class Outro extends mixins(DateMixin) {
         --icon-funding-height: ${height};
         --icon-funding-width: ${width}
       `
+  }
+
+  get distinctSourcesRoute () {
+    const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
+    const path = this.$route.path
+    const query = structuredClone(this.$route.query)
+
+    const pattern = '\\?[^\\?]+$'
+    const postSubstitutionPath = path.replace(new RegExp(pattern, 'gi'), '')
+
+    if (typeof matchingParam === 'undefined') {
+      query['sources-distinctes'] = 'true'
+
+      return this.$router.resolve({ path: postSubstitutionPath, query: { 'sources-distinctes': 'true' } }).href
+    }
+
+    delete query['sources-distinctes']
+
+    return this.$router.resolve({ path: postSubstitutionPath, query }).href
+  }
+
+  get sourcesKind () {
+    const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
+
+    if (typeof matchingParam === 'undefined') {
+      return 'Empêcher qu\'un même média apparaisse plusieurs fois 🗞🗞🗞'
+    }
+
+    return 'Autoriser l\'apparition d\'un même média plusieurs fois 📰'
   }
 
   get introducingIcon () {

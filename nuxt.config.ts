@@ -241,6 +241,11 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
+        name: 'highlights-from-distinct-sources',
+        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)/breves-actualites-du-:localizedDate([-\\S]+)',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
         name: 'curated-highlights',
         path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
