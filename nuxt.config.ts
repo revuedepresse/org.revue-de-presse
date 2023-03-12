@@ -289,7 +289,7 @@ const config: NuxtConfig = {
           day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
 
           return {
-            url: `d${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
+            url: `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
             lastmod: (day.toISOString())
           }
         })
