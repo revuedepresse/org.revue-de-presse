@@ -171,9 +171,6 @@ export default class Highlights extends mixins(ApiMixin) {
   @DatePickerStore.Getter
   public pickingDay!: boolean
 
-  @DatePickerStore.Getter
-  public whichDateHasBeenPicked!: Date
-
   @DatePickerStore.Mutation
   public intendingToPick!: (date: Date) => void
 
@@ -282,6 +279,10 @@ export default class Highlights extends mixins(ApiMixin) {
       list: true,
       '_day--naked': !this.isBaselineView
     }
+  }
+
+  get whichDateHasBeenPicked (): Date|null {
+    return this.$store.getters['date-picker/datePicker']()
   }
 
   get endDate (): string {
