@@ -3,6 +3,17 @@ import Config, { Routes } from '../config'
 import DateMixin, { now, setTimezone } from './date'
 import { FormattedStatus } from './status-format'
 
+export const HIGHLIGHTS_PATH_PREFIX = '/actualites-du-'
+
+export const localizeDate = (date: string): string => {
+  const event = setTimezone(new Date(date))
+  const pattern = '[\\u0300-\\u036f]'
+
+  return `${event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`
+    .normalize('NFD').replace(new RegExp(pattern, 'gi'), '')
+    .replace(new RegExp('\\s', 'gi'), '-')
+}
+
 @Component
 export default class ApiMixin extends DateMixin {
   get routes (): any {
@@ -105,19 +116,14 @@ export default class ApiMixin extends DateMixin {
 
   localizeDatePath (day: string): string {
     if (this.showingDistinctSources) {
-      return `/actualites-du-${this.localizeDate(day)}`
+      return `${HIGHLIGHTS_PATH_PREFIX}${this.localizeDate(day)}`
     }
 
     return ''
   }
 
-  localizeDate (day: string): string {
-    const event = this.setTimezone(new Date(day))
-    const pattern = '[\\u0300-\\u036f]'
-
-    return `${event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`
-      .normalize('NFD').replace(new RegExp(pattern, 'gi'), '')
-      .replace(new RegExp('\\s', 'gi'), '-')
+  localizeDate (date: string): string {
+    return localizeDate(date)
   }
 
   navigateToHomepage () {
