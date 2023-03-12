@@ -60,10 +60,10 @@
       À propos
     </h2>
     <p class="outro__paragraph">
-      <a href="/mentions-legales">Mentions Légales</a><br />
-      <a href="/nous-contacter">Nous contacter</a><br />
-      <a href="/nous-soutenir">Nous soutenir</a><br />
-      <a href="/sources">Sources des brèves</a><br />
+      <a :href="legalNoticePagePath">Mentions Légales</a><br />
+      <a :href="contactPagePath">Nous contacter</a><br />
+      <a :href="supportPagePath">Nous soutenir</a><br />
+      <a :href="sourcesPagePath">Sources des brèves</a><br />
     </p>
     <h2
       class="outro__title outro__iconography-funding"
