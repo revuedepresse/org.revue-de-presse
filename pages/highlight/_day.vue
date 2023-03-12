@@ -319,6 +319,10 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   get showLoadingSpinnerComponent (): boolean {
+    if (this.$route && this.$route.name === null) {
+      return true
+    }
+
     if (this.showingCuratedHighlights) {
       return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
     }
@@ -402,6 +406,11 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
   }
 
   async fetch () {
+    if (this.$route.name === null) {
+      this.items = []
+      return
+    }
+
     const action = this.getHighlightsAction()
     const curatedHighlightsRoute = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
@@ -668,6 +677,7 @@ export default class Highlights extends mixins(ApiMixin, DateMixin) {
     }
 
     if (
+      this.$route.name === null ||
       [
         'curated-highlights',
         'homepage',
