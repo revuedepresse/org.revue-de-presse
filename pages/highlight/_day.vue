@@ -607,6 +607,13 @@ export default class Highlights extends mixins(ApiMixin) {
 
       return {
         title,
+        link: [
+          {
+            hid: 'canonical',
+            rel: 'canonical',
+            href
+          }
+        ],
         meta: [
           { hid: 'description', name: 'description', content: description },
           {
