@@ -175,7 +175,7 @@ export default class Highlights extends mixins(ApiMixin) {
   public intendingToPick!: (date: Date) => void
 
   get visitingCuratedHighlightsRoute () {
-    return this.$route.name === 'curated-highlights'
+    return this.$route.name === 'curated-highlights' || this.$route.name === 'highlights-from-distinct-sources'
   }
 
   get day (): string {
