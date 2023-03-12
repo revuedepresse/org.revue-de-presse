@@ -75,7 +75,6 @@ import nextDayIcon from '~/assets/icons/icon-next-day.svg'
 import nextDayActiveIcon from '~/assets/icons/icon-next-day-active.png'
 import nextDayHoverIcon from '~/assets/icons/icon-next-day-hover.png'
 import ApiMixin from '~/mixins/api'
-import EventHub from '~/modules/event-hub'
 import Time from '~/modules/time'
 
 const DatePickerStore = namespace('date-picker')
