@@ -92,10 +92,10 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import IntroducingIcon from '../../assets/icons/icon-introducing.svg'
 import SharingIcon from '../../assets/icons/icon-sharing.svg'
 import FundingIcon from '../../assets/icons/icon-funding.svg'
-import DateMixin from '~/mixins/date'
+import ApiMixin from '~/mixins/api'
 
 @Component
-class Outro extends mixins(DateMixin) {
+class Outro extends mixins(ApiMixin) {
   get year () {
     return this.now().getFullYear()
   }

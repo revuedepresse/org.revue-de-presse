@@ -41,7 +41,7 @@ import ScrollableList from '../scrollable-list/scrollable-list.vue'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
-import DateMixin from '~/mixins/date'
+import ApiMixin from '~/mixins/api'
 import Time from '~/modules/time'
 
 type DateInterval = {
@@ -54,7 +54,7 @@ const DatePickerStore = namespace('date-picker')
 @Component({
   components: { ScrollableList }
 })
-class MonthPicker extends mixins(DateMixin) {
+class MonthPicker extends mixins(ApiMixin) {
   @Prop({
     type: Boolean,
     required: true

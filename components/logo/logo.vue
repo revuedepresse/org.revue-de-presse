@@ -22,9 +22,10 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import Logotype from '~/assets/revue-de-presse_48x48.png?data'
+import ApiMixin from '~/mixins/api'
 
 @Component
-export default class Logo extends Vue {
+export default class Logo extends ApiMixin {
   get logo () {
     return Logotype
   }

@@ -78,17 +78,17 @@
 
 <script lang="ts">
 import { Component, Prop, mixins, namespace } from 'nuxt-property-decorator'
-import DateMixin from '../../mixins/date'
 import Time from '../../modules/time'
 import pickItemIcon from '~/assets/icons/icon-pick-item.svg'
 import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
+import ApiMixin from '~/mixins/api'
 import Site from '~/modules/site'
 
 const DatePickerStore = namespace('date-picker')
 
 @Component
-class CalendarMonth extends mixins(DateMixin) {
+class CalendarMonth extends mixins(ApiMixin) {
   @Prop({
     type: Boolean,
     default: false

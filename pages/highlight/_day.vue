@@ -62,12 +62,13 @@ import HighlightList from '../../components/highlight-list/highlight-list.vue'
 import SharedState from '../../modules/shared-state'
 import Sources from '../../components/sources/sources.vue'
 import Outro from '../../components/outro/outro.vue'
-import DateMixin, { getMinDate, isValidDate, now, setTimezone } from '../../mixins/date'
 import Config from '../../config'
 import { RawStatus } from '../../mixins/status-format'
 import ApiMixin from '../../mixins/api'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
+import ApiMixin from '~/mixins/api'
+import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
@@ -117,7 +118,7 @@ const DatePickerStore = namespace('date-picker')
     Support
   }
 })
-export default class Highlights extends mixins(ApiMixin, DateMixin) {
+export default class Highlights extends mixins(ApiMixin) {
   $refs!: {
     header: HeightAware,
     day: {
