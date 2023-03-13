@@ -321,7 +321,7 @@ const config: NuxtConfig = {
 
   generate: {
     fallback: true,
-    subFolders: false,
+    subFolders: true,
     routes: [
       '/',
       '/mentions-legales',
