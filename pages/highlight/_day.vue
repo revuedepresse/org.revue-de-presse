@@ -691,7 +691,7 @@ export default class Highlights extends mixins(ApiMixin) {
   detectError () {
     if (
       this.visitingCuratedHighlightsRoute &&
-      isValidDate(this.$route.params.day) && (
+      this.isValidDate(this.$route.params.day) && (
         setTimezone(new Date(this.$route.params.day)) > now() ||
         setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
       )
@@ -725,7 +725,7 @@ export default class Highlights extends mixins(ApiMixin) {
         'not-found'
       ].every(r => r !== this.$route.name) || (
         this.visitingCuratedHighlightsRoute &&
-        !isValidDate(this.$route.params.day)
+        !this.isValidDate(this.$route.params.day)
       )
     ) {
       this.$nuxt.error({

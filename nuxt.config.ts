@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { now, setTimezone } from './mixins/date'
+import { formatDate, now, setTimezone } from './mixins/date'
 import { localizeDate, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
 import Site from './modules/site'
 
@@ -10,14 +10,12 @@ const title = 'Revue de presse'
 const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
-const days = (until = { today: false }) => {
+const days = () => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
   const yesterday = now()
-  if (!until.today) {
-    yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
-  }
+  yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
 
   do {
     const nextDate = new Date()
@@ -268,25 +266,34 @@ const config: NuxtConfig = {
         lastmod: (now().toISOString())
       },
       {
-        url: '/contact',
-        lastmod: (new Date('2023-03-02').toISOString())
-      },
-      {
         url: '/mentions-legales',
         lastmod: (new Date('2023-01-23').toISOString())
       },
       {
-        url: '/sources',
+        url: '/nous-contacter',
         lastmod: (new Date('2023-03-02').toISOString())
       },
       {
         url: '/nous-soutenir',
         lastmod: (new Date('2023-03-06').toISOString())
       },
-      ...days({ today: true })
+      {
+        url: '/sources',
+        lastmod: (new Date('2023-03-02').toISOString())
+      },
+      {
+        url: `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
+        changefreq: 'daily',
+        lastmod: (now().toISOString())
+      },
+      ...days()
         .map((d: string) => {
-          const day = new Date(d.replace('/', ''))
+          let day = new Date(d.replace('/', ''))
           day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
+
+          if (d === formatDate(now())) {
+            day = now()
+          }
 
           return {
             url: `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
@@ -315,7 +322,16 @@ const config: NuxtConfig = {
   generate: {
     fallback: true,
     subFolders: false,
-    routes: ['/', ...days()]
+    routes: [
+      '/',
+      '/mentions-legales',
+      '/nous-contacter',
+      '/nous-soutenir',
+      '/sources',
+      `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}}`,
+      ...days().map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
+      ...days()
+    ]
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
