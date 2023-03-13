@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -68,7 +68,7 @@
     "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
-    "eslint": "^8.35.0",
+    "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-typescript": "^0.14.0",
