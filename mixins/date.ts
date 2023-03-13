@@ -2,6 +2,10 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import Time from '../modules/time'
 import Errors from '../modules/errors'
 
+export const formatDate = (date: Date): string => {
+  return Time.formatDate(date)
+}
+
 export const isValidDate = (day: string): boolean => {
   const matching = day.match(new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d$', 'gi'))
 
@@ -76,7 +80,7 @@ export default class DateMixin extends Vue {
   }
 
   formatDate (date: Date) {
-    return Time.formatDate(date)
+    return formatDate(date)
   }
 
   guardAgainstMissingMonthOrYear (candidate: string|undefined) {
