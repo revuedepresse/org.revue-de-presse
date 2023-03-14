@@ -40,7 +40,7 @@
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
     "@nuxtjs/sitemap": "^2.4.0",
-    "@typescript-eslint/typescript-estree": "^5.54.1",
+    "@typescript-eslint/typescript-estree": "^5.55.0",
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.29.1",
     "csstype": "^3.1.1",
