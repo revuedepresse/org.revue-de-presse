@@ -8,3 +8,8 @@ to = "/well-known/assetlinks.json"
 status = 200
 force = true
 
+[[redirects]]
+from = "/.well-known/2023-03-14_linkedin-community-management-api-validation.txt"
+to = "/well-known/2023-03-14_linkedin-community-management-api-validation.txt"
+status = 200
+force = true

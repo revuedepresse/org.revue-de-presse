@@ -8,10 +8,13 @@ deps-analysis: ## Analyze dependencies graph
 generate: ## Build production package
 	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate --modern'
 
-publish-asset-links: # Publish assets links for TWA
+publish-asset-links: ## Publish assets links for TWA
 	@/bin/bash -c 'mkdir --parents dist/well-known && cp ./static/assetlinks.json ./dist/well-known'
 
-build: generate publish-asset-links ## Build production package
+copy-domain-name-ownership-proof: ## Copy proof of domain name ownership
+	@/bin/bash -c 'cp ./static/2023-03-14_linkedin-community-management-api-validation.txt ./dist/well-known'
+
+build: generate publish-asset-links copy-domain-name-ownership-proof ## Build production package
 	@export IFS=$$'\n'
 
 	for page in $$(find ./dist/* -type f | sort --reverse);
