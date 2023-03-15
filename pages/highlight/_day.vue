@@ -66,6 +66,7 @@ import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
 import ApiMixin from '~/mixins/api'
+import SourcesMixin from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
 import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
@@ -117,7 +118,7 @@ const DatePickerStore = namespace('date-picker')
     Support
   }
 })
-export default class Highlights extends mixins(ApiMixin) {
+export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
   $refs!: {
     header: HeightAware,
     day: {
@@ -645,11 +646,14 @@ export default class Highlights extends mixins(ApiMixin) {
   }
 
   validate (ctx: Context) {
+    if (ctx.route.name === 'source') {
+      return this.isInvalidSourceRoute(ctx.route)
+    }
+
     if ([
       'legal-notice',
       'homepage',
       'contact',
-      'source',
       'sources',
       'not-found'
     ].find(route => route === ctx.route.name)) {

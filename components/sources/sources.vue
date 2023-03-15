@@ -65,49 +65,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import Sources from '../../assets/sources.json'
+import { Context } from '@nuxt/types'
 
-type Source = {
-  name: string,
-  twitterId: number,
-  username: string,
-  url: string
-}
+import { Component, mixins } from 'nuxt-property-decorator'
+import Sources from '../../assets/sources.json'
+import SourcesMixin, { Source } from '~/mixins/sources'
+import ApiMixin from '~/mixins/api'
 
 @Component
-class SourcesPage extends Vue {
+class SourcesPage extends mixins(ApiMixin, SourcesMixin) {
   $refs!: {
     list: HTMLElement,
     [key: string]: any
   }
 
   get sources () {
-    if (typeof Sources === 'undefined') {
-      return []
-    }
-
-    const sources: Source[] = structuredClone(Sources)
-    const sortedSources: Source[] = sources.sort((left: Source, right: Source) => {
-      if (left.username === right.username) {
-        return 0
-      }
-
-      if (left.username < right.username) {
-        return -1
-      }
-
-      return 1
-    })
+    const sortedSources: Source[] = this.sortedSources
 
     if (this.$route.name === 'source' && this.$route.params.twitterId) {
       const twitterId: number = parseInt(this.$route.params.twitterId, 10)
       const filteredSource = sortedSources.find(s => s.twitterId === twitterId)
 
+      if (!filteredSource) {
+        return []
+      }
+
       return [filteredSource]
     }
 
-    return sources
+    return sortedSources
   }
 
   formatExternalUrl (username: string) {
@@ -141,6 +127,25 @@ class SourcesPage extends Vue {
     }
 
     selectedItem.scrollIntoView({ block: 'center' })
+  }
+
+  validate (ctx: Context) {
+    if (ctx.route.name !== 'source') {
+      return true
+    }
+
+    if (!ctx.route || !ctx.route.params) {
+      return false
+    }
+
+    const params: string[] = Object.keys(ctx.route.params)
+
+    const matchingParam = params.find(p => p === 'twitterId')
+    if (matchingParam === 'undefined') {
+      return false
+    }
+
+    return Sources.filter(s => `${s.twitterId}` === matchingParam).length > 0
   }
 
   mounted () {
