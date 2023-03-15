@@ -65,7 +65,7 @@ import Outro from '../../components/outro/outro.vue'
 import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
-import SourcesMixin from '~/mixins/sources'
+import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
 import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
@@ -117,7 +117,7 @@ const DatePickerStore = namespace('date-picker')
     Support
   }
 })
-export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
+export default class Highlights extends mixins(SourcesMixin) {
   $refs!: {
     header: HeightAware,
     day: {
@@ -309,6 +309,10 @@ export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
   }
 
   get showErrorMessage (): boolean {
+    if (this.showingSourcePage && !this.isValidSourceRoute(this.$route)) {
+      return true
+    }
+
     if (
       (this.showingHomepage && this.items.length > 0) ||
       this.showingContactPage ||
@@ -340,6 +344,10 @@ export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
 
     if (this.showingCuratedHighlights) {
       return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
+    }
+
+    if (this.showingSourcePage && !this.isValidSourceRoute(this.$route)) {
+      return true
     }
 
     if (this.showingNotFoundPage) {
@@ -646,7 +654,7 @@ export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
 
   validate (ctx: Context) {
     if (ctx.route.name === 'source') {
-      return this.isInvalidSourceRoute(ctx.route)
+      return !isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
     }
 
     if ([
@@ -707,12 +715,14 @@ export default class Highlights extends mixins(ApiMixin, SourcesMixin) {
         'homepage',
         'contact',
         'legal-notice',
-        'source',
         'sources',
         'not-found'
       ].every(r => r !== this.$route.name) || (
         this.visitingCuratedHighlightsRoute &&
         !this.isValidDate(this.$route.params.day)
+      ) || (
+        this.$route.name === 'source' &&
+        !isValidSourceRoute({ sortedSources: sortSources(), route: this.$route })
       )
     ) {
       this.$nuxt.error({
