@@ -1,13 +1,13 @@
 <template>
   <div
-    v-if="isShowingSourcesPage"
+    v-if="showingSourceContents"
     ref="sources"
     class="sources"
   >
-    <h1 v-if="showAllSources">
+    <h1 v-if="showingSourcesPage">
       Sources des brèves
     </h1>
-    <p v-if="showAllSources">
+    <p v-if="showingSourcesPage">
       Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Twitter des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
     </p>
     <div
@@ -17,7 +17,7 @@
       class="sources__item"
     >
       <h2
-        v-if="showAllSources"
+        v-if="showingSourcesPage"
         :id="formatId(source.username)"
       >
         {{ source.name }}
@@ -55,7 +55,7 @@
       </ul>
     </div>
     <p
-      v-if="showAllSources"
+      v-if="showingSourcesPage"
       id="footnote"
       class="sources__footnote"
     >
@@ -65,57 +65,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import Sources from '../../assets/sources.json'
-
-type Source = {
-  name: string,
-  twitterId: number,
-  username: string,
-  url: string
-}
+import { Component, mixins } from 'nuxt-property-decorator'
+import SourcesMixin, { Source } from '~/mixins/sources'
+import ApiMixin from '~/mixins/api'
 
 @Component
-class SourcesPage extends Vue {
+class SourcesPage extends mixins(ApiMixin, SourcesMixin) {
   $refs!: {
     list: HTMLElement,
     [key: string]: any
   }
 
-  get isShowingSourcesPage () {
-    return this.$route.name === 'sources' || this.$route.name === 'source'
-  }
-
-  get showAllSources () {
-    return this.$route.name === 'sources'
-  }
-
   get sources () {
-    if (typeof Sources === 'undefined') {
-      return []
-    }
-
-    const sources: Source[] = structuredClone(Sources)
-    const sortedSources: Source[] = sources.sort((left: Source, right: Source) => {
-      if (left.username === right.username) {
-        return 0
-      }
-
-      if (left.username < right.username) {
-        return -1
-      }
-
-      return 1
-    })
+    const sortedSources: Source[] = this.sortedSources
 
     if (this.$route.name === 'source' && this.$route.params.twitterId) {
       const twitterId: number = parseInt(this.$route.params.twitterId, 10)
       const filteredSource = sortedSources.find(s => s.twitterId === twitterId)
 
+      if (!filteredSource) {
+        return []
+      }
+
       return [filteredSource]
     }
 
-    return sources
+    return sortedSources
   }
 
   formatExternalUrl (username: string) {
@@ -127,7 +102,7 @@ class SourcesPage extends Vue {
   }
 
   scrollIntoView () {
-    if (!this.isShowingSourcesPage) {
+    if (!this.showingSourceContents) {
       return
     }
 

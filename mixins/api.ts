@@ -14,6 +14,10 @@ export const localizeDate = (date: string): string => {
     .replace(new RegExp('\\s', 'gi'), '-')
 }
 
+export const sourcePath = (status: { publisherId: string, username: string }): string => {
+  return `/source/${status.publisherId}/${status.username}`
+}
+
 @Component
 export default class ApiMixin extends DateMixin {
   get routes (): any {
@@ -52,6 +56,26 @@ export default class ApiMixin extends DateMixin {
     return `/nous-contacter${this.distinctSourcesQueryParam}`
   }
 
+  get showingContactPage () {
+    return this.$route.name === 'contact'
+  }
+
+  get showingLegalNoticePage () {
+    return this.$route.name === 'legal-notice'
+  }
+
+  get showingSourcesPage () {
+    return this.$route.name === 'sources'
+  }
+
+  get showingSourcePage () {
+    return this.$route.name === 'source'
+  }
+
+  get showingSourceContents () {
+    return this.showingSourcePage || this.showingSourcesPage
+  }
+
   get supportPagePath (): string {
     return `/nous-soutenir${this.distinctSourcesQueryParam}`
   }
@@ -60,8 +84,8 @@ export default class ApiMixin extends DateMixin {
     return `/sources${this.distinctSourcesQueryParam}`
   }
 
-  sourcePathPath (status: FormattedStatus) {
-    return `/source/${status.publisherId}/${status.username}${this.distinctSourcesQueryParam}`
+  sourcePath (status: FormattedStatus) {
+    return `${sourcePath(status)}${this.distinctSourcesQueryParam}`
   }
 
   get showingDistinctSources () {

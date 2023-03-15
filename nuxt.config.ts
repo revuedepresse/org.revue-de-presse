@@ -1,8 +1,9 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
 import { formatDate, now, setTimezone } from './mixins/date'
-import { localizeDate, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
+import { localizeDate, sourcePath, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
 import Site from './modules/site'
+import Sources from './assets/sources.json'
 
 const description =
   'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
@@ -39,6 +40,14 @@ const days = () => {
 
     return `/${d.getFullYear()}-${month}-${date}`
   })
+}
+
+const sources = () => {
+  return Sources
+    .map(s => sourcePath({
+      publisherId: `${s.twitterId}`,
+      username: s.username.toLowerCase()
+    }))
 }
 
 type Route = {
@@ -311,7 +320,14 @@ const config: NuxtConfig = {
             lastmod: (day.toISOString())
           }
         })
-        .reverse()
+        .reverse(),
+      ...sources()
+        .map((sourcePath) => {
+          return {
+            url: sourcePath,
+            lastmod: (new Date('2023-03-15').toISOString())
+          }
+        })
     ]
   },
 
@@ -330,7 +346,8 @@ const config: NuxtConfig = {
       '/sources',
       `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
       ...days().map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
-      ...days()
+      ...days(),
+      ...sources()
     ]
   },
 

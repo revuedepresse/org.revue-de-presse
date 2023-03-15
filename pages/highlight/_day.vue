@@ -26,9 +26,9 @@
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
           />
-          <Contact />
-          <LegalNotice />
-          <Sources />
+          <LazyContact v-if="showingContactPage" />
+          <LazyLegalNotice v-if="showingLegalNoticePage" />
+          <LazySources v-if="showingSourceContents" />
           <Support />
         </div>
         <div class="_day__column">
@@ -65,7 +65,7 @@ import Outro from '../../components/outro/outro.vue'
 import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
-import ApiMixin from '~/mixins/api'
+import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
 import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
@@ -117,7 +117,7 @@ const DatePickerStore = namespace('date-picker')
     Support
   }
 })
-export default class Highlights extends mixins(ApiMixin) {
+export default class Highlights extends mixins(SourcesMixin) {
   $refs!: {
     header: HeightAware,
     day: {
@@ -309,6 +309,10 @@ export default class Highlights extends mixins(ApiMixin) {
   }
 
   get showErrorMessage (): boolean {
+    if (this.showingSourcePage && !this.isValidSourceRoute(this.$route)) {
+      return true
+    }
+
     if (
       (this.showingHomepage && this.items.length > 0) ||
       this.showingContactPage ||
@@ -342,6 +346,10 @@ export default class Highlights extends mixins(ApiMixin) {
       return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
     }
 
+    if (this.showingSourcePage && !this.isValidSourceRoute(this.$route)) {
+      return true
+    }
+
     if (this.showingNotFoundPage) {
       return true
     }
@@ -363,22 +371,6 @@ export default class Highlights extends mixins(ApiMixin) {
 
   get showingHomepage () {
     return this.$route.name === 'homepage'
-  }
-
-  get showingContactPage () {
-    return this.$route.name === 'contact'
-  }
-
-  get showingLegalNoticePage () {
-    return this.$route.name === 'legal-notice'
-  }
-
-  get showingSourcesPage () {
-    return this.$route.name === 'sources'
-  }
-
-  get showingSourcePage () {
-    return this.$route.name === 'source'
   }
 
   get validCuratedHighlightsDay () {
@@ -661,11 +653,14 @@ export default class Highlights extends mixins(ApiMixin) {
   }
 
   validate (ctx: Context) {
+    if (ctx.route.name === 'source') {
+      return !isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
+    }
+
     if ([
       'legal-notice',
       'homepage',
       'contact',
-      'source',
       'sources',
       'not-found'
     ].find(route => route === ctx.route.name)) {
@@ -720,12 +715,14 @@ export default class Highlights extends mixins(ApiMixin) {
         'homepage',
         'contact',
         'legal-notice',
-        'source',
         'sources',
         'not-found'
       ].every(r => r !== this.$route.name) || (
         this.visitingCuratedHighlightsRoute &&
         !this.isValidDate(this.$route.params.day)
+      ) || (
+        this.$route.name === 'source' &&
+        !isValidSourceRoute({ sortedSources: sortSources(), route: this.$route })
       )
     ) {
       this.$nuxt.error({
