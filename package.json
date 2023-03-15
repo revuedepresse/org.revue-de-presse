@@ -55,7 +55,7 @@
     "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.19.1",
+    "@babel/eslint-parser": "^7.21.3",
     "@nuxt/types": "^2.16.0",
     "@nuxt/typescript": "^2.8.1",
     "@nuxtjs/date-fns": "^1.4.3",
