@@ -1,13 +1,13 @@
 <template>
   <div
-    v-if="isShowingSourcesPage"
+    v-if="showingSourceContents"
     ref="sources"
     class="sources"
   >
-    <h1 v-if="showAllSources">
+    <h1 v-if="showingSourcesPage">
       Sources des brèves
     </h1>
-    <p v-if="showAllSources">
+    <p v-if="showingSourcesPage">
       Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Twitter des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
     </p>
     <div
@@ -17,7 +17,7 @@
       class="sources__item"
     >
       <h2
-        v-if="showAllSources"
+        v-if="showingSourcesPage"
         :id="formatId(source.username)"
       >
         {{ source.name }}
@@ -55,7 +55,7 @@
       </ul>
     </div>
     <p
-      v-if="showAllSources"
+      v-if="showingSourcesPage"
       id="footnote"
       class="sources__footnote"
     >
@@ -80,14 +80,6 @@ class SourcesPage extends Vue {
   $refs!: {
     list: HTMLElement,
     [key: string]: any
-  }
-
-  get isShowingSourcesPage () {
-    return this.$route.name === 'sources' || this.$route.name === 'source'
-  }
-
-  get showAllSources () {
-    return this.$route.name === 'sources'
   }
 
   get sources () {
@@ -127,7 +119,7 @@ class SourcesPage extends Vue {
   }
 
   scrollIntoView () {
-    if (!this.isShowingSourcesPage) {
+    if (!this.showingSourceContents) {
       return
     }
 

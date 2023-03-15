@@ -26,9 +26,9 @@
             :show-error-message="showErrorMessage"
             :show-loading-spinner="showLoadingSpinner"
           />
-          <Contact />
-          <LegalNotice />
-          <Sources />
+          <LazyContact v-if="showingContactPage" />
+          <LazyLegalNotice v-if="showingLegalNoticePage" />
+          <LazySources v-if="showingSourceContents" />
           <Support />
         </div>
         <div class="_day__column">
@@ -363,22 +363,6 @@ export default class Highlights extends mixins(ApiMixin) {
 
   get showingHomepage () {
     return this.$route.name === 'homepage'
-  }
-
-  get showingContactPage () {
-    return this.$route.name === 'contact'
-  }
-
-  get showingLegalNoticePage () {
-    return this.$route.name === 'legal-notice'
-  }
-
-  get showingSourcesPage () {
-    return this.$route.name === 'sources'
-  }
-
-  get showingSourcePage () {
-    return this.$route.name === 'source'
   }
 
   get validCuratedHighlightsDay () {

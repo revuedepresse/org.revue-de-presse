@@ -52,6 +52,26 @@ export default class ApiMixin extends DateMixin {
     return `/nous-contacter${this.distinctSourcesQueryParam}`
   }
 
+  get showingContactPage () {
+    return this.$route.name === 'contact'
+  }
+
+  get showingLegalNoticePage () {
+    return this.$route.name === 'legal-notice'
+  }
+
+  get showingSourcesPage () {
+    return this.$route.name === 'sources'
+  }
+
+  get showingSourcePage () {
+    return this.$route.name === 'source'
+  }
+
+  get showingSourceContents () {
+    return this.showingSourcePage || this.showingSourcesPage
+  }
+
   get supportPagePath (): string {
     return `/nous-soutenir${this.distinctSourcesQueryParam}`
   }
