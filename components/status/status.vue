@@ -48,7 +48,7 @@
           </span>
           <a
             class="status__source"
-            :href="sourcePathPath(status)"
+            :href="sourcePath(status)"
           >
             Source
           </a>
