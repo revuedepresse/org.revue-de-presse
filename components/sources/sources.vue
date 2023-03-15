@@ -65,10 +65,7 @@
 </template>
 
 <script lang="ts">
-import { Context } from '@nuxt/types'
-
 import { Component, mixins } from 'nuxt-property-decorator'
-import Sources from '../../assets/sources.json'
 import SourcesMixin, { Source } from '~/mixins/sources'
 import ApiMixin from '~/mixins/api'
 
@@ -127,25 +124,6 @@ class SourcesPage extends mixins(ApiMixin, SourcesMixin) {
     }
 
     selectedItem.scrollIntoView({ block: 'center' })
-  }
-
-  validate (ctx: Context) {
-    if (ctx.route.name !== 'source') {
-      return true
-    }
-
-    if (!ctx.route || !ctx.route.params) {
-      return false
-    }
-
-    const params: string[] = Object.keys(ctx.route.params)
-
-    const matchingParam = params.find(p => p === 'twitterId')
-    if (matchingParam === 'undefined') {
-      return false
-    }
-
-    return Sources.filter(s => `${s.twitterId}` === matchingParam).length > 0
   }
 
   mounted () {
