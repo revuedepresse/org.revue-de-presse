@@ -25,7 +25,8 @@ export const getMinDate = () => {
 }
 
 export const now = (timezone = 'Europe/Paris'): Date => {
-  return setTimezone(new Date(), timezone)
+  const rightNow = new Date()
+  return setTimezone(rightNow, timezone)
 }
 
 @Component

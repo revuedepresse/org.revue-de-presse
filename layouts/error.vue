@@ -1,5 +1,6 @@
 <template>
   <Highlights
+    v-if="false"
     :error="error"
     :error-message-provider="errorMessageProvider"
   >

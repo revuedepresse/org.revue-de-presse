@@ -1,5 +1,7 @@
 <template>
-  <div class="calendar-month">
+  <div
+    class="calendar-month"
+  >
     <div
       class="calendar-month__buttons"
       :style="pickItemIcon"
@@ -199,7 +201,13 @@ class CalendarMonth extends mixins(ApiMixin) {
   dateOfFirstVisibleDay () {
     let firstVisibleDayCandidate = this.nameOfFirstDayOfMonth()
 
-    const dateCandidate = this.setTimezone(new Date(this.year, this.month, 1))
+    const firstDayOfTheMonth = this.now()
+    firstDayOfTheMonth.setDate(1)
+    firstDayOfTheMonth.setHours(0)
+    firstDayOfTheMonth.setMinutes(0)
+    firstDayOfTheMonth.setSeconds(0)
+
+    const dateCandidate = this.setTimezone(firstDayOfTheMonth)
 
     this.guardAgainstMissingMonthOrYear(firstVisibleDayCandidate)
 
@@ -274,7 +282,7 @@ class CalendarMonth extends mixins(ApiMixin) {
 
   dayRows () {
     let dateOfFirstVisibleDay
-
+    debugger
     try {
       dateOfFirstVisibleDay = this.dateOfFirstVisibleDay()
     } catch (e) {
