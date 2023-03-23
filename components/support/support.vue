@@ -25,6 +25,21 @@
         -->github.com/revuedepresse<!--
       --></a>
     </p>
+    <h2>Être partie prenante du projet</h2>
+    <p>
+      Vous contribuez directement à nous aider lorsque vous
+      <ul>
+        <li>partagez l'existence du projet <a href="https://revue-de-presse.org">@revue_2_presse</a>
+        autour de vous.</li>
+        <li>visitez le site du projet <a href="https://revue-de-presse.org">https://revue-de-presse.org</a></li>
+        <li>mettez en favoris (🤍) les revues qui vous paraissent pertinentes</li>
+      </ul>
+    </p>
+    <ul>
+      <li><a href="https://tiktok.com/@revue_2_presse">https://tiktok.com/@revue_2_presse</a></li>
+      <li><a href="https://twitter.com/revue_2_presse">https://twitter.com/revue_2_presse</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=org.revue_de_presse">Le Play Store pour les téléphones Android</a></li>
+    </ul>
     <h2>Financement</h2>
     <p>
       Depuis la naissance du projet en 2015,
