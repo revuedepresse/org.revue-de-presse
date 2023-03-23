@@ -38,6 +38,10 @@
     text-align: left;
   }
 
+  h2 {
+    line-height: calc(3 * var(--separation-1));
+  }
+
   a {
     @extend .clickable;
   }

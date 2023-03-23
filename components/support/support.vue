@@ -32,30 +32,29 @@
     </p>
     <ul>
       <li>
-        vous abonnez à
+        vous abonnez à @revue_2_presse depuis
         <ul>
           <li>
-            <a href="https://tiktok.com/@revue_2_presse">@revue_2_presse</a> depuis TikTok 🎵
+            <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://twitter.com/revue_2_presse">@revue_2_presse</a> depuis Twitter 🐦
+            <a href="https://twitter.com/revue_2_presse">Twitter</a>
           </li>
         </ul>
       </li>
       <li>
-        «Likez», «retweetez», mettez en favoris et commentez les revues qui vous paraissent pertinentes
-        depuis les plateformes sociales en ligne où nous sommes présents :
+        «likez», «retweetez», mettez en favoris ou commentez les revues qui vous paraissent pertinentes depuis&nbsp;:
         <ul>
           <li>
-            <a href="https://tiktok.com/@revue_2_presse">TikTok - tiktok.com/@revue_2_presse 🎵</a>
+            <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://twitter.com/revue_2_presse">Twitter - twitter.com/revue_2_presse 🐦</a>
+            <a href="https://twitter.com/revue_2_presse">Twitter</a>
           </li>
         </ul>
       </li>
       <li>
-        évaluez l'application depuis le Play Store:<br />
+        évaluez l'app depuis le Play Store:<br />
         <a href="https://play.google.com/store/apps/details?id=org.revue_de_presse">Revue de Presse pour appareils Android</a>
       </li>
     </ul>
@@ -64,7 +63,8 @@
 
     <ul>
       <li>
-        nous identifiez des bugs de l'application web ou mobile en nous écrivant à <a href="mailto:bug@revue-de-presse.org">bug@revue-de-presse.org</a> 🐞.
+        nous écrivez à <a href="mailto:bug@revue-de-presse.org">bug@revue-de-presse.org</a>
+        après avoir identifié des bugs de l'application web ou mobile 🐞 ou
       </li>
       <li>
         nous suggérez de nouveaux médias de la presse française pas encore référencés depuis la page <a href="/sources">Sources des brèves</a>.
