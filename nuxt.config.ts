@@ -284,7 +284,7 @@ const config: NuxtConfig = {
       },
       {
         url: '/nous-soutenir',
-        lastmod: (new Date('2023-03-06').toISOString())
+        lastmod: (new Date('2023-03-23').toISOString())
       },
       {
         url: '/sources',
