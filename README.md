@@ -19,3 +19,28 @@ make help
 GNU General Public License v3.0 or later
 
 See [COPYING](./COPYING) to see the full text.
+
+
+## Acknowledgment
+
+We're grateful towards all amazing contributors involved in the following  
+communities, organizations and projects (in lexicographic order):
+
+- [Blackfire](https://blackfire.io)
+- [Composer](http://getcomposer.org/)
+- [Datadog](https://datadoghq.eu/)
+- [Debian](https://www.debian.org/)
+- [Docker](docker.com)
+- [Doctrine](https://www.doctrine-project.org/)
+- [GitHub](https://github.com/)
+- [JetBrains](https://jb.gg/OpenSourceSupport)
+- [PHP](https://www.php.net/)
+- [Symfony](https://symfony.com/)
+- [Ubuntu](https://ubuntu.com/)
+
+### Some of their logos
+
+[![Blackfire](../http-api/doc/images/blackfire-io.png?raw=true)](https://blackfire.io)  
+[![JetBrains](../http-api/doc/images/jetbrains-logo.png?raw=true)](https://jb.gg/OpenSourceSupport)
+[![Testing Powered By SauceLabs](https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-gray.png?sanitize=true "Testing Powered By SauceLabs")](https://saucelabs.com)
+
