@@ -41,7 +41,7 @@ communities, organizations and projects (in lexicographic order):
 
 ### Some of their logos
 
-[![Blackfire](../http-api/doc/images/blackfire-io.png?raw=true)](https://blackfire.io)  
-[![JetBrains](../http-api/doc/images/jetbrains-logo.png?raw=true)](https://jb.gg/OpenSourceSupport)
+[![Blackfire](../main/doc/images/blackfire-io.png?raw=true)](https://blackfire.io)  
+[![JetBrains](../main/doc/images/jetbrains-logo.png?raw=true)](https://jb.gg/OpenSourceSupport)
 [![Testing Powered By SauceLabs](https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-gray.png?sanitize=true "Testing Powered By SauceLabs")](https://saucelabs.com)
 
