@@ -1,6 +1,6 @@
 {
   "name": "revue-de-presse",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "license": "GPL-3.0-or-later",
   "funding": [
     {
@@ -40,7 +40,7 @@
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/emotion": "^0.1.0",
     "@nuxtjs/sitemap": "^2.4.0",
-    "@typescript-eslint/typescript-estree": "^5.54.1",
+    "@typescript-eslint/typescript-estree": "^5.56.0",
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.29.1",
     "csstype": "^3.1.1",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
-    "@nuxt/types": "^2.16.0",
+    "@nuxt/types": "^2.16.3",
     "@nuxt/typescript": "^2.8.1",
     "@nuxtjs/date-fns": "^1.4.3",
     "@nuxtjs/dotenv": "^1.4.1",
@@ -65,20 +65,20 @@
     "@nuxtjs/router": "^1.5.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/svg": "^0.4.0",
-    "@types/node": "^18.15.3",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
+    "@types/node": "^18.15.6",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
-    "eslint-config-prettier": "^8.7.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-typescript": "^0.14.0",
-    "eslint-plugin-vue": "^9.9.0",
+    "eslint-plugin-vue": "^9.10.0",
     "node-sass": "8.0.0",
     "nuxt-compress": "^5.0.0",
     "nuxt-lazysizes": "1.4.0",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.6",
     "sass-loader": "^10.4.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "webpack": "^4.46.0"
   },
   "resolutions": {
