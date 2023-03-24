@@ -5,6 +5,10 @@
   margin-top: var(--separation-1);
   margin-bottom: var(--separation-2);
 
+  &--bold {
+    font-weight: bold;
+  }
+
   p {
     color: var(--color-black);
     font: normal normal normal var(--font-size-footer-paragraph)/var(--line-spacing-footer-paragraph) Roboto;
@@ -32,6 +36,10 @@
   h1 {
     margin-left: var(--separation-3);
     text-align: left;
+  }
+
+  h2 {
+    line-height: calc(3 * var(--separation-1));
   }
 
   a {

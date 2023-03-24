@@ -25,20 +25,50 @@
         -->github.com/revuedepresse<!--
       --></a>
     </p>
-    <h2>Être partie prenante du projet</h2>
+    <h2>Soyez partie prenante du projet</h2>
     <p>
-      Vous contribuez directement à nous aider lorsque vous
-      <ul>
-        <li>partagez l'existence du projet <a href="https://revue-de-presse.org">@revue_2_presse</a>
-        autour de vous.</li>
-        <li>visitez le site du projet <a href="https://revue-de-presse.org">https://revue-de-presse.org</a></li>
-        <li>mettez en favoris (🤍) les revues qui vous paraissent pertinentes</li>
-      </ul>
+      <span class="support--bold">Contribuez directement au <a href="https://revue-de-presse.org">projet</a></span>
+      en nous offrant de la visibilité autour de vous lorsque vous :
     </p>
     <ul>
-      <li><a href="https://tiktok.com/@revue_2_presse">https://tiktok.com/@revue_2_presse</a></li>
-      <li><a href="https://twitter.com/revue_2_presse">https://twitter.com/revue_2_presse</a></li>
-      <li><a href="https://play.google.com/store/apps/details?id=org.revue_de_presse">Le Play Store pour les téléphones Android</a></li>
+      <li>
+        vous abonnez à @revue_2_presse depuis
+        <ul>
+          <li>
+            <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/revue_2_presse">Twitter</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        «likez», «retweetez», mettez en favoris ou commentez les revues qui vous paraissent pertinentes depuis&nbsp;:
+        <ul>
+          <li>
+            <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/revue_2_presse">Twitter</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        évaluez l'app depuis le Play Store:<br />
+        <a href="https://play.google.com/store/apps/details?id=org.revue_de_presse">Revue de Presse pour appareils Android</a>
+      </li>
+    </ul>
+
+    <p>ou encore lorsque vous</p>
+
+    <ul>
+      <li>
+        nous écrivez à <a href="mailto:bug@revue-de-presse.org">bug@revue-de-presse.org</a>
+        après avoir identifié des bugs de l'application web ou mobile 🐞 ou
+      </li>
+      <li>
+        nous suggérez de nouveaux médias de la presse française pas encore référencés depuis la page <a href="/sources">Sources des brèves</a>.
+      </li>
     </ul>
     <h2>Financement</h2>
     <p>
