@@ -40,7 +40,7 @@ communities, organizations and projects (in lexicographic order):
 - [Symfony](https://symfony.com/)
 - [Ubuntu](https://ubuntu.com/)
 
-### Our Sponsors
+### Our Sponsors who support our FOSS project 💙
 
 [![Blackfire](../main/doc/images/blackfire-io.png?raw=true)](https://blackfire.io)  
 [![JetBrains](../main/doc/images/jetbrains-logo.png?raw=true)](https://jb.gg/OpenSourceSupport)  
