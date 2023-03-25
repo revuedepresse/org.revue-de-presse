@@ -36,10 +36,11 @@ communities, organizations and projects (in lexicographic order):
 - [GitHub](https://github.com/)
 - [JetBrains](https://jb.gg/OpenSourceSupport)
 - [PHP](https://www.php.net/)
+- [SauceLabs](https://saucelabs.com/)
 - [Symfony](https://symfony.com/)
 - [Ubuntu](https://ubuntu.com/)
 
-### Some of their logos
+### Our Sponsors
 
 [![Blackfire](../main/doc/images/blackfire-io.png?raw=true)](https://blackfire.io)  
 [![JetBrains](../main/doc/images/jetbrains-logo.png?raw=true)](https://jb.gg/OpenSourceSupport)  
