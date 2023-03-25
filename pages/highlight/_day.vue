@@ -662,6 +662,7 @@ export default class Highlights extends mixins(SourcesMixin) {
       'homepage',
       'contact',
       'sources',
+      'support',
       'not-found'
     ].find(route => route === ctx.route.name)) {
       return true
@@ -716,6 +717,7 @@ export default class Highlights extends mixins(SourcesMixin) {
         'contact',
         'legal-notice',
         'sources',
+        'support',
         'not-found'
       ].every(r => r !== this.$route.name) || (
         this.visitingCuratedHighlightsRoute &&
