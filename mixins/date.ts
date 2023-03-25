@@ -2,6 +2,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import Time from '../modules/time'
 import Errors from '../modules/errors'
 
+const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
 export const formatDate = (date: Date): string => {
   return Time.formatDate(date)
 }
@@ -16,16 +18,17 @@ export const isValidDate = (day: string): boolean => {
   return Time.formatDate(new Date(day)) === day
 }
 
-export const setTimezone = (date: Date, timezone = 'Europe/Paris'): Date => {
+export const setTimezone = (date: Date, timezone = clientTimezone): Date => {
   return new Date(date.toLocaleString('en-US', { timeZone: timezone }))
 }
 
 export const getMinDate = () => {
-  return new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))
+  return setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))
 }
 
-export const now = (timezone = 'Europe/Paris'): Date => {
-  return setTimezone(new Date(), timezone)
+export const now = (timezone = clientTimezone): Date => {
+  const rightNow = new Date()
+  return setTimezone(rightNow, timezone)
 }
 
 @Component
@@ -117,15 +120,19 @@ export default class DateMixin extends Vue {
     return this.setTimezone(new Date(year, month - 1, 1))
   }
 
-  setTimezone (date: Date, timezone = 'Europe/Paris'): Date {
+  setTimezone (date: Date, timezone = clientTimezone): Date {
     return setTimezone(date, timezone)
   }
 
-  now (timezone = 'Europe/Paris'): Date {
+  now (timezone = clientTimezone): Date {
     return now(timezone)
   }
 
   whichDayOfWeek (dayNumber: number): string {
     return this.daysOfWeek[dayNumber]
+  }
+
+  get whichDateHasBeenPicked (): Date|null {
+    return this.$store.getters['date-picker/datePicker']()
   }
 }

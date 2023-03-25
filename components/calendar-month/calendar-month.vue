@@ -1,5 +1,7 @@
 <template>
-  <div class="calendar-month">
+  <div
+    class="calendar-month"
+  >
     <div
       class="calendar-month__buttons"
       :style="pickItemIcon"
@@ -47,10 +49,13 @@
           </th>
         </tr>
       </thead>
-      <tbody class="calendar-month__day-numbers">
+      <tbody
+        class="calendar-month__day-numbers"
+      >
         <tr
           v-for="(rowNumber, rowIndex) in dayRows()"
           :key="rowIndex"
+          :data-key="rowIndex"
           class="calendar-month__day-row"
         >
           <td
@@ -196,24 +201,72 @@ class CalendarMonth extends mixins(ApiMixin) {
     return this.getNextMonth(this.month, this.year)
   }
 
-  dateOfFirstVisibleDay () {
-    let firstVisibleDayCandidate = this.nameOfFirstDayOfMonth()
+  get daysAfterSelectedMonth (): number {
+    let dateOfLastVisibleDay
 
-    const dateCandidate = this.setTimezone(new Date(this.year, this.month, 1))
-
-    this.guardAgainstMissingMonthOrYear(firstVisibleDayCandidate)
-
-    while (firstVisibleDayCandidate !== 'Lun.') {
-      dateCandidate.setDate(dateCandidate.getDate() - 1)
-      firstVisibleDayCandidate = this.whichDayOfWeek(dateCandidate.getDay())
+    try {
+      dateOfLastVisibleDay = this.dateOfLastVisibleDay()
+    } catch (e) {
+      return 0
     }
 
-    return dateCandidate
+    let daysAfterSelectedMonth = 0
+    if (dateOfLastVisibleDay.getMonth() !== this.month) {
+      daysAfterSelectedMonth = dateOfLastVisibleDay.getDate()
+    }
+
+    return daysAfterSelectedMonth
+  }
+
+  get daysBeforeSelectedMonth (): number {
+    let dateOfFirstVisibleDay
+    try {
+      dateOfFirstVisibleDay = this.dateOfFirstVisibleDay
+    } catch (e) {
+      return 0
+    }
+
+    let daysBeforeSelectedMonth = 0
+    if (dateOfFirstVisibleDay.getMonth() !== this.month) {
+      daysBeforeSelectedMonth = this.totalDaysInPreviousMonth() - dateOfFirstVisibleDay.getDate() + 1
+    }
+
+    return daysBeforeSelectedMonth
+  }
+
+  get totalDaysInMonth (): number {
+    return this.setTimezone(new Date(this.year, this.month + 1, 0)).getDate()
+  }
+
+  get dateOfFirstVisibleDay (): Date {
+    const firstDayOfMonth = structuredClone(this.now())
+    firstDayOfMonth.setDate(1)
+
+    let dateOfFirstVisibleDay = this.findDateOfFirstVisibleDay(firstDayOfMonth)
+
+    if (this.whichDateHasBeenPicked && (
+      dateOfFirstVisibleDay.getDay() !== this.whichDateHasBeenPicked.getDay() ||
+      dateOfFirstVisibleDay.getMonth() !== this.whichDateHasBeenPicked.getMonth() ||
+      dateOfFirstVisibleDay.getFullYear() !== this.whichDateHasBeenPicked.getFullYear()
+    )) {
+      const dateOfFirstVisibleDayCandidate = structuredClone(this.whichDateHasBeenPicked)
+      dateOfFirstVisibleDayCandidate.setDate(1)
+      dateOfFirstVisibleDayCandidate.setHours(0)
+      dateOfFirstVisibleDayCandidate.setMinutes(0)
+
+      dateOfFirstVisibleDay = this.findDateOfFirstVisibleDay(dateOfFirstVisibleDayCandidate)
+    }
+
+    return dateOfFirstVisibleDay
+  }
+
+  get nameOfFirstDayOfMonth () : string {
+    return this.daysOfWeek[this.setTimezone(new Date(this.year, this.month, 1)).getDay()]
   }
 
   dateOfLastVisibleDay () {
     let lastVisibleDayCandidate = this.nameOfLastDayOfMonth()
-    const dateCandidate = this.setTimezone(new Date(this.year, this.month, this.totalDaysInMonth()))
+    const dateCandidate = this.setTimezone(new Date(this.year, this.month, this.totalDaysInMonth))
 
     this.guardAgainstMissingMonthOrYear(lastVisibleDayCandidate)
 
@@ -231,7 +284,7 @@ class CalendarMonth extends mixins(ApiMixin) {
     return (new Array(7))
       .fill('', 0, 7)
       .map((_, index) => {
-        const dayOfWeek = this.setTimezone(new Date(this.dateOfFirstVisibleDay().getTime()))
+        const dayOfWeek = this.setTimezone(new Date(this.dateOfFirstVisibleDay.getTime()))
         dayOfWeek.setDate(dayOfWeek.getDate() + index + shift)
 
         return dayOfWeek
@@ -254,18 +307,25 @@ class CalendarMonth extends mixins(ApiMixin) {
     this.pickDate(this.nextMonth)
   }
 
-  nameOfFirstDayOfMonth () {
-    return this.daysOfWeek[this.setTimezone(new Date(this.year, this.month, 1)).getDay()]
+  findDateOfFirstVisibleDay (date: Date): Date {
+    let firstVisibleDayCandidate = this.nameOfFirstDayOfMonth
+
+    const dateCandidate = this.setTimezone(date)
+
+    this.guardAgainstMissingMonthOrYear(firstVisibleDayCandidate)
+
+    while (firstVisibleDayCandidate !== 'Lun.') {
+      dateCandidate.setDate(dateCandidate.getDate() - 1)
+      firstVisibleDayCandidate = this.whichDayOfWeek(dateCandidate.getDay())
+    }
+
+    return dateCandidate
   }
 
   nameOfLastDayOfMonth () {
-    const lastDayNumberOfMonth = this.totalDaysInMonth()
+    const lastDayNumberOfMonth = this.totalDaysInMonth
 
     return this.whichDayOfWeek(this.setTimezone(new Date(this.year, this.month, lastDayNumberOfMonth)).getDay())
-  }
-
-  totalDaysInMonth (): number {
-    return this.setTimezone(new Date(this.year, this.month + 1, 0)).getDate()
   }
 
   totalDaysInPreviousMonth (): number {
@@ -273,37 +333,7 @@ class CalendarMonth extends mixins(ApiMixin) {
   }
 
   dayRows () {
-    let dateOfFirstVisibleDay
-
-    try {
-      dateOfFirstVisibleDay = this.dateOfFirstVisibleDay()
-    } catch (e) {
-      return
-    }
-
-    let daysBeforeSelectedMonth = 0
-    if (dateOfFirstVisibleDay.getMonth() !== this.month) {
-      daysBeforeSelectedMonth = this.totalDaysInPreviousMonth() - dateOfFirstVisibleDay.getDate() + 1
-    }
-
-    let dateOfLastVisibleDay
-
-    try {
-      dateOfLastVisibleDay = this.dateOfLastVisibleDay()
-    } catch (e) {
-      return
-    }
-
-    let daysAfterSelectedMonth = 0
-    if (dateOfLastVisibleDay.getMonth() !== this.month) {
-      daysAfterSelectedMonth = dateOfLastVisibleDay.getDate()
-    }
-
-    return (
-      daysBeforeSelectedMonth +
-      this.totalDaysInMonth() +
-      daysAfterSelectedMonth
-    ) / 7
+    return Math.floor((this.daysBeforeSelectedMonth + this.totalDaysInMonth + this.daysAfterSelectedMonth) / 7)
   }
 
   getNextItemClasses () {
