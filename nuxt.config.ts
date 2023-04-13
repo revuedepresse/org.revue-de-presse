@@ -11,12 +11,16 @@ const title = 'Revue de presse'
 const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
-const days = () => {
+const days = (until: Date|undefined = undefined) => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
   const yesterday = now()
   yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
+
+  if (typeof until !== 'undefined') {
+    yesterday.setTime(until.getTime())
+  }
 
   do {
     const nextDate = new Date()
@@ -345,8 +349,8 @@ const config: NuxtConfig = {
       '/nous-soutenir',
       '/sources',
       `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
-      ...days().map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
-      ...days(),
+      ...days(setTimezone(new Date(Date.parse('30 Apr 2023 00:00:00 GMT')))).map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
+      ...days(setTimezone(new Date(Date.parse('30 Apr 2023 00:00:00 GMT')))),
       ...sources()
     ]
   },
