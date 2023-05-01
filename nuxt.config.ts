@@ -349,8 +349,8 @@ const config: NuxtConfig = {
       '/nous-soutenir',
       '/sources',
       `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
-      ...days(setTimezone(new Date(Date.parse('30 Apr 2023 00:00:00 GMT')))).map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
-      ...days(setTimezone(new Date(Date.parse('30 Apr 2023 00:00:00 GMT')))),
+      ...days(setTimezone(new Date(Date.parse('30 May 2023 00:00:00 GMT')))).map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
+      ...days(setTimezone(new Date(Date.parse('30 May 2023 00:00:00 GMT')))),
       ...sources()
     ]
   },
