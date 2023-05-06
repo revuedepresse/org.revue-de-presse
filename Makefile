@@ -40,3 +40,7 @@ install-bubblewrap: ## Install bubblewrap
 
 start: clean ## Start production server
 	@/bin/bash -c 'source .env && npx nuxt start'
+
+update-twa: install-bubblewrap ## Build Android app using Trusted Web Activites
+	@/bin/bash -c 'asdf local nodejs 18.14.2 && bubblewrap update'
+
