@@ -652,9 +652,13 @@ export default class Highlights extends mixins(SourcesMixin) {
     this.navigateToHighlightsForDay(day)
   }
 
+  get isValidSource () {
+    return ctx => isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
+  }
+
   validate (ctx: Context) {
     if (ctx.route.name === 'source') {
-      return !isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
+      return isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
     }
 
     if ([
@@ -684,14 +688,18 @@ export default class Highlights extends mixins(SourcesMixin) {
     return greaterThanMinDate && lesserThanMaxDate
   }
 
-  detectError () {
-    if (
-      this.visitingCuratedHighlightsRoute &&
+  get invalidCuratedHighlights () {
+    return this.visitingCuratedHighlightsRoute &&
       this.isValidDate(this.$route.params.day) && (
-        setTimezone(new Date(this.$route.params.day)) > now() ||
-        setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
-      )
-    ) {
+      setTimezone(new Date(this.$route.params.day)) > now() ||
+      setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
+    )
+  }
+
+  detectError () {
+    const isSourceRoute = this.$route.name === 'source'
+
+    if (!isSourceRoute && this.invalidCuratedHighlights) {
       this.$nuxt.error({
         statusCode: 404,
         message: NO_REVIEW_ERROR_MESSAGE.replace(
@@ -704,6 +712,18 @@ export default class Highlights extends mixins(SourcesMixin) {
         ),
         path: '/contenu-introuvable'
       })
+
+      return
+    }
+
+    if (isSourceRoute) {
+      if (!isValidSourceRoute({ sortedSources: sortSources(), route: this.$route })) {
+        this.$nuxt.error({
+          statusCode: 404,
+          message: 'Aucun contenu à cette adresse.',
+          path: '/contenu-introuvable'
+        })
+      }
 
       return
     }
@@ -722,9 +742,6 @@ export default class Highlights extends mixins(SourcesMixin) {
       ].every(r => r !== this.$route.name) || (
         this.visitingCuratedHighlightsRoute &&
         !this.isValidDate(this.$route.params.day)
-      ) || (
-        this.$route.name === 'source' &&
-        !isValidSourceRoute({ sortedSources: sortSources(), route: this.$route })
       )
     ) {
       this.$nuxt.error({
