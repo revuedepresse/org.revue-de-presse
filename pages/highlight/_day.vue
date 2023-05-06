@@ -652,10 +652,6 @@ export default class Highlights extends mixins(SourcesMixin) {
     this.navigateToHighlightsForDay(day)
   }
 
-  get isValidSource () {
-    return ctx => isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
-  }
-
   validate (ctx: Context) {
     if (ctx.route.name === 'source') {
       return isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
