@@ -36,7 +36,6 @@ communities, organizations and projects (in lexicographic order):
 - [GitHub](https://github.com/)
 - [JetBrains](https://jb.gg/OpenSourceSupport)
 - [PHP](https://www.php.net/)
-- [?SauceLabs](https://saucelabs.com/) (pending validation)
 - [Symfony](https://symfony.com/)
 - [Ubuntu](https://ubuntu.com/)
 
