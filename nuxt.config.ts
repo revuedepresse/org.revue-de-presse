@@ -15,11 +15,11 @@ const days = (until: Date|undefined = undefined) => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
-  const yesterday = now()
-  yesterday.setTime(now().getTime() - (27 * 60 * 60 * 1000))
+  const twelweWeeksFromNow = now()
+  twelweWeeksFromNow.setTime(now().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
 
   if (typeof until !== 'undefined') {
-    yesterday.setTime(until.getTime())
+    twelweWeeksFromNow.setTime(until.getTime())
   }
 
   do {
@@ -29,7 +29,7 @@ const days = (until: Date|undefined = undefined) => {
 
     days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
-  } while (next <= yesterday)
+  } while (next <= twelweWeeksFromNow)
 
   return days.map((d) => {
     let month = `${d.getMonth() + 1}`
