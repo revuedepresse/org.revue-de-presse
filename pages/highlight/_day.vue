@@ -100,7 +100,7 @@ type RequestOptions = {
   params: Params
 }
 
-const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
+const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_ (ou les dernières frasques d\'Elon Musk pénalisent votre accès à des données publiques par essence - cf. https://techcrunch.com/2023/06/30/twitter-now-requires-an-account-to-view-tweets/).'
 
 const DatePickerStore = namespace('date-picker')
 
