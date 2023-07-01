@@ -1,7 +1,7 @@
 <template>
   <div
     ref="loading-spinner"
-    class="loading-spinner__container"
+    :class="containerClasses"
   >
     <div
       v-if="showLoadingSpinner"
@@ -18,7 +18,7 @@
         :style="warningIcon"
       >
       </div>
-      <p v-text="message" />
+      <p v-html="message" />
     </div>
   </div>
 </template>
@@ -29,8 +29,6 @@ import warningIcon from '~/assets/icons/icon-warning.svg'
 
 @Component
 class LoadingSpinner extends Vue {
-  brandColor = '#00cdc7'
-
   @Prop({
     type: String
   })
@@ -47,6 +45,13 @@ class LoadingSpinner extends Vue {
     default: false
   })
     showLoadingSpinner!: boolean
+
+  get containerClasses () {
+    return {
+      'loading-spinner__container': true,
+      'loading-spinner__container--hidden': this.showErrorMessage
+    }
+  }
 
   get warningIcon () {
     const widthOrHeight = '20px'

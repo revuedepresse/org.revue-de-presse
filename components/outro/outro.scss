@@ -6,17 +6,18 @@
   padding-bottom: 60px;
   width: 100%;
 
-  &--fixed {
-    bottom: 0;
-    position: fixed;
-    left: 0;
-  }
 
   @media (min-width: $width-desktop) {
     bottom: auto;
     margin-bottom: var(--separation-1);
     position: static;
     left: auto;
+
+    .outro--fixed {
+      bottom: 0;
+      position: fixed;
+      left: 0;
+    }
   }
 
   @media (min-width: $width-desktop) {

@@ -100,7 +100,7 @@ type RequestOptions = {
   params: Params
 }
 
-const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
+const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_ (Voir <a class="loading-spinner__link" href="https://www.reuters.com/technology/twitter-now-needs-users-sign-view-tweets-2023-06-30/" target="_blank">Twitter now requires users to sign in to view tweets</a>).'
 
 const DatePickerStore = namespace('date-picker')
 
@@ -153,6 +153,10 @@ export default class Highlights extends mixins(SourcesMixin) {
             'fr-FR',
             { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
           )
+        )
+        .replace(
+          '_nbsp_',
+          '\xA0\xA0\xA0'
         )
     }
   })

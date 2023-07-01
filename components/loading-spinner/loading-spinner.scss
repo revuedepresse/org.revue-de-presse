@@ -62,4 +62,13 @@
     height: var(--line-height-base);
     line-height: var(--line-height-base);
   }
+
+  ::v-deep .loading-spinner__link,
+  ::v-deep .loading-spinner__link:active,
+  ::v-deep .loading-spinner__link:hover,
+  ::v-deep .loading-spinner__link:link,
+  ::v-deep .loading-spinner__link:visited
+  {
+    color: var(--color-black);
+  }
 }
