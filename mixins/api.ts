@@ -30,30 +30,16 @@ export default class ApiMixin extends DateMixin {
     return routes
   }
 
-  get distinctSourcesQueryParam (): string {
-    // if (this.showingDistinctSources) {
-    //   return '?sources-distinctes'
-    // }
-    //
-    return ''
-  }
-
   get homepagePath () {
-    // const today = this.formatDate(now())
-    //
-    // if (this.distinctSourcesQueryParam) {
-    //   return `/${today}${this.localizeDatePath(today)}`
-    // }
-    //
     return '/'
   }
 
   get legalNoticePagePath (): string {
-    return `/mentions-legales${this.distinctSourcesQueryParam}`
+    return '/mentions-legales'
   }
 
   get contactPagePath (): string {
-    return `/nous-contacter${this.distinctSourcesQueryParam}`
+    return '/nous-contacter'
   }
 
   get showingContactPage () {
@@ -77,74 +63,19 @@ export default class ApiMixin extends DateMixin {
   }
 
   get supportPagePath (): string {
-    return `/nous-soutenir${this.distinctSourcesQueryParam}`
+    return '/nous-soutenir'
   }
 
   get sourcesPagePath (): string {
-    return `/sources${this.distinctSourcesQueryParam}`
+    return '/sources'
   }
 
   sourcePath (status: FormattedStatus) {
-    return `${sourcePath(status)}${this.distinctSourcesQueryParam}`
-  }
-
-  get showingDistinctSources () {
-    return true
-    // const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
-    //
-    // return typeof matchingParam !== 'undefined' || this.$route.name === 'highlights-from-distinct-sources'
-  }
-
-  get switchBetweenFilteringModes () {
-    const path = this.$route.path
-    const query = structuredClone(this.$route.query)
-    const params = structuredClone(this.$route.params)
-
-    const pattern = '\\?[^\\?]+$'
-    const postSubstitutionPath = path.replace(new RegExp(pattern, 'gi'), '')
-
-    if (this.showingDistinctSources) {
-      delete query['sources-distinctes']
-
-      if (this.$route.name === 'highlights-from-distinct-sources') {
-        if (params.day === this.formatDate(this.now())) {
-          return this.$router.resolve({ name: 'homepage', query }).href
-        }
-
-        return this.$router.resolve({ name: 'curated-highlights', params, query }).href
-      }
-
-      return this.$router.resolve({ path: postSubstitutionPath, query }).href
-    }
-
-    if (this.$route.name === 'curated-highlights') {
-      delete query['sources-distinctes']
-
-      params.localizedDate = this.localizeDate(params.day)
-
-      return this.$router.resolve({ name: 'highlights-from-distinct-sources', params }).href
-    }
-
-    if (this.$route.name === 'homepage') {
-      delete query['sources-distinctes']
-
-      params.day = this.formatDate(this.now())
-      params.localizedDate = this.localizeDate(params.day)
-
-      return this.$router.resolve({ name: 'highlights-from-distinct-sources', params }).href
-    }
-
-    query['sources-distinctes'] = 'true'
-
-    return this.$router.resolve({ path: postSubstitutionPath, query }).href
+    return `${sourcePath(status)}`
   }
 
   localizeDatePath (day: string): string {
-    if (this.showingDistinctSources) {
-      return `${HIGHLIGHTS_PATH_PREFIX}${this.localizeDate(day)}`
-    }
-
-    return ''
+    return `${HIGHLIGHTS_PATH_PREFIX}${this.localizeDate(day)}`
   }
 
   localizeDate (date: string): string {

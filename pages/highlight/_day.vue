@@ -387,13 +387,6 @@ export default class Highlights extends mixins(SourcesMixin) {
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
   }
 
-  get showingHighlightsFromDistinctSources () {
-    return true
-    // const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
-    //
-    // return this.$route.name === 'highlights-from-distinct-sources' || typeof matchingParam !== 'undefined'
-  }
-
   get isShowingAnotherPage (): boolean {
     if (this.visitingCuratedHighlightsRoute) {
       return !this.validCuratedHighlightsDay
@@ -483,7 +476,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     const requestOptions: RequestOptions = {
       headers: requestHeaders,
       params: {
-        distinctSources: HIGHLIGHTS_FROM_SHARED_SOURCES,
+        distinctSources: HIGHLIGHTS_FROM_DISTINCT_SOURCES,
         includeRetweets: RETWEETS_INCLUDED,
         excludeMedia: MEDIA_INCLUDED,
         startDate: requestedDate,
@@ -505,10 +498,6 @@ export default class Highlights extends mixins(SourcesMixin) {
 
     if (!this.$device.isDesktop && !this.$device.isTablet) {
       requestOptions.params.excludeMedia = MEDIA_EXCLUDED
-    }
-
-    if (this.showingHighlightsFromDistinctSources) {
-      requestOptions.params.distinctSources = HIGHLIGHTS_FROM_DISTINCT_SOURCES
     }
 
     if (this.selectedAggregates.length > 0) {
