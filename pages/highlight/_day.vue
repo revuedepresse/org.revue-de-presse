@@ -100,7 +100,7 @@ type RequestOptions = {
   params: Params
 }
 
-const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_ (Voir <a class="loading-spinner__link" href="https://www.lemonde.fr/pixels/article/2023/07/01/twitter-met-en-place-une-limitation-quotidienne-de-la-lecture-des-tweets_6180176_4408996.html" target="_blank">Twitter met en place une limitation quotidienne de la lecture des tweets</a>).'
+const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
 
 const DatePickerStore = namespace('date-picker')
 
