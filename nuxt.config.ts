@@ -255,13 +255,8 @@ const config: NuxtConfig = {
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
       routes.push({
-        name: 'highlights-from-distinct-sources',
-        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)/actualites-du-:localizedDate([-\\S]+)',
-        component: resolve(__dirname, 'pages/highlight/_day.vue')
-      })
-      routes.push({
         name: 'curated-highlights',
-        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)',
+        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)/actualites-du-:localizedDate([-\\S]+)',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
@@ -294,11 +289,6 @@ const config: NuxtConfig = {
         url: '/sources',
         lastmod: (new Date('2023-03-02').toISOString())
       },
-      {
-        url: `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
-        changefreq: 'daily',
-        lastmod: (now().toISOString())
-      },
       ...days()
         .map((d: string) => {
           let day = new Date(d.replace('/', ''))
@@ -310,17 +300,6 @@ const config: NuxtConfig = {
 
           return {
             url: `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
-            lastmod: (day.toISOString())
-          }
-        })
-        .reverse(),
-      ...days()
-        .map((d: string) => {
-          const day = new Date(d.replace('/', ''))
-          day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
-
-          return {
-            url: d,
             lastmod: (day.toISOString())
           }
         })
@@ -348,9 +327,7 @@ const config: NuxtConfig = {
       '/nous-contacter',
       '/nous-soutenir',
       '/sources',
-      `/${formatDate(now())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(now()))}`,
       ...days(setTimezone(new Date(Date.parse('30 May 2023 00:00:00 GMT')))).map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
-      ...days(setTimezone(new Date(Date.parse('30 May 2023 00:00:00 GMT')))),
       ...sources()
     ]
   },

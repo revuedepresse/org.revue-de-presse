@@ -178,7 +178,7 @@ export default class Highlights extends mixins(SourcesMixin) {
   public intendingToPick!: (date: Date) => void
 
   get visitingCuratedHighlightsRoute () {
-    return this.$route.name === 'curated-highlights' || this.$route.name === 'highlights-from-distinct-sources'
+    return this.$route.name === 'curated-highlights'
   }
 
   get day (): string {
@@ -662,10 +662,8 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     if (
-      (
-        ctx.route.name === 'highlights-from-distinct-sources' ||
-        ctx.route.name === 'curated-highlights'
-      ) && ctx.route.path.endsWith('/')
+      ctx.route.name === 'curated-highlights' &&
+      ctx.route.path.endsWith('/')
     ) {
       return false
     }
@@ -721,7 +719,6 @@ export default class Highlights extends mixins(SourcesMixin) {
       this.undefinedRoute ||
       [
         'curated-highlights',
-        'highlights-from-distinct-sources',
         'homepage',
         'contact',
         'legal-notice',
