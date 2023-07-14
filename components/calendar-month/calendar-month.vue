@@ -375,12 +375,6 @@ class CalendarMonth extends mixins(ApiMixin) {
   canonicalUrl (date: Date) {
     const day = Time.formatDate(date)
 
-    if (day === Time.formatDate(this.now())) {
-      if (!this.showingDistinctSources) {
-        return `${Site.baseURL}`
-      }
-    }
-
     return `${Site.baseURL}/${day}${this.localizeDatePath(day)}`
   }
 

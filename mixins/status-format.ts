@@ -110,60 +110,8 @@ type FormattedStatus = {
   metrics?: VanityMetrics
 }
 
-type FilteringFn = (status: RawStatus) => boolean
-
-type Filter = FilteringFn | undefined | null | 'media' | 'top100'
-
 @Component
 export default class StatusFormat extends Vue {
-  filterStatuses (statuses: RawStatus[], filterType: Filter) {
-    if (typeof filterType === 'undefined' || filterType === null) {
-      return statuses
-    }
-
-    let filteredStatuses
-
-    if (typeof filterType === 'function') {
-      filteredStatuses = Object.values(statuses).filter(filterType)
-
-      if (filteredStatuses.length === 0) {
-        throw new Errors.NoRemainingStatusAfterApplyingFilter()
-      }
-
-      return filteredStatuses
-    }
-
-    if (filterType === 'media') {
-      const filter = (status: RawStatus) => status.media && status.media.length > 0
-      filteredStatuses = Object.values(statuses).filter(filter)
-      if (filteredStatuses.length === 0) {
-        EventHub.$emit('status_list.apologize_about_empty_list_intended')
-        return Object.values(statuses)
-      }
-
-      return filteredStatuses
-    }
-
-    if (filterType === 'top100') {
-      filteredStatuses = Object.values(Object.assign({}, statuses))
-      const sortByRetweet = (firstStatus: RawStatus, secondStatus: RawStatus) => {
-        if (firstStatus.totalRetweet === secondStatus.totalRetweet) {
-          return 0
-        }
-
-        if (firstStatus.totalRetweet < secondStatus.totalRetweet) {
-          return 1
-        }
-
-        return -1
-      }
-
-      return filteredStatuses.sort(sortByRetweet).slice(0, 10)
-    }
-
-    return statuses
-  }
-
   formatStatus (tweet: RawStatus) {
     const formattedStatuses = this.formatStatuses([tweet])
 
