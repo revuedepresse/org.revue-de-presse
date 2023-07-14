@@ -9,7 +9,7 @@
     <p :class="firstParagraphClasses">
       Retrouver chaque jour les 10 tweets médias
       ayant été les plus relayés au cours de la journée.<br /><br />
-      <a :href="switchBetweenFilteringModes" v-text="filterLabel" /><br /><br />
+      <!-- <a :href="switchBetweenFilteringModes" v-text="filterLabel" /><br /><br /> -->
       <span
         v-if="showSubscribeToTwitterAccountButton"
         class="outro__subscribe-to"
@@ -116,14 +116,14 @@ class Outro extends mixins(ApiMixin) {
         --icon-funding-width: ${width}
       `
   }
-
-  get filterLabel () {
-    if (this.showingDistinctSources) {
-      return 'Autoriser l\'apparition d\'un même média plusieurs fois 📰'
-    }
-
-    return 'Empêcher qu\'un même média apparaisse plusieurs fois 🗞🗞🗞'
-  }
+  //
+  // get filterLabel () {
+  //   if (this.showingDistinctSources) {
+  //     return 'Autoriser l\'apparition d\'un même média plusieurs fois 📰'
+  //   }
+  //
+  //   return 'Empêcher qu\'un même média apparaisse plusieurs fois 🗞🗞🗞'
+  // }
 
   get introducingIcon () {
     const width = '22px'

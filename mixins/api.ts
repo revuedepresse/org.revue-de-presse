@@ -31,20 +31,20 @@ export default class ApiMixin extends DateMixin {
   }
 
   get distinctSourcesQueryParam (): string {
-    if (this.showingDistinctSources) {
-      return '?sources-distinctes'
-    }
-
+    // if (this.showingDistinctSources) {
+    //   return '?sources-distinctes'
+    // }
+    //
     return ''
   }
 
   get homepagePath () {
-    const today = this.formatDate(now())
-
-    if (this.distinctSourcesQueryParam) {
-      return `/${today}${this.localizeDatePath(today)}`
-    }
-
+    // const today = this.formatDate(now())
+    //
+    // if (this.distinctSourcesQueryParam) {
+    //   return `/${today}${this.localizeDatePath(today)}`
+    // }
+    //
     return '/'
   }
 
@@ -89,9 +89,10 @@ export default class ApiMixin extends DateMixin {
   }
 
   get showingDistinctSources () {
-    const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
-
-    return typeof matchingParam !== 'undefined' || this.$route.name === 'highlights-from-distinct-sources'
+    return true
+    // const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
+    //
+    // return typeof matchingParam !== 'undefined' || this.$route.name === 'highlights-from-distinct-sources'
   }
 
   get switchBetweenFilteringModes () {

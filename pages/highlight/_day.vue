@@ -388,9 +388,10 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   get showingHighlightsFromDistinctSources () {
-    const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
-
-    return this.$route.name === 'highlights-from-distinct-sources' || typeof matchingParam !== 'undefined'
+    return true
+    // const matchingParam: string|undefined = Object.keys(this.$route.query).find(param => param === 'sources-distinctes')
+    //
+    // return this.$route.name === 'highlights-from-distinct-sources' || typeof matchingParam !== 'undefined'
   }
 
   get isShowingAnotherPage (): boolean {
