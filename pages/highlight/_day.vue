@@ -76,7 +76,6 @@ if (SharedState.isProductionModeActive()) {
 const MEDIA_INCLUDED = 0
 const MEDIA_EXCLUDED = 1
 
-const HIGHLIGHTS_FROM_SHARED_SOURCES = 0
 const HIGHLIGHTS_FROM_DISTINCT_SOURCES = 1
 
 const RETWEETS_EXCLUDED = 0

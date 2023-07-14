@@ -1,7 +1,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import SharedState from '../modules/shared-state'
-import EventHub from '../modules/event-hub'
-import Errors from '../modules/errors'
 import { setTimezone } from './date'
 
 type Media = {

@@ -1,6 +1,6 @@
 import { Component } from 'nuxt-property-decorator'
 import Config, { Routes } from '../config'
-import DateMixin, { now, setTimezone } from './date'
+import DateMixin, { setTimezone } from './date'
 import { FormattedStatus } from './status-format'
 
 export const HIGHLIGHTS_PATH_PREFIX = '/actualites-du-'
