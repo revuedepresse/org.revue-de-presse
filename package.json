@@ -10,14 +10,6 @@
     {
       "type": "github.com",
       "url": "https://github.com/sponsors/thierrymarianne"
-    },
-    {
-      "type": "liberapay.com",
-      "url": "https://liberapay.com/thierrymarianne/"
-    },
-    {
-      "type": "ko-fi.com",
-      "url": "https://ko-fi.com/thierrymarianne"
     }
   ],
   "private": true,
@@ -37,6 +29,7 @@
     "node": ">=18.16.1"
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/axios": "5.13.5",
     "@nuxtjs/device": "^2.1.0",
@@ -46,7 +39,7 @@
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.31.0",
     "csstype": "^3.1.2",
-    "nuxt": "^3.0.0",
+    "nuxt": "2.16.2",
     "nuxt-property-decorator": "^2.9.1",
     "nuxt-purgecss": "^2.0.0",
     "nuxt-trailingslash-module": "^1.2.0",
@@ -81,7 +74,7 @@
     "prettier": "^2.8.8",
     "sass-loader": "^10.4.1",
     "typescript": "^5.1.3",
-    "webpack": "^4.46.0"
+    "webpack": "^4.47.0"
   },
   "resolutions": {
     "typescript": "*"
