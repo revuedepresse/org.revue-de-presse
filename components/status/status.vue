@@ -21,8 +21,8 @@
     <div class="status__publication">
       <publisher
         :profile-pictures="profilePictures"
-        :name="status.name"
-        :username="status.username"
+        :name="status.screen_name"
+        :username="status.screen_name"
         :publication-url="status.url"
         :remove-twitter-logo="isIntro"
       />
@@ -48,7 +48,10 @@
           </span>
           <a
             class="status__source"
-            :href="sourcePath(status)"
+            :href="sourcePath({
+              publisher_id: '',
+              screen_name: status.screen_name
+            })"
           >
             Source
           </a>
@@ -63,21 +66,9 @@
         <div class="status__favorites"></div>
       </div>
       <div
-        v-show="!isIntro"
+        v-show="false"
         class="status__web-intents"
       >
-        <web-intent
-          :status-id="status.statusId"
-          :intent-type="webIntentTypes.reply"
-        />
-        <web-intent
-          :status-id="status.statusId"
-          :intent-type="webIntentTypes.retweet"
-        />
-        <web-intent
-          :status-id="status.statusId"
-          :intent-type="webIntentTypes.like"
-        />
       </div>
 
       <div
@@ -167,14 +158,22 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   aggregateType: string = this.fromAggregateType
 
   get profilePictures (): ProfilePicture {
-    if (this.status.base64EncodedAvatar) {
+    if (this.status && this.status.base64EncodedAvatar) {
       return this.status.base64EncodedAvatar
     }
 
-    return {
-      x1: this.status.avatarUrl,
-      x2: this.status.avatarUrl,
-      x3: this.status.avatarUrl
+    if (this.status) {
+      return {
+        x1: '',
+        x2: '',
+        x3: ''
+      }
+    } else {
+      return {
+        x1: '',
+        x2: '',
+        x3: ''
+      }
     }
   }
 
@@ -191,7 +190,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   get favorite () {
-    return this.status.totalLike || 0
+    return (this.status && this.status.likes) || 0
   }
 
   get urlWhichCanBeShared () {
@@ -202,14 +201,11 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   get retweet () {
-    return this.status.totalRetweet || 0
+    return (this.status && this.status.reposts) || 0
   }
 
   get statusText () {
-    if (
-      typeof this.status === 'undefined' ||
-        typeof this.status === 'string'
-    ) {
+    if (typeof this.status === 'undefined') {
       return ''
     }
 
@@ -245,7 +241,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       return ''
     }
 
-    return `https://twitter.com/${this.status.username}`
+    return `https://bsky.app/profile/${this.status.screen_name}`
   }
 
   get publisherStyle () {
@@ -253,14 +249,15 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
       return ''
     }
     const size = '48px'
-    return `--avatar-url: center / ${size} no-repeat url("${this.status.avatarUrl}");
+    return `--avatar-url: center / ${size} no-repeat url("${this.status.avatarUrl || ''}");
       --avatar-size: ${size};
       `
   }
 
   get showVanityMetrics () {
     return !this.isIntro &&
-      this.status.metrics !== undefined &&
+      typeof this.status !== 'undefined' &&
+      typeof this.status.metrics !== 'undefined' &&
       this.status.metrics.favorites.length > 0 &&
       this.status.metrics.retweets.length > 0
   }
@@ -275,19 +272,12 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
   }
 
   formatStatusText (status: FormattedStatus) {
-    if (typeof status === 'undefined' || typeof status === 'string') {
-      return ''
-    }
-
-    let urls: Array<TweetUrl> = []
-    if (status.originalDocument.entities?.urls) {
-      urls = status.originalDocument.entities.urls
-    }
-
-    let text = this.replaceHyperlinksWithAnchors(status.text, urls)
-    text = this.replaceMentionsWithWithAnchors(text)
-
-    return text.replace(/\s/g, ' ')
+    return status.text
+      .replaceAll("\\'", "'")
+      .replaceAll('\\"', '"')
+      .replaceAll('\\n', '<br />')
+      .replace(/^"/, '')
+      .replace(/"$/, '')
   }
 
   removeTrackingParams (subject: string) {
@@ -369,11 +359,11 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
     return status.base64EncodedMedia
   }
 
-  getMediaHeight (media: Media): Number {
+  getMediaHeight (media: Media): number {
     return media.sizes.small.h
   }
 
-  getMediaWidth (): Number {
+  getMediaWidth (): number {
     return 570
   }
 
@@ -383,6 +373,7 @@ class Status extends mixins(ApiMixin, DateMixin, StatusFormatMixin) {
 
   mounted () {
     if (
+      !this.status ||
       this.status.metrics === undefined ||
       this.$refs.sparklines === undefined ||
       this.isIntro
