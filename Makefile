@@ -15,13 +15,13 @@ copy-domain-name-ownership-proof: ## Copy proof of domain name ownership
 	@/bin/bash -c 'cp ./static/2023-03-14_linkedin-community-management-api-validation.txt ./dist/well-known'
 
 build: generate publish-asset-links copy-domain-name-ownership-proof ## Build production package
-	@export IFS=$$'\n'
-
-	for page in $$(find ./dist/* -type f | sort --reverse);
-	do
-		\cat $$page | sed -E 's#\{\{ date \}\}#'"$$(echo "$${page}" | sed -E 's/\.\/dist\///g' | sed 's#\.html##g')"'#g' > ./template.html
-		mv ./template.html $$page
-	done
+#	@export IFS=$$'\n'
+#
+#	for page in $$(find ./dist/* -type f | sort --reverse);
+#	do
+#		\cat $$page | sed -E 's#\{\{ date \}\}#'"$$(echo "$${page}" | sed -E 's/\.\/dist\///g' | sed 's#\.html##g')"'#g' > ./template.html
+#		mv ./template.html $$page
+#	done
 
 dev: ## Start development server
 	@/bin/bash -c 'source .env && NODE_OPTIONS="--openssl-legacy-provider" npx nuxt'
