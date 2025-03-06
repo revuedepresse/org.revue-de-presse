@@ -3,6 +3,7 @@ set -Eeuo pipefail
 
 function move_pages() {
     export IFS=$'\n'
+    export LC_ALL=C
 
     for page in $(find ./dist/* -type f | sort --reverse);
     do
