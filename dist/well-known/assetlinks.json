@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.revue_de_presse",
+      "sha256_cert_fingerprints": [
+        "01:E5:E3:A6:41:4F:ED:9A:03:D2:EC:A0:1D:D2:16:C2:4C:DA:99:FA:0C:D2:DD:FC:7D:F4:8B:4E:C2:BD:5C:DD"
+      ]
+    }
+  }
+]

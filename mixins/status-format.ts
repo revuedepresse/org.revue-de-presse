@@ -8,18 +8,6 @@ type Media = {
   title: string,
 }
 
-// type RawFavoritesMetrics = {
-//   delta?: number,
-//   favorites: number,
-//   checkedAt: string
-// }
-//
-// type RawRetweetsMetrics = {
-//   delta?: number,
-//   retweets: number,
-//   checkedAt: string
-// }
-
 type FavoritesMetrics = {
   delta: number,
   value: number,
