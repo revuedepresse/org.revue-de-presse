@@ -1,4 +1,3 @@
-
 const domain = 'revue-de-presse.org'
 const scheme = 'https://'
 

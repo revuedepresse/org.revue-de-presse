@@ -6,7 +6,7 @@
     <h1>Nous soutenir</h1>
     <h2>Projet citoyen, ouvert et libre</h2>
     <p>
-      Revue de presse s'appuie sur l'API de Twitter
+      Revue de presse s'appuie sur l'API de Bluesky
       et relaie des brèves de presse en provenance exclusive de médias Français
       d'après le succès rencontré par ses brèves auprès du public.
     </p>
