@@ -3,7 +3,7 @@ import { EnvParam, EnvProvider } from '~/modules/shared-state'
 const testMode = false
 
 const getHostAndScheme = (environmentProvider: EnvProvider) => {
-  let host: string|undefined = 'localhost'
+  let host: string|undefined = 'local.api.revue-de-presse.org'
   let scheme: string|undefined = 'http://'
 
   const environment: EnvParam = environmentProvider.getEnvironmentParameters()

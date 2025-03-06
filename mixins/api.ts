@@ -1,7 +1,6 @@
 import { Component } from 'nuxt-property-decorator'
 import Config, { Routes } from '../config'
 import DateMixin, { setTimezone } from './date'
-import { FormattedStatus } from './status-format'
 
 export const HIGHLIGHTS_PATH_PREFIX = '/actualites-du-'
 
@@ -70,8 +69,16 @@ export default class ApiMixin extends DateMixin {
     return '/sources'
   }
 
-  sourcePath (status: FormattedStatus) {
-    return `${sourcePath(status)}`
+  sourcePath ({
+    publisher_id,
+    screen_name,
+  }: {
+    publisher_id: string,
+    screen_name: string
+  }) {
+    return `${sourcePath({
+      publisherId: publisher_id, username: screen_name
+    })}`
   }
 
   localizeDatePath (day: string): string {

@@ -8,17 +8,17 @@ type Media = {
   title: string,
 }
 
-type RawFavoritesMetrics = {
-  delta?: number,
-  favorites: number,
-  checkedAt: string
-}
-
-type RawRetweetsMetrics = {
-  delta?: number,
-  retweets: number,
-  checkedAt: string
-}
+// type RawFavoritesMetrics = {
+//   delta?: number,
+//   favorites: number,
+//   checkedAt: string
+// }
+//
+// type RawRetweetsMetrics = {
+//   delta?: number,
+//   retweets: number,
+//   checkedAt: string
+// }
 
 type FavoritesMetrics = {
   delta: number,
@@ -44,22 +44,24 @@ type ProfilePicture = {
 }
 
 type RawStatus = {
-  base64_encoded_avatar?: ProfilePicture,
+  avatar_url: string,
+  base64_encoded_avatar?: {
+    x1: string,
+    x2: string,
+    x3: string,
+  },
   base64_encoded_media?: string,
-  username: string,
-  avatarUrl: string,
-  publishedAt: Date,
-  statusId: string,
+  screen_name: string,
+  date: Date,
+  reposts: number,
+  likes: number,
+  publication_id: string,
   text: string,
   url: string,
   isVisible: boolean,
   media: Media[],
-  totalRetweet: number,
-  totalLike: number,
   links: string[],
   original_document: string,
-  avatar_url: string,
-  status_id: string,
   published_at: string,
   retweet_count: number,
   favorite_count: number,
@@ -76,25 +78,20 @@ type TweetUrl = {
   expanded_url: string
 }
 
-type Entities = {
-  urls: Array<TweetUrl>,
-}
-
 type FormattedStatus = {
+  base64_encoded_avatar?: ProfilePicture
   base64EncodedAvatar?: ProfilePicture
   base64EncodedMedia?: string
-  username: string,
-  name: string,
-  publisherId: string,
-  avatarUrl: string,
+  avatarUrl?: string
+  screen_name: string,
   publishedAt: Date,
   statusId: string,
   text: string,
   url: string,
   isVisible: boolean,
   media: Media[],
-  totalRetweet: number,
-  totalLike: number,
+  reposts: number,
+  likes: number,
   links: RegExpMatchArray[]|null|Array<string>,
   inAggregate?: string,
   likedBy?: string,
@@ -102,9 +99,6 @@ type FormattedStatus = {
   usernameOfRetweetingMember?: string,
   statusRepliedTo?: FormattedStatus,
   key?: number,
-  originalDocument: {
-    entities: Entities
-  },
   metrics?: VanityMetrics
 }
 
@@ -161,53 +155,30 @@ export default class StatusFormat extends Vue {
         aggregate = this.$route.params.aggregateType
       }
 
-      const originalDocument = JSON.parse(status.original_document)
-
       const metrics: VanityMetrics = {
         favorites: [],
         retweets: []
       }
 
-      if (originalDocument.metrics) {
-        metrics.favorites = originalDocument.metrics.favorites
-          .filter((f: RawFavoritesMetrics) => typeof f.delta !== 'undefined')
-          .map((f: RawFavoritesMetrics) => {
-            return {
-              checkedAt: setTimezone(new Date(f.checkedAt)),
-              delta: f.delta,
-              value: f.favorites,
-            }
-          })
-
-        metrics.retweets = originalDocument.metrics.retweets
-          .filter((r: RawRetweetsMetrics) => typeof r.delta !== 'undefined')
-          .map((r: RawRetweetsMetrics) => {
-            return {
-              checkedAt: setTimezone(new Date(r.checkedAt)),
-              delta: r.delta,
-              value: r.retweets,
-            }
-          })
-      }
-
       const formattedStatus: FormattedStatus = {
-        base64EncodedAvatar: status.base64_encoded_avatar,
-        base64EncodedMedia: status.base64_encoded_media,
-        name: originalDocument.user.name,
-        publisherId: originalDocument.user.id,
-        inAggregate: aggregate,
-        username: status.username,
         avatarUrl: status.avatar_url,
-        publishedAt: setTimezone(new Date(status.published_at)),
-        statusId: status.status_id,
+        base64EncodedAvatar: {
+          x1: status.avatar_url,
+          x2: status.avatar_url,
+          x3: status.avatar_url,
+        },
+        base64EncodedMedia: status.base64_encoded_media,
+        screen_name: status.screen_name,
+        inAggregate: aggregate,
+        publishedAt: setTimezone(new Date(status.date)),
+        statusId: status.publication_id,
         text: status.text,
         url: status.url,
         isVisible: false,
         media: status.media,
-        totalRetweet: status.retweet_count,
-        totalLike: status.favorite_count,
+        reposts: status.reposts,
+        likes: status.likes,
         links,
-        originalDocument,
         metrics
       }
 
@@ -241,6 +212,8 @@ export default class StatusFormat extends Vue {
       },
       formattedStatuses
     )
+
+    console.log({ formattedStatuses })
 
     return formattedStatuses
   }

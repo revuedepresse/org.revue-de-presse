@@ -89,19 +89,17 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
         x2: Logo2x,
         x3: Logo3x
       },
-      username: 'revue_2_presse',
-      avatarUrl: Logo1x,
+      screen_name: 'revue_2_presse',
       avatar_url: Logo1x,
       published_at: this.formatDate(this.now()),
-      publishedAt: this.now(),
-      statusId: '0',
-      status_id: '0',
+      date: this.now(),
+      publication_id: '0',
       text,
       url: '',
       isVisible: true,
       media: [],
-      totalRetweet: 0,
-      totalLike: 0,
+      reposts: 0,
+      likes: 0,
       retweet_count: 0,
       favorite_count: 0,
       links: [],
@@ -114,7 +112,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       const tweet = structuredClone(h.status)
       return {
         tweet,
-        tweetId: tweet.statusId
+        tweetId: tweet.publication_id
       }
     })
   }
@@ -153,7 +151,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
         highlightIndex = 0
       }
 
-      const description = this.highlights[highlightIndex].status.text
+      const description = (this.highlights[highlightIndex].status.text || '')
         .replaceAll(new RegExp(pattern, 'ig'), '')
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
 

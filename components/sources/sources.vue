@@ -8,7 +8,7 @@
       Sources des brèves
     </h1>
     <p v-if="showingSourcesPage">
-      Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Twitter des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
+      Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Bluesky des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
     </p>
     <div
       v-for="source in sources"
@@ -59,7 +59,7 @@
       id="footnote"
       class="sources__footnote"
     >
-      <sup>*</sup> La popularité est dérivée du nombre de RTs des publications depuis Twitter
+      <sup>*</sup> La popularité est dérivée du nombre de RTs des publications depuis Bluesky
     </p>
   </div>
 </template>
