@@ -213,8 +213,6 @@ export default class StatusFormat extends Vue {
       formattedStatuses
     )
 
-    console.log({ formattedStatuses })
-
     return formattedStatuses
   }
 
