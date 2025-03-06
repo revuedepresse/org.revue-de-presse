@@ -6,8 +6,10 @@ function move_pages() {
 
     for page in $(find ./dist/* -type f | sort --reverse);
     do
+      local path
+      path="$(echo "${page}" | sed -E 's#\.\/dist\/##g' | sed 's#\.html##g')"
       \cat $page | \
-      sed -E 's#\{\{ date \}\}#'"$(echo "${page}" | sed -E 's#\.\/dist\/##g' | sed 's#\.html##g')"'#g' > ./template.html
+      sed -E 's#\{\{ date \}\}#'"${path}"'#g' > ./template.html
       mv ./template.html $page
     done
 }
