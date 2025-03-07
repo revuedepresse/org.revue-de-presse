@@ -79,21 +79,13 @@
     </p>
     <ul class="support__list">
       <li><a href="https://www.buymeacoffee.com/thierrymarianne" rel="noreferrer nofollow noopener">buymeacoffee.com</a></li>
-      <li><a href="https://ko-fi.com/thierrymarianne/" rel="noreferrer nofollow noopener">ko-fi.com</a></li>
-      <li><a href="https://liberapay.com/thierrymarianne/" rel="noreferrer nofollow noopener">liberapay.com</a></li>
       <li><a href="https://github.com/sponsors/thierrymarianne" rel="noreferrer nofollow noopener">github.com</a></li>
     </ul>
     <h2>Programmes open-source</h2>
     <p class="support__paragraph">
       Dans le cadre de leurs programmes respectifs de soutien aux projets dont le code source est ouvert et libre,
       Revue de presse est hébergé par <a target="_blank" href="https://www.netlify.com/legal/open-source-policy/" rel="noreferrer nofollow noopener">netlify</a>
-      à titre gracieux et <a href="https://jb.gg/OpenSourceSupport" target="_blank" rel="noreferrer nofollow noopener">Jetbrains</a> met à notre disposition ses éditeurs.<br />
-      <a href="https://jb.gg/OpenSourceSupport" target="_blank" rel="noreferrer nofollow noopener"><img
-        alt="Jetbrains logo"
-        width="60"
-        height="105"
-        :src="vendorLogo"
-      ></a>
+      à titre gracieux.<br />
     </p>
   </div>
 </template>
