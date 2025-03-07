@@ -38,18 +38,18 @@
             <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://twitter.com/revue_2_presse">Twitter</a>
+            <a href="https://bsky.app/profile/revue-de-presse.bsky.social">Bluesky</a>
           </li>
         </ul>
       </li>
       <li>
-        «likez», «retweetez», mettez en favoris ou commentez les revues qui vous paraissent pertinentes depuis&nbsp;:
+        «likez», «republiez», mettez en favoris ou commentez les revues qui vous paraissent pertinentes depuis&nbsp;:
         <ul>
           <li>
             <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://twitter.com/revue_2_presse">Twitter</a>
+            <a href="https://bsky.app/profile/revue-de-presse.bsky.social">Bluesky</a>
           </li>
         </ul>
       </li>
