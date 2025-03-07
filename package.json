@@ -67,7 +67,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-typescript": "^0.14.0",
-    "eslint-plugin-vue": "^9.15.1",
+    "eslint-plugin-vue": "^10.0.0",
     "node-sass": "8.0.0",
     "nuxt-compress": "^5.0.0",
     "nuxt-lazysizes": "1.4.3",
