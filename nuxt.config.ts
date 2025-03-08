@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { formatDate, yesterday, setTimezone } from './mixins/date'
+import { formatDate, yesterday, setTimezone, MIN_DATE } from './mixins/date'
 import { localizeDate, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
 import Site from './modules/site'
 
@@ -13,7 +13,7 @@ const icon = '/logo-revue-de-presse.png'
 const untilDate = (new Date()).toUTCString().substring(5)
 
 const days = (until: Date|undefined = undefined) => {
-  const days = [setTimezone(new Date(Date.parse('04 Mar 2025 00:00:00 GMT')))]
+  const days = [setTimezone(new Date(Date.parse(MIN_DATE)))]
   let next = days[days.length - 1]
 
   const twelveWeeksFromNow = yesterday()

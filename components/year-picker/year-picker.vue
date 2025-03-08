@@ -32,6 +32,9 @@ import Time from '~/modules/time'
 
 const DatePickerStore = namespace('date-picker')
 
+const MIN_YEAR = 2018
+const PLACEHOLDER = MIN_YEAR + 1
+
 @Component({
   components: { ScrollableList }
 })
@@ -66,17 +69,17 @@ class YearPicker extends mixins(DateMixin) {
 
   get acceptedYears () {
     const today = this.now()
-    const years = new Array(today.getFullYear() - 2018)
+    const years = new Array(today.getFullYear() - MIN_YEAR)
 
     const acceptedYears = [{
       index: 0,
-      label: 2018,
-      isSelected: this.year === 2018,
+      label: MIN_YEAR,
+      isSelected: this.year === MIN_YEAR,
       onClick: () => {
       }
     }].concat(
       years
-        .fill(2019)
+        .fill(PLACEHOLDER)
         .map((year, inc) => {
           return {
             index: inc + 1,
