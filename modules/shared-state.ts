@@ -1,5 +1,5 @@
 import Config from '../config'
-import { FormattedStatus } from '../mixins/status-format'
+import { FormattedStatus } from '~/mixins/status-format'
 
 type EnvParam = {
   developmentMode: boolean,
@@ -74,7 +74,8 @@ class Logger {
   info (): void {
   }
 
-  error (): void {
+  error (message: string, provenance: string, error: Error): void {
+    console.error(message, provenance, error)
   }
 }
 

@@ -67,7 +67,7 @@ import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
 import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
-import { getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
+import { getMinDate, isValidDate, yesterday, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
@@ -148,7 +148,7 @@ export default class Highlights extends mixins(SourcesMixin) {
       return NO_REVIEW_ERROR_MESSAGE
         .replace(
           '_date_',
-          now().toLocaleDateString(
+          yesterday().toLocaleDateString(
             'fr-FR',
             { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
           )
@@ -178,7 +178,7 @@ export default class Highlights extends mixins(SourcesMixin) {
   public intendingToPick!: (date: Date) => void
 
   get visitingCuratedHighlightsRoute () {
-    return this.$route.name === 'curated-highlights'
+    return ['curated-highlights', 'highlights'].includes(this.$route.name || '')
   }
 
   get day (): string {
@@ -193,15 +193,18 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   get areMediaVisible () {
-    return !this.$device.isMobile || !this.isBaselineView
+    return !this.$device.isMobile ||
+      !this.isBaselineView
   }
 
   get fetchingData () {
-    return this.$fetchState !== undefined && this.$fetchState.pending
+    return typeof this.$fetchState !== 'undefined' &&
+      this.$fetchState.pending
   }
 
   get undefinedRoute () {
-    return this.$route && this.$route.name === null
+    return this.$route &&
+      this.$route.name === null
   }
 
   get fixedStyle () {
@@ -222,7 +225,7 @@ export default class Highlights extends mixins(SourcesMixin) {
           !this.showingSourcesPage &&
           !this.showingSupportPage
         ) &&
-        this.$fetchState.pending === false
+        !this.$fetchState.pending
       )
   }
 
@@ -236,13 +239,17 @@ export default class Highlights extends mixins(SourcesMixin) {
 
   get containerClass () {
     const filledContainerClass = '_day__container _day__container--filled'
-    const nonEmptyList = this.$nuxt.isOnline && this.items.length > 0
 
     if (this.showingNotFoundPage) {
       return `${filledContainerClass}-with-emptiness`
     }
 
-    if (nonEmptyList || this.fetchingData || this.undefinedRoute) {
+    const nonEmptyList = this.$nuxt.isOnline &&
+      this.items.length > 0
+
+    if (nonEmptyList ||
+      this.fetchingData ||
+      this.undefinedRoute) {
       if (
         (
           this.error &&
@@ -264,7 +271,7 @@ export default class Highlights extends mixins(SourcesMixin) {
       !this.showingSupportPage &&
       this.$nuxt.isOnline &&
       this.items.length === 0 &&
-      this.$fetchState.pending === false
+      !this.$fetchState.pending
     ) {
       return `${filledContainerClass}-with-emptiness`
     }
@@ -297,14 +304,17 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   get isBaselineView () {
-    if (this.$route === undefined) {
+    if (typeof this.$route === 'undefined') {
       return true
     }
 
     const paramNames = Object.keys(this.$route.query)
-    const isBaselineViewActive = paramNames.find(p => p === 'naked') === undefined
+    const isBaselineViewActive = paramNames
+      .find(p => p === 'naked') === undefined
 
-    return this.$device.isDesktop || this.$device.isTablet || isBaselineViewActive
+    return this.$device.isDesktop ||
+      this.$device.isTablet ||
+      isBaselineViewActive
   }
 
   get showingNotFoundPage () {
@@ -329,7 +339,8 @@ export default class Highlights extends mixins(SourcesMixin) {
 
     return this.showingNotFoundPage ||
       !this.validCuratedHighlightsDay ||
-      (this.$fetchState !== undefined && this.$fetchState.error !== null) ||
+      (typeof this.$fetchState !== 'undefined' &&
+        this.$fetchState.error !== null) ||
       this.items.length === 0
   }
 
@@ -346,7 +357,9 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     if (this.showingCuratedHighlights) {
-      return this.fetchingData || this.items.length === 0 || (!this.validCuratedHighlightsDay && !this.showingHomepage)
+      return this.fetchingData ||
+        this.items.length === 0 ||
+        (!this.validCuratedHighlightsDay && !this.showingHomepage)
     }
 
     if (this.showingSourcePage && !this.isValidSourceRoute(this.$route)) {
@@ -365,7 +378,8 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   get showingCuratedHighlights () {
-    return this.showingHomepage || this.visitingCuratedHighlightsRoute
+    return this.showingHomepage ||
+      this.visitingCuratedHighlightsRoute
   }
 
   get showingSupportPage () {
@@ -382,7 +396,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     return this.isValidDate(this.$route.params.day) &&
-      setTimezone(new Date(this.$route.params.day)) <= now() &&
+      setTimezone(new Date(this.$route.params.day)) <= yesterday() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
   }
 
@@ -396,8 +410,7 @@ export default class Highlights extends mixins(SourcesMixin) {
       this.showingNotFoundPage ||
       this.showingSourcePage ||
       this.showingSourcesPage ||
-      this.showingSupportPage ||
-      this.$route.name === 'source'
+      this.showingSupportPage
   }
 
   @Watch('startDate')
@@ -444,9 +457,9 @@ export default class Highlights extends mixins(SourcesMixin) {
       }
     )
       .then(res => res.json())
-      .catch((_e) => {
+      .catch((e) => {
         this.logger.error(
-          // e.message, 'highlight-list', e
+          e.message, 'highlight-list', e
         )
       })
 
@@ -527,7 +540,7 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   fetchHighlights () {
-    if (this.$fetch === undefined) {
+    if (typeof this.$fetch === 'undefined') {
       return
     }
 
@@ -642,12 +655,19 @@ export default class Highlights extends mixins(SourcesMixin) {
       return
     }
 
+    if (this.$route.name === 'highlights') {
+      return
+    }
+
     this.navigateToHighlightsForDay(day)
   }
 
   validate (ctx: Context) {
     if (ctx.route.name === 'source') {
-      return isValidSourceRoute({ sortedSources: sortSources(), route: ctx.route })
+      return isValidSourceRoute({
+        sortedSources: sortSources(),
+        route: ctx.route
+      })
     }
 
     if ([
@@ -662,7 +682,8 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     if (
-      ctx.route.name === 'curated-highlights' &&
+      ['curated-highlights', 'highlights']
+        .includes(ctx.route.name || '') &&
       ctx.route.path.endsWith('/')
     ) {
       return false
@@ -670,7 +691,7 @@ export default class Highlights extends mixins(SourcesMixin) {
 
     const selectedDate = setTimezone(new Date(ctx.params.day))
     const greaterThanMinDate = setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))) <= selectedDate
-    const lesserThanMaxDate = selectedDate <= now()
+    const lesserThanMaxDate = selectedDate <= yesterday()
 
     return greaterThanMinDate && lesserThanMaxDate
   }
@@ -678,7 +699,7 @@ export default class Highlights extends mixins(SourcesMixin) {
   get invalidCuratedHighlights () {
     return this.visitingCuratedHighlightsRoute &&
       this.isValidDate(this.$route.params.day) && (
-      setTimezone(new Date(this.$route.params.day)) > now() ||
+      setTimezone(new Date(this.$route.params.day)) > yesterday() ||
       setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
     )
   }
@@ -686,7 +707,8 @@ export default class Highlights extends mixins(SourcesMixin) {
   detectError () {
     const isSourceRoute = this.$route.name === 'source'
 
-    if (!isSourceRoute && this.invalidCuratedHighlights) {
+    const notFoundPage = !isSourceRoute && this.invalidCuratedHighlights
+    if (notFoundPage) {
       this.$nuxt.error({
         statusCode: 404,
         message: NO_REVIEW_ERROR_MESSAGE.replace(
@@ -715,20 +737,24 @@ export default class Highlights extends mixins(SourcesMixin) {
       return
     }
 
+    const invalidCuratedHighlightsRouteAccess = (
+      this.visitingCuratedHighlightsRoute &&
+      !this.isValidDate(this.$route.params.day)
+    )
+
     if (
       this.undefinedRoute ||
       [
         'curated-highlights',
+        'highlights',
         'homepage',
         'contact',
         'legal-notice',
         'sources',
         'support',
         'not-found'
-      ].every(r => r !== this.$route.name) || (
-        this.visitingCuratedHighlightsRoute &&
-        !this.isValidDate(this.$route.params.day)
-      )
+      ].every(r => r !== this.$route.name) ||
+      invalidCuratedHighlightsRouteAccess
     ) {
       this.$nuxt.error({
         statusCode: 404,
@@ -746,7 +772,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     if (
       this.visitingCuratedHighlightsRoute &&
       isValidDate(this.$route.params.day) &&
-      setTimezone(new Date(this.$route.params.day)) <= now() &&
+      setTimezone(new Date(this.$route.params.day)) <= yesterday() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
     ) {
       this.intendingToPick(new Date(this.$route.params.day))

@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { formatDate, now, setTimezone } from './mixins/date'
+import { formatDate, yesterday, setTimezone } from './mixins/date'
 import { localizeDate, sourcePath, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
 import Site from './modules/site'
 import Sources from './assets/sources.json'
@@ -11,15 +11,17 @@ const title = 'Revue de presse'
 const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
+const untilDate = (new Date()).toUTCString().substring(5)
+
 const days = (until: Date|undefined = undefined) => {
   const days = [setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))]
   let next = days[days.length - 1]
 
-  const twelweWeeksFromNow = now()
-  twelweWeeksFromNow.setTime(now().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
+  const twelveWeeksFromNow = yesterday()
+  twelveWeeksFromNow.setTime(yesterday().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
 
   if (typeof until !== 'undefined') {
-    twelweWeeksFromNow.setTime(until.getTime())
+    twelveWeeksFromNow.setTime(until.getTime())
   }
 
   do {
@@ -29,7 +31,7 @@ const days = (until: Date|undefined = undefined) => {
 
     days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
-  } while (next <= twelweWeeksFromNow)
+  } while (next <= twelveWeeksFromNow)
 
   return days.map((d) => {
     let month = `${d.getMonth() + 1}`
@@ -256,7 +258,12 @@ const config: NuxtConfig = {
       })
       routes.push({
         name: 'curated-highlights',
-        path: '/:day(\\d\\d\\d\\d-\\d\\d-\\d\\d)/actualites-du-:localizedDate([-\\S]+)',
+        path: '/:day(\\d{4}-\\d{2}-\\d{2})/actualites-du-:localizedDate([-\\S]+)',
+        component: resolve(__dirname, 'pages/highlight/_day.vue')
+      })
+      routes.push({
+        name: 'highlights',
+        path: '/:day(\\d{4}-\\d{2}-\\d{2})',
         component: resolve(__dirname, 'pages/highlight/_day.vue')
       })
     }
@@ -271,7 +278,7 @@ const config: NuxtConfig = {
       {
         url: '/',
         changefreq: 'daily',
-        lastmod: (now().toISOString())
+        lastmod: (yesterday().toISOString())
       },
       {
         url: '/mentions-legales',
@@ -283,19 +290,19 @@ const config: NuxtConfig = {
       },
       {
         url: '/nous-soutenir',
-        lastmod: (new Date('2023-03-23').toISOString())
+        lastmod: (new Date('2023-03-07').toISOString())
       },
       {
         url: '/sources',
-        lastmod: (new Date('2023-03-02').toISOString())
+        lastmod: (new Date('2025-03-08').toISOString())
       },
       ...days()
         .map((d: string) => {
           let day = new Date(d.replace('/', ''))
           day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
 
-          if (d === formatDate(now())) {
-            day = now()
+          if (d === formatDate(yesterday())) {
+            day = yesterday()
           }
 
           return {
@@ -327,7 +334,10 @@ const config: NuxtConfig = {
       '/nous-contacter',
       '/nous-soutenir',
       '/sources',
-      ...days(setTimezone(new Date(Date.parse('30 May 2023 00:00:00 GMT')))).map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
+      ...days(setTimezone(new Date(Date.parse(untilDate))))
+        .map((d: string) => `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`),
+      ...days(setTimezone(new Date(Date.parse(untilDate))))
+        .map((d: string) => `${d}`),
       ...sources()
     ]
   },

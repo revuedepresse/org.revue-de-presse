@@ -25,8 +25,8 @@
     "minor": "npm version minor --no-git-tag-version --sign-git-tag"
   },
   "engines": {
-    "npm": ">=9.5.1",
-    "node": ">=18.16.1"
+    "npm": ">=10.8.2",
+    "node": ">=18.20.7"
   },
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -39,7 +39,7 @@
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.31.0",
     "csstype": "^3.1.2",
-    "nuxt": "2.16.2",
+    "nuxt": "2.18",
     "nuxt-property-decorator": "^2.9.1",
     "nuxt-purgecss": "^2.0.0",
     "nuxt-trailingslash-module": "^1.2.0",

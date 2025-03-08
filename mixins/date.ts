@@ -2,7 +2,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import Time from '../modules/time'
 import Errors from '../modules/errors'
 
-const clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+const clientTimezone = Intl.DateTimeFormat()
+  .resolvedOptions().timeZone
 
 export const formatDate = (date: Date): string => {
   return Time.formatDate(date)
@@ -26,9 +27,11 @@ export const getMinDate = () => {
   return setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))
 }
 
-export const now = (timezone = clientTimezone): Date => {
-  const rightNow = new Date()
-  return setTimezone(rightNow, timezone)
+export const yesterday = (timezone = clientTimezone): Date => {
+  const date = setTimezone(new Date(), timezone)
+  date.setDate(date.getDate() - 1)
+
+  return date
 }
 
 @Component
@@ -101,7 +104,7 @@ export default class DateMixin extends Vue {
   }
 
   formatMaxDate (): string {
-    return Time.today()
+    return Time.yesterday()
   }
 
   getNextMonth (month: number, year: number): Date {
@@ -125,7 +128,7 @@ export default class DateMixin extends Vue {
   }
 
   now (timezone = clientTimezone): Date {
-    return now(timezone)
+    return yesterday(timezone)
   }
 
   whichDayOfWeek (dayNumber: number): string {

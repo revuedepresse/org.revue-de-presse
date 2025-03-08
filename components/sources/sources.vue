@@ -8,58 +8,15 @@
       Sources des brèves
     </h1>
     <p v-if="showingSourcesPage">
-      Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées chaque jour par popularité</a> proviennent des comptes Bluesky des médias Français, ayant été classés par ordre lexico-graphique ci-dessous :
+      Les sources des brèves de publications <a href="#footnote" class="sources__internal-link">triées par popularité</a> en fin de chaque journée
+      proviennent des comptes Bluesky de médias Français.
     </p>
-    <div
-      v-for="source in sources"
-      :key="source.username"
-      :data-key="source.username"
-      class="sources__item"
-    >
-      <h2
-        v-if="showingSourcesPage"
-        :id="formatId(source.username)"
-      >
-        {{ source.name }}
-      </h2>
-      <h1
-        v-else
-        :id="formatId(source.username)"
-        class="sources__target"
-      >
-        {{ source.name }}
-      </h1>
-      <ul class="sources__media">
-        <li class="sources__source">
-          <span class="sources__external-link-container">
-            <a
-              class="sources__external-link"
-              rel="noreferer nofollow noopener"
-              :href="source.url"
-            >
-              {{ source.url }}
-            </a>
-          </span>
-        </li>
-        <li class="sources__source">
-          <span class="sources__external-link-container">
-            <a
-              class="sources__external-link"
-              rel="noreferer nofollow noopener"
-              :href="formatExternalUrl(source.username)"
-            >
-              @{{ source.username }}
-            </a>
-          </span>
-        </li>
-      </ul>
-    </div>
     <p
       v-if="showingSourcesPage"
       id="footnote"
       class="sources__footnote"
     >
-      <sup>*</sup> La popularité est dérivée du nombre de RTs des publications depuis Bluesky
+      La popularité est déduite des partages des publications depuis Bluesky.
     </p>
   </div>
 </template>
