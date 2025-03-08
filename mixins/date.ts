@@ -24,7 +24,7 @@ export const setTimezone = (date: Date, timezone = clientTimezone): Date => {
 }
 
 export const getMinDate = () => {
-  return setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT')))
+  return setTimezone(new Date(Date.parse('04 Mar 2025 00:00:00 GMT')))
 }
 
 export const yesterday = (timezone = clientTimezone): Date => {

@@ -74,8 +74,7 @@ class Logger {
   info (): void {
   }
 
-  error (message: string, provenance: string, error: Error): void {
-    console.error(message, provenance, error)
+  error (_message: string, _provenance: string, _error: Error): void {
   }
 }
 
