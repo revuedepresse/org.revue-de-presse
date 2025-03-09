@@ -1,8 +1,17 @@
 import { Component } from 'nuxt-property-decorator'
 import Config, { Routes } from '../config'
+import type { RawStatus } from '../mixins/status-format'
 import DateMixin, { setTimezone } from './date'
 
 export const HIGHLIGHTS_PATH_PREFIX = '/actualites-du-'
+
+export const MEDIA_INCLUDED = 0
+export const MEDIA_EXCLUDED = 1
+
+export const HIGHLIGHTS_FROM_DISTINCT_SOURCES = 1
+
+export const RETWEETS_EXCLUDED = 0
+export const RETWEETS_INCLUDED = 1
 
 export const localizeDate = (date: string): string => {
   const event = setTimezone(new Date(date))
@@ -15,6 +24,44 @@ export const localizeDate = (date: string): string => {
 
 export const sourcePath = (status: { publisherId: string, username: string }): string => {
   return `/source/${status.publisherId}/${status.username}`
+}
+
+export const fetchHighlights = ({
+  action,
+  curatedHighlightsRoute,
+  requestOptions,
+  logger
+}: { action: { method: string, route: string },
+  curatedHighlightsRoute: string,
+  requestOptions: {
+    params: Record<string, null|string>,
+    headers?: HeadersInit
+  },
+  logger: { error: (message: string, context: string, error: Error) => void }
+}): Promise<{ statuses: Array<{ status: RawStatus }> }> => {
+  const url = new URL(curatedHighlightsRoute)
+  Object.keys(requestOptions.params).map((key: string) => {
+    let param: string | null = requestOptions.params[key]
+    if (param == null) {
+      param = ''
+    }
+
+    return url.searchParams.set(key, param)
+  })
+
+  return fetch(
+    url.toString(),
+    {
+      method: action.method,
+      headers: requestOptions.headers
+    }
+  )
+    .then(res => res.json())
+    .catch((e) => {
+      logger.error(
+        e.message, 'highlight-list', e
+      )
+    })
 }
 
 @Component
@@ -83,6 +130,24 @@ export default class ApiMixin extends DateMixin {
 
   localizeDatePath (day: string): string {
     return `${HIGHLIGHTS_PATH_PREFIX}${this.localizeDate(day)}`
+  }
+
+  fetchCuratedHighlights ({
+    action,
+    curatedHighlightsRoute,
+    requestOptions,
+    logger
+  }: { action: { method: string, route: string },
+    curatedHighlightsRoute: string,
+    requestOptions: { params: Record<string, string>, headers: Headers },
+    logger: { error: (message: string, context: string, error: Error) => void }
+  }): Promise<{ statuses: Array<{ status: RawStatus }> }> {
+    return fetchHighlights({
+      action,
+      curatedHighlightsRoute,
+      requestOptions,
+      logger
+    })
   }
 
   localizeDate (date: string): string {

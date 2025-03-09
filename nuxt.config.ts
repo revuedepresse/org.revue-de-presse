@@ -1,8 +1,64 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { formatDate, yesterday, setTimezone, MIN_DATE } from './mixins/date'
-import { localizeDate, HIGHLIGHTS_PATH_PREFIX } from './mixins/api'
+import { formatDate, now, setTimezone, MIN_DATE } from './mixins/date'
+import type { RawStatus } from './mixins/status-format'
+import {
+  localizeDate,
+  HIGHLIGHTS_PATH_PREFIX,
+  fetchHighlights,
+  HIGHLIGHTS_FROM_DISTINCT_SOURCES,
+  RETWEETS_INCLUDED, MEDIA_INCLUDED
+} from './mixins/api'
 import Site from './modules/site'
+// import Config from './config'
+
+const createFeed = async (feed: {
+  addItem({
+    title,
+    id,
+    link,
+    description,
+    content
+  }: {
+    title: string,
+    id: string,
+    link: string,
+    description: string,
+    content: string
+  }): void
+}) => {
+  const headers = new Headers()
+  headers.set('x-auth-token', process.env.API_AUTH_TOKEN || '')
+
+  // api.actions.fetchHighlights
+  const response = await fetchHighlights({
+    action: {
+      method: 'get',
+      route: '/api/twitter/highlights',
+    },
+    curatedHighlightsRoute: 'https://api.revue-de-presse.org/api/twitter/highlights',
+    requestOptions: {
+      headers,
+      params: {
+        distinctSources: `${HIGHLIGHTS_FROM_DISTINCT_SOURCES}`,
+        includeRetweets: `${RETWEETS_INCLUDED}`,
+        excludeMedia: `${MEDIA_INCLUDED}`,
+        startDate: formatDate(now()),
+        endDate: formatDate(now())
+      }
+    },
+    logger: { error: (_message, _provenance, _error) => {} }
+  })
+  response.statuses.forEach(({ status }: { status: RawStatus}) => {
+    feed.addItem({
+      title: status.screen_name,
+      id: status.publication_id,
+      link: status.url,
+      description: status.avatar_url,
+      content: status.text
+    })
+  })
+}
 
 const description =
   'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
@@ -16,8 +72,8 @@ const days = (until: Date|undefined = undefined) => {
   const days = [setTimezone(new Date(Date.parse(MIN_DATE)))]
   let next = days[days.length - 1]
 
-  const twelveWeeksFromNow = yesterday()
-  twelveWeeksFromNow.setTime(yesterday().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
+  const twelveWeeksFromNow = now()
+  twelveWeeksFromNow.setTime(now().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
 
   if (typeof until !== 'undefined') {
     twelveWeeksFromNow.setTime(until.getTime())
@@ -187,6 +243,7 @@ const config: NuxtConfig = {
   modules: [
     'nuxt-trailingslash-module',
     '@nuxtjs/device',
+    '@nuxtjs/feed',
     '@nuxtjs/style-resources',
     [
       'nuxt-compress',
@@ -197,6 +254,39 @@ const config: NuxtConfig = {
       }
     ],
     '@nuxtjs/sitemap'
+  ],
+
+  feed: [
+    {
+      path: '/feed.xml',
+      // feed: [],
+      async create (feed: {
+        options: Record<string, string>,
+        addItem: ({
+          title,
+          id,
+          link,
+          description,
+          content
+        }: {
+          title: string,
+          id: string,
+          link: string,
+          description: string,
+          content: string
+        }) => void
+      }): Promise<void> {
+        feed.options = {
+          title: 'Revue de presse',
+          description: 'Retrouver chaque jour les 10 publications médias ayant été les plus relayés au cours de la journée.',
+          link: Site.baseURL,
+        }
+        await createFeed(feed)
+      },
+      cacheTime: 1000 * 60 * 15,
+      type: 'rss2',
+      data: []
+    },
   ],
 
   dateFns: {
@@ -269,7 +359,7 @@ const config: NuxtConfig = {
       {
         url: '/',
         changefreq: 'daily',
-        lastmod: (yesterday().toISOString())
+        lastmod: (now().toISOString())
       },
       {
         url: '/mentions-legales',
@@ -292,8 +382,8 @@ const config: NuxtConfig = {
           let day = new Date(d.replace('/', ''))
           day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
 
-          if (d === formatDate(yesterday())) {
-            day = yesterday()
+          if (d === formatDate(now())) {
+            day = now()
           }
 
           return {
