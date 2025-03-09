@@ -34,13 +34,6 @@ export const now = (timezone = clientTimezone): Date => {
   return setTimezone(rightNow, timezone)
 }
 
-export const yesterday = (timezone = clientTimezone): Date => {
-  const date = setTimezone(new Date(), timezone)
-  date.setDate(date.getDate() - 1)
-
-  return date
-}
-
 @Component
 export default class DateMixin extends Vue {
   get daysOfWeek (): Array<string> {

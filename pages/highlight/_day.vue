@@ -74,7 +74,7 @@ import {
 } from '~/mixins/api'
 import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
-import { getMinDate, isValidDate, now, setTimezone, yesterday } from '~/mixins/date'
+import {formatDate, getMinDate, isValidDate, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
@@ -395,7 +395,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     return this.isValidDate(this.$route.params.day) &&
-      setTimezone(new Date(this.$route.params.day)) <= yesterday() &&
+      setTimezone(new Date(this.$route.params.day)) <= now() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
   }
 
@@ -437,6 +437,11 @@ export default class Highlights extends mixins(SourcesMixin) {
     const action = this.getHighlightsAction()
     const curatedHighlightsRoute = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
+
+    if (this.$route.name === 'homepage') {
+      requestOptions.params.startDate = formatDate(now())
+      requestOptions.params.endDate = formatDate(now())
+    }
 
     const response = await this.fetchCuratedHighlights({
       action,
