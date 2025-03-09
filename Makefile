@@ -30,11 +30,11 @@ install: ## Install dependencies
 	@/bin/bash -c '( test -e .env && source .env || true ) && NODE_OPTIONS="--openssl-legacy-provider" npm install'
 
 install-bubblewrap: ## Install bubblewrap
-	@/bin/bash -c 'asdf install nodejs 18.14.2 && asdf local nodejs 18.14.2 && npm i -g @bubblewrap/cli'
+	@/bin/bash -c 'source fun.sh && install_bubblewrap'
 
 start: clean ## Start production server
 	@/bin/bash -c 'source .env && npx nuxt start'
 
 update-twa: install-bubblewrap ## Build Android app using Trusted Web Activites
-	@/bin/bash -c 'asdf local nodejs 18.14.2 && bubblewrap update'
+	@/bin/bash -c 'source fun.sh && update_twa'
 

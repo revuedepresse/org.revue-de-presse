@@ -89,6 +89,7 @@ import previousItemIcon from '~/assets/icons/icon-previous-item.png'
 import nextItemIcon from '~/assets/icons/icon-next-item.png'
 import ApiMixin from '~/mixins/api'
 import Site from '~/modules/site'
+import { formatDate } from '~/mixins/date'
 
 const DatePickerStore = namespace('date-picker')
 
@@ -351,7 +352,7 @@ class CalendarMonth extends mixins(ApiMixin) {
   }
 
   isReviewAvailable (date: Date) {
-    return this.setTimezone(date) <= this.now()
+    return this.setTimezone(date) <= this.yesterday()
   }
 
   pickDate (date: Date) {
@@ -361,9 +362,11 @@ class CalendarMonth extends mixins(ApiMixin) {
       this.resetPickingChoice()
     }
 
+    // Redirecting to yesterday
+    // since top 10 is now available at the end of each day
     if (day === Time.formatDate(this.now())) {
-      this.intendingToPick(this.now())
-      this.navigateToHomepage()
+      this.intendingToPick(this.yesterday())
+      this.navigateToHighlightsForDay(formatDate(this.yesterday()))
 
       return
     }

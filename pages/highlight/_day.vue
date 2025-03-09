@@ -65,21 +65,20 @@ import Outro from '../../components/outro/outro.vue'
 import Config from '../../config'
 import EventHub from '../../modules/event-hub'
 import Time from '../../modules/time'
+import {
+  HIGHLIGHTS_FROM_DISTINCT_SOURCES,
+  MEDIA_EXCLUDED,
+  MEDIA_INCLUDED,
+  RETWEETS_EXCLUDED,
+  RETWEETS_INCLUDED
+} from '~/mixins/api'
 import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
-import { getMinDate, isValidDate, yesterday, setTimezone } from '~/mixins/date'
+import { formatDate, getMinDate, isValidDateFormat, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
 }
-
-const MEDIA_INCLUDED = 0
-const MEDIA_EXCLUDED = 1
-
-const HIGHLIGHTS_FROM_DISTINCT_SOURCES = 1
-
-const RETWEETS_EXCLUDED = 0
-const RETWEETS_INCLUDED = 1
 
 type Params = {
   endDate?: string,
@@ -148,7 +147,7 @@ export default class Highlights extends mixins(SourcesMixin) {
       return NO_REVIEW_ERROR_MESSAGE
         .replace(
           '_date_',
-          yesterday().toLocaleDateString(
+          now().toLocaleDateString(
             'fr-FR',
             { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
           )
@@ -178,7 +177,10 @@ export default class Highlights extends mixins(SourcesMixin) {
   public intendingToPick!: (date: Date) => void
 
   get visitingCuratedHighlightsRoute () {
-    return ['curated-highlights', 'highlights'].includes(this.$route.name || '')
+    return [
+      'curated-highlights',
+      'highlights',
+    ].includes(this.$route.name || '')
   }
 
   get day (): string {
@@ -396,7 +398,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
 
     return this.isValidDate(this.$route.params.day) &&
-      setTimezone(new Date(this.$route.params.day)) <= yesterday() &&
+      setTimezone(new Date(this.$route.params.day)) <= this.yesterday() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
   }
 
@@ -439,29 +441,17 @@ export default class Highlights extends mixins(SourcesMixin) {
     const curatedHighlightsRoute = this.getHighlightsRoute()
     const requestOptions = this.getRequestOptions()
 
-    const url = new URL(curatedHighlightsRoute)
-    Object.keys(requestOptions.params).map((key: string) => {
-      let param: string | null = requestOptions.params[key]
-      if (param == null) {
-        param = ''
-      }
+    if (this.showingHomepage) {
+      requestOptions.params.startDate = formatDate(this.yesterday())
+      requestOptions.params.endDate = formatDate(this.yesterday())
+    }
 
-      return url.searchParams.set(key, param)
+    const response = await this.fetchCuratedHighlights({
+      action,
+      curatedHighlightsRoute,
+      requestOptions,
+      logger: this.logger
     })
-
-    const response = await fetch(
-      url.toString(),
-      {
-        method: action.method,
-        headers: requestOptions.headers
-      }
-    )
-      .then(res => res.json())
-      .catch((e) => {
-        this.logger.error(
-          e.message, 'highlight-list', e
-        )
-      })
 
     this.items = []
     this.items = response.statuses
@@ -476,7 +466,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     let requestedDate = this.startDate
 
     if (
-      this.$route.name === 'homepage' &&
+      this.showingHomepage &&
       this.now().getHours() < 7
     ) {
       const d = new Date(this.startDate)
@@ -691,7 +681,10 @@ export default class Highlights extends mixins(SourcesMixin) {
 
     const selectedDate = setTimezone(new Date(ctx.params.day))
     const greaterThanMinDate = setTimezone(new Date(Date.parse('01 Jan 2018 00:00:00 GMT'))) <= selectedDate
-    const lesserThanMaxDate = selectedDate <= yesterday()
+
+    const yesterday = new Date()
+    yesterday.setDate(now().getDate() - 1)
+    const lesserThanMaxDate = selectedDate <= yesterday
 
     return greaterThanMinDate && lesserThanMaxDate
   }
@@ -699,7 +692,7 @@ export default class Highlights extends mixins(SourcesMixin) {
   get invalidCuratedHighlights () {
     return this.visitingCuratedHighlightsRoute &&
       this.isValidDate(this.$route.params.day) && (
-      setTimezone(new Date(this.$route.params.day)) > yesterday() ||
+      setTimezone(new Date(this.$route.params.day)) > this.yesterday() ||
       setTimezone(new Date(this.$route.params.day)) < setTimezone(getMinDate())
     )
   }
@@ -765,14 +758,14 @@ export default class Highlights extends mixins(SourcesMixin) {
   }
 
   mounted () {
-    if (this.$route.name === 'homepage') {
-      this.intendingToPick(this.now())
+    if (this.showingHomepage) {
+      this.intendingToPick(this.yesterday())
     }
 
     if (
       this.visitingCuratedHighlightsRoute &&
-      isValidDate(this.$route.params.day) &&
-      setTimezone(new Date(this.$route.params.day)) <= yesterday() &&
+      isValidDateFormat(this.$route.params.day) &&
+      setTimezone(new Date(this.$route.params.day)) <= this.yesterday() &&
       setTimezone(new Date(this.$route.params.day)) >= setTimezone(getMinDate())
     ) {
       this.intendingToPick(new Date(this.$route.params.day))

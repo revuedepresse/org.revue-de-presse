@@ -42,8 +42,8 @@
       v-if="!removeTwitterLogo"
       class="publisher__platform"
       alt="logo de Bluesky"
-      width="27"
-      height="24"
+      width="20"
+      height="28"
       :src="logo"
     >
   </div>

@@ -148,6 +148,9 @@ export default class StatusFormat extends Vue {
         retweets: []
       }
 
+      const urlRegex = new RegExp('(http(?:s)?:\\/\\/\\\S*)', 'g')
+      const quote = new RegExp('"$', 'g')
+
       const formattedStatus: FormattedStatus = {
         avatarUrl: status.avatar_url,
         base64EncodedAvatar: {
@@ -160,7 +163,13 @@ export default class StatusFormat extends Vue {
         inAggregate: aggregate,
         publishedAt: setTimezone(new Date(status.date)),
         statusId: status.publication_id,
-        text: status.text,
+        text: status.text
+          .replaceAll(quote, '')
+          .replaceAll('\\xa0\\', '&nbsp;')
+          .replaceAll(urlRegex, (url) => {
+            url = url.replace('"', '')
+            return `<a class="status__text-external-link" href="${url}">${url}</a>`
+          }),
         url: status.url,
         isVisible: false,
         media: status.media,
@@ -196,6 +205,7 @@ export default class StatusFormat extends Vue {
         statusCollection[
           statusCollection.indexOf(status)
         ].key = statusCollection.indexOf(status)
+
         return statusCollection
       },
       formattedStatuses

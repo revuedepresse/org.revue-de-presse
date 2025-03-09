@@ -27,7 +27,7 @@ import LoadingSpinner from '../loading-spinner/loading-spinner.vue'
 import Status from '../status/status.vue'
 import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
-import DateMixin, { yesterday, setTimezone } from '~/mixins/date'
+import DateMixin, { now, setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
 import Logo1x from '~/assets/revue-de-presse_48x48.png?data'
 import Logo2x from '~/assets/revue-de-presse_96x96.png?data'
@@ -154,7 +154,7 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
         .replaceAll(new RegExp(pattern, 'ig'), '')
         .replaceAll(new RegExp('[\r\n\\s]+', 'ig'), ' ')
 
-      let event = yesterday()
+      let event = now()
       if (this.$route.name !== 'homepage') {
         event = setTimezone(new Date(this.startDate))
       }

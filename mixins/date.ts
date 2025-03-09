@@ -9,7 +9,7 @@ export const formatDate = (date: Date): string => {
   return Time.formatDate(date)
 }
 
-export const isValidDate = (day: string): boolean => {
+export const isValidDateFormat = (day: string): boolean => {
   const matching = day.match(new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d$', 'gi'))
 
   if (matching === null) {
@@ -29,11 +29,9 @@ export const getMinDate = () => {
   return setTimezone(new Date(Date.parse(MIN_DATE)))
 }
 
-export const yesterday = (timezone = clientTimezone): Date => {
-  const date = setTimezone(new Date(), timezone)
-  date.setDate(date.getDate() - 1)
-
-  return date
+export const now = (timezone = clientTimezone): Date => {
+  const rightNow = new Date()
+  return setTimezone(rightNow, timezone)
 }
 
 @Component
@@ -84,7 +82,7 @@ export default class DateMixin extends Vue {
   }
 
   isValidDate (day: string) {
-    return isValidDate(day)
+    return isValidDateFormat(day)
   }
 
   formatDate (date: Date) {
@@ -130,7 +128,14 @@ export default class DateMixin extends Vue {
   }
 
   now (timezone = clientTimezone): Date {
-    return yesterday(timezone)
+    return now(timezone)
+  }
+
+  yesterday (timezone = clientTimezone): Date {
+    const date = this.now(timezone)
+    date.setDate(date.getDate() - 1)
+
+    return date
   }
 
   whichDayOfWeek (dayNumber: number): string {
