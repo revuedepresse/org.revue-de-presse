@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { formatDate, now, setTimezone, MIN_DATE } from './mixins/date'
+import { formatDate, now, setTimezone, yesterday, MIN_DATE } from './mixins/date'
 import type { RawStatus } from './mixins/status-format'
 import {
   localizeDate,
@@ -43,8 +43,8 @@ const createFeed = async (feed: {
         distinctSources: `${HIGHLIGHTS_FROM_DISTINCT_SOURCES}`,
         includeRetweets: `${RETWEETS_INCLUDED}`,
         excludeMedia: `${MEDIA_INCLUDED}`,
-        startDate: formatDate(now()),
-        endDate: formatDate(now())
+        startDate: formatDate(yesterday()),
+        endDate: formatDate(yesterday())
       }
     },
     logger: { error: (_message, _provenance, _error) => {} }
