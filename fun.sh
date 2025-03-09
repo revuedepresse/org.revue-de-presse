@@ -13,4 +13,17 @@ function move_pages() {
     done
 }
 
+# [Install asdf](https://asdf-vm.com/guide/getting-started.html#_1-install-asdf)
+# [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs)
+function install_bubblewrap() {
+   asdf install nodejs $(\cat ./.nvmrc) && \
+   npm i -g @bubblewrap/cli
+}
+
+function update_twa() {
+    bubblewrap update
+}
+
 set +Eeuo pipefail
+
+

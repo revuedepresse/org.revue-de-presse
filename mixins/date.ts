@@ -29,6 +29,11 @@ export const getMinDate = () => {
   return setTimezone(new Date(Date.parse(MIN_DATE)))
 }
 
+export const now = (timezone = clientTimezone): Date => {
+  const rightNow = new Date()
+  return setTimezone(rightNow, timezone)
+}
+
 export const yesterday = (timezone = clientTimezone): Date => {
   const date = setTimezone(new Date(), timezone)
   date.setDate(date.getDate() - 1)
@@ -130,7 +135,7 @@ export default class DateMixin extends Vue {
   }
 
   now (timezone = clientTimezone): Date {
-    return yesterday(timezone)
+    return now(timezone)
   }
 
   whichDayOfWeek (dayNumber: number): string {
