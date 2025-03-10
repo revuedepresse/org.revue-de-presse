@@ -5,9 +5,9 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "org.revue_de_presse",
+      "package_name": "org.revue_2_presse",
       "sha256_cert_fingerprints": [
-        "01:E5:E3:A6:41:4F:ED:9A:03:D2:EC:A0:1D:D2:16:C2:4C:DA:99:FA:0C:D2:DD:FC:7D:F4:8B:4E:C2:BD:5C:DD"
+        "C4:4B:91:EA:05:9D:64:8A:B2:ED:96:8C:9D:1E:32:AC:BA:35:17:4A:3E:0F:D4:E1:A0:36:80:8E:E1:81:C6:06"
       ]
     }
   }
