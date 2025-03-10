@@ -11,10 +11,13 @@ generate: ## Build production package
 publish-asset-links: ## Publish assets links for TWA
 	@/bin/bash -c 'mkdir -p dist/well-known && cp ./static/assetlinks.json ./dist/well-known'
 
+publish-atproto-did: ## Publish at proto did
+	@/bin/bash -c 'mkdir -p dist/well-known && cp ./static/atproto-did ./dist/well-known'
+
 copy-domain-name-ownership-proof: ## Copy proof of domain name ownership
 	@/bin/bash -c 'cp ./static/2023-03-14_linkedin-community-management-api-validation.txt ./dist/well-known'
 
-build: generate publish-asset-links copy-domain-name-ownership-proof ## Build production package
+build: generate publish-asset-links publish-atproto-did copy-domain-name-ownership-proof ## Build production package
 	@/bin/bash -c 'source fun.sh && move_pages'
 
 dev: ## Start development server

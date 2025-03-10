@@ -184,7 +184,7 @@ export default class DatePicker extends mixins(ApiMixin) {
   get nextDayPath () {
     const day = Time.formatDate(this.dayFollowingPickedDate)
 
-    if (day === Time.formatDate(this.now())) {
+    if (day === Time.formatDate(this.yesterday())) {
       return this.homepagePath
     }
 
@@ -274,12 +274,12 @@ export default class DatePicker extends mixins(ApiMixin) {
   }
 
   isNextDayAvailable () {
-    const today = this.now()
+    const yesterday = this.yesterday()
     const sinceDate = this.setTimezone(new Date(this.startDate))
 
     if (
       sinceDate.getFullYear() >= 2018 &&
-      sinceDate.getFullYear() < today.getFullYear()) {
+      sinceDate.getFullYear() < yesterday.getFullYear()) {
       return true
     }
 
@@ -291,15 +291,15 @@ export default class DatePicker extends mixins(ApiMixin) {
       return sinceDate.getDate() === 31
     }
 
-    if (sinceDate.getMonth() < today.getMonth()) {
+    if (sinceDate.getMonth() < yesterday.getMonth()) {
       return true
     }
 
-    if (sinceDate.getMonth() > today.getMonth()) {
+    if (sinceDate.getMonth() > yesterday.getMonth()) {
       return false
     }
 
-    return sinceDate.getDate() < today.getDate()
+    return sinceDate.getDate() < yesterday.getDate()
   }
 
   isPreviousDayAvailable () {

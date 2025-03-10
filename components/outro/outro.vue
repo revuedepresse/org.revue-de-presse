@@ -4,7 +4,7 @@
       class="outro__title outro__iconography-sharing"
       :style="sharingIcon"
     >
-      @revue_2_presse
+      @revue-de-presse.org
     </h2>
     <p :class="firstParagraphClasses">
       Retrouver chaque jour les 10 publications médias
@@ -35,7 +35,7 @@
                 >
                 </path>
               </svg>
-              <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
+              <span class="outro__subscription-label">Suivre&nbsp;@revue-de-presse.bsky.social</span><!--
         --></a><!--
       --></span>
       <a
@@ -71,8 +71,8 @@
       Pro bono publico
     </h2>
     <p class="outro__paragraph">
-      Ce projet est porté par <a rel="noreferrer nofollow noopener" href="https://twitter.com/sylvaineg">@sylvaineg</a> et
-      <a href="https://twitter.com/thierrymarianne" rel="noreferrer nofollow noopener">@thierrymarianne</a> avec 💙.
+      Ce projet est porté par <a rel="noreferrer nofollow noopener" href="https://bsky.app/profile/sylvainegarderet.bsky.social">@sylvainegarderet.bsky.social</a> et
+      <a href="https://bsky.app/profile/@thierrymarianne.bsky.social" rel="noreferrer nofollow noopener">@thierrymarianne.bsky.social</a> avec 💙.
     </p>
     <div class="outro__copyright-footer">
       <div class="outro__copyright">

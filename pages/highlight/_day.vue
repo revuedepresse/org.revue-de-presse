@@ -1,10 +1,13 @@
 <template>
   <div>
     <link rel="preconnect" :href="getApiHost" crossorigin>
-    <div :class="daysClasses">
+    <div
+      :class="daysClasses"
+      @click="(event) => closeDatePicker(event)"
+    >
       <AppHeader
         ref="header"
-        :is-baseline-view="isBaselineView"
+        :is-baseline-view="isBaselineView || showingTop10"
         :picked-date="startDate"
       />
       <div class="_day__content">
@@ -18,7 +21,7 @@
             :start-date="startDate"
             :items="items"
             :is-showing-another-page="isShowingAnotherPage"
-            :is-baseline-view="isBaselineView"
+            :is-baseline-view="isBaselineView || showingTop10"
           />
           <LoadingSpinner
             v-if="showLoadingSpinnerComponent"
@@ -34,7 +37,7 @@
         <div class="_day__column">
           <Outro :class="outroClass" />
           <div
-            v-if="isBaselineView"
+            v-if="isBaselineView && !showingTop10"
             class="_day__navigation"
           >
             <DatePicker
@@ -101,6 +104,10 @@ type RequestOptions = {
 const NO_REVIEW_ERROR_MESSAGE = 'Aucun contenu à découvrir pour le _date_.'
 
 const DatePickerStore = namespace('date-picker')
+
+interface InputClickEvent extends Event {
+  target: HTMLInputElement;
+}
 
 @Component({
   components: {
@@ -173,8 +180,58 @@ export default class Highlights extends mixins(SourcesMixin) {
   @DatePickerStore.Getter
   public pickingDay!: boolean
 
+  @DatePickerStore.Getter
+  public pickingMonth!: boolean
+
+  @DatePickerStore.Getter
+  public pickingYear!: boolean
+
   @DatePickerStore.Mutation
   public intendingToPick!: (date: Date) => void
+
+  @DatePickerStore.Mutation
+  public pickDay!: () => void
+
+  @DatePickerStore.Mutation
+  public resetPickingChoice!: () => void
+
+  @DatePickerStore.Getter
+  public datePicker!: () => Date
+
+  closeDatePicker (event: InputClickEvent): boolean {
+    const datePicker = document.querySelector('.date-picker')
+    if (!datePicker) {
+      return true
+    }
+
+    if (datePicker.contains(event.target)) {
+      return true
+    }
+
+    if (event.target.nodeName === 'A' || event.target.nodeName === 'BUTTON') {
+      return true
+    }
+
+    if (!this.isBaselineView) {
+      return true
+    }
+
+    if (!this.pickingDay &&
+      !this.pickingMonth &&
+      !this.pickingYear
+    ) {
+      return true
+    }
+
+    this.onMount()
+    this.pickDay()
+    if (this.showingHomepage || this.showingCuratedHighlights) {
+      this.navigateToHighlightsForDay(formatDate(this.datePicker() || this.yesterday()))
+    }
+    this.resetPickingChoice()
+
+    return false
+  }
 
   get visitingCuratedHighlightsRoute () {
     return [
@@ -310,13 +367,19 @@ export default class Highlights extends mixins(SourcesMixin) {
       return true
     }
 
-    const paramNames = Object.keys(this.$route.query)
-    const isBaselineViewActive = paramNames
-      .find(p => p === 'naked') === undefined
-
     return this.$device.isDesktop ||
       this.$device.isTablet ||
-      isBaselineViewActive
+      !this.showingTop3
+  }
+
+  get showingTop3 () {
+    return Object.keys(this.$route.query)
+      .find(p => p === 'naked') !== undefined
+  }
+
+  get showingTop10 () {
+    return Object.keys(this.$route.query)
+      .find(p => p === 'top10') !== undefined
   }
 
   get showingNotFoundPage () {
@@ -757,7 +820,7 @@ export default class Highlights extends mixins(SourcesMixin) {
     }
   }
 
-  mounted () {
+  onMount () {
     if (this.showingHomepage) {
       this.intendingToPick(this.yesterday())
     }
@@ -770,6 +833,10 @@ export default class Highlights extends mixins(SourcesMixin) {
     ) {
       this.intendingToPick(new Date(this.$route.params.day))
     }
+  }
+
+  mounted () {
+    this.onMount()
 
     this.detectError()
   }
