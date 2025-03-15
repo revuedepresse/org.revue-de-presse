@@ -158,7 +158,9 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
       if (this.$route.name !== 'homepage') {
         event = setTimezone(new Date(this.startDate))
       }
-      const localizedDate = event.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      const localizedDate = event.toLocaleDateString('fr-FR', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      })
 
       const title = `Revue de presse du ${localizedDate} - Revue-de-presse.org 🦉`
 

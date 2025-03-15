@@ -40,7 +40,7 @@
         :publication-url="status.url"
       >
         <div
-          v-if="!isIntro"
+          v-if="false"
           class="status__source-container"
         >
           <span class="status__sep">
