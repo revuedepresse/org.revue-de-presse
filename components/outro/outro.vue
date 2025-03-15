@@ -4,7 +4,7 @@
       class="outro__title outro__iconography-sharing"
       :style="sharingIcon"
     >
-      @revue_2_presse
+      @revue-de-presse.org
     </h2>
     <p :class="firstParagraphClasses">
       Retrouver chaque jour les 10 publications médias
@@ -35,7 +35,7 @@
                 >
                 </path>
               </svg>
-              <span class="outro__subscription-label">Suivre&nbsp;@revue_2_presse</span><!--
+              <span class="outro__subscription-label">Suivre&nbsp;@revue-de-presse.bsky.social</span><!--
         --></a><!--
       --></span>
       <a
