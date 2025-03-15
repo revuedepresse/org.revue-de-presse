@@ -77,7 +77,7 @@ import {
 } from '~/mixins/api'
 import SourcesMixin, { isValidSourceRoute, sortSources } from '~/mixins/sources'
 import { RawStatus } from '~/mixins/status-format'
-import {formatDate, getMinDate, isValidDateFormat, now, setTimezone, yesterday} from '~/mixins/date'
+import { formatDate, getMinDate, isValidDateFormat, now, setTimezone } from '~/mixins/date'
 
 if (SharedState.isProductionModeActive()) {
   Vue.config.productionTip = false
