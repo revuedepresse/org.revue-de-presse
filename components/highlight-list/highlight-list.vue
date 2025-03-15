@@ -29,9 +29,7 @@ import Outro from '../outro/outro.vue'
 import StatusFormatMixin, { RawStatus } from '~/mixins/status-format'
 import DateMixin, { now, setTimezone } from '~/mixins/date'
 import ApiMixin from '~/mixins/api'
-import Logo1x from '~/assets/revue-de-presse_48x48.png?data'
-import Logo2x from '~/assets/revue-de-presse_96x96.png?data'
-import Logo3x from '~/assets/revue-de-presse_144x144.png?data'
+import Logo from '~/assets/revue-de-presse-logo.svg?data'
 
 @Component({
   components: {
@@ -85,12 +83,12 @@ export default class HighlightList extends mixins(ApiMixin, DateMixin, StatusFor
 
     return {
       base64_encoded_avatar: {
-        x1: Logo1x,
-        x2: Logo2x,
-        x3: Logo3x
+        x1: Logo,
+        x2: Logo,
+        x3: Logo
       },
       screen_name: 'revue_2_presse',
-      avatar_url: Logo1x,
+      avatar_url: Logo,
       published_at: this.formatDate(this.now()),
       date: this.now(),
       publication_id: '0',

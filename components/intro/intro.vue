@@ -47,7 +47,7 @@ export default class Intro extends Vue {
   })
     showIntro = false
 
-  isIntroVisible = false
+  isIntroVisible = true
 
   currentRoute: string = this.$router.currentRoute.path
   logo = logo
