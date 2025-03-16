@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import Logotype from '~/assets/revue-de-presse_48x48.png?data'
 import ApiMixin from '~/mixins/api'
+import Logotype from '~/assets/revue-de-presse-logo.svg?data'
 
 @Component
 export default class Logo extends ApiMixin {
