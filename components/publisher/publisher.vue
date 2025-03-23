@@ -6,7 +6,7 @@
     <div class="publisher__container">
       <a
         :aria-label="label(name)"
-        :href="publisherUrl"
+        href="#"
         rel="nofollow noreferrer noopener"
       >
         <img
@@ -22,7 +22,7 @@
       <div class="publisher__identifiers">
         <a
           :aria-label="label(name)"
-          :href="publisherUrl"
+          href="#"
           class="publisher__name"
           rel="nofollow noreferrer noopener"
         >
@@ -32,7 +32,7 @@
           :aria-label="label(name)"
           class="publisher__username"
           rel="nofollow noreferrer noopener"
-          :href="publisherUrl"
+          href="#"
         >
           @{{ username }}
         </a>

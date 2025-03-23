@@ -26,6 +26,10 @@
   &__container {
     display: flex;
     flex-direction: row;
+
+    a {
+      cursor: auto;
+    }
   }
 
   &__identifiers {
@@ -36,6 +40,7 @@
 
   &__name {
     color: var(--color-black);
+    cursor: auto;
     font: normal normal bold 15px/25px Arial;
     display: inline-flex;
     height: 17px;
@@ -47,6 +52,7 @@
 
   &__username {
     color: $color-username;
+    cursor: auto;
     display: inline-flex;
     font: normal normal normal 14px/25px Arial;
     height: 16px;
@@ -65,6 +71,7 @@
       &:hover,
       &:visited {
         color: var(--color-white);
+        cursor: auto;
       }
     }
 
@@ -78,6 +85,7 @@
       &:visited {
         color: var(--color-white);
         font-weight: bold;
+        cursor: auto;
       }
     }
   }
