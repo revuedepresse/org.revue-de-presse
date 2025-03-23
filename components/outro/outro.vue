@@ -72,7 +72,7 @@
     </h2>
     <p class="outro__paragraph">
       Ce projet est porté par <a rel="noreferrer nofollow noopener" href="https://bsky.app/profile/sylvainegarderet.bsky.social">@sylvainegarderet.bsky.social</a> et
-      <a href="https://bsky.app/profile/@thierrymarianne.bsky.social" rel="noreferrer nofollow noopener">@thierrymarianne.bsky.social</a> avec 💙.
+      <a href="https://bsky.app/profile/thierry.marianne.io" rel="noreferrer nofollow noopener">@thierry.marianne.io</a> avec 💙.
     </p>
     <div class="outro__copyright-footer">
       <div class="outro__copyright">
