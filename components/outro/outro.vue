@@ -42,7 +42,7 @@
         v-if="showInstallAndroidAppAnchor"
         class="outro__install-android"
         rel="noreferrer nofollow noopener"
-        href="https://play.google.com/store/apps/details?id=org.revue_de_presse"
+        href="https://play.google.com/store/apps/details?id=org.revue_2_presse"
       >
         <img
           alt="Disponible sur Google Play"
