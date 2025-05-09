@@ -59,7 +59,7 @@
       À propos
     </h2>
     <p class="outro__paragraph">
-      <a :href="legalNoticePagePath">Mentions Légales</a><br />
+      <a :href="legalNoticePagePath">Privacy policy</a><br />
       <a :href="contactPagePath">Nous contacter</a><br />
       <a :href="supportPagePath">Nous soutenir</a><br />
       <a :href="sourcesPagePath">Sources des brèves</a><br />

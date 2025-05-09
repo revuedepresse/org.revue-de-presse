@@ -3,9 +3,9 @@
     v-if="isShowingLegalNotice"
     class="legal-notice"
   >
-    <h1>Mentions légales de revue-de-presse.org</h1>
+    <h1>Privacy policy</h1>
 
-    <p>En vigueur au 07/10/14</p>
+    <p>En vigueur au 09/05/25</p>
 
     <p>
       Conformément aux dispositions des Articles 6-III et<br />
@@ -77,7 +77,7 @@ class LegalNotice extends Vue {
   }
 
   get editor () {
-    return atob('U3lsdmFpbmUgR2FyZGVyZXQgZXQgVGhpZXJyeSBNYXJpYW5uZQ==')
+    return atob('U3lsdmFpbmUgR2FyZGVyZXQgZXQgVGhpZXJyeSBNYXJpYW5uZSBBbGV4YW5kcmU=')
   }
 
   get site () {
@@ -85,7 +85,7 @@ class LegalNotice extends Vue {
   }
 
   get email () {
-    return atob('bWVudGlvbnMtbGVnYWxlc0ByZXZ1ZS1kZS1wcmVzc2Uub3Jn')
+    return atob('Y29udGFjdCtnb29nbGUtcGxheUByZXZ1ZS1kZS1wcmVzc2Uub3Jn')
   }
 }
 
