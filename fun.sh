@@ -11,6 +11,8 @@ function move_pages() {
       sed -E 's#\{\{ date \}\}#'"$(echo "${page}" | sed -E 's#\.\/dist\/##g' | sed 's#\.html##g')"'#g' > ./template.html
       mv ./template.html $page
     done
+
+    mv ./dist/.well-known ./dist/well-known
 }
 
 # [Install asdf](https://asdf-vm.com/guide/getting-started.html#_1-install-asdf)
