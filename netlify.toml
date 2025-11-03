@@ -9,6 +9,12 @@ status = 200
 force = true
 
 [[redirects]]
+from = "/.well-known/atproto-did"
+to = "/well-known/atproto-did"
+status = 200
+force = true
+
+[[redirects]]
 from = "/.well-known/2023-03-14_linkedin-community-management-api-validation.txt"
 to = "/well-known/2023-03-14_linkedin-community-management-api-validation.txt"
 status = 200
