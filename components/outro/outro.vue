@@ -1,6 +1,16 @@
 <template>
   <div id="project" class="outro">
     <h2
+      v-if="isJanuary2026"
+      class="outro__title"
+    >
+      <a
+        class="outro__happy-new-year-anchor"
+        href="https://2025.revue-de-presse.org/"
+        rel="noreferrer nofollow noopener"
+      >Bonne année 2026!</a>
+    </h2>
+    <h2
       class="outro__title outro__iconography-sharing"
       :style="sharingIcon"
     >
@@ -108,6 +118,11 @@ import ApiMixin from '~/mixins/api'
 class Outro extends mixins(ApiMixin) {
   get year () {
     return this.now().getFullYear()
+  }
+
+  get isJanuary2026 () {
+    const now = this.now()
+    return now.getFullYear() === 2026 && now.getMonth() === 0
   }
 
   get firstParagraphClasses () {
