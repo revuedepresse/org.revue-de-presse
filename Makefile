@@ -8,6 +8,9 @@ deps-analysis: ## Analyze dependencies graph
 generate: ## Build production package
 	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate --modern'
 
+install-python-deps: ## Install python dependencies
+	@/bin/bash -c 'pip install uv ; uv python install 3.11'
+
 publish-asset-links: ## Publish assets links for TWA
 	@/bin/bash -c 'mkdir -p dist/.well-known && cp ./static/assetlinks.json ./dist/.well-known'
 
@@ -29,8 +32,8 @@ help:
 lint: ## Lint source files
 	@/bin/bash -c 'npx eslint --fix --ext .ts,.js,.vue .'
 
-install: ## Install dependencies
-	@/bin/bash -c '( test -e .env && source .env || true ) && NODE_OPTIONS="--openssl-legacy-provider" npm install'
+install: install-python-deps ## Install dependencies
+	@/bin/bash -c '( test -e .env && source .env || true ) && NODE_OPTIONS="--openssl-legacy-provider" npm install --python=$(uv python find 3.11)'
 
 install-bubblewrap: ## Install bubblewrap
 	@/bin/bash -c 'source fun.sh && install_bubblewrap'
