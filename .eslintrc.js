@@ -4,6 +4,13 @@ module.exports = {
     node: true,
     browser: true
   },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json'
+      }
+    }
+  },
   extends: [
     'plugin:vue/recommended',
     'eslint:recommended',

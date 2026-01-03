@@ -102,3 +102,4 @@ twa*
 # Vim swap files
 *.swp
 
+./tmp/
