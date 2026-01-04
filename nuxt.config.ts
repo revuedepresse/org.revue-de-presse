@@ -62,7 +62,7 @@ const createFeed = async (feed: {
 
 const description =
   'Chaque jour, une revue de presse des 10 publications des médias les plus marquantes'
-const title = 'Revue de presse'
+const title = 'Revue de presse - revue-de-presse.org'
 const banner = `${Site.baseURL}/revue-de-presse-banner.jpg`
 const icon = '/logo-revue-de-presse.png'
 
