@@ -4,7 +4,7 @@ const testMode = false
 
 const getHostAndScheme = (environmentProvider: EnvProvider) => {
   let host: string|undefined = 'local.api.revue-de-presse.org'
-  let scheme: string|undefined = 'http://'
+  let scheme: string|undefined = 'https://'
 
   const environment: EnvParam = environmentProvider.getEnvironmentParameters()
   if (environment.productionMode) {

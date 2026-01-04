@@ -81,6 +81,7 @@ typings/
 
 # Nuxt generate
 dist
+static/sitemap.xml
 manifest-checksum.txt
 
 # vuepress build output

@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 .ONESHELL:
-.PHONY: dev generate help install start
+.PHONY: dev generate generate-sitemap help install start
 
 deps-analysis: ## Analyze dependencies graph
 	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" npx nuxt build --modern --analyze'
@@ -23,7 +23,11 @@ copy-domain-name-ownership-proof: ## Copy proof of domain name ownership
 build: generate publish-asset-links publish-atproto-did copy-domain-name-ownership-proof ## Build production package
 	@/bin/bash -c 'source fun.sh && move_pages'
 
-dev: ## Start development server
+generate-sitemap: ## Generate sitemap for dev server
+	@/bin/bash -c 'NODE_OPTIONS="--openssl-legacy-provider" NODE_ENV=production npx nuxt generate --modern'
+	@/bin/bash -c 'cp dist/sitemap.xml static/sitemap.xml'
+
+dev: generate-sitemap ## Start development server
 	@/bin/bash -c 'source .env && NODE_OPTIONS="--openssl-legacy-provider" npx nuxt'
 
 help:

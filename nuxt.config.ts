@@ -1,6 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 import TerserPlugin from 'terser-webpack-plugin'
-import { formatDate, now, setTimezone, yesterday, MIN_DATE } from './mixins/date'
+import { formatDate, setTimezone, yesterday } from './mixins/date'
 import type { RawStatus } from './mixins/status-format'
 import {
   localizeDate,
@@ -68,15 +68,18 @@ const icon = '/logo-revue-de-presse.png'
 
 const untilDate = (new Date()).toUTCString().substring(5)
 
+// Sitemap-specific minimum date (does not affect app navigation)
+const SITEMAP_MIN_DATE = '04 Mar 2025 00:00:00 GMT'
+
 const days = (until: Date|undefined = undefined) => {
-  const days = [setTimezone(new Date(Date.parse(MIN_DATE)))]
+  const days = [setTimezone(new Date(Date.parse(SITEMAP_MIN_DATE)))]
   let next = days[days.length - 1]
 
-  const twelveWeeksFromNow = now()
-  twelveWeeksFromNow.setTime(now().getTime() + 3 * 4 * 7 * (24 * 60 * 60 * 1000))
+  // Default to yesterday to exclude today and future dates from sitemap
+  const yesterdayDate = yesterday()
 
   if (typeof until !== 'undefined') {
-    twelveWeeksFromNow.setTime(until.getTime())
+    yesterdayDate.setTime(until.getTime())
   }
 
   do {
@@ -86,7 +89,7 @@ const days = (until: Date|undefined = undefined) => {
 
     days.push(setTimezone(new Date(nextDate.setDate(next.getDate() + 1))))
     next = days[days.length - 1]
-  } while (next <= twelveWeeksFromNow)
+  } while (next <= yesterdayDate)
 
   return days.map((d) => {
     let month = `${d.getMonth() + 1}`
@@ -359,7 +362,12 @@ const config: NuxtConfig = {
       {
         url: '/',
         changefreq: 'daily',
-        lastmod: (now().toISOString())
+        lastmod: (yesterday().toISOString())
+      },
+      {
+        url: `/${formatDate(yesterday())}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(formatDate(yesterday()))}`,
+        changefreq: 'daily',
+        lastmod: (yesterday().toISOString())
       },
       {
         url: '/mentions-legales',
@@ -378,13 +386,10 @@ const config: NuxtConfig = {
         lastmod: (new Date('2025-03-08').toISOString())
       },
       ...days()
+        .filter((d: string) => d !== `/${formatDate(yesterday())}`)
         .map((d: string) => {
-          let day = new Date(d.replace('/', ''))
+          const day = new Date(d.replace('/', ''))
           day.setTime(day.getTime() + (23 * 60 * 60 * 1000))
-
-          if (d === formatDate(now())) {
-            day = now()
-          }
 
           return {
             url: `${d}${HIGHLIGHTS_PATH_PREFIX}${localizeDate(d)}`,
