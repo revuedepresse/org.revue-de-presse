@@ -166,6 +166,7 @@ export default class StatusFormat extends Vue {
         text: status.text
           .replaceAll(quote, '')
           .replaceAll('\\xa0\\', '&nbsp;')
+          .replaceAll('\\x202f\\', '&nbsp;')
           .replaceAll(urlRegex, (url) => {
             url = url.replace('"', '')
             return `<a class="status__text-external-link" href="${url}">${url}</a>`
