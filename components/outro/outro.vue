@@ -45,7 +45,7 @@
                 >
                 </path>
               </svg>
-              <span class="outro__subscription-label">Suivre&nbsp;@revue-de-presse.bsky.social</span><!--
+              <span class="outro__subscription-label">Suivre&nbsp;@revue-de-presse.org</span><!--
         --></a><!--
       --></span>
       <a
