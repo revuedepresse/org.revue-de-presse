@@ -38,7 +38,7 @@
             <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://bsky.app/profile/revue-de-presse.bsky.social">Bluesky</a>
+            <a href="https://bsky.app/profile/revue-de-presse.org">Bluesky</a>
           </li>
         </ul>
       </li>
@@ -49,7 +49,7 @@
             <a href="https://tiktok.com/@revue_2_presse">TikTok</a>
           </li>
           <li>
-            <a href="https://bsky.app/profile/revue-de-presse.bsky.social">Bluesky</a>
+            <a href="https://bsky.app/profile/revue-de-presse.org">Bluesky</a>
           </li>
         </ul>
       </li>
